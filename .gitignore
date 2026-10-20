@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+# JavaScript / Next
+node_modules/
+.next/
+out/
+dist/
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Local RAG state and archives
+.chroma/
+chroma_data/
+*.sqlite3
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+# Dumps
+*.log
