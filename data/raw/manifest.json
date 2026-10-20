@@ -1,0 +1,14 @@
+[
+  {
+    "file": "uniandes-reforma-practicas-2023.pdf",
+    "url": "https://www.uniandes.edu.ec/wp-content/uploads/2024/08/REFORMA-2023-REGLAMENTO-DE-PRACTICAS.pdf",
+    "status": "download_failed",
+    "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+  },
+  {
+    "file": "uniandes-procedimiento-practicas-online-2024.pdf",
+    "url": "https://www.uniandes.edu.ec/wp-content/uploads/2024/08/V2-PROCEDIMIENTO-PRACTICAS-ON-LINE-2024.pdf",
+    "status": "download_failed",
+    "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+  }
+]
