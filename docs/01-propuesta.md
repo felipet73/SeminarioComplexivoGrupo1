@@ -10,12 +10,12 @@ La LOES, el Reglamento de Régimen Académico del CES y las normas internas UNIA
 
 ## 2. Objetivo general
 
-Desarrollar y desplegar un asistente web que responda consultas académicas **solo cuando exista evidencia oficial recuperada**, con título de documento, artículo/sección, enlace y versión; y un agente acotado que genere checklist individual usando datos aportados por el estudiante, sin emitir decisiones administrativas.
+Desarrollar y desplegar un asistente web que responda consultas académicas, con título de documento, artículo/sección, enlace y versión; y un agente acotado que genere checklist individual usando datos aportados por el estudiante, sin emitir decisiones administrativas.
 
 ## 3. Objetivos específicos
 
 1. Inventariar fuentes oficiales y verificar vigencia/reformas antes de indexar.
-2. Levantar y documentar ≥15 preguntas **reales**, diferenciadas del cuestionario propuesto.
+2. Levantar y documentar ≥15 preguntas adjunta propuesta inicial, diferenciadas del cuestionario propuesto.
 3. Implementar búsqueda híbrida de fragmentos jurídicos con metadatos y evidencia de cita.
 4. Crear tres herramientas controladas: `consultar_requisitos`, `calcular_plazo`, `generar_checklist`.
 5. Comparar tres prompts sobre 10 preguntas y validar 20 casos con artículos esperados.
