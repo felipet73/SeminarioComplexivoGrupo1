@@ -1,5 +1,9 @@
 # 03. Arquitectura propuesta — Semana 1
 
+## Estado actual y frontera de fases
+
+El único componente de ejecución implementado es el backend en **Python + FastAPI**. Expone `GET /health`, publica su contrato en `/docs` y tiene una prueba automatizada. El frontend, la ingesta, el índice vectorial, el LLM, el RAG y las herramientas descritas a continuación son arquitectura objetivo; no se deben presentar como funcionalidades disponibles en Semana 1.
+
 ## Vista de componentes
 
 ```mermaid
@@ -90,4 +94,4 @@ sequenceDiagram
 
 ## Despliegue propuesto
 
-Local: Python virtualenv + FastAPI; frontend y vector DB se añadirán en fase siguiente. Producción: Render/Railway o plataforma aprobada, HTTPS y configuración de secretos en panel. Puntos a revisar: persistencia ChromaDB en volumen duradero, límites de uso y cuotas del proveedor LLM.
+Local actual: entorno virtual de Python + FastAPI; ejecutar `uvicorn app.main:app --reload` desde `backend/` y verificar `GET /health`. El frontend y la base vectorial se añadirán en fases posteriores. Producción: Render/Railway o plataforma aprobada, HTTPS y configuración de secretos en panel. Puntos a revisar antes del despliegue RAG: persistencia ChromaDB en volumen duradero, límites de uso y cuotas del proveedor LLM.

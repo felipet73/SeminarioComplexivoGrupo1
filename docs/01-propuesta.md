@@ -1,7 +1,7 @@
 # 01. Propuesta de solución — Semana 1
 
 **Proyecto:** Asistente inteligente de titulación y normativa académica de UNIANDES (RAG + agente de trámites).  
-**Carrera:** Software · Caso 01, grupo 1 · **Estado:** propuesta inicial, pendiente de validación docente e institucional.  
+**Carrera:** Software · Caso 01, grupo 1 · **Estado:** propuesta de Semana 1; backend base implementado y validación docente e institucional pendiente.
 **Fuentes del alcance:** guía de caso UNIANDES y documento «Fase 1: las 15 preguntas frecuentes comunes» (aportados por el equipo).
 
 ## 1. Problema real
@@ -66,7 +66,11 @@ Desarrollar y desplegar un asistente web que responda consultas académicas, con
 
 ## 8. Modelo y tecnologías elegidos
 
-**Propuesta inicial:** Next.js/React (frontend), Python FastAPI (API), ChromaDB persistente local (base vectorial MVP), embeddings multilingües configurables, SDK del proveedor LLM configurado por entorno. Se preferirá retrieval híbrido (full-text + vectores), con re-ranking opcional y devolución de evidencia. **No se fija un modelo comercial concreto sin benchmark de octubre de 2026**: la recomendación «Gemini 1.5 Flash / GPT-4o-mini» del documento de FAQ es histórica y debe reevaluarse por disponibilidad, precio, soporte en español, latencia y grounding; el MVP `/health` funciona sin LLM ni API key.
+**Backend elegido e implementado en Semana 1:** Python 3.11+ con FastAPI. El repositorio contiene `backend/app/main.py`, el endpoint `GET /health`, configuración de dependencias y una prueba automatizada. Esta base permite exponer un contrato HTTP documentado en `/docs` y comprobar que el servicio está disponible sin depender de un modelo, una clave API o una base vectorial.
+
+**Arquitectura objetivo por fases:** el frontend web se incorporará en Semana 2 y consumirá la API FastAPI; ChromaDB persistente local, embeddings multilingües y el SDK del proveedor LLM se incorporarán cuando exista una fuente aprobada y un benchmark. La recuperación prevista es híbrida (texto + vectores), con re-ranking opcional y evidencia devuelta al cliente. Ninguno de esos componentes se presenta como implementado en esta semana.
+
+**Modelo generativo:** no se fija un modelo comercial sin benchmark de octubre de 2026. La recomendación «Gemini 1.5 Flash / GPT-4o-mini» del documento de FAQ es histórica y debe reevaluarse por disponibilidad, precio, soporte en español, latencia y grounding. El endpoint actual funciona sin LLM ni API key.
 
 **Criterio de selección del modelo:** precisión de citas (prioridad), abstención, robustez frente a inyección, latencia p95, costo por 100 consultas, tratamiento de datos, facilidad de integración y disponibilidad de function calling. Tres variantes de prompt se compararán en dataset controlado.
 
@@ -81,3 +85,14 @@ Desarrollar y desplegar un asistente web que responda consultas académicas, con
 ## 10. Supuestos y pendientes
 
 Las 15 FAQ del archivo recibido son una **propuesta**, no la evidencia de entrevistas realizadas. No existen aún respuestas reales, fechas de campo, conteos ni firmas. Los documentos locales en `data/raw` no se consideran vigentes hasta la validación y el registro de reforma. Pendiente definir integrantes, carrera/modalidad exactas, presupuesto, proveedor LLM y aprobación de la selección documental.
+
+## 11. Corte de implementación de Semana 1
+
+| Elemento | Estado verificable | Siguiente paso |
+|---|---|---|
+| API backend | Implementado con Python y FastAPI; `GET /health` responde el estado del servicio | Mantener el contrato y añadir endpoints de chat en Semana 2 |
+| Pruebas | Implementada una prueba para `/health` | Añadir pruebas de validación y seguridad con cada endpoint nuevo |
+| Frontend | No implementado | Crear cliente web que consuma la API en Semana 2 |
+| RAG, embeddings y vector store | No implementados | Activarlos solo con fuentes aprobadas y fragmentadas en Semana 3 |
+| Agente y herramientas | Diseñados, no implementados | Implementar la allowlist y pruebas de rechazo en Semana 3 |
+| FAQ reales | Pendientes de levantamiento | Realizar encuesta o entrevista anonimizada y registrar evidencia |
