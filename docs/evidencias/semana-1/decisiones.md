@@ -8,3 +8,9 @@
 | ADR-004 | 2026-10-19 | No fijar Gemini 1.5 Flash ni GPT-4o-mini | Modelos mencionados en el documento fuente son recomendaciones histÃ³ricas | Pendiente de benchmark |
 | ADR-005 | 2026-10-19 | Respuestas Ãºnicamente con fuente aprobada y cita verificable | Requisito expreso del caso y control de alucinaciones | PolÃ­tica propuesta |
 | ADR-006 | 2026-10-19 | 15 FAQ del DOCX son cuestionario, no resultados de campo | Evitar afirmar levantamiento que aÃºn no ocurriÃ³ | Confirmado por contenido recibido |
+
+
+## Decisión Técnica: Selección Multimodelo (Gemini principal con Fallback a OpenAI)
+- **Modelo Principal:** Google Gemini 1.5 Flash (alta ventana de contexto y baja latencia).
+- **Modelo de Respaldo:** OpenAI GPT-4o-mini (tolerancia a fallos por cuota o latencia).
+- **Configuración:** Selección manual expuesta en el payload y fallback automático en backend.
