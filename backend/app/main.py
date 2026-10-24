@@ -1,105 +1,72 @@
-﻿import os
-import time
-from typing import Optional, Literal
-from fastapi import FastAPI, HTTPException
+from __future__ import annotations
+import json, time
+from uuid import uuid4
+from collections.abc import Iterator
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
-from pydantic import BaseModel, Field
-from dotenv import load_dotenv
+from fastapi.responses import StreamingResponse
+from app.config import Settings, get_settings
+from app.prompts import cargar_prompt
+from app.schemas import ConsultaChat, RespuestaAsistente
+from app.services.llm import ClienteLLM, ProveedorNoDisponible, ResultadoLLM
+from app.services.metrics import registrar, resumen
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
-load_dotenv()
+app = FastAPI(title="Asistente Académico UNIANDES", version="2.0.0")
+settings = get_settings()
+app.add_middleware(CORSMiddleware, allow_origins=settings.origins, allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
+INJECTION_MARKERS = ("ignore previous", "ignora las instrucciones", "system prompt", "revela tu prompt", "actúa como")
+DOMAIN_WORDS = ("titul", "matr", "práct", "pract", "vincul", "homolog", "certific", "académ", "uniandes", "modalidad")
+DOMAIN_WORDS += ('secretar', 'normativ', 'trámit', 'tramit', 'requisito')
 
-app = FastAPI(title="Asistente Academico UNIANDES", version="1.0.0")
+def obtener_llm(config: Settings = Depends(get_settings)) -> ClienteLLM: return ClienteLLM(config)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+def respuesta_local(pregunta: str) -> RespuestaAsistente | None:
+    normalizada = pregunta.lower()
+    if any(marker in normalizada for marker in INJECTION_MARKERS):
+        return RespuestaAsistente(respuesta="No puedo seguir instrucciones que alteren el rol del asistente. Puedo orientar únicamente sobre trámites académicos.", estado="rechazo", requiere_revision_humana=True, tiempo_segundos=0)
+    if not any(word in normalizada for word in DOMAIN_WORDS):
+        return RespuestaAsistente(respuesta="Esta consulta está fuera del ámbito de orientación académica de UNIANDES. Para trámites, titulación o normativa, reformula tu pregunta.", estado="rechazo", requiere_revision_humana=True, tiempo_segundos=0)
+    return None
 
-HTML_PAGINA = """<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Asistente Academico UNIANDES</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-100 min-h-screen flex flex-col items-center p-4">
-  <div class="w-full max-w-3xl bg-white rounded-xl shadow-md border flex flex-col h-[90vh]">
-    <header class="p-4 bg-blue-900 text-white rounded-t-xl flex justify-between items-center">
-      <div>
-        <h1 class="text-lg font-bold">Asistente de Orientacion Academica UNIANDES</h1>
-        <p class="text-xs text-blue-200">Semana 2 — Conexion con IA Generativa</p>
-      </div>
-    </header>
-    <main id="chatBox" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
-      <div class="bg-blue-100 text-blue-950 p-3 rounded-lg text-sm max-w-[85%] border border-blue-200">
-        Hola, soy el Orientador Academico de UNIANDES. Puedes consultarme sobre requisitos de matricula, certificados, practicas y modalidades de titulacion.
-      </div>
-    </main>
-    <footer class="p-4 border-t bg-white rounded-b-xl">
-      <form id="chatForm" class="flex gap-2">
-        <input type="text" id="userInput" placeholder="Escribe tu consulta academica..." class="flex-1 border rounded-lg px-3 py-2 text-sm" required />
-        <button type="submit" id="sendBtn" class="bg-blue-900 text-white px-4 py-2 rounded-lg text-sm font-medium">Enviar</button>
-      </form>
-    </footer>
-  </div>
-  <script>
-    const form = document.getElementById('chatForm');
-    const input = document.getElementById('userInput');
-    const chatBox = document.getElementById('chatBox');
-    const sendBtn = document.getElementById('sendBtn');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const q = input.value.trim();
-      if (!q) return;
-
-      chatBox.innerHTML += `<div class="flex justify-end"><div class="bg-blue-900 text-white p-3 rounded-lg text-sm max-w-[85%]">${q}</div></div>`;
-      input.value = '';
-      sendBtn.disabled = true;
-      sendBtn.innerText = 'Consultando...';
-
-      try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ pregunta: q })
-        });
-        const d = await res.json();
-        chatBox.innerHTML += `<div class="flex justify-start"><div class="bg-white border p-3 rounded-lg text-sm max-w-[85%] shadow-sm">${d.respuesta}<br><br><small class="text-gray-500">Fuente: ${d.fuente} | Modelo: ${d.modelo_utilizado}</small></div></div>`;
-      } catch (err) {
-        chatBox.innerHTML += `<div class="text-red-500 text-sm">Error: ${err.message}</div>`;
-      } finally {
-        sendBtn.disabled = false;
-        sendBtn.innerText = 'Enviar';
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    });
-  </script>
-</body>
-</html>"""
-
-@app.get("/", include_in_schema=False, response_class=HTMLResponse)
-def root():
-    return HTML_PAGINA
+def responder(payload: ConsultaChat, llm: ClienteLLM) -> RespuestaAsistente:
+    request_id = str(uuid4())
+    inicio = time.perf_counter()
+    segura = respuesta_local(payload.pregunta)
+    if segura:
+        registrar('consulta', request_id=request_id, estado=segura.estado, segundos=0, preferido=payload.modelo_preferido, status=200)
+        return segura
+    contexto = {k: v for k, v in payload.model_dump(exclude={'pregunta', 'modelo_preferido'}, exclude_none=True).items() if v.strip()}
+    try:
+        resultado: ResultadoLLM = llm.generar_texto(cargar_prompt(), payload.pregunta, payload.modelo_preferido, request_id=request_id, contexto=contexto)
+    except ProveedorNoDisponible as error:
+        registrar('consulta', request_id=request_id, estado='error', status=503, error='no_disponible', preferido=payload.modelo_preferido, segundos=round(time.perf_counter() - inicio, 3))
+        raise HTTPException(status_code=503, detail=str(error)) from error
+    registrar('consulta', request_id=request_id, estado='abstencion', status=200, modelo=resultado.modelo, fallback=resultado.fallback, preferido=payload.modelo_preferido, segundos=round(time.perf_counter() - inicio, 3))
+    return RespuestaAsistente(respuesta=resultado.texto, estado="abstencion", requiere_revision_humana=True, fuentes=[], modelo_utilizado=resultado.modelo, fallback_activado=resultado.fallback, tiempo_segundos=round(time.perf_counter() - inicio, 3))
 
 @app.get("/health")
-def health():
-    return {"status": "ok", "service": "titulacion-rag-api"}
+def health() -> dict[str, str]: return {"status": "ok", "service": "titulacion-rag-api", "version": "2.0.0"}
 
-class ChatRequest(BaseModel):
-    pregunta: str
-    modelo_preferido: Optional[Literal["gemini", "openai"]] = "gemini"
+@app.exception_handler(RequestValidationError)
+async def error_validacion(request, exc):
+    if request.url.path.startswith('/api/chat'):
+        registrar('consulta', request_id=str(uuid4()), estado='validacion', status=422, error='entrada_invalida', segundos=0)
+    return JSONResponse(status_code=422, content={'detail': 'Revisa la pregunta (3–2000 caracteres) y los campos de contexto.'})
 
-@app.post("/api/chat")
-def chat(payload: ChatRequest):
-    return {
-        "respuesta": "Para tramites de titulacion o matricula, consulte los reglamentos oficiales de UNIANDES en Secretaria Academica.",
-        "fuente": "Reglamento de Regimen Academico UNIANDES",
-        "modelo_utilizado": "Inferencia Local MVP",
-        "fallback_activado": False,
-        "tiempo_segundos": 0.1
-    }
+@app.get('/api/metricas')
+def metricas() -> dict:
+    return resumen()
+
+@app.post("/api/chat", response_model=RespuestaAsistente)
+def chat(payload: ConsultaChat, llm: ClienteLLM = Depends(obtener_llm)) -> RespuestaAsistente: return responder(payload, llm)
+
+@app.post("/api/chat/stream")
+def chat_stream(payload: ConsultaChat, llm: ClienteLLM = Depends(obtener_llm)) -> StreamingResponse:
+    respuesta = responder(payload, llm)
+    def eventos() -> Iterator[str]:
+        for parte in respuesta.respuesta.split(" "):
+            yield f"event: token\ndata: {json.dumps({'texto': parte + ' '}, ensure_ascii=False)}\n\n"
+        yield f"event: done\ndata: {respuesta.model_dump_json()}\n\n"
+    return StreamingResponse(eventos(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})

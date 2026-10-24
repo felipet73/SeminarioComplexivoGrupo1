@@ -28,3 +28,6 @@ Thumbs.db
 .vscode/
 # Dumps
 *.log
+logs/
+frontend/test-results/
+frontend/playwright-report/
