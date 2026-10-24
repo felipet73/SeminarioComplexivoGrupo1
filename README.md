@@ -30,6 +30,27 @@ Abrir http://127.0.0.1:8000/health (esperado: `{"status":"ok","service":"titulac
 
 Pruebas: `cd backend && pytest -q`.
 
+## Semana 2: ejecución
+
+Actualización del 24-10-2026: formulario de contexto académico y dashboard público en `http://localhost:5173/metricas` (API: `GET /api/metricas`). Incluye intentos, errores, tokens reportados y latencias. Las métricas requieren el backend activo y registran solo metadatos de las nuevas consultas. Revisión de requisitos y pendientes en [contexto, métricas y brechas](docs/07-contexto-metricas-y-brechas.md).
+
+El backend expone `POST /api/chat` y `POST /api/chat/stream` (SSE). Gemini es el proveedor principal y OpenAI el respaldo; sus claves viven solo en `.env`.
+
+```powershell
+# terminal 1
+cd backend
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+
+# terminal 2
+cd frontend
+npm install
+npm run dev
+```
+
+Pruebas: `cd backend; pytest -q`, `cd frontend; npm run test` y, tras `npx playwright install`, `npm run test:e2e`. No se consumen tokens durante las pruebas. Mientras no se haya implementado RAG con normativa aprobada, el sistema no entrega citas ni requisitos como oficiales.
+
 ## Estructura
 
 ```text
