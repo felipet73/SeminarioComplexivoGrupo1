@@ -1,0 +1,27 @@
+/* Estado de espera: movimiento de baja intensidad, sin desplazar el contenido. */
+.pagina .chat{position:relative;isolation:isolate;transition:border-color .6s ease,box-shadow .6s ease;}
+.pagina .chat--procesando{border-color:#92b6e0;animation:chat-respirar 3.8s ease-in-out infinite;}
+.chat--procesando::after{content:'';position:absolute;z-index:5;inset:0;padding:1.5px;border-radius:inherit;pointer-events:none;background:linear-gradient(125deg,#2466b880,#94c4f280 32%,#f1c85fa6 49%,#1b57a380 67%,#94c4f280);background-size:250% 250%;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;animation:chat-luz 7s ease-in-out infinite;}
+.pagina .mensaje--pensando{position:relative;overflow:hidden;width:min(100%,420px);max-width:100%;padding:19px 19px 17px;border:1px solid #dfebf8;border-radius:4px 17px 17px 17px;background:linear-gradient(115deg,#fff,#f8fbff 75%,#fffcf4);box-shadow:0 8px 25px #103a7010;}
+.pensando{display:flex;align-items:center;gap:15px;}
+.pensando__emblema{position:relative;display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#e5f0ff,#f5f9ff);box-shadow:inset 0 0 0 1px #d9e8fa;}
+.pensando__emblema::before{content:'';position:absolute;inset:-3px;border:1.5px solid transparent;border-top-color:#2866b0;border-right-color:#d5ab46;border-radius:50%;animation:pensando-orbita 3.2s linear infinite;}
+.pensando__emblema svg{width:21px;height:21px;fill:#195093;animation:pensando-destello 3s ease-in-out infinite;}
+.pensando__texto{min-width:0;}.pensando__texto>span{display:block;font-size:8px;letter-spacing:.14em;color:#7591b4;}
+.pensando__texto b{display:block;margin-top:6px;font-size:12px;font-weight:600;line-height:1.6;color:#234b7e;}
+.pagina .pensando__texto p{margin-top:3px;font-size:10px;color:#7a8da6;line-height:1.5;}
+.mensaje .pensando__puntos{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;}
+.pensando__puntos i{width:3px;height:3px;border-radius:50%;background:#336aa8;animation:pensando-punto 1.8s ease-in-out infinite;}
+.pensando__puntos i:nth-child(2){animation-delay:.2s;}.pensando__puntos i:nth-child(3){animation-delay:.4s;background:#bc922c;}
+.pensando__rastro{display:flex;gap:5px;margin:17px 0 0 59px;height:3px;overflow:hidden;border-radius:8px;background:#eaf1fa;}
+.pensando__rastro i{display:block;width:26%;height:3px;border-radius:8px;background:linear-gradient(90deg,#b2cdec,#5c8bc1);animation:pensando-onda 2.6s ease-in-out infinite;}
+.pensando__rastro i:nth-child(2){animation-delay:.3s;}.pensando__rastro i:nth-child(3){animation-delay:.6s;background:linear-gradient(90deg,#d9bd76,#ecd9a3);}
+.pagina .pensando__respuesta{margin-top:15px;border-top:1px solid #e0ebf8;padding-top:12px;}
+@keyframes chat-respirar{0%,100%{box-shadow:0 22px 60px #0a32621c,0 0 0 3px #6ea0db08;}50%{box-shadow:0 22px 60px #0a326225,0 0 0 5px #6ea0db12,0 0 30px #e4c57613;}}
+@keyframes chat-luz{0%,100%{background-position:0% 0%;}50%{background-position:100% 100%;}}
+@keyframes pensando-orbita{to{transform:rotate(360deg);}}
+@keyframes pensando-destello{0%,100%{opacity:.7;transform:scale(.92);}50%{opacity:1;transform:scale(1.05);}}
+@keyframes pensando-punto{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}
+@keyframes pensando-onda{0%,100%{opacity:.22;transform:scaleX(.65);}50%{opacity:.85;transform:scaleX(1);}}
+@media(max-width:550px){.pagina .mensaje--pensando{padding:16px 13px;}.pensando{gap:12px;}.pensando__texto b{font-size:11px;}.pensando__rastro{margin-left:56px;}}
+@media(prefers-reduced-motion:reduce){.pagina .chat--procesando,.chat--procesando::after,.pensando__emblema::before,.pensando__emblema svg,.pensando__puntos i,.pensando__rastro i{animation:none;}.pensando__puntos i,.pensando__rastro i{opacity:.65;}}
