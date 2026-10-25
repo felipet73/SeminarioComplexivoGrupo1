@@ -1,5 +1,7 @@
 export type Estado = 'respuesta'|'abstencion'|'aclaracion'|'rechazo';
-export type Respuesta = {respuesta:string;estado:Estado;requiere_revision_humana:boolean;fuentes:unknown[];modelo_utilizado:string|null;fallback_activado:boolean;tiempo_segundos:number};
+export type CampoNecesario = {campo:keyof import('./ContextoAcademico').Contexto;etiqueta:string;tipo:'texto'|'select';opciones:string[];max_length:number};
+export type Fuente = {titulo:string;seccion:string;url:string;version?:string;pagina?:number;fragmento_id?:string};
+export type Respuesta = {respuesta:string;estado:Estado;requiere_revision_humana:boolean;fuentes:Fuente[];campos_necesarios?:CampoNecesario[];modelo_utilizado:string|null;fallback_activado:boolean;tiempo_segundos:number};
 export const API = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000';
 export class ApiError extends Error { constructor(public status:number, message:string, public retryAfter?:number){super(message)} }
 export type ModeloPreferido = 'gemini' | 'openai';

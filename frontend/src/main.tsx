@@ -2,5 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import Metricas from './Metricas';
-const Pagina = window.location.pathname.replace(/\/$/, '') === '/metricas' ? Metricas : App;
+import Admin from './admin/Admin';
+const route=window.location.pathname.replace(/\/+$/, '').toLowerCase();
+const Pagina = route === '/admin' ? Admin : route === '/metricas' ? Metricas : App;
 createRoot(document.getElementById('root')!).render(<StrictMode><Pagina/></StrictMode>);
