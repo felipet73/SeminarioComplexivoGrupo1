@@ -8,7 +8,9 @@ from app.config import Settings
 from app.services.metrics import registrar
 
 class ProveedorNoDisponible(Exception):
-    pass
+    def __init__(self,message,category='no_disponible',status=None):
+        super().__init__(message)
+        self.category,self.status=category,status
 
 @dataclass(frozen=True)
 class SalidaProveedor:
@@ -23,6 +25,9 @@ class ResultadoLLM:
     modelo: str
     fallback: bool
     segundos: float
+    tokens_entrada: int | None = None
+    tokens_salida: int | None = None
+    tokens_total: int | None = None
 
 class GeminiProvider:
     def __init__(self, key: str, model: str, timeout: float = 15):
@@ -75,15 +80,18 @@ class ClienteLLM:
         orden = [preferido, 'openai' if preferido == 'gemini' else 'gemini']
         return [(disponibles[n][0], disponibles[n][1], i > 0) for i, n in enumerate(orden) if n in disponibles]
 
-    def generar_texto(self, system_prompt: str, pregunta: str, preferido: str = 'gemini', request_id: str | None = None, contexto: dict | None = None) -> ResultadoLLM:
+    def generar_texto(self, system_prompt: str, pregunta: str, preferido: str = 'gemini', request_id: str | None = None, contexto: dict | None = None, permitir_fallback: bool = True) -> ResultadoLLM:
         if len(pregunta) > self.settings.llm_max_input_chars:
             raise ValueError('La consulta supera el límite permitido.')
         mensaje = json.dumps({'consulta': pregunta, 'contexto_declarado': contexto or {}}, ensure_ascii=False)
         inicio = time.perf_counter()
+        last_category,last_status='no_disponible',None
         providers = self._proveedores(preferido)
+        if not permitir_fallback:
+            providers = [p for p in providers if not p[2]]
         if not providers:
             registrar('configuracion', request_id=request_id, preferido=preferido, error='sin_configuracion', segundos=0)
-            raise ProveedorNoDisponible('Configura GEMINI_API_KEY u OPENAI_API_KEY en el backend.')
+            raise ProveedorNoDisponible('Configura GEMINI_API_KEY u OPENAI_API_KEY en el backend.','sin_configuracion')
         for provider, model, fallback in providers:
             for intento in range(self.settings.llm_retries + 1):
                 intento_inicio = time.perf_counter()
@@ -93,6 +101,7 @@ class ClienteLLM:
                         raise ValueError('Respuesta vacía')
                 except Exception as error:
                     categoria, status = clasificar_error(error)
+                    last_category,last_status=categoria,status
                     registrar('llm', request_id=request_id, modelo=model, preferido=preferido, fallback=fallback,
                               intento=intento + 1, error=categoria, status=status,
                               segundos=round(time.perf_counter() - intento_inicio, 3))
@@ -103,5 +112,5 @@ class ClienteLLM:
                     registrar('llm', request_id=request_id, modelo=model, preferido=preferido, fallback=fallback,
                               intento=intento + 1, segundos=round(time.perf_counter() - intento_inicio, 3),
                               tokens_entrada=r.tokens_entrada, tokens_salida=r.tokens_salida, tokens_total=r.tokens_total)
-                    return ResultadoLLM(r.texto, model, fallback, round(time.perf_counter() - inicio, 3))
-        raise ProveedorNoDisponible('El servicio de IA no está disponible. Intenta nuevamente en unos minutos.')
+                    return ResultadoLLM(r.texto, model, fallback, round(time.perf_counter() - inicio, 3), r.tokens_entrada, r.tokens_salida, r.tokens_total)
+        raise ProveedorNoDisponible('El servicio de IA no está disponible. Intenta nuevamente en unos minutos.',last_category,last_status)

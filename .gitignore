@@ -29,5 +29,6 @@ Thumbs.db
 # Dumps
 *.log
 logs/
+data/admin/
 frontend/test-results/
 frontend/playwright-report/
