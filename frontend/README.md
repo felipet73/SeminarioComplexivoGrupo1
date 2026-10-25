@@ -1,5 +1,7 @@
 # Frontend
 
+Las tarjetas de Configuración, RAG y Análisis se contraen/expanden con animación y controles accesibles; el contenido sigue montado para conservar los borradores. «Nueva fuente» reinicia el formulario incluso si ya está en modo nuevo: borra campos, archivo y errores, restablece las casillas, expande el editor y enfoca el título. Guardar una fuente nueva también deja el formulario limpio. No se permite reiniciarlo durante su guardado.
+
 Las preguntas sugeridas públicas no incluyen pruebas adversarias. Estas se encuentran en `/admin`, pestaña Análisis, cuya simulación muestra burbujas por caso y versión con métricas. Cada aclaración del chat conserva un botón para reabrir sus campos pendientes; las simulaciones permiten repetir el caso con contexto para todas las versiones.
 
 Cuando la IA solicita datos faltantes, el chat muestra su respuesta también en un popup con campos validados. Permite volver a consultar con la pregunta/modelo/contexto originales o salir sin consultar. Los valores se conservan ante errores. Ver [campos necesarios](../docs/09-aclaraciones-y-campos-necesarios.md); cubierto por `npm run test` y `npm run test:admin`.
