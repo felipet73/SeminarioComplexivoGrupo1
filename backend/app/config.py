@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     llm_timeout_seconds: float = 15
     llm_retries: int = 0
     llm_max_input_chars: int = 2000
+    admin_username: str = 'admin'
+    admin_password: str = ''
+    admin_cookie_secure: bool = False
+    admin_session_minutes: int = 60
     model_config = SettingsConfigDict(env_file=ROOT / ".env", extra="ignore")
 
     @property
