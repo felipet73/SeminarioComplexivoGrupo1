@@ -23,6 +23,10 @@ Esta versión está diseñada para un proceso del backend. Sesiones y exclusión
 
 ## Configuración: prompts y fuentes
 
+Las secciones del administrador incorporan controles Contraer/Expandir, con animación respetuosa de la preferencia de movimiento reducido, `aria-expanded`, `aria-controls` e `inert` para que el contenido cerrado no reciba foco. Se mantienen montadas al contraerlas: no se pierden campos ni resultados. Se inician abiertas; el estado no se guarda entre recargas o cambios de pestaña.
+
+«Nueva fuente» abre y limpia siempre el formulario, aun si ya se estaba creando una fuente: restablece título, fechas, texto, notas, archivo, casillas y errores, y enfoca el título. Editar/reemplazar abre el formulario con los datos del documento. Tras guardar se prepara un formulario nuevo; el botón de reinicio se deshabilita durante el guardado para no interrumpirlo.
+
 - V1/V2/V3 se leen de `backend/app/prompts/system_vN.md`. La administración permite consultar contenido/descripción, modificar una versión y crear la siguiente Vn.
 - Cada edición crea una revisión con fecha, actor y snapshots antes/después. También se detectan modificaciones externas a los archivos .md y se registran como `filesystem`. La copia SQLite mantiene los snapshots; los archivos reflejan el estado actual.
 - El botón «Usar en el chat» cambia la versión activa en backend; el laboratorio no necesita alterar esa versión para comparar variantes. Guardados con revisión esperada impiden pisar una edición concurrente.
