@@ -1,5 +1,7 @@
 # Contexto académico, observabilidad y revisión de cumplimiento
 
+Este documento registra el corte anterior a la administración. La actualización de prompts, RAG persistente y laboratorio se detalla en [08-admin-rag-y-analisis.md](08-admin-rag-y-analisis.md); sus brechas reemplazan las entradas históricas que ahora están implementadas.
+
 Fecha: 24 de octubre de 2026. Revisión del código frente a `docs/01-propuesta.md`, `02-requisitos.md`, `03-arquitectura.md`, `04-fuentes.md`, `05-prompts.md` y las condiciones de Semana 2 registradas en `06-semana-2-implementacion.md`. Esto es una revisión técnica, no una aprobación docente o institucional.
 
 Actualización de disponibilidad: Gemini 3.8 Flash presentó 503/504. Se sustituyó por `gemini-3.5-flash-lite` tras dos pruebas con el system prompt real y contexto ficticio de Software: 6,94 s / 564 tokens y 5,57 s / 610 tokens, ambas con texto. Esto verifica disponibilidad puntual, no calidad normativa ni disponibilidad garantizada. Se redujo el timeout por llamada a 15 s y los reintentos a cero, conservando OpenAI como respaldo. Referencia de modelo: https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite

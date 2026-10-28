@@ -1,5 +1,15 @@
 # Frontend
 
+Las tarjetas de Configuración, RAG y Análisis se contraen/expanden con animación y controles accesibles; el contenido sigue montado para conservar los borradores. «Nueva fuente» reinicia el formulario incluso si ya está en modo nuevo: borra campos, archivo y errores, restablece las casillas, expande el editor y enfoca el título. Guardar una fuente nueva también deja el formulario limpio. No se permite reiniciarlo durante su guardado.
+
+Las preguntas sugeridas públicas no incluyen pruebas adversarias. Estas se encuentran en `/admin`, pestaña Análisis, cuya simulación muestra burbujas por caso y versión con métricas. Cada aclaración del chat conserva un botón para reabrir sus campos pendientes; las simulaciones permiten repetir el caso con contexto para todas las versiones.
+
+Cuando la IA solicita datos faltantes, el chat muestra su respuesta también en un popup con campos validados. Permite volver a consultar con la pregunta/modelo/contexto originales o salir sin consultar. Los valores se conservan ante errores. Ver [campos necesarios](../docs/09-aclaraciones-y-campos-necesarios.md); cubierto por `npm run test` y `npm run test:admin`.
+
+`/admin` abre el login administrativo y las pestañas Configuración / RAG / Análisis. Usa `/api/admin` a través del proxy Vite al backend 8000 (reinicia Vite tras actualizar esta configuración). Usuario por defecto `admin`, contraseña definida únicamente en `.env` del repositorio. No hay claves ni tokens de sesión en localStorage.
+
+Pruebas completas del administrador: `npm run test:admin` levanta servidores aislados 9019/4180, fuentes temporales y LLM doble. Consulta [manual de administración](../docs/08-admin-rag-y-analisis.md). En producción configura reverse proxy `/api/admin` en el mismo origen, HTTPS y `ADMIN_COOKIE_SECURE=true`.
+
 El selector muestra Gemini 3.5 Flash-Lite como primera opción y OpenAI GPT-4.1 mini como alternativa. El backend usa 15 segundos por llamada, sin reintentos adicionales antes del respaldo.
 
 La ruta `/` muestra la orientación con contexto académico opcional y selector de modelo. `/metricas` muestra el dashboard público (sin login ni enlace de menú), alimentado por `GET /api/metricas`. Abre `http://localhost:5173/metricas` con el backend activo. Los campos elegidos se envían con cada nueva consulta y se mantienen solo en memoria durante la página actual.
