@@ -81,6 +81,8 @@ Pruebas: en backend `.\.venv\Scripts\python.exe -m pytest -q`; en frontend `npm 
 
 ## Variables de entorno
 
+El administrador incluye ayudas ampliadas y diagramas interactivos de indexación, recuperación y simulación. Análisis muestra respuestas y mediciones sin solicitar evaluación adicional a IA: [guía de ayudas y trazas](docs/10-ayudas-y-trazas-rag.md).
+
 El chat principal admite aclaraciones con un popup de campos faltantes y reconsulta con contexto. Ver [contrato e interacción](docs/09-aclaraciones-y-campos-necesarios.md).
 
 Copiar `.env.example` a `.env` en instalaciones nuevas y completar las claves de los proveedores y `ADMIN_PASSWORD`. **Nunca subir `.env` o claves reales a Git.** `AI_PROVIDER` y `AI_MODEL` son configurables y no se usan en `/health`.
