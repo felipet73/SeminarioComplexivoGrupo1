@@ -133,10 +133,30 @@ def test_hibrido_persistente_y_fallback_lexico(client,monkeypatch):
     assert client.post(f'/api/admin/rag/index/{d["id"]}',headers=HEADERS,json={}).status_code==200
     r=client.post('/api/admin/rag/search',headers=HEADERS,json={'query':'titulación'}).json()
     assert r['strategy']=='hybrid'
+    vector_step=next(s for s in r['trace'] if s['id']=='vector')
+    assert vector_step['status']=='completed' and vector_step['details']['vectores_leidos']>0
     monkeypatch.setattr(rag,'embed',lambda *a:(_ for _ in ()).throw(RuntimeError('offline')))
     r=client.post('/api/admin/rag/search',headers=HEADERS,json={'query':'titulación'}).json()
     assert r['strategy']=='lexical' and r['warning']
     assert r['chunks']
+    assert next(s for s in r['trace'] if s['id']=='vector')['status']=='error'
+
+def test_traza_recuperacion_sin_fuentes_y_lexica_no_usa_vectores(client,monkeypatch):
+    signin(client)
+    def no_embed(*args):raise AssertionError('La ruta léxica no debe generar embeddings')
+    monkeypatch.setattr(rag,'embed',no_embed)
+    empty=client.post('/api/admin/rag/search',headers=HEADERS,json={'query':'titulación'}).json()
+    assert empty['chunks']==[] and len(empty['trace'])==6
+    assert next(s for s in empty['trace'] if s['id']=='vector')['status']=='skipped'
+    doc=upload(client)
+    index=client.post(f'/api/admin/rag/index/{doc["id"]}',headers=HEADERS,json={}).json()
+    assert len(index['trace'])==4
+    assert index['trace'][2]['status']=='skipped'
+    found=client.post('/api/admin/rag/search',headers=HEADERS,json={'query':'titulación'}).json()
+    assert found['chunks']
+    assert next(s for s in found['trace'] if s['id']=='vector')['details']['vectores_leidos']==0
+    assert found['trace'][-1]['details']['fragmentos']==len(found['chunks'])
+    assert found['trace'][-1]['details']['milisegundos']>=0
 
 def test_simulacion_versiones_metricas_y_evaluador(client,monkeypatch):
     signin(client)
@@ -155,9 +175,11 @@ def test_simulacion_versiones_metricas_y_evaluador(client,monkeypatch):
         assert r.status_code==202,r.text
         job=client.get('/api/admin/analysis/'+r.json()['id']).json()
         assert job['status']=='completed'
-        assert len(job['results'])==3 and len(calls)==4
+        assert len(job['results'])==3 and len(calls)==3
         assert job['results'][0]['tokens_total']==25
-        assert job['review']['texto']=='Orientación evaluada'
+        assert job['review'] is None and job['evaluation_mode']=='measurements_only'
+        assert job['trace'][-1]['details']['evaluaciones_ia']==0
+        assert all('Eres evaluador' not in prompt for prompt,_ in calls)
         assert job['prompts'][0]['revision']==1
         assert job['rag_config']['top_k']==4
         assert job['evidence']==[{'chunks':[]}]

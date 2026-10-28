@@ -23,6 +23,8 @@ Esta versión está diseñada para un proceso del backend. Sesiones y exclusión
 
 ## Configuración: prompts y fuentes
 
+El botón «Cancelar» de fuentes descarta el borrador sin escribir en backend. Si se estaba editando/reemplazando, abandona la selección y vuelve a «Agregar una fuente»; si se estaba agregando, limpia el alta. Restablece campos, archivo, errores y casillas; no elimina ni modifica la fuente original. Se deshabilita mientras se guarda.
+
 Las secciones del administrador incorporan controles Contraer/Expandir, con animación respetuosa de la preferencia de movimiento reducido, `aria-expanded`, `aria-controls` e `inert` para que el contenido cerrado no reciba foco. Se mantienen montadas al contraerlas: no se pierden campos ni resultados. Se inician abiertas; el estado no se guarda entre recargas o cambios de pestaña.
 
 «Nueva fuente» abre y limpia siempre el formulario, aun si ya se estaba creando una fuente: restablece título, fechas, texto, notas, archivo, casillas y errores, y enfoca el título. Editar/reemplazar abre el formulario con los datos del documento. Tras guardar se prepara un formulario nuevo; el botón de reinicio se deshabilita durante el guardado para no interrumpirlo.
@@ -65,10 +67,12 @@ La visualización utiliza conversaciones por caso y respuestas por versión, con
 - Un trabajo en segundo plano por proceso, con progreso consultable. Al reiniciar, los trabajos inconclusos se marcan interrumpidos y pueden ejecutarse nuevamente. No hay reanudación parcial automática.
 - Las simulaciones no cambian al proveedor de respaldo: así se evita comparar modelos diferentes sin advertirlo. Los errores de cada variante quedan separados y no detienen el resto.
 - Cada respuesta muestra modelo real, tiempo de generación, tokens de entrada/salida/total reportados por SDK y errores. Tokens desconocidos permanecen como N/D. El resumen por versión incluye éxitos, fallos y latencia media.
-- Después de las respuestas se solicita a la misma IA una comparación de claridad, abstención, seguridad, sustento y coincidencia con referencias, con ganador provisional o empate y mejoras. El texto de cada respuesta puede abreviarse a 1800 caracteres para el juez; esto se declara en sus instrucciones.
-- El análisis de IA registra su consumo/tiempo aparte. Los tokens mostrados son de generación; embeddings son operaciones adicionales. Se puede exportar el experimento completo en JSON, incluidos snapshots y métricas. Los contenidos permanecen privados bajo la sesión admin, no aparecen en `/metricas`.
+- Desde la actualización del 28 de octubre de 2026 no se solicita comparación, calificación, resumen ni elección de ganador a un juez de IA. Se generan únicamente las respuestas y se muestran las mediciones. La referencia esperada se revisa manualmente, no se usa para dirigir la respuesta del modelo.
+- Los tokens mostrados son los reportados para generación; embeddings son operaciones adicionales. `evaluation_mode=measurements_only` identifica los trabajos nuevos. Se puede exportar el experimento completo en JSON, incluidos snapshots, métricas y trazas. Los contenidos permanecen privados bajo la sesión admin, no aparecen en `/metricas`. Los informes antiguos no se borran del almacenamiento, pero la pantalla ya no presenta evaluaciones de IA.
 
 Cada experimento conserva también la configuración RAG y los fragmentos recuperados, además de la duración total. Esto permite revisar posteriormente qué evidencia recibió cada variante, incluso si se reemplaza una fuente.
+
+Las secciones incluyen ayudas ampliadas y recuadros explicativos. Después de indexar, recuperar o simular se muestran trazas del backend en diagramas de nodos seleccionables, sincronizados con sus pasos y detalles. Véase [guía de ayudas y procesos](10-ayudas-y-trazas-rag.md).
 
 ## Pruebas
 
