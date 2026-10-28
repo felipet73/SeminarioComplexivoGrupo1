@@ -1,4 +1,5 @@
 .pagina .hero{padding-top:48px;padding-bottom:48px}.pagina .hero h1{font-size:clamp(38px,4vw,56px)}
+.chat-fuentes{padding:12px 0 0 16px;margin:12px 0;border-top:1px solid #d9e6f5;display:grid;gap:8px}.chat-fuentes a{font-size:12px;color:#175da7}.mensaje .chat-fuentes small{border:0;padding:0;margin-top:4px;}
 .ayudas{background:#eaf2fd;border:1px solid #d4e2f4;border-radius:12px;padding:18px;margin:22px 0}.ayudas h3{font-size:13px;color:#173c70;margin:0 0 14px}.ayudas ul{margin:0;padding-left:17px;display:grid;gap:12px;font-size:12px;line-height:1.6;color:#536b8c}.ayudas li::marker{color:#bd8c19}
 .pagina .zona-chat{grid-template-columns:.6fr 1.4fr;gap:40px;align-items:start}.panel-ayuda{position:sticky;top:24px}
 .contexto{padding:24px;background:linear-gradient(130deg,#f4f8ff,#fff);border-bottom:1px solid #dce5ef}
