@@ -4,8 +4,9 @@ from uuid import uuid4
 from collections.abc import Iterator
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse, RedirectResponse, JSONResponse
+from fastapi.responses import StreamingResponse
 from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 from app.config import Settings, get_settings
 from app.schemas import ConsultaChat, RespuestaAsistente
@@ -33,6 +34,7 @@ async def proteger_admin(request, call_next):
     return response
 
 settings = get_settings()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.origins,
@@ -47,41 +49,4 @@ def obtener_llm(config: Settings = Depends(get_settings)) -> ClienteLLM:
 def responder(payload: ConsultaChat, llm: ClienteLLM) -> RespuestaAsistente:
     return generar_respuesta(payload, llm)[0]
 
-@app.get("/")
-def raiz():
-    return RedirectResponse(url="/docs")
-
-@app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok", "service": "titulacion-rag-api", "version": "2.0.0"}
-
-@app.exception_handler(RequestValidationError)
-async def error_validacion(request, exc):
-    if request.url.path.startswith('/api/chat'):
-        registrar('consulta', request_id=str(uuid4()), estado='validacion', status=422, error='entrada_invalida', segundos=0)
-    return JSONResponse(status_code=422, content={'detail': 'Revisa los campos enviados y sus límites de tamaño.'})
-
-@app.get('/api/sources/{doc_id}/{revision}')
-def source(doc_id: str, revision: int):
-    with store.db() as conn:
-        doc = store.get(conn, 'document', doc_id)
-    if not doc or not rag.eligible(doc) or doc['revision'] != revision:
-        raise HTTPException(404, 'La revisión no está activa o vigente.')
-    return file_response(doc)
-
-@app.get('/api/metricas')
-def metricas() -> dict:
-    return resumen()
-
-@app.post("/api/chat", response_model=RespuestaAsistente)
-def chat(payload: ConsultaChat, llm: ClienteLLM = Depends(obtener_llm)) -> RespuestaAsistente:
-    return responder(payload, llm)
-
-@app.post("/api/chat/stream")
-def chat_stream(payload: ConsultaChat, llm: ClienteLLM = Depends(obtener_llm)) -> StreamingResponse:
-    respuesta = responder(payload, llm)
-    def eventos() -> Iterator[str]:
-        for parte in respuesta.respuesta.split(" "):
-            yield f"event: token\ndata: {json.dumps({'texto': parte + ' '}, ensure_ascii=False)}\n\n"
-        yield f"event: done\ndata: {respuesta.model_dump_json()}\n\n"
-    return StreamingResponse(eventos(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+@app.get
