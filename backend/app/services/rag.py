@@ -5,6 +5,7 @@ import io
 import json
 import math
 import re
+import time
 import zipfile
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -12,6 +13,7 @@ from defusedxml import ElementTree
 from app.config import get_settings
 from app.services import admin_store as store
 from app.services.metrics import registrar
+from app.services.tracing import step
 
 MAX_BYTES = 10 * 1024 * 1024
 ARTICLE = re.compile(r'(?im)^\s*(?:art(?:ículo|iculo|\.)?|artículo)\s*\.?\s*(\d+[a-z]?(?:[.-]\d+)?)\b[^\n]{0,160}')
@@ -158,6 +160,7 @@ def embed(texts, model, task):
     return values
 
 def index_document(doc_id, actor):
+    started=time.perf_counter()
     with store.db() as conn:
         doc = store.get(conn,'document',doc_id)
         config = store.get(conn,'config','rag')
@@ -187,28 +190,38 @@ def index_document(doc_id, actor):
         store.put(conn,'document',doc_id,current)
         store.audit(conn,actor,'index_document',doc_id,{'indexed_revision':doc.get('indexed_revision')},
                     {'revision':current['revision'],'chunks':len(chunks),'config_revision':config['revision']})
-    return {'document':public_doc(current), 'chunks':chunks}
+    trace=[step('document','Leer revisión','Se usa el texto extraído de la revisión seleccionada; no se vuelve a descargar la fuente.',revision=doc['revision'],paginas=len(doc['pages'])),
+           step('split','Dividir por artículos','Se reconocen encabezados de artículos y se crean ventanas con solapamiento, conservando página y sección.',fragmentos=len(chunks),tamano=config['chunk_size'],solapamiento=config['overlap']),
+           step('vectors','Generar vectores','En híbrido, Google genera embeddings de 768 dimensiones por lotes de hasta 16 fragmentos. En léxico este paso se omite.','completed' if config['strategy']=='hybrid' else 'skipped',vectores=sum(v is not None for v in vectors),modelo=config['embedding_model']),
+           step('commit','Guardar índice','Una transacción sustituye los fragmentos de esta fuente en chunks y chunk_search (FTS5). Los vectores se guardan como JSON en chunks.vector; no hay un índice vectorial ANN separado.',tabla='chunks',indice_lexico='chunk_search',milisegundos=round((time.perf_counter()-started)*1000,2))]
+    return {'document':public_doc(current), 'chunks':chunks,'trace':trace}
 
 def retrieve(query, config=None):
+    started=time.perf_counter()
     config = config or store.settings()
     warning = None
+    trace=[step('query','Preparar consulta','La búsqueda usa la consulta enviada y la configuración guardada en backend, no cambios pendientes del formulario.',estrategia=config['strategy'],top_k=config['top_k'],revision_config=config['revision'])]
     with store.db() as conn:
         docs = {d['id']:d for d in store.all_records(conn,'document') if eligible(d) and d['indexed_revision']==d['revision'] and d.get('index_signature')==signature(config)}
+        trace.append(step('filter','Filtrar fuentes','Se admiten solo documentos habilitados, aprobados, vigentes y con revisión e índice compatibles.',documentos_admitidos=len(docs)))
         if not docs:
-            return {'chunks':[], 'strategy':'lexical','warning':'No hay documentos vigentes, aprobados e indexados con la configuración actual.'}
+            trace.extend([step('lexical','Buscar palabras','Sin fuentes elegibles no se ejecuta FTS5.','skipped'),step('vector','Consultar vectores','No se leen vectores ni se llama al servicio de embeddings.','skipped'),step('rank','Ordenar candidatos','No hay candidatos que ordenar.','skipped'),step('return','Devolver fragmentos','La recuperación finaliza sin evidencia; no llama a un modelo generativo.',fragmentos=0,milisegundos=round((time.perf_counter()-started)*1000,2))])
+            return {'chunks':[], 'strategy':'lexical','warning':'No hay documentos vigentes, aprobados e indexados con la configuración actual.','trace':trace}
         params = list(docs)
         placeholders = ','.join('?' for _ in params)
         terms = list(dict.fromkeys(t.lower() for t in re.findall(r'[^\W_]{2,}',query,flags=re.UNICODE) if t.lower() not in STOP))[:24]
         lexical = []
         if terms:
             match = ' OR '.join('"'+t+'"' for t in terms)
-            lexical = [dict(r) for r in conn.execute(f'''SELECT c.*, bm25(chunk_search) AS rank FROM chunk_search
+            lexical = [dict(r) for r in conn.execute(f'''SELECT c.id,c.doc_id,c.revision,c.title,c.section,c.page,c.text, bm25(chunk_search) AS rank FROM chunk_search
                 JOIN chunks c ON c.id=chunk_search.id WHERE chunk_search MATCH ? AND c.doc_id IN ({placeholders})
                 ORDER BY rank LIMIT 40''',[match]+params)]
         candidates = {c['id']:c for c in lexical}
         scores = {c['id']:1/(60+i+1) for i,c in enumerate(lexical)}
         semantic = []
         rows = [dict(r) for r in conn.execute(f'SELECT * FROM chunks WHERE doc_id IN ({placeholders}) AND vector IS NOT NULL AND embedding_model=? LIMIT 5000',params+[config['embedding_model']])] if config['strategy']=='hybrid' else []
+    trace.append(step('lexical','Buscar palabras','FTS5/BM25 busca hasta 24 términos distintos unidos por OR y conserva hasta 40 candidatos léxicos. No usa vectores.',terminos=len(terms),candidatos=len(lexical)))
+    vector_status='skipped'
     if rows:
         try:
             q = embed([query],config['embedding_model'],'RETRIEVAL_QUERY')[0]
@@ -222,13 +235,18 @@ def retrieve(query, config=None):
             for i,(_,row) in enumerate(semantic[:40]):
                 candidates[row['id']] = row
                 scores[row['id']] = scores.get(row['id'],0)+1/(60+i+1)
+            vector_status='completed'
         except Exception:
+            vector_status='error'
+            semantic=[]
             warning = 'Búsqueda semántica no disponible; se usó el índice léxico.'
             registrar('embedding',modelo=config['embedding_model'],error='embedding_no_disponible')
+    trace.append(step('vector','Consultar vectores','Híbrido lee chunks.vector y genera un vector de la consulta. Calcula coseno en Python sobre hasta 5000 vectores compatibles y aplica el umbral. En léxico no se ejecuta; ante error se conserva BM25.',vector_status,vectores_leidos=len(rows),coincidencias_sobre_umbral=len(semantic),umbral=config['min_similarity'],tabla='chunks.vector (JSON)',dimensiones_solicitadas=768))
     selected = sorted(candidates.values(),key=lambda c:scores[c['id']],reverse=True)[:config['top_k']]
     result = []
     for chunk in selected:
         doc = docs[chunk['doc_id']]
         result.append({k:chunk[k] for k in ('id','doc_id','revision','title','section','page','text')} |
                       {'source_url':doc['source_url'],'kind':doc['kind'],'sha256':doc['sha256'],'score':round(scores[chunk['id']],5)})
-    return {'chunks':result,'strategy':'hybrid' if semantic else 'lexical','warning':warning}
+    trace.extend([step('rank','Fusionar y seleccionar','Se suman posiciones con Reciprocal Rank Fusion: 1/(60+posición). Si no hay ranking semántico, solo aporta BM25. Se limita al top-k; la puntuación no es una probabilidad de exactitud.',candidatos=len(candidates),top_k=config['top_k']),step('return','Devolver fragmentos','Se devuelve texto y procedencia para inspección o contexto del bot. Esta prueba no genera una respuesta con IA.',fragmentos=len(result),milisegundos=round((time.perf_counter()-started)*1000,2))])
+    return {'chunks':result,'strategy':'hybrid' if semantic else 'lexical','warning':warning,'trace':trace}
