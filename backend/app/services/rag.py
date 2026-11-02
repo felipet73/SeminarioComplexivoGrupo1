@@ -1,0 +1,321 @@
+"""Ingesta, índice persistente por artículo y recuperación filtrada por vigencia."""
+from __future__ import annotations
+import hashlib
+import io
+import json
+import math
+import re
+import time
+import zipfile
+import unicodedata
+from collections import deque
+from threading import Lock
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
+from defusedxml import ElementTree
+from app.config import get_settings
+from app.services import admin_store as store
+from app.services.metrics import registrar
+from app.services.tracing import step
+
+MAX_BYTES = 10 * 1024 * 1024
+EMBED_TIMES = deque()
+EMBED_LOCK = Lock()
+ARTICLE = re.compile(r'(?im)^\s*(?:art(?:ículo|iculo|\.)?|artículo)\s*\.?\s*(\d+[a-z]?(?:[.-]\d+)?)\b[^\n]{0,160}')
+STOP = set('a al de del la el en y o las los un una que qué como cómo para por con es se mi mis sobre debo quiero necesito cuáles cual cuál'.split())
+STOP.update('quien quién quienes quiénes cuantos cuántos cuanto cuánto donde dónde cuando cuándo son ser debe deben tiene tienen qué cómo puedo puede consulta dime explica explicar según'.split())
+STOP.update('genera generar checklist lista verificación verificacion duda dudas favor ayuda ayudar quiero saber dice disposición disposicion'.split())
+STOP.update('aclaración aclaracion'.split())
+
+
+def lexical_coverage(terms, text):
+    """Cobertura de términos, independiente de la escala BM25 y del tamaño del corpus."""
+    def normalize(value):
+        return ''.join(c for c in unicodedata.normalize('NFD', value.lower()) if not unicodedata.combining(c))
+    tokens = set(re.findall(r'[^\W_]{2,}', normalize(text)))
+    return sum(normalize(t) in tokens for t in terms) / max(1, len(terms))
+
+class RevisionConflict(RuntimeError):
+    pass
+
+def extract(name: str, content: bytes) -> list[dict]:
+    ext = Path(name).suffix.lower()
+    if ext == '.pdf':
+        from pypdf import PdfReader
+        reader = PdfReader(io.BytesIO(content))
+        if reader.is_encrypted or len(reader.pages) > 200:
+            raise ValueError('PDF cifrado o mayor a 200 páginas. Divide el archivo o usa un PDF accesible.')
+        pages = [{'page': i+1,'text':p.extract_text() or ''} for i,p in enumerate(reader.pages)]
+    elif ext == '.docx':
+        with zipfile.ZipFile(io.BytesIO(content)) as archivo:
+            info = archivo.getinfo('word/document.xml')
+            if info.file_size > 5_000_000:
+                raise ValueError('El contenido DOCX supera el límite de extracción.')
+            root = ElementTree.fromstring(archivo.read(info))
+            ns = {'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+            pages = [{'page':1,'text':'\n'.join(''.join(p.itertext()) for p in root.findall('.//w:p',ns))}]
+    elif ext in ('.txt','.md','.csv'):
+        pages = [{'page':1,'text':content.decode('utf-8-sig')}]
+    else:
+        raise ValueError('Formato permitido: PDF con texto, DOCX, TXT, MD o CSV UTF-8.')
+    total = sum(len(p['text']) for p in pages)
+    if total < 20:
+        raise ValueError('No se encontró texto suficiente. El PDF puede necesitar OCR previo.')
+    if total > 1_000_000:
+        raise ValueError('El documento excede un millón de caracteres. Divídelo.')
+    return pages
+
+def public_doc(doc):
+    return {k:v for k,v in doc.items() if k not in ('pages','path')}
+
+def eligible(doc, today=None):
+    today = today or datetime.now(timezone(timedelta(hours=-5))).date().isoformat()
+    return bool(doc['enabled'] and doc['approved'] and doc['valid_from'] <= today and
+                (not doc['valid_to'] or doc['valid_to'] >= today))
+
+def save_document(name, content, meta, actor, doc_id=None, expected=None):
+    if not content or len(content) > MAX_BYTES:
+        raise ValueError('Archivo vacío o mayor a 10 MB.')
+    pages = extract(name, content)
+    name = re.split(r'[/\\]', name)[-1][:180]
+    with store.db() as conn:
+        old = store.get(conn,'document',doc_id) if doc_id else None
+        if doc_id and not old:
+            raise LookupError('Documento no encontrado')
+        if old and expected != old['revision']:
+            raise RevisionConflict('El documento cambió. Recarga antes de reemplazarlo.')
+        doc_id = doc_id or store.new_id()
+        revision = old['revision'] + 1 if old else 1
+        relative = f'files/{doc_id}/{revision}{Path(name).suffix.lower()}'
+        target = store.DATA_DIR / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(content)
+        result = dict(meta, id=doc_id, name=name, revision=revision, updated=store.now(),
+                      sha256=hashlib.sha256(content).hexdigest(), path=relative, pages=pages,
+                      indexed_revision=None, chunks=0)
+        store.put(conn,'document',doc_id,result)
+        store.audit(conn,actor,'replace_document' if old else 'upload_document',doc_id,old,result)
+        return public_doc(result)
+
+def update_document(doc_id, meta, actor, expected):
+    with store.db() as conn:
+        old = store.get(conn,'document',doc_id)
+        if not old:
+            raise LookupError('Documento no encontrado')
+        if old['revision'] != expected:
+            raise RevisionConflict('El documento cambió. Recarga antes de guardarlo.')
+        result = dict(old, **meta)
+        result.update(revision=old['revision']+1, updated=store.now(), indexed_revision=None, chunks=0)
+        store.put(conn,'document',doc_id,result)
+        store.audit(conn,actor,'update_document',doc_id,old,result)
+        return public_doc(result)
+
+def split_document(doc, config):
+    chunks = []
+    section = 'Sección general'
+    size, overlap = config['chunk_size'], config['overlap']
+    for page in doc['pages']:
+        text = page['text'].replace('\x00','')
+        matches = list(ARTICLE.finditer(text))
+        boundaries = [(0,section)]
+        for match in matches:
+            boundaries.append((match.start(),f'Artículo {match.group(1)}'))
+        boundaries.append((len(text),''))
+        for i in range(len(boundaries)-1):
+            start, section_name = boundaries[i]
+            fragment = text[start:boundaries[i+1][0]].strip()
+            if not fragment:
+                continue
+            section = section_name
+            offset = 0
+            while offset < len(fragment):
+                end = min(offset+size,len(fragment))
+                if end < len(fragment):
+                    split = fragment.rfind(' ',offset+size//2,end)
+                    if split > offset:
+                        end = split
+                part = fragment[offset:end].strip()
+                if part:
+                    chunks.append({'id':f'{doc["id"]}-r{doc["revision"]}-{len(chunks)+1}',
+                        'doc_id':doc['id'],'revision':doc['revision'],'title':doc['title'],
+                        'section':section,'page':page['page'],'text':part})
+                    if len(chunks) > 512:
+                        raise ValueError('Demasiados fragmentos. Divide el documento o aumenta el tamaño de chunk.')
+                if end == len(fragment):
+                    break
+                offset = end-overlap
+                if len(chunks) > 512:
+                    raise ValueError('Demasiados fragmentos. Divide el documento o aumenta el tamaño de chunk.')
+    return chunks
+
+def signature(config):
+    return hashlib.sha256(json.dumps({k:config[k] for k in ('chunk_size','overlap','strategy','embedding_model')},sort_keys=True).encode()).hexdigest()
+
+def still_current(chunks):
+    with store.db() as conn:
+        config=store.get(conn,'config','rag')
+        for chunk in chunks:
+            doc=store.get(conn,'document',chunk['doc_id'])
+            if not doc or not eligible(doc) or doc['revision']!=chunk['revision'] or doc.get('index_signature')!=signature(config):
+                return False
+    return True
+
+def embed(texts, model, task):
+    """Caché por texto/modelo/tarea y control conservador de cuota por proceso."""
+    from app.parametros import PARAMETROS
+    keys = [embedding_cache_key(model, task, text) for text in texts]
+    with store.db() as conn:
+        cached = [store.get(conn, 'embedding_cache', key) for key in keys]
+    missing = [i for i, value in enumerate(cached) if value is None]
+    if missing:
+        budget = PARAMETROS['embedding_texts_per_minute'] if model.startswith('gemini') else 8000
+        for attempt in range(PARAMETROS['embedding_retries'] + 1):
+            while True:
+                with EMBED_LOCK:
+                    now = time.monotonic()
+                    while EMBED_TIMES and EMBED_TIMES[0][0] <= now - 60:
+                        EMBED_TIMES.popleft()
+                    if sum(n for _, n in EMBED_TIMES) + len(missing) <= budget:
+                        EMBED_TIMES.append((now, len(missing)))
+                        delay = 0
+                    else:
+                        delay = min(59, max(.1, 60 - (now - EMBED_TIMES[0][0])))
+                if not delay:
+                    break
+                time.sleep(delay)
+            try:
+                values = _embed_provider([texts[i] for i in missing], model, task)
+                break
+            except Exception as error:
+                if getattr(error, 'code', None) != 429 or attempt == PARAMETROS['embedding_retries']:
+                    raise
+                time.sleep(min(2 ** (attempt + 1), 10))
+        with store.db() as conn:
+            for i, vector in zip(missing, values):
+                cached[i] = vector
+                store.put(conn, 'embedding_cache', keys[i], vector)
+    return cached
+
+
+def embedding_cache_key(model, task, text):
+    return hashlib.sha256(json.dumps([model, task, text], ensure_ascii=False).encode()).hexdigest()
+
+
+def _embed_provider(texts, model, task):
+    s = get_settings()
+    if model == 'text-embedding-3-small':
+        from openai import OpenAI
+        if not s.openai_api_key:
+            raise ValueError('Configura OPENAI_API_KEY para los embeddings seleccionados.')
+        with OpenAI(api_key=s.openai_api_key, timeout=15, max_retries=0) as client:
+            result = client.embeddings.create(model=model, input=texts, dimensions=768, encoding_format='float')
+        values = [item.embedding for item in sorted(result.data, key=lambda item: item.index)]
+        if len(values) != len(texts) or any(len(v) != 768 for v in values):
+            raise ValueError('El proveedor no devolvió todos los embeddings de 768 dimensiones.')
+        registrar('embedding', modelo=model, estado='indexacion' if task=='RETRIEVAL_DOCUMENT' else 'consulta')
+        return values
+    from google import genai
+    from google.genai import types
+    if not s.gemini_api_key:
+        raise ValueError('Configura GEMINI_API_KEY para el índice semántico.')
+    with genai.Client(api_key=s.gemini_api_key, http_options=types.HttpOptions(timeout=15000,retry_options=types.HttpRetryOptions(attempts=1))) as client:
+        r = client.models.embed_content(model=model, contents=texts,
+            config=types.EmbedContentConfig(task_type=task,output_dimensionality=768))
+    values = [e.values for e in r.embeddings or []]
+    if len(values) != len(texts) or any(not v for v in values):
+        raise ValueError('El proveedor no devolvió todos los embeddings.')
+    registrar('embedding', modelo=model, estado='indexacion' if task=='RETRIEVAL_DOCUMENT' else 'consulta')
+    return values
+
+def index_document(doc_id, actor):
+    started=time.perf_counter()
+    with store.db() as conn:
+        doc = store.get(conn,'document',doc_id)
+        config = store.get(conn,'config','rag')
+    if not doc:
+        raise LookupError('Documento no encontrado')
+    chunks = split_document(doc,config)
+    vectors = [None]*len(chunks)
+    if config['strategy']=='hybrid':
+        for start in range(0,len(chunks),16):
+            batch = chunks[start:start+16]
+            vectors[start:start+16] = embed([c['text'] for c in batch], config['embedding_model'],'RETRIEVAL_DOCUMENT')
+    with store.db() as conn:
+        current = store.get(conn,'document',doc_id)
+        if current['revision'] != doc['revision'] or store.get(conn,'config','rag')['revision'] != config['revision']:
+            raise RevisionConflict('Cambió el documento o la configuración durante la indexación. Repite la operación.')
+        remaining=conn.execute('SELECT COUNT(*) FROM chunks WHERE doc_id<>?',(doc_id,)).fetchone()[0]
+        if remaining+len(chunks)>5000:
+            raise ValueError('El índice local admite hasta 5000 fragmentos. Reduce el corpus o aumenta el tamaño de fragmento.')
+        conn.execute('DELETE FROM chunk_search WHERE id IN (SELECT id FROM chunks WHERE doc_id=?)',(doc_id,))
+        conn.execute('DELETE FROM chunks WHERE doc_id=?',(doc_id,))
+        for chunk,vector in zip(chunks,vectors):
+            conn.execute('INSERT INTO chunks VALUES(?,?,?,?,?,?,?,?,?)',
+                tuple(chunk[k] for k in ('id','doc_id','revision','title','section','page','text')) +
+                (json.dumps(vector) if vector else None, config['embedding_model'] if vector else None))
+            conn.execute('INSERT INTO chunk_search(id,title,section,text) VALUES(?,?,?,?)',tuple(chunk[k] for k in ('id','title','section','text')))
+        current.update(indexed_revision=current['revision'], chunks=len(chunks), index_config_revision=config['revision'],index_signature=signature(config))
+        store.put(conn,'document',doc_id,current)
+        store.audit(conn,actor,'index_document',doc_id,{'indexed_revision':doc.get('indexed_revision')},
+                    {'revision':current['revision'],'chunks':len(chunks),'config_revision':config['revision']})
+    trace=[step('document','Leer revisión','Se usa el texto extraído de la revisión seleccionada; no se vuelve a descargar la fuente.',revision=doc['revision'],paginas=len(doc['pages'])),
+           step('split','Dividir por artículos','Se reconocen encabezados de artículos y se crean ventanas con solapamiento, conservando página y sección.',fragmentos=len(chunks),tamano=config['chunk_size'],solapamiento=config['overlap']),
+           step('vectors','Generar vectores','En híbrido, el proveedor seleccionado genera embeddings de 768 dimensiones por lotes de hasta 16 fragmentos. La caché evita repetir textos. En léxico este paso se omite.','completed' if config['strategy']=='hybrid' else 'skipped',vectores=sum(v is not None for v in vectors),modelo=config['embedding_model']),
+           step('commit','Guardar índice','Una transacción sustituye los fragmentos de esta fuente en chunks y chunk_search (FTS5). Los vectores se guardan como JSON en chunks.vector; no hay un índice vectorial ANN separado.',tabla='chunks',indice_lexico='chunk_search',milisegundos=round((time.perf_counter()-started)*1000,2))]
+    return {'document':public_doc(current), 'chunks':chunks,'trace':trace}
+
+def retrieve(query, config=None):
+    started=time.perf_counter()
+    config = config or store.settings()
+    warning = None
+    trace=[step('query','Preparar consulta','La búsqueda usa la consulta enviada y la configuración guardada en backend, no cambios pendientes del formulario.',estrategia=config['strategy'],top_k=config['top_k'],revision_config=config['revision'])]
+    with store.db() as conn:
+        docs = {d['id']:d for d in store.all_records(conn,'document') if eligible(d) and d['indexed_revision']==d['revision'] and d.get('index_signature')==signature(config)}
+        trace.append(step('filter','Filtrar fuentes','Se admiten solo documentos habilitados, aprobados, vigentes y con revisión e índice compatibles.',documentos_admitidos=len(docs)))
+        if not docs:
+            trace.extend([step('lexical','Buscar palabras','Sin fuentes elegibles no se ejecuta FTS5.','skipped'),step('vector','Consultar vectores','No se leen vectores ni se llama al servicio de embeddings.','skipped'),step('rank','Ordenar candidatos','No hay candidatos que ordenar.','skipped'),step('return','Devolver fragmentos','La recuperación finaliza sin evidencia; no llama a un modelo generativo.',fragmentos=0,milisegundos=round((time.perf_counter()-started)*1000,2))])
+            return {'chunks':[], 'strategy':'lexical','warning':'No hay documentos vigentes, aprobados e indexados con la configuración actual.','trace':trace}
+        params = list(docs)
+        placeholders = ','.join('?' for _ in params)
+        terms = list(dict.fromkeys(t.lower() for t in re.findall(r'[^\W_]{2,}',query,flags=re.UNICODE) if t.lower() not in STOP))[:24]
+        lexical = []
+        if terms:
+            match = ' OR '.join('"'+t+'"' for t in terms)
+            lexical = [dict(r) for r in conn.execute(f'''SELECT c.id,c.doc_id,c.revision,c.title,c.section,c.page,c.text, bm25(chunk_search) AS rank FROM chunk_search
+                JOIN chunks c ON c.id=chunk_search.id WHERE chunk_search MATCH ? AND c.doc_id IN ({placeholders})
+                ORDER BY rank LIMIT 40''',[match]+params)]
+            lexical = [c for c in lexical if lexical_coverage(terms, c['title']+' '+c['section']+' '+c['text']) >= config.get('min_lexical_coverage', .6)]
+        candidates = {c['id']:c for c in lexical}
+        scores = {c['id']:1/(60+i+1) for i,c in enumerate(lexical)}
+        semantic = []
+        rows = [dict(r) for r in conn.execute(f'SELECT * FROM chunks WHERE doc_id IN ({placeholders}) AND vector IS NOT NULL AND embedding_model=? LIMIT 5000',params+[config['embedding_model']])] if config['strategy']=='hybrid' else []
+    trace.append(step('lexical','Buscar palabras','FTS5/BM25 ordena hasta 40 candidatos; se descartan pasajes con cobertura insuficiente de términos de la consulta. No usa vectores.',terminos=len(terms),candidatos=len(lexical),cobertura_minima=config.get('min_lexical_coverage', .6)))
+    vector_status='skipped'
+    if rows:
+        try:
+            q = embed([query],config['embedding_model'],'RETRIEVAL_QUERY')[0]
+            qnorm = math.sqrt(sum(x*x for x in q)) or 1
+            for row in rows:
+                v = json.loads(row['vector'])
+                similarity = sum(a*b for a,b in zip(q,v))/(qnorm*(math.sqrt(sum(x*x for x in v)) or 1))
+                if similarity >= config['min_similarity']:
+                    semantic.append((similarity,row))
+            semantic.sort(key=lambda x:x[0],reverse=True)
+            for i,(_,row) in enumerate(semantic[:40]):
+                candidates[row['id']] = row
+                scores[row['id']] = scores.get(row['id'],0)+1/(60+i+1)
+            vector_status='completed'
+        except Exception:
+            vector_status='error'
+            semantic=[]
+            warning = 'Búsqueda semántica no disponible; se usó el índice léxico.'
+            registrar('embedding',modelo=config['embedding_model'],error='embedding_no_disponible')
+    trace.append(step('vector','Consultar vectores','Híbrido lee chunks.vector y genera un vector de la consulta. Calcula coseno en Python sobre hasta 5000 vectores compatibles y aplica el umbral. En léxico no se ejecuta; ante error se conserva BM25.',vector_status,vectores_leidos=len(rows),coincidencias_sobre_umbral=len(semantic),umbral=config['min_similarity'],tabla='chunks.vector (JSON)',dimensiones_solicitadas=768))
+    selected = sorted(candidates.values(),key=lambda c:scores[c['id']],reverse=True)[:config['top_k']]
+    result = []
+    for chunk in selected:
+        doc = docs[chunk['doc_id']]
+        result.append({k:chunk[k] for k in ('id','doc_id','revision','title','section','page','text')} |
+                      {'source_url':doc['source_url'],'kind':doc['kind'],'sha256':doc['sha256'],'score':round(scores[chunk['id']],5)})
+    trace.extend([step('rank','Fusionar y seleccionar','Se suman posiciones con Reciprocal Rank Fusion: 1/(60+posición). Si no hay ranking semántico, solo aporta BM25. Se limita al top-k; la puntuación no es una probabilidad de exactitud.',candidatos=len(candidates),top_k=config['top_k']),step('return','Devolver fragmentos','Se devuelve texto y procedencia para inspección o contexto del bot. Esta prueba no genera una respuesta con IA.',fragmentos=len(result),milisegundos=round((time.perf_counter()-started)*1000,2))])
+    return {'chunks':result,'strategy':'hybrid' if semantic else 'lexical','warning':warning,'trace':trace}
