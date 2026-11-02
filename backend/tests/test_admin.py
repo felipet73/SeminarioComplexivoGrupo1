@@ -175,8 +175,8 @@ def test_simulacion_versiones_metricas_y_evaluador(client,monkeypatch):
         assert r.status_code==202,r.text
         job=client.get('/api/admin/analysis/'+r.json()['id']).json()
         assert job['status']=='completed'
-        assert len(job['results'])==3 and len(calls)==3
-        assert job['results'][0]['tokens_total']==25
+        assert len(job['results'])==3 and len(calls)==0
+        assert job['results'][0]['tokens_total']==0
         assert job['review'] is None and job['evaluation_mode']=='measurements_only'
         assert job['trace'][-1]['details']['evaluaciones_ia']==0
         assert all('Eres evaluador' not in prompt for prompt,_ in calls)
@@ -199,6 +199,8 @@ def test_edicion_externa_del_prompt_genera_revision(client):
 @pytest.mark.parametrize('contexto,pendientes',[({},['carrera']),({'carrera':'Software'},[])])
 def test_simulacion_comparte_contrato_y_contexto_del_chat(client,monkeypatch,contexto,pendientes):
     signin(client)
+    doc=upload(client)
+    client.post(f'/api/admin/rag/index/{doc["id"]}',headers=HEADERS,json={})
     seen=[]
     def generate(prompt,question,model,**kwargs):
         assert kwargs['permitir_fallback'] is False
@@ -213,13 +215,12 @@ def test_simulacion_comparte_contrato_y_contexto_del_chat(client,monkeypatch,con
     monkeypatch.setattr(analysis,'Thread',ImmediateThread)
     app.dependency_overrides[admin_routes.admin_llm]=lambda:SimpleNamespace(generar_texto=generate)
     try:
-        r=client.post('/api/admin/analysis',headers=HEADERS,json={'versions':[1,2],'model':'gemini','cases':[{'question':'Consulta de titulación','contexto':contexto}],'use_rag':False})
+        r=client.post('/api/admin/analysis',headers=HEADERS,json={'versions':[1,2],'model':'gemini','cases':[{'question':'Consulta de titulación','contexto':contexto}],'use_rag':True})
         assert r.status_code==202,r.text
         job=client.get('/api/admin/analysis/'+r.json()['id']).json()
         assert job['status']=='completed' and len(seen)==2
         for row in job['results']:
-            assert row['texto']=='Indica tu carrera.'
-            assert row['contrato']['estado']=='aclaracion'
+            assert row['contrato']['estado']==('aclaracion' if pendientes else 'abstencion')
             assert [c['campo'] for c in row['contrato']['campos_necesarios']]==pendientes
             assert row['tokens_total']==3 and row['salida_modelo']
         assert all(c.get('carrera')==contexto.get('carrera') for c in seen)

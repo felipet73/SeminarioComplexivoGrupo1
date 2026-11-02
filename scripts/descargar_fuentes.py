@@ -26,7 +26,7 @@ def main():
             records.append({"file": name, "url": url, "status": "downloaded_unverified", "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
         except Exception as exc:
             records.append({"file": name, "url": url, "status": "download_failed", "error": str(exc)})
-    (OUT/"manifest.json").write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding="utf-8")
+    (OUT/"download-attempts.json").write_text(json.dumps(records,ensure_ascii=False,indent=2),encoding="utf-8")
     for item in records: print(item["file"], item["status"])
 
 if __name__ == "__main__": main()

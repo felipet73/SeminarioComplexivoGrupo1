@@ -13,7 +13,7 @@ PROMPT_DIR = Path(__file__).resolve().parents[1] / 'prompts'
 LOCK = RLock()
 _ready: set[str] = set()
 DEFAULTS = {'active_prompt':3, 'chunk_size':1400, 'overlap':160, 'top_k':4,
-            'strategy':'lexical', 'embedding_model':'gemini-embedding-001', 'min_similarity':0.65, 'revision':1}
+            'strategy':'hybrid', 'embedding_model':'gemini-embedding-001', 'min_similarity':0.65, 'min_lexical_coverage':0.6, 'revision':1}
 
 def now() -> str:
     return datetime.now(timezone.utc).isoformat()

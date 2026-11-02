@@ -1,116 +1,98 @@
 # Asistente de Titulación y Normativa Académica — UNIANDES
 
-**Caso 01, Grupo 1 · Ingeniería de Software con IA Generativa**  
-Proyecto académico con backend FastAPI, frontend React y administración de prompts, fuentes RAG y evaluación.
+Caso 01, Grupo 1 · Ingeniería de Software con IA Generativa.
 
-Integrantes:  
-- Aguilar Rogel Olmes Patricio
-- Cevallos Mazon Widman Yadiro  
-- Torres Lopez Christian Felipe  
+Integrantes: Aguilar Rogel Olmes Patricio; Cevallos Mazon Widman Yadiro; Torres Lopez Christian Felipe.
 
+Proyecto educativo con FastAPI, React/Vite, Gemini con respaldo OpenAI, RAG con citas verificadas y agente de herramientas de alcance controlado. Orienta a partir de las fuentes aportadas; no emite resoluciones ni modifica expedientes.
 
-## Estado de avance
+## Estado real de la Entrega 3
 
-> **Implementado:** chat React/FastAPI, Gemini con respaldo OpenAI, contexto académico, métricas y `/admin` protegido con versiones de prompt, fuentes versionadas, indexación RAG y laboratorio comparativo.
->
-> **Pendiente:** cargar y validar normativa real, evaluar exactitud con artículos esperados, herramientas deterministas del agente, FAQ reales y despliegue. Solo fuentes aprobadas, vigentes e indexadas pueden fundamentar citas.
+| Punto | Implementación y evidencia |
+|---|---|
+| Conocimiento especializado | Cinco fuentes originales en `data/raw`, manifiesto con hashes y fechas de incorporación, vigencia por fuente en `config/fuentes.yaml`, ingesta repetible con el indexador del panel |
+| RAG | BM25 + embeddings, persistencia SQLite, filtros de vigencia/aprobación, umbrales, RRF, citas y abstención sin modelo cuando no hay evidencia |
+| Agente controlado | Lista cerrada, Pydantic de entrada/salida, MAX_ITER, herramientas de consulta/checklist/calendario y borrador demo con confirmación, caducidad, idempotencia y auditoría |
+| Evaluación | 20 preguntas con artículo y respuesta esperados; comparación real léxica/híbrida; chat real separado de 20 contratos del flujo con modelo doble |
+| Calidad | Backend, frontend, navegador, cobertura, Ruff, comprobación de patrones de secretos, auditorías de dependencias y workflow de CI; la ejecución remota se verifica tras publicar los cambios |
 
-## Inicio rápido (Python 3.11+)
+La matriz de **todos los pasos mínimos, recomendados y avanzados** del HTML del grupo 1 está en [auditoría de la entrega](docs/12-auditoria-entrega3-grupo1.md). No se declara completado un despliegue público ni una corrida de GitHub Actions que no se haya observado.
+
+## Inicio rápido
+
+Usar Python 3.12 y Node 22 o superior. Desde la raíz:
+
+```powershell
+python -m venv backend/.venv
+backend/.venv/Scripts/Activate.ps1
+pip install -r backend/requirements-dev.txt
+```
+
+En Linux/macOS activar con `source backend/.venv/bin/activate`. Copiar `.env.example` a `.env` en una instalación nueva y completar claves y contraseña administrativa. No sobrescribir un `.env` existente. Las claves solo se leen en backend.
 
 ```bash
+# Corpus híbrido con Gemini; requiere clave y cuota de embeddings.
+python scripts/ingest.py --strategy hybrid
+
+# Alternativa explícita de embeddings con OPENAI_API_KEY.
+python scripts/ingest.py --strategy hybrid --embedding-model text-embedding-3-small
+
+# Línea base reproducible sin red ni proveedor.
+python scripts/ingest.py --strategy lexical
+
 cd backend
-python -m venv .venv
-# Linux/macOS: source .venv/bin/activate
-# Windows PowerShell: .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Abrir http://127.0.0.1:8000/health (esperado: `{"status":"ok","service":"titulacion-rag-api","version":"2.0.0"}`) y http://127.0.0.1:8000/docs. El endpoint de salud solo confirma que la API está en ejecución; no comprueba conectividad con LLM, fuentes ni índice vectorial.
+En otra terminal:
 
-Pruebas: `cd backend && pytest -q`.
-
-## Semana 2: ejecución
-
-Administración: `http://localhost:5173/admin`, usuario por defecto `admin`; contraseña solo en `.env` (`ADMIN_PASSWORD`). `.env.example` la deja vacía. Pestañas Configuración, RAG y Análisis, con pruebas aisladas `cd frontend; npm run test:admin`. Instrucciones, límites y estado actual en [administración y RAG](docs/08-admin-rag-y-analisis.md).
-
-Actualización del 24-10-2026: formulario de contexto académico y dashboard público en `http://localhost:5173/metricas` (API: `GET /api/metricas`). Incluye intentos, errores, tokens reportados y latencias. Las métricas requieren el backend activo y registran solo metadatos de las nuevas consultas. Revisión de requisitos y pendientes en [contexto, métricas y brechas](docs/07-contexto-metricas-y-brechas.md).
-
-El backend expone `POST /api/chat` y `POST /api/chat/stream` (SSE). Gemini es el proveedor principal y OpenAI el respaldo; sus claves viven solo en `.env`.
-
-```powershell
-# terminal 1
-cd backend
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-
-# terminal 2
+```bash
 cd frontend
-npm install
+npm ci
 npm run dev
 ```
 
-Pruebas: en backend `.\.venv\Scripts\python.exe -m pytest -q`; en frontend `npm run build`, `npm run test` y `npm run test:admin` tras `npx playwright install chromium`. Las pruebas unitarias y `test:admin` usan dobles sin consumir proveedores. La suite histórica `npm run test:e2e` requiere servidores propios y puede consultar el modelo real. Sin normativa aprobada e indexada, el sistema no entrega citas ni requisitos como oficiales.
+Chat: http://localhost:5173 · Administrador: http://localhost:5173/admin · Métricas: http://localhost:5173/metricas · Contratos: http://127.0.0.1:8000/docs. `/health` comprueba el proceso, no disponibilidad de fuentes ni proveedores. El usuario administrativo por defecto es `admin`; configurar `ADMIN_PASSWORD`.
 
-## Estructura
+La ingesta reutiliza documentos idénticos y vectores en caché; no duplica revisiones sin cambios. Valida SHA-256 antes de modificar documentos. Las fechas y aprobación del YAML son decisiones del equipo, no una verificación jurídica automática. Los artículos se dividen conservando documento, revisión, sección y página; la exportación está en `data/processed/fragmentos.jsonl`.
 
-```text
-.
-├── README.md
-├── .gitignore
-├── .env.example
-├── docs/
-│   ├── 01-propuesta.md
-│   ├── 02-requisitos.md
-│   ├── 03-arquitectura.md
-│   ├── 04-fuentes.md
-│   ├── 05-levantamiento-15-preguntas.md
-│   ├── 05-preguntas-frecuentes.csv
-│   └── evidencias/semana-1/
-├── data/
-│   ├── raw/                     # PDF normativos + manifiesto
-│   └── referencias/             # documentos docentes aportados
-├── backend/
-│   ├── app/main.py
-│   ├── tests/test_health.py
-│   ├── requirements.txt
-│   └── pyproject.toml
-└── scripts/descargar_fuentes.py
+## Verificación reproducible
+
+Con el entorno backend activado, desde la raíz:
+
+```bash
+python -m pytest -q -c backend/pyproject.toml backend/tests --cov=app --cov-fail-under=85
+# Alternativa habitual: cd backend; python -m pytest -q --cov=app --cov-fail-under=85
+python -m ruff check backend scripts eval
+python scripts/check_secrets.py
+python scripts/ingest.py --data-dir data/eval-state --strategy lexical
+python eval/evaluar.py
+python eval/evaluar_flujo.py
 ```
 
-## Variables de entorno
+La configuración `-c backend/pyproject.toml` permite ejecutar desde la raíz; también se puede ejecutar pytest desde `backend`. La suite no consume proveedores. En frontend: `npm test`, `npm run build` y `npm run test:admin` (requiere instalar Chromium con `npx playwright install chromium`). El servidor de navegador usa estado temporal y modelo doble.
 
-El administrador incluye ayudas ampliadas y diagramas interactivos de indexación, recuperación y simulación. Análisis muestra respuestas y mediciones sin solicitar evaluación adicional a IA: [guía de ayudas y trazas](docs/10-ayudas-y-trazas-rag.md).
+Evaluación con proveedores reales, desde la raíz:
 
-El chat principal admite aclaraciones con un popup de campos faltantes y reconsulta con contexto. Ver [contrato e interacción](docs/09-aclaraciones-y-campos-necesarios.md).
+```bash
+python -u eval/comparar.py --embedding-model text-embedding-3-small
+python eval/evaluar.py --data-dir data/eval-hybrid --chat --prompt system_v3 --output eval/results-chat-hybrid.json
+```
 
-Copiar `.env.example` a `.env` en instalaciones nuevas y completar las claves de los proveedores y `ADMIN_PASSWORD`. **Nunca subir `.env` o claves reales a Git.** `AI_PROVIDER` y `AI_MODEL` son configurables y no se usan en `/health`.
+Consume API y requiere las claves correspondientes. Gemini también puede seleccionarse para embeddings. Los informes incluyen denominadores, fuentes/artículos esperados, respuestas esperadas y obtenidas. No se inventan puntuaciones por el nombre del prompt. La validación de citas no certifica que cada afirmación esté respaldada: se necesita revisión humana de contenido.
 
-## Alcance técnico por fase
+El workflow ejecuta pruebas y evaluación sin red de modelos en cada push/PR. Su ejecución manual agrega la comparación y el chat reales usando los secretos `GEMINI_API_KEY` y `OPENAI_API_KEY` del repositorio. La última corrida remota debe comprobarse en Actions tras publicar los cambios.
 
-| Semana | Entregable principal | Estado en este repositorio |
-|---|---|---|
-| 1 | Propuesta, requisitos, arquitectura, inventario de fuentes y backend base | Documentado; API `/health` y su prueba implementadas |
-| 2 | Chat, prompts comparados y cliente web | Implementados; laboratorio `/admin` disponible; validar comparativas con casos reales |
-| 3 | RAG con citas, agente controlado y evaluación | RAG e historial implementados; pendientes herramientas deterministas y evaluación de exactitud |
-| 4 | Despliegue, pruebas en URL pública y documentación final | Pendiente |
+## Alcance y límites
 
-## Fases pendientes
+El asistente explica preguntas educativas relacionadas con las fuentes disponibles, distingue normas nacionales de requisitos internos y pide contexto solo cuando cambia la respuesta. Una fuente ausente produce abstención, no un requisito inventado. Solo las fuentes aprobadas, habilitadas, vigentes e indexadas pueden citarse.
 
-1. Semana 1: validar vigencia de fuentes, obtener evidencia real de ≥15 FAQ y registrar la revisión docente.
-2. Semana 2: ejecutar y revisar 3 prompts × 10 preguntas con el laboratorio implementado; los ejemplos propuestos no sustituyen FAQ reales.
-3. Semana 3: cargar normativa vigente, aprobar e indexar; implementar tools y evaluar con 20 preguntas/artículos esperados. Ver [administración y RAG](docs/08-admin-rag-y-analisis.md).
-4. Semana 4: despliegue, pruebas de negativas/ambigüedad/inyección, README final y sustentación.
+El agente y su bucle están en [backend/app/agente.py](backend/app/agente.py), función `ejecutar_agente`. Allí se encuentran `PERMITIDAS`, `MAX_ITER` y `REQUIEREN_OK`, siguiendo la organización propuesta en la guía. Las herramientas se definen en [app/tools/academicas.py](backend/app/tools/academicas.py). La API ofrece `/api/agente` y `/api/agente/confirmar/{id}`; el chat utiliza ese mismo orquestador.
 
-## Métricas de aceptación (todavía no medidas)
+El calendario simula días hábiles explícitos, excluye fines de semana y la fecha inicial y **no incluye feriados ni determina plazos institucionales**. Los borradores de tutor requieren confirmación y se registran únicamente como demostración local; no se envían a la universidad, no asignan tutores ni certifican cumplimiento. El actor auditado identifica una capacidad de demostración, no una cuenta universitaria autenticada. Usar datos ficticios.
 
-≥80% (≥16 de 20) exactitud con artículo, 100% abstención en negativos y 100% rechazo en casos adversarios ensayados. Todos los resultados futuros deben reportar denominadores y evidencia.
+La persistencia vectorial usa SQLite y coseno exhaustivo hasta 5000 fragmentos, como alternativa arquitectónica a Chroma. No se declara un índice ANN. No hay integraciones con expedientes ni despliegue público de semana 4.
 
-## Seguridad, ética y límites
+Documentación técnica: [arquitectura](docs/03-arquitectura.md), [fuentes](docs/04-fuentes.md), [decisiones](docs/09-decisiones.md), [automatización](docs/10-automatizacion.md), [calidad](docs/11-plan-de-calidad.md). Los archivos de talleres se implementaron para esta entrega; no se presentan como descargas originales no aportadas. La revisión y ampliación de FAQ reales del equipo sigue siendo trabajo humano.
 
-Sistema orientativo; no emite actos administrativos ni certifica estados de estudiante. En el MVP solo datos ficticios. Las fuentes no validadas no pueden dar respuestas oficiales. Registrar aportes y herramientas de IA usadas en el README final.
-
-## Fuentes y autores
-
-Caso y documento FAQ aportados por el equipo (copias en `data/referencias/`). Enlaces oficiales y estado de verificación en `docs/04-fuentes.md`. **Integrantes / contribuciones:** por completar; no atribuir commits inexistentes.
+Se utilizó asistencia de Codex para análisis, implementación y ejecución de verificaciones. Los integrantes deben revisar las reglas, los casos y las fuentes y poder explicar la solución; no se atribuyen contribuciones ni commits que no consten en el historial.

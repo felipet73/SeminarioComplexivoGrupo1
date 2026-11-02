@@ -1,14 +1,95 @@
-[
-  {
-    "file": "uniandes-reforma-practicas-2023.pdf",
-    "url": "https://www.uniandes.edu.ec/wp-content/uploads/2024/08/REFORMA-2023-REGLAMENTO-DE-PRACTICAS.pdf",
-    "status": "download_failed",
-    "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
-  },
-  {
-    "file": "uniandes-procedimiento-practicas-online-2024.pdf",
-    "url": "https://www.uniandes.edu.ec/wp-content/uploads/2024/08/V2-PROCEDIMIENTO-PRACTICAS-ON-LINE-2024.pdf",
-    "status": "download_failed",
-    "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
-  }
-]
+{
+  "description": "Fuentes aportadas por el equipo; metadatos de aprobacion y vigencia preservados del panel. No equivalen a una certificacion juridica externa.",
+  "documents": [
+    {
+      "file": "4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf",
+      "sha256": "76e0a6fb8626ea264a8522d73bfcf72cbd973e7e3d9becebb31679daf692518e",
+      "exported_at": "2026-10-31",
+      "metadata": {
+        "title": "Instructivo para la ejecucion de seguimiento a graduados",
+        "kind": "normativa",
+        "source_url": "",
+        "valid_from": "2019-01-01",
+        "valid_to": null,
+        "approved": true,
+        "enabled": true,
+        "notes": ""
+      },
+      "origin": "admin_upload",
+      "acquired_at": "2026-10-30T23:24:43.323602+00:00",
+      "downloaded_at": null
+    },
+    {
+      "file": "03_2017-11-09_MANUAL_VINCULACION_UNIANDES.pdf",
+      "sha256": "ccb0414055f9f92c05d6dc660e06128b70f9df8577707b8e381b548c02e9b8b9",
+      "exported_at": "2026-10-31",
+      "metadata": {
+        "title": "Vinculacion Uniandes",
+        "kind": "normativa",
+        "source_url": "",
+        "valid_from": "2017-11-09",
+        "valid_to": null,
+        "approved": true,
+        "enabled": true,
+        "notes": ""
+      },
+      "origin": "admin_upload",
+      "acquired_at": "2026-10-30T23:17:32.318492+00:00",
+      "downloaded_at": null
+    },
+    {
+      "file": "LOES.pdf",
+      "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a",
+      "exported_at": "2026-10-31",
+      "metadata": {
+        "title": "LOES",
+        "kind": "normativa",
+        "source_url": "",
+        "valid_from": "2018-08-02",
+        "valid_to": null,
+        "approved": true,
+        "enabled": true,
+        "notes": ""
+      },
+      "origin": "admin_upload",
+      "acquired_at": "2026-10-25T19:45:35.745675+00:00",
+      "downloaded_at": null
+    },
+    {
+      "file": "Reglamento-de-Regimen-Academico.pdf",
+      "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39",
+      "exported_at": "2026-10-31",
+      "metadata": {
+        "title": "Reglamento Regimen Academico",
+        "kind": "normativa",
+        "source_url": "",
+        "valid_from": "2020-01-01",
+        "valid_to": null,
+        "approved": true,
+        "enabled": true,
+        "notes": ""
+      },
+      "origin": "admin_upload",
+      "acquired_at": "2026-10-31T15:25:48.935146+00:00",
+      "downloaded_at": null
+    },
+    {
+      "file": "2020-MANUAL-PARA-LA-ELABORACION-EJECUCION-SEGUIMIENTO-Y-CONTROL-DEL-PLAN-OPERATIVO-ANUAL-POA-1.pdf",
+      "sha256": "10fef7e4d28c972c4a1f9eed30a239f67879449997b2f989b5e1a6d74d55e9ef",
+      "exported_at": "2026-10-31",
+      "metadata": {
+        "title": "Manual para elaboracion plan operativo",
+        "kind": "normativa",
+        "source_url": "",
+        "valid_from": "2020-01-01",
+        "valid_to": null,
+        "approved": true,
+        "enabled": true,
+        "notes": ""
+      },
+      "origin": "admin_upload",
+      "acquired_at": "2026-10-30T23:33:09.227419+00:00",
+      "downloaded_at": null
+    }
+  ]
+}
