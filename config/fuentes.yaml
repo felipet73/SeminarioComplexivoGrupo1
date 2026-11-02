@@ -1,0 +1,39 @@
+{
+  "documents": {
+    "4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf": {
+      "valid_from": "2019-01-01",
+      "valid_to": null,
+      "approved": true,
+      "enabled": true,
+      "kind": "normativa"
+    },
+    "03_2017-11-09_MANUAL_VINCULACION_UNIANDES.pdf": {
+      "valid_from": "2017-11-09",
+      "valid_to": null,
+      "approved": true,
+      "enabled": true,
+      "kind": "normativa"
+    },
+    "LOES.pdf": {
+      "valid_from": "2018-08-02",
+      "valid_to": null,
+      "approved": true,
+      "enabled": true,
+      "kind": "normativa"
+    },
+    "Reglamento-de-Regimen-Academico.pdf": {
+      "valid_from": "2020-01-01",
+      "valid_to": null,
+      "approved": true,
+      "enabled": true,
+      "kind": "normativa"
+    },
+    "2020-MANUAL-PARA-LA-ELABORACION-EJECUCION-SEGUIMIENTO-Y-CONTROL-DEL-PLAN-OPERATIVO-ANUAL-POA-1.pdf": {
+      "valid_from": "2020-01-01",
+      "valid_to": null,
+      "approved": true,
+      "enabled": true,
+      "kind": "normativa"
+    }
+  }
+}

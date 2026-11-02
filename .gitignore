@@ -32,3 +32,11 @@ logs/
 data/admin/
 frontend/test-results/
 frontend/playwright-report/
+data/processed/
+data/eval-state/
+data/eval-lexical/
+data/eval-hybrid/
+data/eval-clean/
+eval/results*.json
+.ruff_cache/
+tmp/

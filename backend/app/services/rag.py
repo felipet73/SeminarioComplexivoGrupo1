@@ -7,6 +7,9 @@ import math
 import re
 import time
 import zipfile
+import unicodedata
+from collections import deque
+from threading import Lock
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from defusedxml import ElementTree
@@ -16,8 +19,21 @@ from app.services.metrics import registrar
 from app.services.tracing import step
 
 MAX_BYTES = 10 * 1024 * 1024
+EMBED_TIMES = deque()
+EMBED_LOCK = Lock()
 ARTICLE = re.compile(r'(?im)^\s*(?:art(?:ículo|iculo|\.)?|artículo)\s*\.?\s*(\d+[a-z]?(?:[.-]\d+)?)\b[^\n]{0,160}')
 STOP = set('a al de del la el en y o las los un una que qué como cómo para por con es se mi mis sobre debo quiero necesito cuáles cual cuál'.split())
+STOP.update('quien quién quienes quiénes cuantos cuántos cuanto cuánto donde dónde cuando cuándo son ser debe deben tiene tienen qué cómo puedo puede consulta dime explica explicar según'.split())
+STOP.update('genera generar checklist lista verificación verificacion duda dudas favor ayuda ayudar quiero saber dice disposición disposicion'.split())
+STOP.update('aclaración aclaracion'.split())
+
+
+def lexical_coverage(terms, text):
+    """Cobertura de términos, independiente de la escala BM25 y del tamaño del corpus."""
+    def normalize(value):
+        return ''.join(c for c in unicodedata.normalize('NFD', value.lower()) if not unicodedata.combining(c))
+    tokens = set(re.findall(r'[^\W_]{2,}', normalize(text)))
+    return sum(normalize(t) in tokens for t in terms) / max(1, len(terms))
 
 class RevisionConflict(RuntimeError):
     pass
@@ -145,9 +161,61 @@ def still_current(chunks):
     return True
 
 def embed(texts, model, task):
+    """Caché por texto/modelo/tarea y control conservador de cuota por proceso."""
+    from app.parametros import PARAMETROS
+    keys = [embedding_cache_key(model, task, text) for text in texts]
+    with store.db() as conn:
+        cached = [store.get(conn, 'embedding_cache', key) for key in keys]
+    missing = [i for i, value in enumerate(cached) if value is None]
+    if missing:
+        budget = PARAMETROS['embedding_texts_per_minute'] if model.startswith('gemini') else 8000
+        for attempt in range(PARAMETROS['embedding_retries'] + 1):
+            while True:
+                with EMBED_LOCK:
+                    now = time.monotonic()
+                    while EMBED_TIMES and EMBED_TIMES[0][0] <= now - 60:
+                        EMBED_TIMES.popleft()
+                    if sum(n for _, n in EMBED_TIMES) + len(missing) <= budget:
+                        EMBED_TIMES.append((now, len(missing)))
+                        delay = 0
+                    else:
+                        delay = min(59, max(.1, 60 - (now - EMBED_TIMES[0][0])))
+                if not delay:
+                    break
+                time.sleep(delay)
+            try:
+                values = _embed_provider([texts[i] for i in missing], model, task)
+                break
+            except Exception as error:
+                if getattr(error, 'code', None) != 429 or attempt == PARAMETROS['embedding_retries']:
+                    raise
+                time.sleep(min(2 ** (attempt + 1), 10))
+        with store.db() as conn:
+            for i, vector in zip(missing, values):
+                cached[i] = vector
+                store.put(conn, 'embedding_cache', keys[i], vector)
+    return cached
+
+
+def embedding_cache_key(model, task, text):
+    return hashlib.sha256(json.dumps([model, task, text], ensure_ascii=False).encode()).hexdigest()
+
+
+def _embed_provider(texts, model, task):
+    s = get_settings()
+    if model == 'text-embedding-3-small':
+        from openai import OpenAI
+        if not s.openai_api_key:
+            raise ValueError('Configura OPENAI_API_KEY para los embeddings seleccionados.')
+        with OpenAI(api_key=s.openai_api_key, timeout=15, max_retries=0) as client:
+            result = client.embeddings.create(model=model, input=texts, dimensions=768, encoding_format='float')
+        values = [item.embedding for item in sorted(result.data, key=lambda item: item.index)]
+        if len(values) != len(texts) or any(len(v) != 768 for v in values):
+            raise ValueError('El proveedor no devolvió todos los embeddings de 768 dimensiones.')
+        registrar('embedding', modelo=model, estado='indexacion' if task=='RETRIEVAL_DOCUMENT' else 'consulta')
+        return values
     from google import genai
     from google.genai import types
-    s = get_settings()
     if not s.gemini_api_key:
         raise ValueError('Configura GEMINI_API_KEY para el índice semántico.')
     with genai.Client(api_key=s.gemini_api_key, http_options=types.HttpOptions(timeout=15000,retry_options=types.HttpRetryOptions(attempts=1))) as client:
@@ -192,7 +260,7 @@ def index_document(doc_id, actor):
                     {'revision':current['revision'],'chunks':len(chunks),'config_revision':config['revision']})
     trace=[step('document','Leer revisión','Se usa el texto extraído de la revisión seleccionada; no se vuelve a descargar la fuente.',revision=doc['revision'],paginas=len(doc['pages'])),
            step('split','Dividir por artículos','Se reconocen encabezados de artículos y se crean ventanas con solapamiento, conservando página y sección.',fragmentos=len(chunks),tamano=config['chunk_size'],solapamiento=config['overlap']),
-           step('vectors','Generar vectores','En híbrido, Google genera embeddings de 768 dimensiones por lotes de hasta 16 fragmentos. En léxico este paso se omite.','completed' if config['strategy']=='hybrid' else 'skipped',vectores=sum(v is not None for v in vectors),modelo=config['embedding_model']),
+           step('vectors','Generar vectores','En híbrido, el proveedor seleccionado genera embeddings de 768 dimensiones por lotes de hasta 16 fragmentos. La caché evita repetir textos. En léxico este paso se omite.','completed' if config['strategy']=='hybrid' else 'skipped',vectores=sum(v is not None for v in vectors),modelo=config['embedding_model']),
            step('commit','Guardar índice','Una transacción sustituye los fragmentos de esta fuente en chunks y chunk_search (FTS5). Los vectores se guardan como JSON en chunks.vector; no hay un índice vectorial ANN separado.',tabla='chunks',indice_lexico='chunk_search',milisegundos=round((time.perf_counter()-started)*1000,2))]
     return {'document':public_doc(current), 'chunks':chunks,'trace':trace}
 
@@ -216,11 +284,12 @@ def retrieve(query, config=None):
             lexical = [dict(r) for r in conn.execute(f'''SELECT c.id,c.doc_id,c.revision,c.title,c.section,c.page,c.text, bm25(chunk_search) AS rank FROM chunk_search
                 JOIN chunks c ON c.id=chunk_search.id WHERE chunk_search MATCH ? AND c.doc_id IN ({placeholders})
                 ORDER BY rank LIMIT 40''',[match]+params)]
+            lexical = [c for c in lexical if lexical_coverage(terms, c['title']+' '+c['section']+' '+c['text']) >= config.get('min_lexical_coverage', .6)]
         candidates = {c['id']:c for c in lexical}
         scores = {c['id']:1/(60+i+1) for i,c in enumerate(lexical)}
         semantic = []
         rows = [dict(r) for r in conn.execute(f'SELECT * FROM chunks WHERE doc_id IN ({placeholders}) AND vector IS NOT NULL AND embedding_model=? LIMIT 5000',params+[config['embedding_model']])] if config['strategy']=='hybrid' else []
-    trace.append(step('lexical','Buscar palabras','FTS5/BM25 busca hasta 24 términos distintos unidos por OR y conserva hasta 40 candidatos léxicos. No usa vectores.',terminos=len(terms),candidatos=len(lexical)))
+    trace.append(step('lexical','Buscar palabras','FTS5/BM25 ordena hasta 40 candidatos; se descartan pasajes con cobertura insuficiente de términos de la consulta. No usa vectores.',terminos=len(terms),candidatos=len(lexical),cobertura_minima=config.get('min_lexical_coverage', .6)))
     vector_status='skipped'
     if rows:
         try:

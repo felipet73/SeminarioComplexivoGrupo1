@@ -37,9 +37,10 @@ class RAGConfig(BaseModel):
     chunk_size: int = Field(default=1400,ge=300,le=4000)
     overlap: int = Field(default=160,ge=0,le=1000)
     top_k: int = Field(default=4,ge=1,le=10)
-    strategy: Literal['lexical','hybrid'] = 'lexical'
-    embedding_model: Literal['gemini-embedding-001'] = 'gemini-embedding-001'
+    strategy: Literal['lexical','hybrid'] = 'hybrid'
+    embedding_model: Literal['gemini-embedding-001','text-embedding-3-small'] = 'gemini-embedding-001'
     min_similarity: float = Field(default=.65,ge=0,le=1)
+    min_lexical_coverage: float = Field(default=.6,ge=0,le=1)
     revision: int = Field(ge=1)
 
     @model_validator(mode='after')
