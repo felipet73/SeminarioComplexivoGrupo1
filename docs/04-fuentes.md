@@ -27,7 +27,9 @@
 
 ## Descarga local
 
-Los documentos descargados automáticamente (cuando el servidor admite acceso) se registran en `data/raw/manifest.json`. Un archivo descargado **todavía no es normativa vigente validada**. Las fuentes pendientes pueden descargarse desde los enlaces oficiales anteriores. Para reintentos y actualización: `python scripts/descargar_fuentes.py`.
+El manifiesto activo es `data/raw/manifest.json`: contiene los cinco originales aportados por el equipo, hash SHA-256, fecha de incorporación desde el panel y metadatos. Su origen es carga del administrador; `downloaded_at` queda nulo porque no se conoce una fecha de descarga y no debe inventarse. La política de vigencia, habilitación y aprobación de cada fuente se lee de `config/fuentes.yaml` (JSON válido como YAML 1.2). Estos datos preservan la revisión del equipo; no certifican por sí mismos actualidad jurídica.
+
+Los intentos históricos de descarga fallidos se conservan en `data/raw/download-attempts.json`. `python scripts/descargar_fuentes.py` actualiza ese historial, sin reemplazar el manifiesto del corpus. Para incorporar nuevas fuentes: cargar y revisar en el panel; copiar el original autorizado a `data/raw`, registrar hash y procedencia en el manifiesto, agregar su política en el YAML y ejecutar `python scripts/ingest.py`. La ingesta valida hashes, usa el mismo indexador que `/admin` y exporta fragmentos con documento, sección, página y revisión.
 
 ## Fuentes aportadas para la consigna
 

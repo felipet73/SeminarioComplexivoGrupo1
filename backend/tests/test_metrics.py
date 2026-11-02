@@ -43,7 +43,7 @@ def test_openai_primero_y_gemini_como_respaldo(monkeypatch):
     assert orden == ['openai','gemini']
     assert r.fallback
 
-def test_contexto_llega_desde_endpoint_y_metricas_publicas():
+def test_contexto_llega_desde_endpoint_y_metricas_publicas(fuente_indexada):
     recibidos = []
     def generar(*args, **kwargs):
         recibidos.append(kwargs['contexto'])

@@ -18,7 +18,8 @@ def test_chat_devuelve_el_contrato_sin_llamar_un_modelo_real():
     response = client.post("/api/chat", json={"pregunta": "¿Qué debo revisar para mi titulación?"})
     assert response.status_code == 200
     data = response.json()
-    assert data["modelo_utilizado"] == "gemini-test"
+    assert data["modelo_utilizado"] is None
+    assert data['estado'] == 'abstencion'
     assert data["fuentes"] == []
     assert data["requiere_revision_humana"] is True
 
@@ -35,7 +36,7 @@ def test_stream_envia_eventos_sse():
 def test_validacion_pide_una_pregunta_valida():
     assert client.post("/api/chat", json={"pregunta": "x"}).status_code == 422
 
-def test_aclaracion_expone_controles_permitidos_y_omite_datos_ya_ingresados():
+def test_aclaracion_expone_controles_permitidos_y_omite_datos_ya_ingresados(fuente_indexada):
     import json
     contexts=[]
     class Aclarador:
@@ -52,6 +53,7 @@ def test_aclaracion_expone_controles_permitidos_y_omite_datos_ya_ingresados():
     assert 'Primer nivel' in first['campos_necesarios'][1]['opciones']
     retry=client.post('/api/chat',json={'pregunta':'Consulta de titulación','carrera':'Software','curso':'Noveno nivel'}).json()
     assert retry['campos_necesarios']==[]
+    assert retry['estado']=='abstencion'  # No devolver una aclaración imposible de completar.
     assert contexts[-1]['carrera']=='Software' and contexts[-1]['curso']=='Noveno nivel'
     stream=client.post('/api/chat/stream',json={'pregunta':'Consulta de titulación','carrera':'Software'}).text
     done=json.loads(stream.split('event: done\ndata: ')[1].strip())

@@ -7,6 +7,7 @@ import './thinking.css';
 import './simulacion.css';
 import ContextoAcademico, { type Contexto } from './ContextoAcademico';
 import CamposNecesarios from './CamposNecesarios';
+import Confirmacion from './Confirmacion';
 import { preguntasSugeridas } from './sugerencias';
 
 type Mensaje = { id: string; rol: 'usuario' | 'asistente'; texto: string; meta?: Respuesta; consulta?: Reconsulta };
@@ -24,7 +25,7 @@ function IconoEnviar() {
 
 export default function App() {
   const [mensajes, setMensajes] = useState<Mensaje[]>([
-    { id: 'bienvenida', rol: 'asistente', texto: 'Hola, estoy aquí para orientarte. Cuéntame qué trámite académico deseas consultar y te ayudaré a preparar tus siguientes pasos.' },
+    { id: 'bienvenida', rol: 'asistente', texto: 'Hola, puedo ayudarte a entender las fuentes educativas disponibles, consultar normativa y preparar tus pasos de titulación. Cuéntame tu pregunta o menciona un documento o artículo.' },
   ]);
   const [optimistas, agregarOptimista] = useOptimistic(mensajes, (estado, mensaje: Mensaje) =>
     estado.some((actual) => actual.id === mensaje.id) ? estado : [...estado, mensaje]
@@ -211,6 +212,15 @@ export default function App() {
                 <article className={`mensaje mensaje--${mensaje.rol}`} key={mensaje.id}>
                   <span>{mensaje.rol === 'usuario' ? 'TÚ' : 'ASISTENTE'}</span>
                   <p>{mensaje.texto}</p>
+                  {mensaje.meta?.accion_pendiente && <Confirmacion accion={mensaje.meta.accion_pendiente}/>}
+                  {mensaje.meta?.pasos_agente?.length ? (
+                    <small>Apoyos utilizados: {mensaje.meta.pasos_agente.map((paso) => ({
+                      buscar_fragmentos: 'consulta de fuentes', consultar_requisitos: 'consulta de requisitos',
+                      generar_checklist: 'lista de verificación', calcular_plazo: 'simulación de calendario',
+                      solicitud_no_valida: 'solicitud descartada',
+                      registrar_solicitud_tutor: 'preparación de borrador',
+                    }[paso] ?? 'verificación')).join(' · ')}</small>
+                  ) : null}
                   {mensaje.consulta && pendientes.length > 0 && (
                     <button
                       type="button"

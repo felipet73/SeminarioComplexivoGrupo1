@@ -13,3 +13,8 @@
 @media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.pagina .zona-chat{grid-template-columns:1fr}.panel-ayuda{position:static}.distribuciones{grid-template-columns:1fr}}
 @media(max-width:550px){.contexto{padding:18px}.contexto__campos{grid-template-columns:1fr}.contexto__titulo{flex-wrap:wrap}.contexto__titulo .etiqueta{margin-left:46px}.dashboard{padding:0 18px 35px}.dashboard__titulo{align-items:flex-start;flex-direction:column}.dashboard__titulo h1{font-size:34px}.kpis{gap:10px}.kpi{padding:15px}.kpi strong{font-size:24px}.dashboard__barra .marca{font-size:11px}.tabla-titulo{flex-wrap:wrap;margin-bottom:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.confirmacion { margin: 12px 0; padding: 16px; border: 1px solid #c6d9e8; border-radius: 12px; background: #f5f9fc; }
+.confirmacion dl { margin: 12px 0; }
+.confirmacion dt { font-weight: 600; text-transform: capitalize; }
+.confirmacion dd { margin: 0 0 8px; overflow-wrap: anywhere; }
+.confirmacion button { margin-top: 10px; padding: 10px; border: 1px solid #0f3a63; border-radius: 6px; cursor: pointer; }
