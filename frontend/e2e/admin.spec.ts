@@ -84,6 +84,7 @@ test('admin: login, prompts, fuentes, índice y análisis con métricas',async({
   await page.getByRole('button',{name:'Agregar fuente',exact:true}).click();
   await expect(page.getByRole('status')).toContainText('Fuente guardada');
   await page.getByRole('button',{name:/02.*RAG/}).click();
+  await page.getByLabel('Documento',{exact:true}).selectOption({label:'Reglamento E2E · r1'});
   await page.getByRole('button',{name:'Dividir e indexar documento'}).click();
   await expect(page.getByRole('status')).toContainText('2 fragmentos indexados');
   await page.getByLabel('Consulta de prueba').fill('titulación');
