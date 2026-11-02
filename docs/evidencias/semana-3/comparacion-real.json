@@ -1,0 +1,818 @@
+{
+  "lexical": {
+    "modo": "recuperacion_sin_llm",
+    "config": {
+      "active_prompt": 3,
+      "chunk_size": 1400,
+      "overlap": 160,
+      "top_k": 4,
+      "strategy": "lexical",
+      "embedding_model": "text-embedding-3-small",
+      "min_similarity": 0.55,
+      "min_lexical_coverage": 0.6,
+      "revision": 3
+    },
+    "positivos": 16,
+    "negativos": 4,
+    "acierto_top_k": 0.875,
+    "silencio": 1.0,
+    "casos": [
+      {
+        "id": "r01",
+        "pregunta": "¿Quién determina los requisitos y opciones de titulación en el tercer nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 26",
+        "respuesta_esperada": "Cada IES establece requisitos y opciones en su normativa interna; no basta para enumerar requisitos propios de UNIANDES.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 26"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 27"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 91"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r02",
+        "pregunta": "¿Cómo se designa al director o tutor de titulación en el cuarto nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 27",
+        "respuesta_esperada": "En cuarto nivel la IES garantiza designación oportuna de director o tutor de su personal académico o de otra IES.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 27"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r03",
+        "pregunta": "¿La primera prórroga de titulación en cuarto nivel requiere pago?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 28",
+        "respuesta_esperada": "La primera prórroga de cuarto nivel no requiere derechos, aranceles ni un valor similar; la normativa interna establece el plazo adicional.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 28"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r04",
+        "pregunta": "¿Qué es la investigación formativa?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 31",
+        "respuesta_esperada": "Investigación formativa como componente fundamental de la formación e interacción docente-estudiante, transversal al currículo.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 30"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 33"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 31"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 32"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r05",
+        "pregunta": "¿Cómo se desarrolla la investigación formativa en el tercer nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 32",
+        "respuesta_esperada": "Desarrollo de conocimientos y destrezas investigativas orientadas a innovación según el campo de formación del tercer nivel.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 32"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 31"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 33"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 118"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r06",
+        "pregunta": "¿Qué se entiende por fraude o deshonestidad académica?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 38",
+        "respuesta_esperada": "Acción contraria a la transparencia académica, derechos de autor o normas éticas en evaluación o presentación de resultados; citar las conductas del pasaje sin ampliar sanciones.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 38"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 207.1"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 207.1"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 61"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r07",
+        "pregunta": "¿Qué son las prácticas preprofesionales en las carreras de tercer nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 42",
+        "respuesta_esperada": "Actividades de aprendizaje de aplicación de conocimientos o desarrollo de competencias profesionales en entornos relacionados con la carrera.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 42"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 121"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 43"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 122"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r08",
+        "pregunta": "¿Qué nivel de segunda lengua se requiere para graduarse del tercer nivel de grado?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 64",
+        "respuesta_esperada": "Según la copia aportada: al menos B1 para tercer nivel de grado, distinto de A1 técnico y A2 tecnológico; no confundir niveles.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 64"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r09",
+        "pregunta": "¿Qué segunda lengua ancestral se enseña en carreras de educación intercultural bilingüe?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 65",
+        "respuesta_esperada": "En educación intercultural bilingüe se incorpora una lengua ancestral; la IES determina nivel y certificación. No se identifica una lengua específica sin evidencia.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 65"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 64"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r10",
+        "pregunta": "¿Qué debe garantizar el sistema interno de evaluación estudiantil?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 66",
+        "respuesta_esperada": "Sistema interno con transparencia, justicia y equidad que valora competencias y aprendizaje progresivo, formativo y sumativo.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 66"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 85"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 193"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 69"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r11",
+        "pregunta": "¿Qué adaptaciones se prevén para estudiantes con necesidades educativas asociadas a la discapacidad?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 68",
+        "respuesta_esperada": "Políticas y planes de inclusión; adaptaciones programadas antes del período, comunicadas oportunamente y con seguimiento pedagógico.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 68"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r12",
+        "pregunta": "¿Qué estímulos pueden reconocer el mérito académico estudiantil?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 69",
+        "respuesta_esperada": "La IES puede reconocer mérito mediante becas, pasantías, ayudantías o estancias, conforme a normativa; no prometer concesión automática.",
+        "recuperados": [],
+        "acierto": false
+      },
+      {
+        "id": "r13",
+        "pregunta": "¿Qué es la matrícula?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 70",
+        "respuesta_esperada": "Acto académico administrativo que da condición de estudiante mediante registro de asignaturas, cursos o equivalentes en un período y según procedimientos internos.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 71"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 72"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 116"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 70"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r14",
+        "pregunta": "¿Quiénes se consideran estudiantes regulares y qué porcentaje de materias deben cursar?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 76",
+        "respuesta_esperada": "Con fines de titulación y matrícula en al menos 60% de materias o créditos permitidos por la malla; contempla la situación del período de titulación.",
+        "recuperados": [],
+        "acierto": false
+      },
+      {
+        "id": "r15",
+        "pregunta": "¿En qué consiste la validación de conocimientos?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 83",
+        "respuesta_esperada": "Comprobación de resultados de aprendizaje mediante evaluación establecida por la IES; otorga créditos por conocimientos validados, sin aprobar automáticamente un caso individual.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 83"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 84"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 145"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 141"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r16",
+        "pregunta": "¿En qué consiste un ajuste curricular sustantivo?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 110",
+        "respuesta_esperada": "Cambio en perfil de egreso, duración en créditos o períodos, denominación de carrera/programa o de la titulación; otros elementos son ajustes no sustantivos.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 110"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "n01",
+        "pregunta": "¿Cuál es la tasa de interés del Banco Central?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Abstención o rechazo: el corpus educativo no establece la tasa de interés solicitada.",
+        "recuperados": [],
+        "acierto": true
+      },
+      {
+        "id": "n02",
+        "pregunta": "¿Cómo configuro Kubernetes en mi servidor?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Rechazo por estar fuera del ámbito de normativa y procesos educativos.",
+        "recuperados": [],
+        "acierto": true
+      },
+      {
+        "id": "n03",
+        "pregunta": "¿Cómo solicito un certificado académico de Hogwarts?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Abstención: no hay evidencia de un procedimiento académico de Hogwarts; no inventar un trámite.",
+        "recuperados": [],
+        "acierto": true
+      },
+      {
+        "id": "n04",
+        "pregunta": "¿Cuál es el arancel de titulación para pagar en bitcoin?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Abstención: no existe en el corpus un arancel ni procedimiento de pago de titulación en bitcoin. No extrapolar un monto ni afirmar aceptación.",
+        "recuperados": [],
+        "acierto": true
+      }
+    ],
+    "limite": "Acierto de artículo no acredita que todas las afirmaciones estén respaldadas. Revisión humana pendiente."
+  },
+  "hybrid": {
+    "modo": "recuperacion_sin_llm",
+    "config": {
+      "active_prompt": 3,
+      "chunk_size": 1400,
+      "overlap": 160,
+      "top_k": 4,
+      "strategy": "hybrid",
+      "embedding_model": "text-embedding-3-small",
+      "min_similarity": 0.55,
+      "min_lexical_coverage": 0.6,
+      "revision": 2
+    },
+    "positivos": 16,
+    "negativos": 4,
+    "acierto_top_k": 1.0,
+    "silencio": 1.0,
+    "casos": [
+      {
+        "id": "r01",
+        "pregunta": "¿Quién determina los requisitos y opciones de titulación en el tercer nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 26",
+        "respuesta_esperada": "Cada IES establece requisitos y opciones en su normativa interna; no basta para enumerar requisitos propios de UNIANDES.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 26"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 27"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 91"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 17"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r02",
+        "pregunta": "¿Cómo se designa al director o tutor de titulación en el cuarto nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 27",
+        "respuesta_esperada": "En cuarto nivel la IES garantiza designación oportuna de director o tutor de su personal académico o de otra IES.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 27"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 17"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 85"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 132"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r03",
+        "pregunta": "¿La primera prórroga de titulación en cuarto nivel requiere pago?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 28",
+        "respuesta_esperada": "La primera prórroga de cuarto nivel no requiere derechos, aranceles ni un valor similar; la normativa interna establece el plazo adicional.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 28"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 74"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 85"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 20"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r04",
+        "pregunta": "¿Qué es la investigación formativa?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 31",
+        "respuesta_esperada": "Investigación formativa como componente fundamental de la formación e interacción docente-estudiante, transversal al currículo.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 31"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 33"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 30"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 32"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r05",
+        "pregunta": "¿Cómo se desarrolla la investigación formativa en el tercer nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 32",
+        "respuesta_esperada": "Desarrollo de conocimientos y destrezas investigativas orientadas a innovación según el campo de formación del tercer nivel.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 32"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 31"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 33"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 118"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r06",
+        "pregunta": "¿Qué se entiende por fraude o deshonestidad académica?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 38",
+        "respuesta_esperada": "Acción contraria a la transparencia académica, derechos de autor o normas éticas en evaluación o presentación de resultados; citar las conductas del pasaje sin ampliar sanciones.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 38"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 207.1"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 207.1"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 206"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r07",
+        "pregunta": "¿Qué son las prácticas preprofesionales en las carreras de tercer nivel?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 42",
+        "respuesta_esperada": "Actividades de aprendizaje de aplicación de conocimientos o desarrollo de competencias profesionales en entornos relacionados con la carrera.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 42"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 121"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 43"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 120"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r08",
+        "pregunta": "¿Qué nivel de segunda lengua se requiere para graduarse del tercer nivel de grado?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 64",
+        "respuesta_esperada": "Según la copia aportada: al menos B1 para tercer nivel de grado, distinto de A1 técnico y A2 tecnológico; no confundir niveles.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 64"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 64"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 13"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 64"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r09",
+        "pregunta": "¿Qué segunda lengua ancestral se enseña en carreras de educación intercultural bilingüe?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 65",
+        "respuesta_esperada": "En educación intercultural bilingüe se incorpora una lengua ancestral; la IES determina nivel y certificación. No se identifica una lengua específica sin evidencia.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 65"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 64"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 64"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r10",
+        "pregunta": "¿Qué debe garantizar el sistema interno de evaluación estudiantil?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 66",
+        "respuesta_esperada": "Sistema interno con transparencia, justicia y equidad que valora competencias y aprendizaje progresivo, formativo y sumativo.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 66"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 85"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 193"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 67"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r11",
+        "pregunta": "¿Qué adaptaciones se prevén para estudiantes con necesidades educativas asociadas a la discapacidad?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 68",
+        "respuesta_esperada": "Políticas y planes de inclusión; adaptaciones programadas antes del período, comunicadas oportunamente y con seguimiento pedagógico.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 68"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 7"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 13"
+          },
+          {
+            "documento": "Instructivo para la ejecucion de seguimiento a graduados",
+            "seccion": "Sección general"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r12",
+        "pregunta": "¿Qué estímulos pueden reconocer el mérito académico estudiantil?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 69",
+        "respuesta_esperada": "La IES puede reconocer mérito mediante becas, pasantías, ayudantías o estancias, conforme a normativa; no prometer concesión automática.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 69"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 129"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r13",
+        "pregunta": "¿Qué es la matrícula?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 70",
+        "respuesta_esperada": "Acto académico administrativo que da condición de estudiante mediante registro de asignaturas, cursos o equivalentes en un período y según procedimientos internos.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 71"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 70"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 74"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 72"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r14",
+        "pregunta": "¿Quiénes se consideran estudiantes regulares y qué porcentaje de materias deben cursar?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 76",
+        "respuesta_esperada": "Con fines de titulación y matrícula en al menos 60% de materias o créditos permitidos por la malla; contempla la situación del período de titulación.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 76"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 83"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 84"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 80"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r15",
+        "pregunta": "¿En qué consiste la validación de conocimientos?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 83",
+        "respuesta_esperada": "Comprobación de resultados de aprendizaje mediante evaluación establecida por la IES; otorga créditos por conocimientos validados, sin aprobar automáticamente un caso individual.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 83"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 84"
+          },
+          {
+            "documento": "LOES",
+            "seccion": "Artículo 145"
+          },
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 141"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "r16",
+        "pregunta": "¿En qué consiste un ajuste curricular sustantivo?",
+        "documento": "Reglamento Regimen Academico",
+        "seccion": "Artículo 110",
+        "respuesta_esperada": "Cambio en perfil de egreso, duración en créditos o períodos, denominación de carrera/programa o de la titulación; otros elementos son ajustes no sustantivos.",
+        "recuperados": [
+          {
+            "documento": "Reglamento Regimen Academico",
+            "seccion": "Artículo 110"
+          }
+        ],
+        "acierto": true
+      },
+      {
+        "id": "n01",
+        "pregunta": "¿Cuál es la tasa de interés del Banco Central?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Abstención o rechazo: el corpus educativo no establece la tasa de interés solicitada.",
+        "recuperados": [],
+        "acierto": true
+      },
+      {
+        "id": "n02",
+        "pregunta": "¿Cómo configuro Kubernetes en mi servidor?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Rechazo por estar fuera del ámbito de normativa y procesos educativos.",
+        "recuperados": [],
+        "acierto": true
+      },
+      {
+        "id": "n03",
+        "pregunta": "¿Cómo solicito un certificado académico de Hogwarts?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Abstención: no hay evidencia de un procedimiento académico de Hogwarts; no inventar un trámite.",
+        "recuperados": [],
+        "acierto": true
+      },
+      {
+        "id": "n04",
+        "pregunta": "¿Cuál es el arancel de titulación para pagar en bitcoin?",
+        "documento": null,
+        "seccion": null,
+        "respuesta_esperada": "Abstención: no existe en el corpus un arancel ni procedimiento de pago de titulación en bitcoin. No extrapolar un monto ni afirmar aceptación.",
+        "recuperados": [],
+        "acierto": true
+      }
+    ],
+    "limite": "Acierto de artículo no acredita que todas las afirmaciones estén respaldadas. Revisión humana pendiente."
+  }
+}

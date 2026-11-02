@@ -22,8 +22,8 @@ def execute(job, llm):
         job['trace'][1]['status']='running'
         update(job)
         # Misma recuperación para todas las variantes de una pregunta.
-        evidence = [retrieve(c['question'],job['rag_config']) if job['use_rag'] and not respuesta_local(c['question']) else {'chunks':[]} for c in job['cases']]
-        searches=sum(bool(job['use_rag'] and not respuesta_local(c['question'])) for c in job['cases'])
+        evidence = [retrieve(c['question'],job['rag_config']) if job['use_rag'] and not respuesta_local(c['question'], con_evidencia=True) else {'chunks':[]} for c in job['cases']]
+        searches=sum(bool(job['use_rag'] and not respuesta_local(c['question'], con_evidencia=True)) for c in job['cases'])
         job['trace'][1].update(status='completed' if searches else 'skipped',details={'busquedas':searches,'casos':len(evidence),'fragmentos':sum(len(e['chunks']) for e in evidence)})
         job['trace'][2]['status']='running'
         job['evidence']=evidence
@@ -36,7 +36,7 @@ def execute(job, llm):
                      'evidence_ids':[c['id'] for c in evidence[i]['chunks']]}
                 try:
                     contrato,r=generar_respuesta(ConsultaChat(pregunta=case['question'],modelo_preferido=job['model'],**case.get('contexto',{})),
-                        llm,system_prompt=prompt['content'],evidencia=evidence[i]['chunks'],permitir_fallback=False)
+                        llm,system_prompt=prompt['content'],evidencia=evidence[i]['chunks'],permitir_fallback=False,permitir_escrituras=False)
                     metricas=asdict(r) if r else {'modelo':'validación local','fallback':False,'segundos':0,'tokens_entrada':0,'tokens_salida':0,'tokens_total':0}
                     row.update(metricas,status='ok',texto=contrato.respuesta,contrato=contrato.model_dump())
                     row['salida_modelo']=r.texto if r else None

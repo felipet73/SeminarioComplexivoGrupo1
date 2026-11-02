@@ -1,0 +1,45 @@
+{
+  "fecha": "2026-11-01",
+  "backend": {
+    "pruebas_aprobadas": 50,
+    "cobertura": 0.8808
+  },
+  "frontend": {
+    "pruebas_aprobadas": 15,
+    "compilacion_aprobada": true,
+    "generador_openapi_verificado": true
+  },
+  "navegador": {
+    "escenarios_aprobados": 9,
+    "status": "passed",
+    "failedTests": []
+  },
+  "flujo": {
+    "contratos_aprobados": 20,
+    "modelo": "doble declarado"
+  },
+  "chat_real": {
+    "acierto_cita": 1.0,
+    "abstencion_o_rechazo": 1.0,
+    "positivos": 16,
+    "negativos": 4
+  },
+  "auditorias": {
+    "paquetes_runtime_tests": 52,
+    "vulnerabilidades_runtime_tests": 0,
+    "vulnerabilidades_npm": 0
+  },
+  "pendientes": [
+    "Publicar cambios y observar GitHub Actions verde",
+    "Validar humanamente vigencia y procedencia de nuevas fuentes",
+    "Usar Python 3.12 para tooling con filelock corregido"
+  ],
+  "organizacion_agente": {
+    "orquestador": "backend/app/agente.py",
+    "funcion": "ejecutar_agente",
+    "herramientas": "backend/app/tools/academicas.py",
+    "protocolo": "JSON validado a traves de ClienteLLM",
+    "ruta": "/api/agente",
+    "confirmacion": "/api/agente/confirmar/{id}"
+  }
+}

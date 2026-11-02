@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import Literal
 from pydantic import BaseModel, Field, field_validator
+from app.services.actions import AccionPendiente
 
 CampoContexto = Literal['carrera','curso','modalidad','periodo','jornada','tema','objetivo','sede','modalidad_titulacion']
 
@@ -52,10 +53,12 @@ class BorradorRAG(BaseModel):
 
 class RespuestaAsistente(BaseModel):
     respuesta: str
-    estado: Literal["respuesta", "abstencion", "aclaracion", "rechazo"]
+    estado: Literal["respuesta", "abstencion", "aclaracion", "rechazo", "confirmacion"]
     requiere_revision_humana: bool = False
     fuentes: list[Fuente] = Field(default_factory=list)
     campos_necesarios: list[CampoNecesario] = Field(default_factory=list)
+    pasos_agente: list[str] = Field(default_factory=list)
+    accion_pendiente: AccionPendiente | None = None
     modelo_utilizado: str | None = None
     fallback_activado: bool = False
     tiempo_segundos: float = Field(ge=0)
