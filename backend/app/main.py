@@ -15,8 +15,8 @@ from app.services import admin_store as store, rag
 from app.services.llm import ClienteLLM
 from app.services.metrics import registrar, resumen
 
-# --- 1. IMPORTAR LA SEGURIDAD QUE CREAMOS ---
-from seguridad import registrar_rutas_seguridad
+# --- 1. IMPORTAR LA SEGURIDAD QUE CREAMOS (CORREGIDO) ---
+from app.seguridad import registrar_rutas_seguridad
 
 app = FastAPI(title="Asistente Académico UNIANDES", version="2.0.0")
 
