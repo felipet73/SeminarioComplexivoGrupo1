@@ -40,3 +40,6 @@ data/eval-clean/
 eval/results*.json
 .ruff_cache/
 tmp/
+
+gitleaks-local.json
+gitleaks-report.json
