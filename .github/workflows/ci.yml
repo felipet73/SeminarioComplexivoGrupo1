@@ -13,7 +13,8 @@ jobs:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: backend/requirements.txt
-      - run: pip install -r backend/requirements-dev.txt
+      - run: python -m pip install --upgrade pip
+      - run: pip install --no-cache-dir -r backend/requirements-dev.txt
       - run: ruff check backend scripts eval
       - run: python scripts/check_secrets.py
       - run: python -m pytest -q backend/tests --cov=app --cov-fail-under=85 --cov-report=xml
@@ -57,7 +58,9 @@ jobs:
         with:
           node-version: '22'
       - run: python -m venv backend/.venv
-      - run: backend/.venv/bin/pip install -r backend/requirements.txt
+      # MODIFICACIÓN CLAVE AQUÍ: Añadido --no-cache-dir para forzar bcrypt==3.2.2 limpio
+      - run: backend/.venv/bin/pip install --upgrade pip
+      - run: backend/.venv/bin/pip install --no-cache-dir -r backend/requirements.txt
       - run: npm ci
         working-directory: frontend
       - run: npx playwright install --with-deps chromium
@@ -80,7 +83,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -r backend/requirements.txt
+      - run: python -m pip install --upgrade pip
+      - run: pip install --no-cache-dir -r backend/requirements.txt
       - name: Verificar secreto de embeddings
         run: python -c "import os; assert os.environ.get('OPENAI_API_KEY'), 'Configura el secreto OPENAI_API_KEY del repositorio'"
       - run: python -u eval/comparar.py --embedding-model text-embedding-3-small
