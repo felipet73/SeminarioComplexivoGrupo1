@@ -5,3 +5,4 @@ filelock>=4.2.1; python_version >= '3.11'
 passlib[bcrypt]
 PyJWT
 python-multipart
+bcrypt==3.2.2
