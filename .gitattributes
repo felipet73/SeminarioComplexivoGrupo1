@@ -1,0 +1,3 @@
+# Los hashes del corpus representan bytes: Git no debe convertir LF/CRLF.
+data/raw/** -text
+*.sh text eol=lf

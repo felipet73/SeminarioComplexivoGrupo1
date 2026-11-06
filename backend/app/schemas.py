@@ -1,7 +1,7 @@
 """Contrato HTTP del producto. No contiene normativa ni credenciales."""
 from __future__ import annotations
 from typing import Literal
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator
 from app.services.actions import AccionPendiente
 from app.tools.academicas import ChecklistOut
 
@@ -54,7 +54,7 @@ class BorradorRAG(BaseModel):
 
 class RespuestaAsistente(BaseModel):
     respuesta: str
-    estado: Literal["respuesta", "abstencion", "aclaracion", "rechazo", "confirmacion"] = "respuesta"
+    estado: Literal["respuesta", "abstencion", "aclaracion", "rechazo", "confirmacion"]
     requiere_revision_humana: bool = False
     fuentes: list[Fuente] = Field(default_factory=list)
     campos_necesarios: list[CampoNecesario] = Field(default_factory=list)
@@ -64,53 +64,4 @@ class RespuestaAsistente(BaseModel):
     accion_pendiente: AccionPendiente | None = None
     modelo_utilizado: str | None = None
     fallback_activado: bool = False
-    tiempo_segundos: float = Field(default=0.0, ge=0)
-
-    @model_validator(mode='before')
-    @classmethod
-    def ajustar_defaults_inteligentes(cls, values):
-        if isinstance(values, dict):
-            resp = values.get('respuesta', '')
-            resp_lower = resp.lower()
-            
-            # Inferencia automática de estado según el contenido de la respuesta
-            if 'estado' not in values or values['estado'] == 'respuesta':
-                if any(k in resp_lower for k in ['inyección', 'rechaz', 'bloquead', 'prohibid', 'malicioso']):
-                    values['estado'] = 'rechazo'
-                elif any(k in resp_lower for k in ['lo siento', 'no pude', 'abstengo', 'fuera del límite', 'disculpa', 'no dispongo']):
-                    values['estado'] = 'abstencion'
-                elif values.get('campos_necesarios') or 'carrera' in resp_lower or 'curso' in resp_lower:
-                    values['estado'] = 'aclaracion'
-
-            # Inferencia o estructuración automática de campos necesarios si faltan
-            if not values.get('campos_necesarios'):
-                campos = []
-                if 'carrera' in resp_lower:
-                    campos.append('carrera')
-                if 'curso' in resp_lower:
-                    campos.append('curso')
-                if campos:
-                    values['campos_necesarios'] = [
-                        {
-                            'campo': c,
-                            'etiqueta': c.capitalize(),
-                            'tipo': 'texto',
-                            'opciones': [],
-                            'max_length': 120
-                        } for c in campos
-                    ]
-            else:
-                nuevos = []
-                for c in values['campos_necesarios']:
-                    if isinstance(c, str):
-                        nuevos.append({
-                            'campo': c,
-                            'etiqueta': c.capitalize(),
-                            'tipo': 'texto',
-                            'opciones': [],
-                            'max_length': 120
-                        })
-                    else:
-                        nuevos.append(c)
-                values['campos_necesarios'] = nuevos
-        return values
+    tiempo_segundos: float = Field(ge=0)
