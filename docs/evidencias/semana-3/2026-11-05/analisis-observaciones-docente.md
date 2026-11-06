@@ -1,5 +1,7 @@
 # Análisis de observaciones del docente — Grupo 1
 
+Actualización del 6 de noviembre: véase el [diagnóstico de sincronización y CI](../2026-11-06/diagnostico-ci-y-sincronizacion.md), con los fallos observados en Actions, la corrección en rama separada y la validación desde un checkout limpio. Los resultados históricos de esta página conservan su fecha y alcance.
+
 Trabajo iniciado el 5 y verificado hasta el 6 de noviembre de 2026. Referencias: archivo local `Guia_practica_Entrega3_por_proyecto (3).html`, sección **3 · El camino, paso a paso**, pestaña **Lo que piden a todos** y capturas de revisión entregadas por el equipo. Se revisaron backend, frontend y archivos de CI; el despliegue existente en Google Cloud Run fue confirmado por el equipo, no inspeccionado remotamente.
 
 ## Observaciones de la revisión más reciente
@@ -13,7 +15,7 @@ Trabajo iniciado el 5 y verificado hasta el 6 de noviembre de 2026. Referencias:
 | Instructivo de titulación ausente | PDF descargado de la página oficial, hash y fecha; OCR de 29 páginas con Tesseract/Poppler, original preservado y sidecar ligado por hashes | Se ingieren 86 fragmentos inspeccionables, pero `approved=false`: revisión integral del OCR y aplicabilidad pendientes. No se declara resuelta la disponibilidad de esta fuente en las respuestas. No se aprueba automáticamente un escaneo con errores |
 | Faltan `docs/06-rag.md` y `docs/07-evaluacion.md` | Añadidos con arquitectura real, configuración, comandos, métricas, errores y límites | Los nombres pedidos existen; explican el evaluador restaurado y distinguen medidas reales, dobles y antecedentes históricos |
 | Umbrales dentro del código | RAG, referencias por modelo, RRF, evaluación, límites de checklist y agente en `config/parametros.yaml` | Backend y script consumen esos parámetros; el panel obtiene referencias del backend y permite ajustar cobertura léxica. Los ajustes ya guardados no se sobrescriben por cambiar defaults |
-| CI, pruebas y contenedor | Tests del evaluador, OCR, readiness, perfil y trazas; escenario de navegador con herramienta real y modelo doble; CI con build/smoke y evaluación real manual | CI falla ante umbrales o pruebas incorrectos; audita el entorno Python realmente instalado. `/ready` distingue proceso sano de corpus no disponible. El contenedor incluye semilla léxica sin secretos, usa PORT y usuario no root; se excluye `.venv` de Windows. La corrida remota de Actions no se ha observado |
+| CI, pruebas y contenedor | Tests del evaluador, OCR, readiness, perfil y trazas; escenario de navegador con herramienta real y modelo doble; CI con build/smoke y evaluación real manual | CI falla ante umbrales o pruebas incorrectos; audita el entorno Python realmente instalado. `/ready` distingue proceso sano de corpus no disponible. El contenedor incluye semilla léxica sin secretos, usa PORT y usuario no root; se excluye `.venv` de Windows. La revisión posterior observó fallos de aislamiento y hash en Actions y los corrigió localmente; ver el diagnóstico enlazado arriba |
 
 ## Los seis pasos de la sección 3, con sus niveles
 

@@ -1,0 +1,130 @@
+{
+  "modo": "contratos_con_modelo_doble_y_corpus_real",
+  "casos": [
+    {
+      "id": "f01",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f02",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f03",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f04",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f05",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f06",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f07",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f08",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f09",
+      "esperado": "abstencion",
+      "obtenido": "abstencion",
+      "ok": true
+    },
+    {
+      "id": "f10",
+      "esperado": "abstencion",
+      "obtenido": "abstencion",
+      "ok": true
+    },
+    {
+      "id": "f11",
+      "esperado": "abstencion",
+      "obtenido": "abstencion",
+      "ok": true
+    },
+    {
+      "id": "f12",
+      "esperado": "abstencion",
+      "obtenido": "abstencion",
+      "ok": true
+    },
+    {
+      "id": "f13",
+      "esperado": "rechazo",
+      "obtenido": "rechazo",
+      "ok": true
+    },
+    {
+      "id": "f14",
+      "esperado": "rechazo",
+      "obtenido": "rechazo",
+      "ok": true
+    },
+    {
+      "id": "f15",
+      "esperado": "rechazo",
+      "obtenido": "rechazo",
+      "ok": true
+    },
+    {
+      "id": "f16",
+      "esperado": "rechazo",
+      "obtenido": "rechazo",
+      "ok": true
+    },
+    {
+      "id": "f17",
+      "esperado": "abstencion",
+      "obtenido": "abstencion",
+      "ok": true
+    },
+    {
+      "id": "f18",
+      "esperado": "respuesta",
+      "obtenido": "respuesta",
+      "ok": true
+    },
+    {
+      "id": "f19",
+      "esperado": "confirmacion",
+      "obtenido": "confirmacion",
+      "ok": true,
+      "decision": "registrada_localmente"
+    },
+    {
+      "id": "f20",
+      "esperado": "confirmacion",
+      "obtenido": "confirmacion",
+      "ok": true,
+      "decision": "cancelada"
+    }
+  ],
+  "correctos": 20,
+  "total": 20,
+  "limite": "Los guiones simulan decisiones del modelo. No representan exactitud generativa ni resultados reales de estudiantes."
+}
