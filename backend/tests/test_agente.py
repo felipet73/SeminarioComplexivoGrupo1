@@ -140,9 +140,6 @@ def test_checklist_extractivo_solo_normativa_y_sin_certificar(fuente_indexada):
     for item in checklist.items:
         assert item.estado == 'pendiente_de_verificar'
         assert any(item.fragmento_id == c['id'] and item.requisito in c['text'] for c in chunks)
-<<<<<<< Updated upstream
-    assert academicas.construir_checklist('tercer nivel', [dict(c, kind='informativo') for c in chunks]).items == []
-=======
     assert academicas.construir_checklist('tercer nivel', [dict(c, kind='informativo') for c in chunks]).items == []
 
 
@@ -183,4 +180,3 @@ def test_no_permite_que_modelo_cambie_el_nivel_del_estudiante(fuente_indexada):
                                  evidencia=rag.retrieve('titulación')['chunks'])
     assert result.pasos_agente == ['solicitud_no_valida']
     assert any('indicados por el usuario' in e.get('motivo','') for e in result.traza_agente)
->>>>>>> Stashed changes
