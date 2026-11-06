@@ -1,0 +1,642 @@
+{
+  "fecha": "2026-11-06T04:48:30.889420+00:00",
+  "modo": "agente_modelo_real_sin_fallback",
+  "proveedor": "gemini",
+  "modelo": "gemini-3.5-flash-lite",
+  "prompt_sha256": "f8023d76849aab75bf7d7c2b02672b70ed5f48d47c5b31ef53ff1e6c839a6f04",
+  "config": {
+    "active_prompt": 3,
+    "chunk_size": 1400,
+    "overlap": 160,
+    "top_k": 4,
+    "strategy": "hybrid",
+    "embedding_model": "text-embedding-3-small",
+    "min_similarity": 0.55,
+    "min_lexical_coverage": 0.6,
+    "revision": 2
+  },
+  "casos": [
+    {
+      "id": "a1",
+      "pregunta": "Genera un checklist con los requisitos de integración curricular para un estudiante de grado.",
+      "curso": "grado",
+      "respuesta": {
+        "respuesta": "No dispongo de evidencia suficiente en los documentos recuperados sobre los requisitos específicos de integración curricular para el nivel de grado. La normativa disponible trata sobre reconocimiento de horas o créditos [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-117], formatos de asistencia y anexos de vinculación [ce225e90-10e4-4ad7-983e-95a8144a0980-r1-76, ce225e90-10e4-4ad7-983e-95a8144a0980-r1-112], y disposiciones sobre gratuidad [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-155], pero no detallan los puntos para construir este checklist. Por favor, acude a Secretaría o a tu coordinación para consultar la normativa interna aplicable a tu carrera.",
+        "estado": "abstencion",
+        "requiere_revision_humana": true,
+        "fuentes": [],
+        "campos_necesarios": [],
+        "pasos_agente": [],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": null,
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 9.206
+      },
+      "salida_final_modelo": "{\"respuesta\":\"No dispongo de evidencia suficiente en los documentos recuperados sobre los requisitos específicos de integración curricular para el nivel de grado. La normativa disponible trata sobre reconocimiento de horas o créditos [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-117], formatos de asistencia y anexos de vinculación [ce225e90-10e4-4ad7-983e-95a8144a0980-r1-76, ce225e90-10e4-4ad7-983e-95a8144a0980-r1-112], y disposiciones sobre gratuidad [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-155], pero no detallan los puntos para construir este checklist. Por favor, acude a Secretaría o a tu coordinación para consultar la normativa interna aplicable a tu carrera.\",\"estado\":\"abstencion\",\"fragmentos\":[],\"campos_necesarios\":[]}",
+      "tokens_total": 3864,
+      "cumple": false
+    },
+    {
+      "id": "a2",
+      "pregunta": "Necesito una lista de verificación de titulación de posgrado; usa generar_checklist para organizar los requisitos.",
+      "curso": "posgrado",
+      "respuesta": {
+        "respuesta": "Con base en la herramienta de lista de verificación generada para el perfil de posgrado, se han identificado de manera preliminar diversos apartados normativos en la LOES y el Reglamento de Régimen Académico que regulan condiciones generales de ingreso y programas universitarios, tales como los requisitos establecidos por el Consejo de Educación Superior (LOES, Artículo 118, página 51 [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228]), las condiciones para el ingreso a posgrado tecnológico o académico (Reglamento Régimen Académico, Artículo 18, página 7 [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32]), así como disposiciones sobre personal docente (LOES, Artículo 150, página 56 [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265]). \n\nTen en cuenta que esta lista de verificación organiza la evidencia disponible pero no acredita por sí misma el cumplimiento de requisitos de titulación ni garantiza una lista exhaustiva, quedando pendiente de confirmar aspectos específicos como la modalidad de titulación. Para validar los requisitos particulares de tu programa de posgrado, te sugerimos consultar directamente con Secretaría o la coordinación académica.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 118",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 51,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 150",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 56,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 18",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 7,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "posgrado"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+              "f5090185-d1a5-4f90-ad09-e0c5741901d4-r1-65"
+            ],
+            "checklist": {
+              "perfil_declarado": "posgrado",
+              "perfil_interpretado": {
+                "nivel": "posgrado"
+              },
+              "datos_por_confirmar": [
+                "modalidad_titulacion"
+              ],
+              "items": [
+                {
+                  "requisito": "Para\nacceder a carreras y programas universitarios se deberá cumplir los requisitos establecidos en la\nnormativa que para el efecto expida el Consejo de Educación Superior.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+                  "documento": "LOES",
+                  "seccion": "Artículo 118",
+                  "pagina": 51,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "150.- Requisitos para ser profesor o profesora titular principal.- Para ser profesor o profesora\ntitular principal de una universidad o escuela politécnica pública o particular del Sistema de\nEducación Superior se deberá cumplir con los siguientes requisitos:\na) Tener título de posgrado correspondiente a doctorado (PhD o su equivalente) afín al campo\namplio de conocimiento en el que desempeñará sus actividades académicas o reconocimiento de\ntrayectoria, según lo establecido en la presente Ley y la normativa pertinente;",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+                  "documento": "LOES",
+                  "seccion": "Artículo 150",
+                  "pagina": 56,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "y,\nd) Tener cuatro años de experiencia docente, y reunir los requisitos adicionales, señalados en los\nestatutos de cada universidad o escuela politécnica, en ejercicio de su autonomía responsable, los\nque tendrán plena concordancia con el Reglamento de Carrera y Escalafón del Profesor e\nInvestigador del Sistema de Educación Superior.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+                  "documento": "LOES",
+                  "seccion": "Artículo 150",
+                  "pagina": 56,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "Los profesores titulares agregados o auxiliares deberán contar como mínimo con título de maestría\nafín al área en que ejercerán la cátedra, los demás requisitos se establecerán en el reglamento\nrespectivo.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+                  "documento": "LOES",
+                  "seccion": "Artículo 150",
+                  "pagina": 56,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "a) Para el posgrado tecnológico: Poseer un título de tercer nivel tecnológico superior univer sitario \no su equivalente en el campo de las artes, debidamente registrado por el órgano rector de la \npolítica pública de educación superior y cumplir con el proceso de admisión establecido en el \nprograma al que postula;",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 18",
+                  "pagina": 7,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "b) Para el posgrado académico: Poseer t ítulo de tercer nivel de grado, debidamente registrado por \nel órgano rector de la política pública de educación superior y cumplir con el proceso de admisión \nestablecido en el programa al que postula;",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 18",
+                  "pagina": 7,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": {
+          "perfil_declarado": "posgrado",
+          "perfil_interpretado": {
+            "nivel": "posgrado"
+          },
+          "datos_por_confirmar": [
+            "modalidad_titulacion"
+          ],
+          "items": [
+            {
+              "requisito": "Para\nacceder a carreras y programas universitarios se deberá cumplir los requisitos establecidos en la\nnormativa que para el efecto expida el Consejo de Educación Superior.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+              "documento": "LOES",
+              "seccion": "Artículo 118",
+              "pagina": 51,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "150.- Requisitos para ser profesor o profesora titular principal.- Para ser profesor o profesora\ntitular principal de una universidad o escuela politécnica pública o particular del Sistema de\nEducación Superior se deberá cumplir con los siguientes requisitos:\na) Tener título de posgrado correspondiente a doctorado (PhD o su equivalente) afín al campo\namplio de conocimiento en el que desempeñará sus actividades académicas o reconocimiento de\ntrayectoria, según lo establecido en la presente Ley y la normativa pertinente;",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "documento": "LOES",
+              "seccion": "Artículo 150",
+              "pagina": 56,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "y,\nd) Tener cuatro años de experiencia docente, y reunir los requisitos adicionales, señalados en los\nestatutos de cada universidad o escuela politécnica, en ejercicio de su autonomía responsable, los\nque tendrán plena concordancia con el Reglamento de Carrera y Escalafón del Profesor e\nInvestigador del Sistema de Educación Superior.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "documento": "LOES",
+              "seccion": "Artículo 150",
+              "pagina": 56,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "Los profesores titulares agregados o auxiliares deberán contar como mínimo con título de maestría\nafín al área en que ejercerán la cátedra, los demás requisitos se establecerán en el reglamento\nrespectivo.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "documento": "LOES",
+              "seccion": "Artículo 150",
+              "pagina": 56,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "a) Para el posgrado tecnológico: Poseer un título de tercer nivel tecnológico superior univer sitario \no su equivalente en el campo de las artes, debidamente registrado por el órgano rector de la \npolítica pública de educación superior y cumplir con el proceso de admisión establecido en el \nprograma al que postula;",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 18",
+              "pagina": 7,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "b) Para el posgrado académico: Poseer t ítulo de tercer nivel de grado, debidamente registrado por \nel órgano rector de la política pública de educación superior y cumplir con el proceso de admisión \nestablecido en el programa al que postula;",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 18",
+              "pagina": 7,
+              "estado": "pendiente_de_verificar"
+            }
+          ],
+          "completo": false,
+          "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+        },
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 7.147
+      },
+      "salida_final_modelo": "```json\n{\"respuesta\": \"Con base en la herramienta de lista de verificación generada para el perfil de posgrado, se han identificado de manera preliminar diversos apartados normativos en la LOES y el Reglamento de Régimen Académico que regulan condiciones generales de ingreso y programas universitarios, tales como los requisitos establecidos por el Consejo de Educación Superior (LOES, Artículo 118, página 51 [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228]), las condiciones para el ingreso a posgrado tecnológico o académico (Reglamento Régimen Académico, Artículo 18, página 7 [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32]), así como disposiciones sobre personal docente (LOES, Artículo 150, página 56 [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265]). \\n\\nTen en cuenta que esta lista de verificación organiza la evidencia disponible pero no acredita por sí misma el cumplimiento de requisitos de titulación ni garantiza una lista exhaustiva, quedando pendiente de confirmar aspectos específicos como la modalidad de titulación. Para validar los requisitos particulares de tu programa de posgrado, te sugerimos consultar directamente con Secretaría o la coordinación académica.\", \"estado\": \"respuesta\", \"fragmentos\": [\"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228\", \"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265\", \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32\"], \"campos_necesarios\": []}\n```",
+      "tokens_total": 8776,
+      "cumple": true
+    },
+    {
+      "id": "a3",
+      "pregunta": "Genera un checklist de requisitos de titulación para grado con examen complexivo.",
+      "curso": "grado",
+      "modalidad_titulacion": "examen complexivo",
+      "respuesta": {
+        "respuesta": "Para generar un checklist sobre los requisitos de titulación con examen complexivo en grado, la evidencia disponible (como el Reglamento de Régimen Académico) trata sobre posgrados, artes o salud, pero no contiene los requisitos internos específicos de UNIANDES para esta modalidad en el nivel de grado. Por lo tanto, no es posible verificar una lista sustentada en la normativa provista. Te sugiero consultar directamente con Secretaría o tu coordinación para obtener el detalle aplicable a tu carrera.",
+        "estado": "abstencion",
+        "requiere_revision_humana": true,
+        "fuentes": [],
+        "campos_necesarios": [],
+        "pasos_agente": [],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": null,
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 4.006
+      },
+      "salida_final_modelo": "```json\n{\"respuesta\": \"Para generar un checklist sobre los requisitos de titulación con examen complexivo en grado, la evidencia disponible (como el Reglamento de Régimen Académico) trata sobre posgrados, artes o salud, pero no contiene los requisitos internos específicos de UNIANDES para esta modalidad en el nivel de grado. Por lo tanto, no es posible verificar una lista sustentada en la normativa provista. Te sugiero consultar directamente con Secretaría o tu coordinación para obtener el detalle aplicable a tu carrera.\", \"estado\": \"abstencion\", \"fragmentos\": [], \"campos_necesarios\": []}\n```",
+      "tokens_total": 4000,
+      "cumple": false
+    },
+    {
+      "id": "a4",
+      "pregunta": "Organiza un checklist para titularme mediante proyecto de investigación en grado.",
+      "curso": "grado",
+      "modalidad_titulacion": "proyecto de investigación",
+      "respuesta": {
+        "respuesta": "Para titularte mediante proyecto de investigación en grado, la evidencia disponible menciona procedimientos generales de proyectos y seguimiento (como la revisión de borradores, solicitudes de aprobación, presupuestos y cartas de aprobación), pero los fragmentos recuperados corresponden principalmente a normativas generales de vinculación o requisitos de cargos directivos en la LOES (como los artículos 49 y 115.7), los cuales están pendientes de verificar para un checklist específico de titulación de grado. Por lo tanto, no se dispone de una lista completa ni validada de requisitos específicos de titulación para esta modalidad en el corpus actual; se recomienda consultar directamente con Secretaría o la coordinación de tu carrera en UNIANDES para verificar la normativa interna aplicable.",
+        "estado": "abstencion",
+        "requiere_revision_humana": true,
+        "fuentes": [],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "Estudiante de grado modalidad proyecto de investigación"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-217",
+              "ce225e90-10e4-4ad7-983e-95a8144a0980-r1-56",
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-102",
+              "ce225e90-10e4-4ad7-983e-95a8144a0980-r1-40"
+            ],
+            "checklist": {
+              "perfil_declarado": "Estudiante de grado modalidad proyecto de investigación",
+              "perfil_interpretado": {
+                "nivel": "grado",
+                "modalidad_titulacion": "proyecto de investigacion"
+              },
+              "datos_por_confirmar": [],
+              "items": [
+                {
+                  "requisito": "115.7.- Requisitos para ser Rector y Vicerrector.- Para ser Rector o Rectora y Vicerrector o\nVicerrectora de un instituto superior técnico, tecnológico, pedagógico y de artes y que tengan la\ncondición de institutos superiores universitarios, deberá cumplir los siguientes requisitos:\na) Estar en goce de los derechos de participación;",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-217",
+                  "documento": "LOES",
+                  "seccion": "Artículo 115.7",
+                  "pagina": 48,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "49.- Requisitos para ser Rector o Rectora.- Para ser Rector o Rectora de una universidad o\nescuela politécnica se requiere:\na) Estar en goce de los derechos de participación;",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-102",
+                  "documento": "LOES",
+                  "seccion": "Artículo 49",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "6\nRevisar el contenido y \nestructura del proyecto de \nseguim iento a graduados\nBorrador del proyecto\n7 El proyecto esta com pleto?\nno ◄ ►si\n8 Elaborar  la solicitud de aprobación del proyecto Oficio de s olicitud\n9\nReceptar el proyecto de \nseguim iento a graduados con la \ns olicitud \nSello de recibido en el oficio \n10 El proyecto tiene pertinencia?\nno ◄ ►si\n11 El presupuesto está dentro del techo presupuestario?\nno ◄ ►si\nPresupuesto aprobado firm ado \ny s ellado\n12 Aprobar el proyecto Carta de aprobación del Proyecto\n13 Receptar carta de aprobación  para ejecutar el proyecto\n14 Solicitar Informes de Cumplimiento FV G -01 Ficha V isita a G raduados \n15 El  docente está cum pliendo con sus deberes?\nno ◄ ►si\n16 Efectuar cambio  de docente Oficio de notificación del cam bio de docente\nY",
+                  "fragmento_id": "ce225e90-10e4-4ad7-983e-95a8144a0980-r1-40",
+                  "documento": "Vinculacion Uniandes",
+                  "seccion": "Artículo 87",
+                  "pagina": 29,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": null,
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 6.977
+      },
+      "salida_final_modelo": "```json\n{\"respuesta\": \"Para titularte mediante proyecto de investigación en grado, la evidencia disponible menciona procedimientos generales de proyectos y seguimiento (como la revisión de borradores, solicitudes de aprobación, presupuestos y cartas de aprobación), pero los fragmentos recuperados corresponden principalmente a normativas generales de vinculación o requisitos de cargos directivos en la LOES (como los artículos 49 y 115.7), los cuales están pendientes de verificar para un checklist específico de titulación de grado. Por lo tanto, no se dispone de una lista completa ni validada de requisitos específicos de titulación para esta modalidad en el corpus actual; se recomienda consultar directamente con Secretaría o la coordinación de tu carrera en UNIANDES para verificar la normativa interna aplicable.\", \"estado\": \"abstencion\", \"fragmentos\": [\"ce225e90-10e4-4ad7-983e-95a8144a0980-r1-40\", \"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-102\", \"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-217\"], \"campos_necesarios\": []}\n```",
+      "tokens_total": 10117,
+      "cumple": false
+    },
+    {
+      "id": "a5",
+      "pregunta": "Genera un checklist de requisitos de titulación de maestría; distingue lo que falta verificar.",
+      "curso": "maestría",
+      "respuesta": {
+        "respuesta": "Con base en la normativa disponible para el nivel de posgrado (maestría), se ha generado un checklist preliminar que incluye requisitos generales de acceso y de carrera docente previstos en la LOES y en el Reglamento de Régimen Académico (los cuales se encuentran pendientes de verificar y confirmar con la normativa interna específica de la institución). \n\nDatos pendientes de confirmar: modalidad_titulacion.\n\nItems del checklist:\n- Cumplir los requisitos establecidos en la normativa expedida por el Consejo de Educación Superior para acceder a carreras y programas (LOES, Artículo 118, página 51) [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228]. Estado: pendiente_de_verificar.\n- Requisitos de posgrado y trayectoria para profesores titulares, agregados o auxiliares, incluyendo contar como mínimo con título de maestría afín (LOES, Artículo 150, página 56) [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265]. Estado: pendiente_de_verificar.\n- Poseer título de tercer nivel de grado debidamente registrado y cumplir con el proceso de admisión para el posgrado académico (Reglamento Régimen Académico, Artículo 18, página 7) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32]. Estado: pendiente_de_verificar.\n\nNota: Estos pasajes normativos son referenciales y no acreditan cumplimiento ni exhaustividad. Para detalles específicos de titulación de maestría, acuda a Secretaría o a su coordinación.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 118",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 51,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 150",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 56,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 18",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 7,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "maestria"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+              "f5090185-d1a5-4f90-ad09-e0c5741901d4-r1-65"
+            ],
+            "checklist": {
+              "perfil_declarado": "maestria",
+              "perfil_interpretado": {
+                "nivel": "posgrado"
+              },
+              "datos_por_confirmar": [
+                "modalidad_titulacion"
+              ],
+              "items": [
+                {
+                  "requisito": "Para\nacceder a carreras y programas universitarios se deberá cumplir los requisitos establecidos en la\nnormativa que para el efecto expida el Consejo de Educación Superior.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+                  "documento": "LOES",
+                  "seccion": "Artículo 118",
+                  "pagina": 51,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "150.- Requisitos para ser profesor o profesora titular principal.- Para ser profesor o profesora\ntitular principal de una universidad o escuela politécnica pública o particular del Sistema de\nEducación Superior se deberá cumplir con los siguientes requisitos:\na) Tener título de posgrado correspondiente a doctorado (PhD o su equivalente) afín al campo\namplio de conocimiento en el que desempeñará sus actividades académicas o reconocimiento de\ntrayectoria, según lo establecido en la presente Ley y la normativa pertinente;",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+                  "documento": "LOES",
+                  "seccion": "Artículo 150",
+                  "pagina": 56,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "y,\nd) Tener cuatro años de experiencia docente, y reunir los requisitos adicionales, señalados en los\nestatutos de cada universidad o escuela politécnica, en ejercicio de su autonomía responsable, los\nque tendrán plena concordancia con el Reglamento de Carrera y Escalafón del Profesor e\nInvestigador del Sistema de Educación Superior.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+                  "documento": "LOES",
+                  "seccion": "Artículo 150",
+                  "pagina": 56,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "Los profesores titulares agregados o auxiliares deberán contar como mínimo con título de maestría\nafín al área en que ejercerán la cátedra, los demás requisitos se establecerán en el reglamento\nrespectivo.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+                  "documento": "LOES",
+                  "seccion": "Artículo 150",
+                  "pagina": 56,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "a) Para el posgrado tecnológico: Poseer un título de tercer nivel tecnológico superior univer sitario \no su equivalente en el campo de las artes, debidamente registrado por el órgano rector de la \npolítica pública de educación superior y cumplir con el proceso de admisión establecido en el \nprograma al que postula;",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 18",
+                  "pagina": 7,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "b) Para el posgrado académico: Poseer t ítulo de tercer nivel de grado, debidamente registrado por \nel órgano rector de la política pública de educación superior y cumplir con el proceso de admisión \nestablecido en el programa al que postula;",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 18",
+                  "pagina": 7,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": {
+          "perfil_declarado": "maestria",
+          "perfil_interpretado": {
+            "nivel": "posgrado"
+          },
+          "datos_por_confirmar": [
+            "modalidad_titulacion"
+          ],
+          "items": [
+            {
+              "requisito": "Para\nacceder a carreras y programas universitarios se deberá cumplir los requisitos establecidos en la\nnormativa que para el efecto expida el Consejo de Educación Superior.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228",
+              "documento": "LOES",
+              "seccion": "Artículo 118",
+              "pagina": 51,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "150.- Requisitos para ser profesor o profesora titular principal.- Para ser profesor o profesora\ntitular principal de una universidad o escuela politécnica pública o particular del Sistema de\nEducación Superior se deberá cumplir con los siguientes requisitos:\na) Tener título de posgrado correspondiente a doctorado (PhD o su equivalente) afín al campo\namplio de conocimiento en el que desempeñará sus actividades académicas o reconocimiento de\ntrayectoria, según lo establecido en la presente Ley y la normativa pertinente;",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "documento": "LOES",
+              "seccion": "Artículo 150",
+              "pagina": 56,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "y,\nd) Tener cuatro años de experiencia docente, y reunir los requisitos adicionales, señalados en los\nestatutos de cada universidad o escuela politécnica, en ejercicio de su autonomía responsable, los\nque tendrán plena concordancia con el Reglamento de Carrera y Escalafón del Profesor e\nInvestigador del Sistema de Educación Superior.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "documento": "LOES",
+              "seccion": "Artículo 150",
+              "pagina": 56,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "Los profesores titulares agregados o auxiliares deberán contar como mínimo con título de maestría\nafín al área en que ejercerán la cátedra, los demás requisitos se establecerán en el reglamento\nrespectivo.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265",
+              "documento": "LOES",
+              "seccion": "Artículo 150",
+              "pagina": 56,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "a) Para el posgrado tecnológico: Poseer un título de tercer nivel tecnológico superior univer sitario \no su equivalente en el campo de las artes, debidamente registrado por el órgano rector de la \npolítica pública de educación superior y cumplir con el proceso de admisión establecido en el \nprograma al que postula;",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 18",
+              "pagina": 7,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "b) Para el posgrado académico: Poseer t ítulo de tercer nivel de grado, debidamente registrado por \nel órgano rector de la política pública de educación superior y cumplir con el proceso de admisión \nestablecido en el programa al que postula;",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 18",
+              "pagina": 7,
+              "estado": "pendiente_de_verificar"
+            }
+          ],
+          "completo": false,
+          "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+        },
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 5.74
+      },
+      "salida_final_modelo": "```json\n{\"respuesta\": \"Con base en la normativa disponible para el nivel de posgrado (maestría), se ha generado un checklist preliminar que incluye requisitos generales de acceso y de carrera docente previstos en la LOES y en el Reglamento de Régimen Académico (los cuales se encuentran pendientes de verificar y confirmar con la normativa interna específica de la institución). \\n\\nDatos pendientes de confirmar: modalidad_titulacion.\\n\\nItems del checklist:\\n- Cumplir los requisitos establecidos en la normativa expedida por el Consejo de Educación Superior para acceder a carreras y programas (LOES, Artículo 118, página 51) [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228]. Estado: pendiente_de_verificar.\\n- Requisitos de posgrado y trayectoria para profesores titulares, agregados o auxiliares, incluyendo contar como mínimo con título de maestría afín (LOES, Artículo 150, página 56) [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265]. Estado: pendiente_de_verificar.\\n- Poseer título de tercer nivel de grado debidamente registrado y cumplir con el proceso de admisión para el posgrado académico (Reglamento Régimen Académico, Artículo 18, página 7) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32]. Estado: pendiente_de_verificar.\\n\\nNota: Estos pasajes normativos son referenciales y no acreditan cumplimiento ni exhaustividad. Para detalles específicos de titulación de maestría, acuda a Secretaría o a su coordinación.\", \"estado\": \"respuesta\", \"fragmentos\": [\"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-228\", \"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-265\", \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-32\"], \"campos_necesarios\": [\"modalidad_titulacion\"]}\n```",
+      "tokens_total": 10282,
+      "cumple": true
+    },
+    {
+      "id": "a6",
+      "pregunta": "Necesito una lista de verificación de requisitos de titulación de tercer nivel, basada en los artículos recuperados.",
+      "curso": "tercer nivel",
+      "respuesta": {
+        "respuesta": "Con base en la normativa disponible en el Reglamento Régimen Académico (Artículo 26, página 9), los requisitos específicos para acceder a la titulación de tercer nivel y sus opciones de aprobación deben ser determinados por cada Institución de Educación Superior (IES) en su normativa interna. Por lo tanto, no se puede generar una lista detallada con los pasajes actuales, ya que la norma nacional delega esta definición a la IES. Para conocer los requisitos particulares aplicables a tu caso, te sugiero consultar directamente con Secretaría o tu coordinación académica.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 26",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 9,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-42",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": null,
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 3.829
+      },
+      "salida_final_modelo": "```json\n{\"respuesta\": \"Con base en la normativa disponible en el Reglamento Régimen Académico (Artículo 26, página 9), los requisitos específicos para acceder a la titulación de tercer nivel y sus opciones de aprobación deben ser determinados por cada Institución de Educación Superior (IES) en su normativa interna. Por lo tanto, no se puede generar una lista detallada con los pasajes actuales, ya que la norma nacional delega esta definición a la IES. Para conocer los requisitos particulares aplicables a tu caso, te sugiero consultar directamente con Secretaría o tu coordinación académica.\", \"estado\": \"respuesta\", \"fragmentos\": [\"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-42\"], \"campos_necesarios\": []}\n```",
+      "tokens_total": 3918,
+      "cumple": false
+    }
+  ],
+  "aciertos": 2,
+  "total": 6,
+  "limite": "Verifica elección y ejecución real, citas y lista no vacía. No mide exhaustividad ni respaldo semántico de cada frase."
+}

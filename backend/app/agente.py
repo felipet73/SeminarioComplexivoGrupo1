@@ -7,13 +7,8 @@ from app.parametros import PARAMETROS
 from app.services import rag, actions
 from app.services.llm import ResultadoLLM
 from app.tools.academicas import (BuscarIn, RequisitosIn, ChecklistIn, PlazoIn,
-<<<<<<< Updated upstream
-                               buscar_fragmentos, consultar_requisitos,
-                               generar_checklist, ejecutar_calculo)
-=======
                                  buscar_fragmentos, consultar_requisitos,
                                  generar_checklist, ejecutar_calculo, interpretar_perfil)
->>>>>>> Stashed changes
 
 MAX_ITER = PARAMETROS["max_iteraciones"]
 
@@ -105,22 +100,7 @@ def ejecutar_agente(llm, prompt, pregunta, preferido, contexto, *, permitir_escr
             return total(resultado), contexto['evidencia'], pasos, None
         try:
             if not isinstance(value, dict) or 'herramienta' not in value:
-<<<<<<< Updated upstream
-                # Si el modelo devuelve un JSON final sin herramienta, rellenamos campos faltantes para cumplir RespuestaAsistente
-                if isinstance(value, dict):
-                    value.setdefault('estado', 'respuesta')
-                    value.setdefault('requiere_revision_humana', False)
-                    value.setdefault('fuentes', [])
-                    value.setdefault('campos_necesarios', [])
-                    value.setdefault('pasos_agente', pasos)
-                    value.setdefault('accion_pendiente', None)
-                    value.setdefault('modelo_utilizado', preferido)
-                    value.setdefault('fallback_activado', False)
-                    value.setdefault('tiempo_segundos', sum(getattr(r, 'segundos', 0.0) or 0.0 for r in llamadas))
-                    resultado = replace(resultado, texto=json.dumps(value))
-=======
                 evento(vuelta + 1, 'respuesta_final')
->>>>>>> Stashed changes
                 return total(resultado), contexto['evidencia'], pasos, None
                 
             call = PasoHerramienta.model_validate(value)
@@ -164,23 +144,6 @@ def ejecutar_agente(llm, prompt, pregunta, preferido, contexto, *, permitir_escr
             pasos.append('solicitud_no_valida')
             evento(vuelta + 1, 'herramienta_rechazada', motivo=str(error)[:300])
             contexto['resultados_herramientas'].append({'error': str(error)[:300]})
-<<<<<<< Updated upstream
-            
-    # El último turno por límite de iteraciones también garantiza todos los campos del contrato.
-    return total(replace(resultado, texto=json.dumps({
-        'respuesta': 'No pude completar la consulta dentro del límite de pasos. Consulta con coordinación académica.',
-        'estado': 'abstencion',
-        'requiere_revision_humana': False,
-        'fuentes': [],
-        'campos_necesarios': [],
-        'pasos_agente': pasos,
-        'accion_pendiente': None,
-        'modelo_utilizado': None,
-        'fallback_activado': False,
-        'tiempo_segundos': 0.0
-    }))), contexto['evidencia'], pasos, None
-=======
     # El último turno no puede filtrar al usuario un JSON de herramienta ni saltarse el tope.
     evento(MAX_ITER, 'limite_alcanzado')
     return replace(total(resultado), texto=json.dumps({'respuesta': 'No pude completar la consulta dentro del límite de pasos. Consulta con coordinación académica.', 'estado': 'abstencion', 'fragmentos': []})), contexto['evidencia'], pasos, None
->>>>>>> Stashed changes
