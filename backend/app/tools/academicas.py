@@ -1,5 +1,6 @@
 """Contratos y herramientas educativas del agente."""
 import re
+import unicodedata
 from datetime import date, timedelta
 from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
@@ -57,28 +58,70 @@ class ChecklistItem(BaseModel):
 
 class ChecklistOut(BaseModel):
     perfil_declarado: str
+    perfil_interpretado: dict[str, str] = Field(default_factory=dict)
+    datos_por_confirmar: list[str] = Field(default_factory=list)
     items: list[ChecklistItem]
     completo: Literal[False] = False
     advertencia: str = 'Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna.'
+
+
+def normalizar(texto: str) -> str:
+    return ''.join(c for c in unicodedata.normalize('NFD', texto.casefold()) if not unicodedata.combining(c))
+
+
+DIMENSIONES = {
+    'nivel': {'grado': r'\b(grado|pregrado|tercer nivel)\b',
+              'posgrado': r'\b(posgrado|postgrado|maestria|doctorado|cuarto nivel)\b'},
+    'modalidad_titulacion': {'examen complexivo': r'\bcomplexivo\b',
+                            'proyecto de investigacion': r'\b(proyecto de investigacion|tesis)\b'},
+}
+
+
+def interpretar_perfil(perfil: str) -> dict[str, str]:
+    texto = normalizar(perfil)
+    return {dimension: encontrados[0] for dimension, opciones in DIMENSIONES.items()
+            if len(encontrados := [nombre for nombre, patron in opciones.items() if re.search(patron, texto)]) == 1}
+
+
+def consulta_checklist(perfil: str) -> str:
+    texto = normalizar(perfil)
+    tema = 'prácticas preprofesionales' if 'practic' in texto else 'vinculación' if 'vincul' in texto else 'titulación'
+    return tema + ' ' + ' '.join(interpretar_perfil(perfil).values())
 
 
 def construir_checklist(perfil: str, chunks: list[dict]) -> ChecklistOut:
     """Lista extractiva: cada ítem conserva una cita textual y nunca declara cumplimiento."""
     items = []
     seen = set()
+    interpretado = interpretar_perfil(perfil)
+    pendientes = [dimension for dimension in DIMENSIONES if dimension not in interpretado]
+    def salida():
+        return ChecklistOut(perfil_declarado=perfil, perfil_interpretado=interpretado,
+                            datos_por_confirmar=pendientes, items=items)
     for chunk in chunks:
         if chunk.get('kind') != 'normativa':
             continue
         for sentence in re.split(r'(?<=[.;])\s+|\n\s*\n', chunk['text']):
             sentence = sentence.strip()
-            if not re.search(r'requisit|deber[áaíi]|oblig|aproba|cumpl|necesari', sentence, re.I) or len(sentence) < 25 or sentence in seen:
+            # Solo excluimos una regla cuando explicita un perfil incompatible.
+            # Una regla general o comparativa requiere revisión, nunca inferimos aptitud.
+            texto = normalizar(sentence)
+            # Los requisitos de cargos no son requisitos del estudiante.
+            if re.search(r'\b(rector|vicerrector|decano|autoridad|profesor titular)\b', texto):
+                continue
+            incompatible = False
+            for dimension, elegido in interpretado.items():
+                mencionados = {nombre for nombre, patron in DIMENSIONES[dimension].items() if re.search(patron, texto)}
+                if mencionados and elegido not in mencionados:
+                    incompatible = True
+            if incompatible or not re.search(r'requisit|deber[ai]|oblig|aproba|cumpl|necesari', texto) or len(sentence) < PARAMETROS['checklist']['min_caracteres'] or sentence in seen:
                 continue
             seen.add(sentence)
             items.append(ChecklistItem(requisito=sentence, fragmento_id=chunk['id'], documento=chunk['title'],
                                        seccion=chunk['section'], pagina=chunk['page']))
-            if len(items) == 20:
-                return ChecklistOut(perfil_declarado=perfil, items=items)
-    return ChecklistOut(perfil_declarado=perfil, items=items)
+            if len(items) == PARAMETROS['checklist']['max_items']:
+                return salida()
+    return salida()
 
 
 def calcular_plazo(datos: PlazoIn) -> PlazoOut:
@@ -108,7 +151,8 @@ def consultar_requisitos(datos: RequisitosIn):
 
 
 def generar_checklist(datos: ChecklistIn):
-    _, chunks = consultar_pasajes('requisitos ' + datos.perfil_estudiante)
+    # Evita convertir toda la descripción libre en términos léxicos obligatorios.
+    _, chunks = consultar_pasajes(consulta_checklist(datos.perfil_estudiante))
     return construir_checklist(datos.perfil_estudiante, chunks), chunks
 
 

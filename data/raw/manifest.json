@@ -90,6 +90,25 @@
       "origin": "admin_upload",
       "acquired_at": "2026-10-30T23:33:09.227419+00:00",
       "downloaded_at": null
+    },
+    {
+      "file": "UNIANDES-Instructivo-Titulacion-2017.pdf",
+      "sha256": "a66f211d1970cb360a4685b17a6764230017db4061ac7b61532a27de7300a412",
+      "metadata": {
+        "title": "UNIANDES Instructivo de Titulacion 2017",
+        "kind": "normativa",
+        "source_url": "https://uniandes.edu.ec/wp-content/uploads/2020/12/06_2017-08-23_INSTRUCTIVO_FORMAS_TITULACION.pdf",
+        "valid_from": "2017-08-23",
+        "valid_to": null,
+        "approved": false,
+        "enabled": true,
+        "notes": "Fuente oficial escaneada. OCR con errores en membretes y tablas; pendiente revision humana integral y confirmacion institucional de vigencia/aplicabilidad. Excluida de respuestas hasta aprobar. OCR SHA-256: 9505654613bb00077bfdf97dd5bf16dfaf692c8fa0af483d8144e5d7b5ca926e"
+      },
+      "origin": "official_download",
+      "acquired_at": "2026-11-06T04:54:46.786172+00:00",
+      "downloaded_at": "2026-11-06T04:54:46.786172+00:00",
+      "ocr_file": "UNIANDES-Instructivo-Titulacion-2017.ocr.json",
+      "ocr_sha256": "9505654613bb00077bfdf97dd5bf16dfaf692c8fa0af483d8144e5d7b5ca926e"
     }
   ]
 }

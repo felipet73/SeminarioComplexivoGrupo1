@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'backend'))
 from app.admin_schemas import DocMeta
 from app.services import admin_store as store, rag
+from app.parametros import similitud_para_modelo
 
 
 def ingest(manifest=None, strategy=None, embedding_model=None):
@@ -26,7 +27,19 @@ def ingest(manifest=None, strategy=None, embedding_model=None):
             raise ValueError(f'Hash incorrecto: {path.name}')
         if entry['file'] not in policies:
             raise ValueError(f'Falta política de vigencia en config/fuentes.yaml: {path.name}')
-        sources.append((path, content, DocMeta(**(entry['metadata'] | policies[entry['file']])).model_dump(mode='json')))
+        pages = None
+        if entry.get('ocr_file'):
+            ocr_path = (manifest.parent / entry['ocr_file']).resolve()
+            if not ocr_path.is_relative_to(manifest.parent):
+                raise ValueError('OCR fuera del directorio del corpus')
+            ocr_bytes = ocr_path.read_bytes()
+            if hashlib.sha256(ocr_bytes).hexdigest() != entry['ocr_sha256']:
+                raise ValueError('Hash OCR incorrecto')
+            ocr = json.loads(ocr_bytes)
+            if ocr['original_sha256'] != entry['sha256']:
+                raise ValueError('OCR asociado a otro original')
+            pages = rag.validar_ocr(content, ocr['pages'])
+        sources.append((path, content, DocMeta(**(entry['metadata'] | policies[entry['file']])).model_dump(mode='json'), pages))
     if strategy or embedding_model:
         with store.db() as conn:
             config = store.get(conn, 'config', 'rag')
@@ -35,16 +48,17 @@ def ingest(manifest=None, strategy=None, embedding_model=None):
                 updated['strategy'] = strategy
             if embedding_model:
                 updated['embedding_model'] = embedding_model
-                updated['min_similarity'] = .55 if embedding_model == 'text-embedding-3-small' else .65
+                updated['min_similarity'] = similitud_para_modelo(embedding_model)
             if updated != config:
                 store.put(conn, 'config', 'rag', dict(updated, revision=config['revision'] + 1))
     all_chunks = []
-    for path, content, meta in sources:
+    for path, content, meta, pages in sources:
         with store.db() as conn:
             existing = next((d for d in store.all_records(conn, 'document')
                              if d['sha256'] == hashlib.sha256(content).hexdigest()
-                             and all(d.get(k) == v for k, v in meta.items())), None)
-        doc = existing or rag.save_document(path.name, content, meta, 'ingest')
+                             and all(d.get(k) == v for k, v in meta.items())
+                             and (pages is None or d.get('pages') == pages)), None)
+        doc = existing or rag.save_document(path.name, content, meta, 'ingest', ocr_pages=pages)
         if doc.get('indexed_revision') == doc['revision'] and doc.get('index_signature') == rag.signature(store.settings()):
             with store.db() as conn:
                 chunks = [dict(row) for row in conn.execute('SELECT id,doc_id,revision,title,section,page,text FROM chunks WHERE doc_id=?', (doc['id'],))]

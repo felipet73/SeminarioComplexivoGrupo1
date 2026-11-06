@@ -21,7 +21,8 @@ store.PROMPT_DIR.mkdir()
 for file in original.glob('system_v[123].md'):
     shutil.copy2(file,store.PROMPT_DIR/file.name)
 metrics.LOG_PATH=temp/'metrics.jsonl'
-config=Settings(_env_file=None,admin_password='only-e2e-password',gemini_api_key='fake-only-e2e',openai_api_key=None)
+config=Settings(_env_file=None,admin_password='only-e2e-password',gemini_api_key='fake-only-e2e',openai_api_key=None,
+                cors_origins='http://127.0.0.1:4180')
 admin_auth.get_settings=lambda:config
 admin_routes.get_settings=lambda:config
 
@@ -32,6 +33,14 @@ class FakeLLM:
             text=json.dumps({'respuesta':'Necesito tu carrera para esta aclaración.','estado':'aclaracion','fragmentos':[],'campos_necesarios':['carrera']})
         if question.startswith('Prepara solicitud de tutor'):
             text=json.dumps({'herramienta':'registrar_solicitud_tutor','argumentos':{'carrera':'Software','modalidad':'Proyecto','tema':'RAG educativo'}})
+        if question.startswith('Genera checklist'):
+            resultados=kwargs.get('contexto',{}).get('resultados_herramientas',[])
+            if not resultados:
+                text=json.dumps({'herramienta':'generar_checklist','argumentos':{'perfil_estudiante':'grado'}})
+            else:
+                ids=[item['fragmento_id'] for item in resultados[-1].get('resultado',{}).get('items',[])]
+                text=json.dumps({'respuesta':'Revisa los pasajes normativos de tu lista; no certifican cumplimiento.',
+                                 'estado':'respuesta' if ids else 'abstencion','fragmentos':ids})
         return ResultadoLLM(text,'doble-e2e',False,.2,20,30,50)
 app.dependency_overrides[admin_routes.admin_llm]=lambda:FakeLLM()
 app.dependency_overrides[obtener_llm]=lambda:FakeLLM()

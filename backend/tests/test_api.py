@@ -11,9 +11,10 @@ def test_health_check():
 
 
 def test_login_fallido_admin():
-  # Prueba de seguridad: Un intento de login con credenciales erróneas debe ser bloqueado (400 o 422)
+  # El único acceso administrativo es el que utiliza el panel, con guardia CSRF.
   response = client.post(
-      "/admin/login",
-      data={"username": "hacker", "password": "badpassword"},
+      "/api/admin/login",
+      json={"username": "hacker", "password": "badpassword"},
   )
-  assert response.status_code in [400, 422]
+  assert response.status_code == 403
+  assert client.post('/admin/recargar-reglamentos').status_code == 404

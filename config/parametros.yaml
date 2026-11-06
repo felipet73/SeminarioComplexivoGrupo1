@@ -3,5 +3,14 @@
   "max_dias_habiles": 730,
   "embedding_texts_per_minute": 80,
   "embedding_retries": 2,
+  "rag": {
+    "active_prompt": 3, "chunk_size": 1400, "overlap": 160, "top_k": 4,
+    "strategy": "hybrid", "embedding_model": "gemini-embedding-001",
+    "min_similarity": 0.65, "min_lexical_coverage": 0.6
+  },
+  "similitud_por_modelo": {"gemini-embedding-001": 0.65, "text-embedding-3-small": 0.55},
+  "evaluacion": {"min_casos": 20, "min_negativos": 4, "acierto_top_k": 0.7, "silencio": 0.9, "acierto_cita": 0.8, "abstencion_o_rechazo": 1.0},
+  "checklist": {"max_items": 20, "min_caracteres": 25, "max_evidencias": 40},
+  "rrf_k": 60,
   "nota_calculo": "Simulación con días indicados por el usuario; excluye la fecha inicial y fines de semana. No aplica feriados ni fija un plazo institucional."
 }

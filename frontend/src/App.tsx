@@ -1,3 +1,4 @@
+import Checklist from './Checklist';
 import { Activity, startTransition, useActionState, useEffect, useEffectEvent, useOptimistic, useRef, useState } from 'react';
 import assistantImage from '../assets/AsistenteIAUNIANDES.png';
 import { API, ApiError, enviarConsulta, type ModeloPreferido, type Respuesta } from './api';
@@ -212,6 +213,7 @@ export default function App() {
                 <article className={`mensaje mensaje--${mensaje.rol}`} key={mensaje.id}>
                   <span>{mensaje.rol === 'usuario' ? 'TÚ' : 'ASISTENTE'}</span>
                   <p>{mensaje.texto}</p>
+                  {mensaje.meta?.checklist && <Checklist lista={mensaje.meta.checklist}/>}
                   {mensaje.meta?.accion_pendiente && <Confirmacion accion={mensaje.meta.accion_pendiente}/>}
                   {mensaje.meta?.pasos_agente?.length ? (
                     <small>Apoyos utilizados: {mensaje.meta.pasos_agente.map((paso) => ({
