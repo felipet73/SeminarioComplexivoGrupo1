@@ -2,8 +2,9 @@ export type Estado = 'respuesta'|'abstencion'|'aclaracion'|'rechazo'|'confirmaci
 export type AccionPendiente = {id:string;token:string;herramienta:string;argumentos:{carrera:string;modalidad:string;tema:string};vence:string;alcance:string};
 export type CampoNecesario = {campo:keyof import('./ContextoAcademico').Contexto;etiqueta:string;tipo:'texto'|'select';opciones:string[];max_length:number};
 export type Fuente = {titulo:string;seccion:string;url:string;version?:string;pagina?:number;fragmento_id?:string};
-export type Respuesta = {respuesta:string;estado:Estado;requiere_revision_humana:boolean;fuentes:Fuente[];campos_necesarios?:CampoNecesario[];pasos_agente?:string[];accion_pendiente?:AccionPendiente|null;modelo_utilizado:string|null;fallback_activado:boolean;tiempo_segundos:number};
-export const API = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000';
+export type ChecklistAcademico = {perfil_declarado:string;perfil_interpretado:Record<string,string>;datos_por_confirmar:string[];completo:false;advertencia:string;items:{requisito:string;fragmento_id:string;documento:string;seccion:string;pagina:number;estado:'pendiente_de_verificar'}[]};
+export type Respuesta = {respuesta:string;estado:Estado;requiere_revision_humana:boolean;fuentes:Fuente[];campos_necesarios?:CampoNecesario[];pasos_agente?:string[];checklist?:ChecklistAcademico|null;accion_pendiente?:AccionPendiente|null;modelo_utilizado:string|null;fallback_activado:boolean;tiempo_segundos:number};
+export const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').trim().replace(/\/+$/, '');
 export class ApiError extends Error { constructor(public status:number, message:string, public retryAfter?:number){super(message)} }
 export type ModeloPreferido = 'gemini' | 'openai';
 export async function enviarConsulta(pregunta:string, modeloPreferido:ModeloPreferido, onToken:(token:string)=>void, contexto: import('./ContextoAcademico').Contexto = {}):Promise<Respuesta>{

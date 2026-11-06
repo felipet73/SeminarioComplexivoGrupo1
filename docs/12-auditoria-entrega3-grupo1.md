@@ -1,5 +1,7 @@
 # Auditoría de la guía HTML — Grupo 1
 
+**Documento histórico del 1 de noviembre.** La revisión actual, que incorpora las regresiones y nuevas observaciones del docente, está en [análisis del 5–6 de noviembre](evidencias/semana-3/2026-11-05/analisis-observaciones-docente.md). Consultar allí el estado vigente y sus pendientes; las cifras siguientes se conservan como antecedente.
+
 Corte: 1 de noviembre de 2026. Referencia: `Guia_practica_Entrega3_por_proyecto (3).html`, grupo Titulación y normativa académica; sección «3 · El camino, paso a paso» y pestaña «Lo que piden a todos». Se revisaron niveles mínimo, recomendado y avanzado, incluidos los pasos comunes que no aparecen en la ruta priorizada del grupo.
 
 ## Todos los pasos, nivel por nivel

@@ -30,3 +30,31 @@ npm run build
 ```
 
 El backend debe estar en `http://127.0.0.1:8000`. Para otro host, cree `frontend/.env.local` con `VITE_API_URL=http://host:puerto`. `npm run tipos` genera tipos desde `/openapi.json` con el backend activo.
+
+## Variables de producción
+
+`frontend/.env.production` contiene la URL pública del backend:
+
+```dotenv
+VITE_API_URL=https://titulacion-rag-386902880383.us-central1.run.app
+```
+
+`npm run build` carga esa configuración; `npm run dev` conserva el backend local. Vite incorpora la URL al compilar: cambiar variables en el servidor después del build requiere reconstruir el frontend. Una variable `VITE_API_URL` definida por el entorno de build tiene prioridad sobre el archivo. El cliente elimina espacios y barras finales para formar las rutas correctamente.
+
+El frontend de producción es `https://seminario-complexivo-grupo1.vercel.app`. Chat, métricas, confirmación de borradores y enlaces a fuentes usan la URL de backend indicada. El administrador activo conserva `/api/admin` en el origen de Vercel y su cookie de sesión.
+
+`frontend/vercel.json` configura el proyecto Vite con **Root Directory `frontend`**, build `npm run build` y salida `dist`. Sus reglas envían primero `/api/:path*` a Cloud Run, conservando `/api`; después resuelven rutas SPA como `/admin` y `/metricas` con `index.html`. No hay una función intermedia ni se guarda un token en el navegador. Ver [rewrites externos](https://vercel.com/docs/routing/rewrites) y [rutas SPA de Vite](https://vercel.com/docs/frameworks/frontend/vite).
+
+En las variables del servicio **backend de Cloud Run** usar:
+
+```dotenv
+APP_ENV=production
+CORS_ORIGINS=https://seminario-complexivo-grupo1.vercel.app
+ADMIN_COOKIE_SECURE=true
+```
+
+La lista CORS se usa también para validar el `Origin` administrativo cuando el proxy presenta un `Host` distinto. Se exige `X-Admin-Request: 1`; los dominios ajenos, subdominios parecidos y un comodín no autorizan acceso administrativo. La cookie continúa `HttpOnly`, `SameSite=Strict` y sin `Domain`, para que el navegador la asocie al origen Vercel de la respuesta proxificada. La API pública mantiene las solicitudes CORS sin credenciales.
+
+`VITE_ADMIN_API_TARGET` configura únicamente el proxy local de Vite. Las reglas de Vercel se aplican cuando se publica el frontend; la validación nueva de origen se aplica al publicar el backend. Antes de esos cambios, la comprobación remota encontró CORS público permitido y `/api/admin/session` devolviendo 404 en Vercel. Se necesita publicar ambas revisiones para verificar el flujo completo del administrador.
+
+Las variables `VITE_*` son públicas en el navegador. Las credenciales de Gemini, OpenAI y administrador se configuran exclusivamente en el backend.

@@ -1,5 +1,26 @@
 import { test, expect } from '@playwright/test';
 
+test('chat: muestra checklist generado por herramienta y conserva revisión pendiente',async({page})=>{
+  await login(page);
+  const uploaded=await page.request.post('/api/admin/documents',{headers:{'X-Admin-Request':'1'},multipart:{
+    metadata:JSON.stringify({title:'Checklist de prueba',kind:'normativa',source_url:'',valid_from:'2020-01-01',approved:true,enabled:true}),
+    file:{name:'checklist.txt',mimeType:'text/plain',buffer:Buffer.from('Artículo 1. Titulación de grado. Para grado el estudiante deberá aprobar el trabajo de titulación.')}}});
+  expect(uploaded.ok()).toBe(true);
+  const doc=await uploaded.json();
+  expect((await page.request.post(`/api/admin/rag/index/${doc.id}`,{headers:{'X-Admin-Request':'1'},data:{}})).ok()).toBe(true);
+  await page.goto('/');
+  await page.getByLabel('Tu consulta').fill('Genera checklist de titulación para grado');
+  await page.getByRole('button',{name:'Enviar consulta'}).click();
+  const lista=page.getByRole('region',{name:'Lista de verificación académica'});
+  await expect(lista).toContainText('deberá aprobar el trabajo de titulación');
+  await lista.getByRole('checkbox').first().check();
+  await expect(lista).toContainText('Pendiente de verificar');
+  await expect(page.locator('.chat-fuentes')).toContainText('Checklist de prueba');
+  await page.setViewportSize({width:390,height:844});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:'test-results/checklist-movil.png',fullPage:true});
+});
+
 test('chat: muestra argumentos y confirma borrador con API real aislada',async({page})=>{
   await login(page);
   const uploaded=await page.request.post('/api/admin/documents',{headers:{'X-Admin-Request':'1'},multipart:{metadata:JSON.stringify({title:'Contexto de tutor de prueba',kind:'normativa',source_url:'',valid_from:'2020-01-01',approved:true,enabled:true}),file:{name:'tutor.txt',mimeType:'text/plain',buffer:Buffer.from('Artículo 1. Titulación. La orientación para preparar la titulación se consulta con Secretaría Académica.')}}});

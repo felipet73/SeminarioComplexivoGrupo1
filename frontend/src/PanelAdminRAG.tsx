@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API } from './api';
 
 type Fragmento = {
   id: string;
@@ -21,7 +22,7 @@ export default function PanelAdminRAG({ abierto, alCerrar }: Props) {
 
   const cargarLista = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/admin/fragmentos');
+      const res = await fetch(`${API}/api/admin/fragmentos`);
       if (res.ok) {
         const json = await res.json();
         setFragmentos(json.fragmentos || []);
@@ -45,7 +46,7 @@ export default function PanelAdminRAG({ abierto, alCerrar }: Props) {
     data.append('archivo', archivo);
 
     try {
-      const res = await fetch('http://localhost:8000/api/admin/cargar-documento', {
+      const res = await fetch(`${API}/api/admin/cargar-documento`, {
         method: 'POST',
         body: data,
       });
@@ -57,7 +58,7 @@ export default function PanelAdminRAG({ abierto, alCerrar }: Props) {
         setMensaje(`Error: ${json.detail || 'No se pudo procesar el archivo'}`);
       }
     } catch (err) {
-      setMensaje('Error de conexión con el backend (puerto 8000).');
+      setMensaje('Error de conexión con el backend configurado.');
     } finally {
       setCargando(false);
     }

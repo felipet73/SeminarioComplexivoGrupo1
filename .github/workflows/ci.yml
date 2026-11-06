@@ -1,4 +1,9 @@
 name: Pruebas Grupo 1
+permissions:
+  contents: read
+concurrency:
+  group: pruebas-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
   pull_request:
@@ -17,13 +22,13 @@ jobs:
       - run: pip install --no-cache-dir -r backend/requirements-dev.txt
       - run: ruff check backend scripts eval
       - run: python scripts/check_secrets.py
-      - run: python -m pytest -q backend/tests --cov=app --cov-fail-under=85 --cov-report=xml
+      - run: python -m pytest -q backend/tests --cov=app --cov-fail-under=85 --cov-report=xml --junitxml=eval/tests-backend.xml
         env:
           PYTHONPATH: backend
       - run: python scripts/ingest.py --data-dir data/eval-state --strategy lexical
       - run: python eval/evaluar.py
       - run: python eval/evaluar_flujo.py
-      - run: pip-audit -r backend/requirements.lock.txt --disable-pip --no-deps --format=json --output eval/results-auditoria-python.json
+      - run: pip-audit --local --format=json --output eval/results-auditoria-python.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -31,6 +36,7 @@ jobs:
           path: |
             eval/results*.json
             coverage.xml
+            eval/tests-backend.xml
   frontend:
     runs-on: ubuntu-latest
     defaults:
@@ -58,7 +64,6 @@ jobs:
         with:
           node-version: '22'
       - run: python -m venv backend/.venv
-      # MODIFICACIÓN CLAVE AQUÍ: Añadido --no-cache-dir para forzar bcrypt==3.2.2 limpio
       - run: backend/.venv/bin/pip install --upgrade pip
       - run: backend/.venv/bin/pip install --no-cache-dir -r backend/requirements.txt
       - run: npm ci
@@ -89,8 +94,23 @@ jobs:
         run: python -c "import os; assert os.environ.get('OPENAI_API_KEY'), 'Configura el secreto OPENAI_API_KEY del repositorio'"
       - run: python -u eval/comparar.py --embedding-model text-embedding-3-small
       - run: python eval/evaluar.py --data-dir data/eval-hybrid --chat --prompt system_v3 --output eval/results-chat.json
+      - name: Evaluar agente real, elección y seis listas con citas
+        run: python -u eval/evaluar_agente_real.py --modelo gemini --output eval/results-agente-real.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: evaluacion-real
           path: eval/results*.json
+  contenedor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir imagen sin credenciales de modelos
+        run: docker build -f backend/Dockerfile -t titulacion-rag:ci .
+      - name: Probar arranque, corpus y contrato HTTP
+        run: |
+          docker run -d --name titulacion-rag-ci -p 8080:8080 -e PORT=8080 titulacion-rag:ci
+          python scripts/smoke_container.py --url http://127.0.0.1:8080
+      - name: Logs del contenedor
+        if: always()
+        run: docker logs titulacion-rag-ci || true

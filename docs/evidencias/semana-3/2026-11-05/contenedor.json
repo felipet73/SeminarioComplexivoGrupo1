@@ -1,0 +1,22 @@
+{
+  "fecha": "2026-11-06",
+  "imagen": "titulacion-rag:revision3",
+  "imagen_sha256": "d46b37fe9cf22f1344ead3ccb93c86bdb6256947e136cd4dfd02837a080bb3fd",
+  "python": "3.12",
+  "port_contenedor": 9090,
+  "port_host": 9027,
+  "health": "ok",
+  "ready": {
+    "status": "ready",
+    "fragmentos_elegibles": 961,
+    "estrategia": "lexical",
+    "proveedor_verificado": false
+  },
+  "calendario_fin_semana": "2026-11-02",
+  "venv_in_image": false,
+  "dotenv_in_image": false,
+  "alcance": "Smoke local; no despliegue ni inspeccion remota de Cloud Run",
+  "env_config_path": "/app/.env",
+  "env_present": false,
+  "user_id": 1000
+}
