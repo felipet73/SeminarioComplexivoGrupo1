@@ -1,15 +1,11 @@
-import os
-from pathlib import Path
-from dotenv import load_dotenv
 import pytest
 from app.services import metrics
 from app.services import admin_store
 from app import admin_auth
+from app.config import Settings, get_settings
+from app.services import rag
+from app.services.llm import GeminiProvider, OpenAIProvider
 import shutil
-
-# Carga automática del archivo .env ubicado en la raíz del proyecto (un nivel arriba de backend/)
-env_path = Path(__file__).resolve().parent.parent.parent / ".env"
-load_dotenv(dotenv_path=env_path, override=True)
 
 @pytest.fixture
 def fuente_indexada():
@@ -20,6 +16,19 @@ def fuente_indexada():
 
 @pytest.fixture(autouse=True)
 def metricas_aisladas(tmp_path, monkeypatch):
+    # Ni el .env privado ni las claves del equipo deben decidir el resultado.
+    monkeypatch.setitem(Settings.model_config, 'env_file', None)
+    for name in ('GEMINI_API_KEY', 'OPENAI_API_KEY', 'AI_API_KEY'):
+        # También impide heredar claves del .env en los subprocesos del evaluador.
+        monkeypatch.setenv(name, '')
+    get_settings.cache_clear()
+
+    def proveedor_real_prohibido(*args, **kwargs):
+        raise AssertionError('Las pruebas deben simular los proveedores externos')
+
+    monkeypatch.setattr(rag, '_embed_provider', proveedor_real_prohibido)
+    monkeypatch.setattr(GeminiProvider, 'generar', proveedor_real_prohibido)
+    monkeypatch.setattr(OpenAIProvider, 'generar', proveedor_real_prohibido)
     monkeypatch.setattr(metrics, 'LOG_PATH', tmp_path / 'metrics.jsonl')
     original=admin_store.PROMPT_DIR
     copied=tmp_path/'prompts'
@@ -27,11 +36,11 @@ def metricas_aisladas(tmp_path, monkeypatch):
     for path in original.glob('system_v[123].md'):
         shutil.copy2(path,copied/path.name)
     monkeypatch.setattr(admin_store,'DATA_DIR',tmp_path/'admin')
-    
-    # LÍNEA ELIMINADA/COMENTADA: Evitamos forzar 'lexical' globalmente 
-    # porque interfiere con los tests que esperan la estrategia por defecto.
-    # monkeypatch.setattr(admin_store,'DEFAULTS',dict(admin_store.DEFAULTS, strategy='lexical'))
-    
+    monkeypatch.setattr(admin_store,'DEFAULTS',dict(admin_store.DEFAULTS, strategy='lexical'))
     monkeypatch.setattr(admin_store,'PROMPT_DIR',copied)
+    admin_auth.SESSIONS.clear()
+    admin_auth.FAILURES.clear()
+    yield
+    get_settings.cache_clear()
     admin_auth.SESSIONS.clear()
     admin_auth.FAILURES.clear()

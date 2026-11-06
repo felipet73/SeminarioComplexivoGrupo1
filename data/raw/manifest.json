@@ -102,13 +102,13 @@
         "valid_to": null,
         "approved": false,
         "enabled": true,
-        "notes": "Fuente oficial escaneada. OCR con errores en membretes y tablas; pendiente revision humana integral y confirmacion institucional de vigencia/aplicabilidad. Excluida de respuestas hasta aprobar. OCR SHA-256: 9505654613bb00077bfdf97dd5bf16dfaf692c8fa0af483d8144e5d7b5ca926e"
+        "notes": "Fuente oficial escaneada. OCR con errores en membretes y tablas; pendiente revision humana integral y confirmacion institucional de vigencia/aplicabilidad. Excluida de respuestas hasta aprobar. OCR SHA-256: 556a1f22b919a8158adcd0eb227885539d5a79d3a0c2a6ec3be6b714377f82bf"
       },
       "origin": "official_download",
       "acquired_at": "2026-11-06T04:54:46.786172+00:00",
       "downloaded_at": "2026-11-06T04:54:46.786172+00:00",
       "ocr_file": "UNIANDES-Instructivo-Titulacion-2017.ocr.json",
-      "ocr_sha256": "9505654613bb00077bfdf97dd5bf16dfaf692c8fa0af483d8144e5d7b5ca926e"
+      "ocr_sha256": "556a1f22b919a8158adcd0eb227885539d5a79d3a0c2a6ec3be6b714377f82bf"
     }
   ]
 }

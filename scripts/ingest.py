@@ -12,7 +12,8 @@ from app.services import admin_store as store, rag
 from app.parametros import similitud_para_modelo
 
 
-def ingest(manifest=None, strategy=None, embedding_model=None):
+def cargar_fuentes(manifest=None):
+    """Valida todos los originales y OCR sin modificar el índice."""
     manifest = Path(manifest or ROOT / 'data/raw/manifest.json').resolve()
     entries = json.loads(manifest.read_text(encoding='utf-8'))['documents']
     policies = json.loads((ROOT / 'config/fuentes.yaml').read_text(encoding='utf-8'))['documents']
@@ -40,6 +41,11 @@ def ingest(manifest=None, strategy=None, embedding_model=None):
                 raise ValueError('OCR asociado a otro original')
             pages = rag.validar_ocr(content, ocr['pages'])
         sources.append((path, content, DocMeta(**(entry['metadata'] | policies[entry['file']])).model_dump(mode='json'), pages))
+    return sources
+
+
+def ingest(manifest=None, strategy=None, embedding_model=None):
+    sources = cargar_fuentes(manifest)
     if strategy or embedding_model:
         with store.db() as conn:
             config = store.get(conn, 'config', 'rag')
