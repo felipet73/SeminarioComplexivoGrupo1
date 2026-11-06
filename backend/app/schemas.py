@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Literal
 from pydantic import BaseModel, Field, field_validator, model_validator
 from app.services.actions import AccionPendiente
+from app.tools.academicas import ChecklistOut
 
 CampoContexto = Literal['carrera','curso','modalidad','periodo','jornada','tema','objetivo','sede','modalidad_titulacion']
 
@@ -58,6 +59,8 @@ class RespuestaAsistente(BaseModel):
     fuentes: list[Fuente] = Field(default_factory=list)
     campos_necesarios: list[CampoNecesario] = Field(default_factory=list)
     pasos_agente: list[str] = Field(default_factory=list)
+    traza_agente: list[dict] = Field(default_factory=list)
+    checklist: ChecklistOut | None = None
     accion_pendiente: AccionPendiente | None = None
     modelo_utilizado: str | None = None
     fallback_activado: bool = False

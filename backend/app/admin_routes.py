@@ -11,6 +11,7 @@ from app.config import get_settings
 from app.services import admin_store as store, rag, analysis
 from app.services.llm import ClienteLLM
 from app.eval_cases import CASES
+from app.parametros import PARAMETROS
 
 router = APIRouter(prefix='/api/admin', tags=['Administración'])
 protected = APIRouter(dependencies=[Depends(require_admin)])
@@ -44,6 +45,7 @@ def bootstrap():
         return {'prompts':sorted(store.all_records(conn,'prompt'),key=lambda p:p['version']),
                 'documents':[rag.public_doc(d) | {'eligible':rag.eligible(d),'index_current':d.get('index_signature')==rag.signature(store.get(conn,'config','rag')) and d['indexed_revision']==d['revision']} for d in store.all_records(conn,'document')],
                 'config':store.get(conn,'config','rag'),
+                'embedding_thresholds':PARAMETROS['similitud_por_modelo'],
                 'reference_cases':CASES,
                 'models':[{'id':'gemini','name':s.ai_model,'configured':bool(s.gemini_api_key)},
                           {'id':'openai','name':s.fallback_model,'configured':bool(s.openai_api_key)}]}

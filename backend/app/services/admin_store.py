@@ -1,19 +1,20 @@
 """Estado privado local y auditoría de revisiones; SQLite + originales inmutables."""
 from __future__ import annotations
 import json
+import os
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from threading import RLock
 from uuid import uuid4
+from app.parametros import RAG_DEFAULTS
 
-DATA_DIR = Path(__file__).resolve().parents[3] / 'data' / 'admin'
+DATA_DIR = Path(os.environ.get('RAG_DATA_DIR') or Path(__file__).resolve().parents[3] / 'data' / 'admin')
 PROMPT_DIR = Path(__file__).resolve().parents[1] / 'prompts'
 LOCK = RLock()
 _ready: set[str] = set()
-DEFAULTS = {'active_prompt':3, 'chunk_size':1400, 'overlap':160, 'top_k':4,
-            'strategy':'hybrid', 'embedding_model':'gemini-embedding-001', 'min_similarity':0.65, 'min_lexical_coverage':0.6, 'revision':1}
+DEFAULTS = dict(RAG_DEFAULTS, revision=1)
 
 def now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -50,6 +51,9 @@ def db():
                     put(conn,'prompt',version,updated)
                     audit(conn,'filesystem','sync_prompt_file',f'prompt:{version}',previous,updated)
             put(conn, 'config', 'rag', DEFAULTS, ignore=True)
+            config = get(conn, 'config', 'rag')
+            if any(key not in config for key in DEFAULTS):
+                put(conn, 'config', 'rag', dict(DEFAULTS, **config))
             key = str(DATA_DIR.resolve())
             if key not in _ready:
                 for job in all_records(conn, 'analysis'):
