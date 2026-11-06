@@ -1,8 +1,15 @@
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 import pytest
 from app.services import metrics
 from app.services import admin_store
 from app import admin_auth
 import shutil
+
+# Carga automática del archivo .env ubicado en la raíz del proyecto (un nivel arriba de backend/)
+env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
 
 @pytest.fixture
 def fuente_indexada():
@@ -20,7 +27,11 @@ def metricas_aisladas(tmp_path, monkeypatch):
     for path in original.glob('system_v[123].md'):
         shutil.copy2(path,copied/path.name)
     monkeypatch.setattr(admin_store,'DATA_DIR',tmp_path/'admin')
-    monkeypatch.setattr(admin_store,'DEFAULTS',dict(admin_store.DEFAULTS, strategy='lexical'))
+    
+    # LÍNEA ELIMINADA/COMENTADA: Evitamos forzar 'lexical' globalmente 
+    # porque interfiere con los tests que esperan la estrategia por defecto.
+    # monkeypatch.setattr(admin_store,'DEFAULTS',dict(admin_store.DEFAULTS, strategy='lexical'))
+    
     monkeypatch.setattr(admin_store,'PROMPT_DIR',copied)
     admin_auth.SESSIONS.clear()
     admin_auth.FAILURES.clear()
