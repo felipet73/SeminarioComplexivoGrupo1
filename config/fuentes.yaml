@@ -34,6 +34,13 @@
       "approved": true,
       "enabled": true,
       "kind": "normativa"
+    },
+    "UNIANDES-Instructivo-Titulacion-2017.pdf": {
+      "valid_from": "2017-08-23",
+      "valid_to": null,
+      "approved": false,
+      "enabled": true,
+      "notes": "Fuente oficial escaneada. OCR con errores en membretes y tablas; pendiente revision humana integral y confirmacion institucional de vigencia/aplicabilidad. Excluida de respuestas hasta aprobar. OCR SHA-256: 9505654613bb00077bfdf97dd5bf16dfaf692c8fa0af483d8144e5d7b5ca926e"
     }
   }
 }

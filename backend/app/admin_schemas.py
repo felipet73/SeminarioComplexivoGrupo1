@@ -1,6 +1,7 @@
 from datetime import date
 from typing import Literal
 from pydantic import BaseModel, Field, model_validator
+from app.parametros import RAG_DEFAULTS
 
 class Login(BaseModel):
     username: str = Field(min_length=1,max_length=80)
@@ -34,13 +35,13 @@ class DocUpdate(DocMeta):
 
 class RAGConfig(BaseModel):
     active_prompt: int = Field(ge=1,le=999)
-    chunk_size: int = Field(default=1400,ge=300,le=4000)
-    overlap: int = Field(default=160,ge=0,le=1000)
-    top_k: int = Field(default=4,ge=1,le=10)
-    strategy: Literal['lexical','hybrid'] = 'hybrid'
-    embedding_model: Literal['gemini-embedding-001','text-embedding-3-small'] = 'gemini-embedding-001'
-    min_similarity: float = Field(default=.65,ge=0,le=1)
-    min_lexical_coverage: float = Field(default=.6,ge=0,le=1)
+    chunk_size: int = Field(default=RAG_DEFAULTS['chunk_size'],ge=300,le=4000)
+    overlap: int = Field(default=RAG_DEFAULTS['overlap'],ge=0,le=1000)
+    top_k: int = Field(default=RAG_DEFAULTS['top_k'],ge=1,le=10)
+    strategy: Literal['lexical','hybrid'] = RAG_DEFAULTS['strategy']
+    embedding_model: Literal['gemini-embedding-001','text-embedding-3-small'] = RAG_DEFAULTS['embedding_model']
+    min_similarity: float = Field(default=RAG_DEFAULTS['min_similarity'],ge=0,le=1)
+    min_lexical_coverage: float = Field(default=RAG_DEFAULTS['min_lexical_coverage'],ge=0,le=1)
     revision: int = Field(ge=1)
 
     @model_validator(mode='after')

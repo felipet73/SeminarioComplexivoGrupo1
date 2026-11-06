@@ -7,11 +7,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'backend'))
 from app.services import admin_store as store, rag
+from app.parametros import PARAMETROS
 
 
 def activar():
     report = json.loads((ROOT / 'eval/results-comparacion.json').read_text(encoding='utf-8'))['hybrid']
-    if report['acierto_top_k'] < .7 or report['silencio'] < .9:
+    if report.get('errores', 0) or report['acierto_top_k'] < PARAMETROS['evaluacion']['acierto_top_k'] or report['silencio'] < PARAMETROS['evaluacion']['silencio']:
         raise ValueError('La comparación no supera los umbrales de aceptación')
     config = report['config']
     with sqlite3.connect(ROOT / 'data/eval-hybrid/admin.sqlite3') as source:

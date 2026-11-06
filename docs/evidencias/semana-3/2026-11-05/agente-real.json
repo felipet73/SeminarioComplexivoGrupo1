@@ -1,0 +1,974 @@
+{
+  "fecha": "2026-11-06T05:07:19.023125+00:00",
+  "modo": "agente_modelo_real_sin_fallback",
+  "proveedor": "gemini",
+  "modelo": "gemini-3.5-flash-lite",
+  "prompt_sha256": "f8023d76849aab75bf7d7c2b02672b70ed5f48d47c5b31ef53ff1e6c839a6f04",
+  "config": {
+    "active_prompt": 3,
+    "chunk_size": 1400,
+    "overlap": 160,
+    "top_k": 4,
+    "strategy": "hybrid",
+    "embedding_model": "text-embedding-3-small",
+    "min_similarity": 0.55,
+    "min_lexical_coverage": 0.6,
+    "revision": 2
+  },
+  "casos": [
+    {
+      "id": "a1",
+      "pregunta": "Genera un checklist con los requisitos de integración curricular para un estudiante de grado.",
+      "curso": "grado",
+      "respuesta": {
+        "respuesta": "Para generar tu checklist de integración curricular o titulación de grado, la evidencia disponible muestra disposiciones generales aplicables (como la entrega digital de trabajos de titulación según el LOES, Art. 144, p. 54, y directrices sobre opciones en artes o designación de tutor según el Reglamento de Régimen Académico, Art. 27 y 91, pp. 9 y 25). Sin embargo, se requiere confirmar la modalidad específica de titulación para precisar los requisitos internos. Para una orientación detallada, te sugerimos consultar con Secretaría o tu coordinación.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 144",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 54,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 91",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 25,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 27",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 9,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "Estudiante de grado de UNIANDES"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-31",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43"
+            ],
+            "checklist": {
+              "perfil_declarado": "Estudiante de grado de UNIANDES",
+              "perfil_interpretado": {
+                "nivel": "grado"
+              },
+              "datos_por_confirmar": [
+                "modalidad_titulacion"
+              ],
+              "items": [
+                {
+                  "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+                  "documento": "LOES",
+                  "seccion": "Artículo 144",
+                  "pagina": 54,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "Las IES deberán garantizar a todos sus estudiantes la designación oportuna del  director o tutor, de \nentre los miembros del personal académico de la propia IES o de una diferente, para el desarrollo y \nevaluación de la opción de titulación.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 27",
+                  "pagina": 9,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La IES podrá emitir el título respectivo únicamente cuando el estudiante apruebe todos los requisitos \nacadémicos y administrativos establecidos por las IES, lo que constará en el acta consolidada de \nfinalización de estudios, de conformidad con el artículo 85 de este Reglamento.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 27",
+                  "pagina": 9,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": {
+          "perfil_declarado": "Estudiante de grado de UNIANDES",
+          "perfil_interpretado": {
+            "nivel": "grado"
+          },
+          "datos_por_confirmar": [
+            "modalidad_titulacion"
+          ],
+          "items": [
+            {
+              "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "documento": "LOES",
+              "seccion": "Artículo 144",
+              "pagina": 54,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "Las IES deberán garantizar a todos sus estudiantes la designación oportuna del  director o tutor, de \nentre los miembros del personal académico de la propia IES o de una diferente, para el desarrollo y \nevaluación de la opción de titulación.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 27",
+              "pagina": 9,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "La IES podrá emitir el título respectivo únicamente cuando el estudiante apruebe todos los requisitos \nacadémicos y administrativos establecidos por las IES, lo que constará en el acta consolidada de \nfinalización de estudios, de conformidad con el artículo 85 de este Reglamento.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 27",
+              "pagina": 9,
+              "estado": "pendiente_de_verificar"
+            }
+          ],
+          "completo": false,
+          "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+        },
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 4.633
+      },
+      "salida_final_modelo": "{\"respuesta\": \"Para generar tu checklist de integración curricular o titulación de grado, la evidencia disponible muestra disposiciones generales aplicables (como la entrega digital de trabajos de titulación según el LOES, Art. 144, p. 54, y directrices sobre opciones en artes o designación de tutor según el Reglamento de Régimen Académico, Art. 27 y 91, pp. 9 y 25). Sin embargo, se requiere confirmar la modalidad específica de titulación para precisar los requisitos internos. Para una orientación detallada, te sugerimos consultar con Secretaría o tu coordinación.\", \"estado\": \"respuesta\", \"fragmentos\": [\"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257\", \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132\", \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43\"], \"campos_necesarios\": [\"modalidad_titulacion\"]}",
+      "tokens_total": 8583,
+      "cumple": true,
+      "herramienta_elegida_y_ejecutada": true
+    },
+    {
+      "id": "a2",
+      "pregunta": "Necesito una lista de verificación de titulación de posgrado; usa generar_checklist para organizar los requisitos.",
+      "curso": "posgrado",
+      "respuesta": {
+        "respuesta": "Para el nivel de posgrado, los siguientes aspectos normativos generales han sido identificados como referencia, aunque están pendientes de verificar y requieren confirmar la normativa interna específica de UNIANDES y la modalidad de titulación:\n\n- **Entrega en formato digital:** Todas las instituciones de educación superior están obligadas a entregar los trabajos de titulación de grado y posgrado en formato digital para su integración al Sistema Nacional de Información de la Educación Superior (LOES, Artículo 144, p. 54) [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257].\n- **Requisitos en artes (si aplica):** El trabajo o memoria debe contener reflexión teórica, y su presentación requiere registro audiovisual, fotográfico u otro medio digital (Reglamento de Régimen Académico, Artículo 91, p. 25) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132].\n\nEsta lista es una orientación preliminar y no constituye una certificación de cumplimiento ni una lista exhaustiva. Te sugerimos consultar con Secretaría o tu coordinación de programa para conocer todos los requisitos internos aplicables a tu carrera y modalidad.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 144",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 54,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 91",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 25,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "posgrado"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-108",
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-31",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132"
+            ],
+            "checklist": {
+              "perfil_declarado": "posgrado",
+              "perfil_interpretado": {
+                "nivel": "posgrado"
+              },
+              "datos_por_confirmar": [
+                "modalidad_titulacion"
+              ],
+              "items": [
+                {
+                  "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+                  "documento": "LOES",
+                  "seccion": "Artículo 144",
+                  "pagina": 54,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": {
+          "perfil_declarado": "posgrado",
+          "perfil_interpretado": {
+            "nivel": "posgrado"
+          },
+          "datos_por_confirmar": [
+            "modalidad_titulacion"
+          ],
+          "items": [
+            {
+              "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "documento": "LOES",
+              "seccion": "Artículo 144",
+              "pagina": 54,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            }
+          ],
+          "completo": false,
+          "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+        },
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 5.893
+      },
+      "salida_final_modelo": "```json\n{\n  \"respuesta\": \"Para el nivel de posgrado, los siguientes aspectos normativos generales han sido identificados como referencia, aunque están pendientes de verificar y requieren confirmar la normativa interna específica de UNIANDES y la modalidad de titulación:\\n\\n- **Entrega en formato digital:** Todas las instituciones de educación superior están obligadas a entregar los trabajos de titulación de grado y posgrado en formato digital para su integración al Sistema Nacional de Información de la Educación Superior (LOES, Artículo 144, p. 54) [bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257].\\n- **Requisitos en artes (si aplica):** El trabajo o memoria debe contener reflexión teórica, y su presentación requiere registro audiovisual, fotográfico u otro medio digital (Reglamento de Régimen Académico, Artículo 91, p. 25) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132].\\n\\nEsta lista es una orientación preliminar y no constituye una certificación de cumplimiento ni una lista exhaustiva. Te sugerimos consultar con Secretaría o tu coordinación de programa para conocer todos los requisitos internos aplicables a tu carrera y modalidad.\",\n  \"estado\": \"respuesta\",\n  \"fragmentos\": [\n    \"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257\",\n    \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132\"\n  ],\n  \"campos_necesarios\": []\n}\n```",
+      "tokens_total": 8244,
+      "cumple": true,
+      "herramienta_elegida_y_ejecutada": true
+    },
+    {
+      "id": "a3",
+      "pregunta": "Genera un checklist de requisitos de titulación para grado con examen complexivo.",
+      "curso": "grado",
+      "modalidad_titulacion": "examen complexivo",
+      "respuesta": {
+        "respuesta": "Para la modalidad de examen complexivo en grado, la evidencia disponible en el Reglamento Régimen Académico menciona la opción de rendir un examen complexivo como alternativa tras una segunda reprobación en trabajos de titulación artística (Artículo 91, página 25), pero no contiene un listado específico de requisitos o pasos propios para estructurar un checklist general de examen complexivo de grado. Los elementos obtenidos corresponden a normas sobre titulación en artes y posgrados de salud (Artículos 17 y 127), por lo que no es posible armar una lista completa y verificada con las fuentes actuales. Te sugiero consultar directamente con Secretaría o tu coordinación para obtener la normativa interna específica de UNIANDES para esta modalidad.",
+        "estado": "abstencion",
+        "requiere_revision_humana": true,
+        "fuentes": [],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist",
+          "buscar_fragmentos"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "Estudiante de grado con modalidad de titulación examen complexivo"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132"
+            ],
+            "checklist": {
+              "perfil_declarado": "Estudiante de grado con modalidad de titulación examen complexivo",
+              "perfil_interpretado": {
+                "nivel": "grado",
+                "modalidad_titulacion": "examen complexivo"
+              },
+              "datos_por_confirmar": [],
+              "items": [
+                {
+                  "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "herramienta_solicitada",
+            "herramienta": "buscar_fragmentos",
+            "argumentos": {
+              "pregunta": "examen complexivo requisitos titulacion grado"
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "herramienta_completada",
+            "herramienta": "buscar_fragmentos",
+            "fragmentos": [
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-31",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-189"
+            ]
+          },
+          {
+            "vuelta": 3,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 3,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": null,
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 11.65
+      },
+      "salida_final_modelo": "```json\n{\"respuesta\": \"Para la modalidad de examen complexivo en grado, la evidencia disponible en el Reglamento Régimen Académico menciona la opción de rendir un examen complexivo como alternativa tras una segunda reprobación en trabajos de titulación artística (Artículo 91, página 25), pero no contiene un listado específico de requisitos o pasos propios para estructurar un checklist general de examen complexivo de grado. Los elementos obtenidos corresponden a normas sobre titulación en artes y posgrados de salud (Artículos 17 y 127), por lo que no es posible armar una lista completa y verificada con las fuentes actuales. Te sugiero consultar directamente con Secretaría o tu coordinación para obtener la normativa interna específica de UNIANDES para esta modalidad.\", \"estado\": \"abstencion\", \"fragmentos\": [\"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132\"], \"campos_necesarios\": []}\n```",
+      "tokens_total": 10488,
+      "cumple": false,
+      "herramienta_elegida_y_ejecutada": true
+    },
+    {
+      "id": "a4",
+      "pregunta": "Organiza un checklist para titularme mediante proyecto de investigación en grado.",
+      "curso": "grado",
+      "modalidad_titulacion": "proyecto de investigación",
+      "respuesta": {
+        "respuesta": "Para la titulación mediante proyecto de investigación en el nivel de grado, se ha generado un checklist preliminar basado en la normativa disponible. Ten en cuenta que estos elementos están pendientes de verificar y requieren confirmación con la normativa interna de la institución:\n\n- El trabajo de titulación o memoria debe contener la reflexión teórica correspondiente (Reglamento Regimen Academico, Artículo 91, p. 25) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132].\n- La presentación del trabajo de titulación debe registrarse en soporte audiovisual, fotográfico u otros medios digitales (Reglamento Regimen Academico, Artículo 91, p. 25) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132].\n- Si aplica una propuesta curricular experimental o innovadora, debe cumplir con las características establecidas (Reglamento Regimen Academico, Artículo 96, p. 27) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-141].\n\nEste listado es una guía orientativa y no acredita cumplimiento total ni exhaustividad. Te sugerimos consultar con Secretaría o tu coordinación para verificar los requisitos específicos internos de UNIANDES.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 91",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 25,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 96",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 27,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-141",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "estudiante de grado modalidad proyecto de investigacion"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "ce225e90-10e4-4ad7-983e-95a8144a0980-r1-87",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-141"
+            ],
+            "checklist": {
+              "perfil_declarado": "estudiante de grado modalidad proyecto de investigacion",
+              "perfil_interpretado": {
+                "nivel": "grado",
+                "modalidad_titulacion": "proyecto de investigacion"
+              },
+              "datos_por_confirmar": [],
+              "items": [
+                {
+                  "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "Para considerar una propuesta curricular  como experimental o \ninnovadora, deberá tener al menos una de las siguientes características:",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-141",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 96",
+                  "pagina": 27,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": {
+          "perfil_declarado": "estudiante de grado modalidad proyecto de investigacion",
+          "perfil_interpretado": {
+            "nivel": "grado",
+            "modalidad_titulacion": "proyecto de investigacion"
+          },
+          "datos_por_confirmar": [],
+          "items": [
+            {
+              "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "Para considerar una propuesta curricular  como experimental o \ninnovadora, deberá tener al menos una de las siguientes características:",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-141",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 96",
+              "pagina": 27,
+              "estado": "pendiente_de_verificar"
+            }
+          ],
+          "completo": false,
+          "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+        },
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 4.764
+      },
+      "salida_final_modelo": "```json\n{\n  \"respuesta\": \"Para la titulación mediante proyecto de investigación en el nivel de grado, se ha generado un checklist preliminar basado en la normativa disponible. Ten en cuenta que estos elementos están pendientes de verificar y requieren confirmación con la normativa interna de la institución:\\n\\n- El trabajo de titulación o memoria debe contener la reflexión teórica correspondiente (Reglamento Regimen Academico, Artículo 91, p. 25) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132].\\n- La presentación del trabajo de titulación debe registrarse en soporte audiovisual, fotográfico u otros medios digitales (Reglamento Regimen Academico, Artículo 91, p. 25) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132].\\n- Si aplica una propuesta curricular experimental o innovadora, debe cumplir con las características establecidas (Reglamento Regimen Academico, Artículo 96, p. 27) [076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-141].\\n\\nEste listado es una guía orientativa y no acredita cumplimiento total ni exhaustividad. Te sugerimos consultar con Secretaría o tu coordinación para verificar los requisitos específicos internos de UNIANDES.\",\n  \"estado\": \"respuesta\",\n  \"fragmentos\": [\n    \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132\",\n    \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-141\"\n  ],\n  \"campos_necesarios\": []\n}\n```",
+      "tokens_total": 7923,
+      "cumple": true,
+      "herramienta_elegida_y_ejecutada": true
+    },
+    {
+      "id": "a5",
+      "pregunta": "Genera un checklist de requisitos de titulación de maestría; distingue lo que falta verificar.",
+      "curso": "maestría",
+      "respuesta": {
+        "respuesta": "Para la titulación de posgrado (maestría), la normativa general establece la obligación de entregar el trabajo de titulación en formato digital para su integración al Sistema Nacional de Información de la Educación Superior del Ecuador (LOES, Artículo 144, p. 54). Asimismo, en el caso específico de programas en artes, se contempla la presentación de un proyecto de titulación con su respectiva reflexión teórica y registro digital o audiovisual (Reglamento Régimen Académico, Artículo 91, p. 25). \n\nDatos pendientes de confirmar: La modalidad de titulación exacta [modalidad_titulacion] y los requisitos específicos internos de UNIANDES para tu maestría.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 144",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 54,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 91",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 25,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "maestria"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-108",
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-31",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132"
+            ],
+            "checklist": {
+              "perfil_declarado": "maestria",
+              "perfil_interpretado": {
+                "nivel": "posgrado"
+              },
+              "datos_por_confirmar": [
+                "modalidad_titulacion"
+              ],
+              "items": [
+                {
+                  "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+                  "documento": "LOES",
+                  "seccion": "Artículo 144",
+                  "pagina": 54,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": {
+          "perfil_declarado": "maestria",
+          "perfil_interpretado": {
+            "nivel": "posgrado"
+          },
+          "datos_por_confirmar": [
+            "modalidad_titulacion"
+          ],
+          "items": [
+            {
+              "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "documento": "LOES",
+              "seccion": "Artículo 144",
+              "pagina": 54,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            }
+          ],
+          "completo": false,
+          "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+        },
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 4.342
+      },
+      "salida_final_modelo": "```json\n{\"respuesta\": \"Para la titulación de posgrado (maestría), la normativa general establece la obligación de entregar el trabajo de titulación en formato digital para su integración al Sistema Nacional de Información de la Educación Superior del Ecuador (LOES, Artículo 144, p. 54). Asimismo, en el caso específico de programas en artes, se contempla la presentación de un proyecto de titulación con su respectiva reflexión teórica y registro digital o audiovisual (Reglamento Régimen Académico, Artículo 91, p. 25). \\n\\nDatos pendientes de confirmar: La modalidad de titulación exacta [modalidad_titulacion] y los requisitos específicos internos de UNIANDES para tu maestría.\", \"estado\": \"respuesta\", \"fragmentos\": [\"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257\", \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132\"], \"campos_necesarios\": [\"modalidad_titulacion\"]}\n```",
+      "tokens_total": 8085,
+      "cumple": true,
+      "herramienta_elegida_y_ejecutada": true
+    },
+    {
+      "id": "a6",
+      "pregunta": "Necesito una lista de verificación de requisitos de titulación de tercer nivel, basada en los artículos recuperados.",
+      "curso": "tercer nivel",
+      "respuesta": {
+        "respuesta": "Con base en la evidencia disponible, se presenta un checklist orientativo de los requisitos normativos aplicables para la titulación de tercer nivel de grado. Ten en cuenta que este listado organiza los pasajes recuperados y requiere confirmar la modalidad de titulación y la normativa interna específica de UNIANDES:\n\n1. **Entrega del trabajo en formato digital**: Los trabajos de titulación elaborados para grado y posgrado deben entregarse en formato digital para su integración al Sistema Nacional de Información de la Educación Superior (LOES, Artículo 144, p. 54).\n2. **Trabajos en el área de artes (si aplica)**: El trabajo o memoria debe contener una reflexión teórica de la presentación o producción artística, la cual debe registrarse en un soporte audiovisual, fotográfico u otro medio digital (Reglamento Régimen Académico, Artículo 91, p. 25).\n3. **Designación de tutor**: La institución debe garantizar la designación oportuna de un director o tutor para el desarrollo y evaluación de la opción de titulación (Reglamento Régimen Académico, Artículo 27, p. 9).\n4. **Aprobación de requisitos y acta**: La emisión del título procede únicamente tras aprobar todos los requisitos académicos y administrativos establecidos por la IES, lo cual constará en el acta consolidada de finalización de estudios (Reglamento Régimen Académico, Artículo 27, p. 9).\n\nEste checklist es una guía basada en la normativa general y está pendiente de verificar según tu modalidad de titulación. Para confirmar los requisitos particulares de tu carrera, te sugerimos consultar con Secretaría o tu coordinación.",
+        "estado": "respuesta",
+        "requiere_revision_humana": true,
+        "fuentes": [
+          {
+            "titulo": "LOES",
+            "seccion": "Artículo 144",
+            "url": "/api/sources/bcc33150-06a9-4ad4-9fcb-5b522ddac781/1",
+            "version": "Revisión 1",
+            "pagina": 54,
+            "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+            "sha256": "8c454e7851a0b767f9f5b903b23a1bde971f62e408fd65bc593fd6ce8f887a7a"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 91",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 25,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          },
+          {
+            "titulo": "Reglamento Regimen Academico",
+            "seccion": "Artículo 27",
+            "url": "/api/sources/076e861c-58ac-49f6-8cd1-03d58c1ab806/1",
+            "version": "Revisión 1",
+            "pagina": 9,
+            "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+            "sha256": "8b4b25d7715268e00ae126c5e7388450300e6c4b4304652b7f11f3ea0381df39"
+          }
+        ],
+        "campos_necesarios": [],
+        "pasos_agente": [
+          "generar_checklist"
+        ],
+        "traza_agente": [
+          {
+            "vuelta": 1,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_solicitada",
+            "herramienta": "generar_checklist",
+            "argumentos": {
+              "perfil_estudiante": "Estudiante de tercer nivel de grado buscando requisitos de titulación"
+            }
+          },
+          {
+            "vuelta": 1,
+            "evento": "herramienta_completada",
+            "herramienta": "generar_checklist",
+            "fragmentos": [
+              "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-31",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43"
+            ],
+            "checklist": {
+              "perfil_declarado": "Estudiante de tercer nivel de grado buscando requisitos de titulación",
+              "perfil_interpretado": {
+                "nivel": "grado"
+              },
+              "datos_por_confirmar": [
+                "modalidad_titulacion"
+              ],
+              "items": [
+                {
+                  "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+                  "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+                  "documento": "LOES",
+                  "seccion": "Artículo 144",
+                  "pagina": 54,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 91",
+                  "pagina": 25,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "Las IES deberán garantizar a todos sus estudiantes la designación oportuna del  director o tutor, de \nentre los miembros del personal académico de la propia IES o de una diferente, para el desarrollo y \nevaluación de la opción de titulación.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 27",
+                  "pagina": 9,
+                  "estado": "pendiente_de_verificar"
+                },
+                {
+                  "requisito": "La IES podrá emitir el título respectivo únicamente cuando el estudiante apruebe todos los requisitos \nacadémicos y administrativos establecidos por las IES, lo que constará en el acta consolidada de \nfinalización de estudios, de conformidad con el artículo 85 de este Reglamento.",
+                  "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+                  "documento": "Reglamento Regimen Academico",
+                  "seccion": "Artículo 27",
+                  "pagina": 9,
+                  "estado": "pendiente_de_verificar"
+                }
+              ],
+              "completo": false,
+              "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+            }
+          },
+          {
+            "vuelta": 2,
+            "evento": "modelo",
+            "modelo": "gemini-3.5-flash-lite",
+            "fallback": false
+          },
+          {
+            "vuelta": 2,
+            "evento": "respuesta_final"
+          }
+        ],
+        "checklist": {
+          "perfil_declarado": "Estudiante de tercer nivel de grado buscando requisitos de titulación",
+          "perfil_interpretado": {
+            "nivel": "grado"
+          },
+          "datos_por_confirmar": [
+            "modalidad_titulacion"
+          ],
+          "items": [
+            {
+              "requisito": "144.- Trabajos de Titulación en formato digital.- Todas las instituciones de educación superior\nestarán obligadas a entregar los trabajos de titulación que se elaboren para la obtención de títulos\nacadémicos de grado y posgrado en formato digital para ser integradas al Sistema Nacional de\nInformación de la Educación Superior del Ecuador para su difusión pública respetando los derechos\nde autor.",
+              "fragmento_id": "bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257",
+              "documento": "LOES",
+              "seccion": "Artículo 144",
+              "pagina": 54,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "El trabajo de titulación o memoria deberá contener la reflexión teórica de la presentación o \nproducción artística.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "La presentación del trabajo de titulación deberá ser registrada en un soporte \naudiovisual, fotográfico u otros medios digitales.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 91",
+              "pagina": 25,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "Las IES deberán garantizar a todos sus estudiantes la designación oportuna del  director o tutor, de \nentre los miembros del personal académico de la propia IES o de una diferente, para el desarrollo y \nevaluación de la opción de titulación.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 27",
+              "pagina": 9,
+              "estado": "pendiente_de_verificar"
+            },
+            {
+              "requisito": "La IES podrá emitir el título respectivo únicamente cuando el estudiante apruebe todos los requisitos \nacadémicos y administrativos establecidos por las IES, lo que constará en el acta consolidada de \nfinalización de estudios, de conformidad con el artículo 85 de este Reglamento.",
+              "fragmento_id": "076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43",
+              "documento": "Reglamento Regimen Academico",
+              "seccion": "Artículo 27",
+              "pagina": 9,
+              "estado": "pendiente_de_verificar"
+            }
+          ],
+          "completo": false,
+          "advertencia": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+        },
+        "modelo_utilizado": "gemini-3.5-flash-lite",
+        "fallback_activado": false,
+        "tiempo_segundos": 4.274
+      },
+      "salida_final_modelo": "{\"respuesta\": \"Con base en la evidencia disponible, se presenta un checklist orientativo de los requisitos normativos aplicables para la titulación de tercer nivel de grado. Ten en cuenta que este listado organiza los pasajes recuperados y requiere confirmar la modalidad de titulación y la normativa interna específica de UNIANDES:\\n\\n1. **Entrega del trabajo en formato digital**: Los trabajos de titulación elaborados para grado y posgrado deben entregarse en formato digital para su integración al Sistema Nacional de Información de la Educación Superior (LOES, Artículo 144, p. 54).\\n2. **Trabajos en el área de artes (si aplica)**: El trabajo o memoria debe contener una reflexión teórica de la presentación o producción artística, la cual debe registrarse en un soporte audiovisual, fotográfico u otro medio digital (Reglamento Régimen Académico, Artículo 91, p. 25).\\n3. **Designación de tutor**: La institución debe garantizar la designación oportuna de un director o tutor para el desarrollo y evaluación de la opción de titulación (Reglamento Régimen Académico, Artículo 27, p. 9).\\n4. **Aprobación de requisitos y acta**: La emisión del título procede únicamente tras aprobar todos los requisitos académicos y administrativos establecidos por la IES, lo cual constará en el acta consolidada de finalización de estudios (Reglamento Régimen Académico, Artículo 27, p. 9).\\n\\nEste checklist es una guía basada en la normativa general y está pendiente de verificar según tu modalidad de titulación. Para confirmar los requisitos particulares de tu carrera, te sugerimos consultar con Secretaría o tu coordinación.\", \"estado\": \"respuesta\", \"fragmentos\": [\"bcc33150-06a9-4ad4-9fcb-5b522ddac781-r1-257\", \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-132\", \"076e861c-58ac-49f6-8cd1-03d58c1ab806-r1-43\"], \"campos_necesarios\": []}",
+      "tokens_total": 8830,
+      "cumple": true,
+      "herramienta_elegida_y_ejecutada": true
+    }
+  ],
+  "aciertos": 5,
+  "total": 6,
+  "limite": "Verifica elección y ejecución real, citas y lista no vacía. No mide exhaustividad ni respaldo semántico de cada frase."
+}

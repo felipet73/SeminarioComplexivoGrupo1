@@ -115,3 +115,42 @@ def test_checklist_extractivo_solo_normativa_y_sin_certificar(fuente_indexada):
         assert item.estado == 'pendiente_de_verificar'
         assert any(item.fragmento_id == c['id'] and item.requisito in c['text'] for c in chunks)
     assert academicas.construir_checklist('tercer nivel', [dict(c, kind='informativo') for c in chunks]).items == []
+
+
+def test_checklist_cambia_segun_nivel_y_modalidad(fuente_indexada):
+    reglas = ['Para grado se deberá aprobar la integración curricular.',
+              'Para posgrado se deberá aprobar la unidad de titulación.',
+              'Para examen complexivo se deberá aprobar el examen final.',
+              'Para proyecto de investigación se deberá aprobar la defensa.']
+    chunks = [dict(fuente_indexada, kind='normativa', text=' '.join(reglas))]
+    grado = academicas.construir_checklist('grado, examen complexivo', chunks)
+    posgrado = academicas.construir_checklist('maestría, tesis', chunks)
+    assert [i.requisito for i in grado.items] == [reglas[0], reglas[2]]
+    assert [i.requisito for i in posgrado.items] == [reglas[1], reglas[3]]
+    assert not grado.datos_por_confirmar and grado.completo is False
+    assert academicas.construir_checklist('estudiante', chunks).datos_por_confirmar == ['nivel', 'modalidad_titulacion']
+
+
+def test_traza_demuestra_dos_turnos_y_no_inventa_consumo(fuente_indexada):
+    llm = guion({'herramienta':'generar_checklist','argumentos':{'perfil_estudiante':'titulación'}},
+                {'estado':'respuesta','respuesta':'Revisa los requisitos citados.', 'fragmentos':[fuente_indexada['id']]})
+    result, raw = generar_respuesta(ConsultaChat(pregunta='Checklist de titulación'), llm)
+    assert [e['vuelta'] for e in result.traza_agente if e['evento'] == 'modelo'] == [1, 2]
+    assert any(e['evento'] == 'herramienta_completada' for e in result.traza_agente)
+    assert result.checklist and result.checklist.items
+    assert raw.tokens_total is None and raw.segundos == .02
+
+
+def test_checklist_excluye_requisitos_de_cargos(fuente_indexada):
+    chunk = dict(fuente_indexada, kind='normativa', text='Para ser rector se deberá tener título de grado. Para grado se deberá aprobar la integración curricular.')
+    lista = academicas.construir_checklist('grado', [chunk])
+    assert len(lista.items) == 1 and 'rector' not in lista.items[0].requisito
+
+
+def test_no_permite_que_modelo_cambie_el_nivel_del_estudiante(fuente_indexada):
+    llm = guion({'herramienta':'generar_checklist','argumentos':{'perfil_estudiante':'posgrado'}},
+                {'estado':'abstencion','respuesta':'Confirma el perfil académico.'})
+    result, _ = generar_respuesta(ConsultaChat(pregunta='Checklist de titulación de grado'), llm,
+                                 evidencia=rag.retrieve('titulación')['chunks'])
+    assert result.pasos_agente == ['solicitud_no_valida']
+    assert any('indicados por el usuario' in e.get('motivo','') for e in result.traza_agente)

@@ -15,6 +15,8 @@ dist/
 .env
 .env.*
 !.env.example
+# Solo URL pública de la API para el build del frontend; no contiene secretos.
+!frontend/.env.production
 *.pem
 *.key
 # Local RAG state and archives
