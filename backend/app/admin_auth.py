@@ -19,7 +19,22 @@ def digest(value):
 def mutation_guard(request: Request):
     if request.method in ('POST','PUT','PATCH','DELETE'):
         origin = request.headers.get('origin')
-        if request.headers.get('x-admin-request') != '1' or (origin and urlsplit(origin).netloc != request.headers.get('host')):
+        permitido = True
+        if origin:
+            try:
+                parsed = urlsplit(origin)
+                valido = (parsed.scheme in ('http', 'https') and bool(parsed.hostname)
+                          and not parsed.username and not parsed.password
+                          and parsed.path in ('', '/') and not parsed.query and not parsed.fragment)
+                # El proxy de Vercel conserva Origin del navegador, aunque Host sea
+                # Cloud Run. Solo se admiten los orígenes explícitos de configuración;
+                # no se confía en X-Forwarded-Host ni se permite comodín.
+                trusted = {o for o in get_settings().origins if o != '*'}
+                permitido = valido and (parsed.netloc.casefold() == request.headers.get('host', '').casefold()
+                                        or origin.rstrip('/') in trusted)
+            except ValueError:
+                permitido = False
+        if request.headers.get('x-admin-request') != '1' or not permitido:
             raise HTTPException(403, 'Solicitud administrativa no autorizada.')
 
 def require_admin(request: Request):

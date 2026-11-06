@@ -10,13 +10,13 @@ Proyecto educativo con FastAPI, React/Vite, Gemini con respaldo OpenAI, RAG con 
 
 | Punto | Implementación y evidencia |
 |---|---|
-| Conocimiento especializado | Cinco fuentes originales en `data/raw`, manifiesto con hashes y fechas de incorporación, vigencia por fuente en `config/fuentes.yaml`, ingesta repetible con el indexador del panel |
+| Conocimiento especializado | Cinco fuentes aprobadas (961 fragmentos) y el instructivo oficial de titulación de 2017 con OCR (86 fragmentos), pendiente de revisión/aprobación; manifiesto con hashes y fechas, vigencia por fuente en YAML e ingesta repetible |
 | RAG | BM25 + embeddings, persistencia SQLite, filtros de vigencia/aprobación, umbrales, RRF, citas y abstención sin modelo cuando no hay evidencia |
 | Agente controlado | Lista cerrada, Pydantic de entrada/salida, MAX_ITER, herramientas de consulta/checklist/calendario y borrador demo con confirmación, caducidad, idempotencia y auditoría |
-| Evaluación | 20 preguntas con artículo y respuesta esperados; comparación real léxica/híbrida; chat real separado de 20 contratos del flujo con modelo doble |
-| Calidad | Backend, frontend, navegador, cobertura, Ruff, comprobación de patrones de secretos, auditorías de dependencias y workflow de CI; la ejecución remota se verifica tras publicar los cambios |
+| Evaluación | Evaluador restaurado y probado contra falsos aprobados: BM25 14/16, híbrido 16/16, chat real con cita 16/16 y negativas 4/4. Gemini eligió/ejecutó checklist en 6/6 consultas; produjo cinco listas con cita y una abstención (criterio estricto: 5/6) |
+| Calidad | 75 pruebas backend, cobertura 88,43 %, 18 frontend y 10 navegador; pruebas de proxy y CSRF, Ruff, auditorías y gitleaks sin hallazgos, build/smoke de contenedor y CI. Actions remoto se verifica tras publicar |
 
-La matriz de **todos los pasos mínimos, recomendados y avanzados** del HTML del grupo 1 está en [auditoría de la entrega](docs/12-auditoria-entrega3-grupo1.md). No se declara completado un despliegue público ni una corrida de GitHub Actions que no se haya observado.
+La matriz actual de **todos los pasos mínimos, recomendados y avanzados**, incluyendo las nuevas observaciones, está en [análisis y evidencias del 5–6 de noviembre](docs/evidencias/semana-3/2026-11-05/analisis-observaciones-docente.md). La [auditoría del 1 de noviembre](docs/12-auditoria-entrega3-grupo1.md) conserva antecedentes. El equipo confirmó que ya está desplegado en Google Cloud Run; esta revisión no modifica el servicio ni afirma haber observado su configuración o una corrida remota de Actions.
 
 ## Inicio rápido
 
@@ -54,6 +54,8 @@ npm run dev
 
 Chat: http://localhost:5173 · Administrador: http://localhost:5173/admin · Métricas: http://localhost:5173/metricas · Contratos: http://127.0.0.1:8000/docs. `/health` comprueba el proceso, no disponibilidad de fuentes ni proveedores. El usuario administrativo por defecto es `admin`; configurar `ADMIN_PASSWORD`.
 
+Para producción, el frontend es `https://seminario-complexivo-grupo1.vercel.app` y `frontend/.env.production` configura `VITE_API_URL=https://titulacion-rag-386902880383.us-central1.run.app`. `npm run build` incorpora esa URL; desarrollo mantiene el backend local. `frontend/vercel.json` configura el proxy `/api` a Cloud Run y las rutas SPA. Ver [variables de producción, CORS y proxy administrativo](frontend/README.md#variables-de-producción).
+
 La ingesta reutiliza documentos idénticos y vectores en caché; no duplica revisiones sin cambios. Valida SHA-256 antes de modificar documentos. Las fechas y aprobación del YAML son decisiones del equipo, no una verificación jurídica automática. Los artículos se dividen conservando documento, revisión, sección y página; la exportación está en `data/processed/fragmentos.jsonl`.
 
 ## Verificación reproducible
@@ -77,9 +79,10 @@ Evaluación con proveedores reales, desde la raíz:
 ```bash
 python -u eval/comparar.py --embedding-model text-embedding-3-small
 python eval/evaluar.py --data-dir data/eval-hybrid --chat --prompt system_v3 --output eval/results-chat-hybrid.json
+python eval/evaluar_agente_real.py --modelo gemini
 ```
 
-Consume API y requiere las claves correspondientes. Gemini también puede seleccionarse para embeddings. Los informes incluyen denominadores, fuentes/artículos esperados, respuestas esperadas y obtenidas. No se inventan puntuaciones por el nombre del prompt. La validación de citas no certifica que cada afirmación esté respaldada: se necesita revisión humana de contenido.
+Consume API y requiere las claves correspondientes. Gemini también puede seleccionarse para embeddings. Los informes incluyen denominadores, fuentes/artículos esperados, respuestas esperadas y obtenidas. El runner del agente usa Gemini sin fallback y conserva trazas; su criterio estricto exige seis listas finales con citas y actualmente falla con 5/6. La consulta de complexivo se abstuvo por falta de normativa institucional aprobada. No se inventan puntuaciones por el nombre del prompt. La validación de citas no certifica que cada afirmación esté respaldada: se necesita revisión humana de contenido.
 
 El workflow ejecuta pruebas y evaluación sin red de modelos en cada push/PR. Su ejecución manual agrega la comparación y el chat reales usando los secretos `GEMINI_API_KEY` y `OPENAI_API_KEY` del repositorio. La última corrida remota debe comprobarse en Actions tras publicar los cambios.
 
@@ -91,8 +94,8 @@ El agente y su bucle están en [backend/app/agente.py](backend/app/agente.py), f
 
 El calendario simula días hábiles explícitos, excluye fines de semana y la fecha inicial y **no incluye feriados ni determina plazos institucionales**. Los borradores de tutor requieren confirmación y se registran únicamente como demostración local; no se envían a la universidad, no asignan tutores ni certifican cumplimiento. El actor auditado identifica una capacidad de demostración, no una cuenta universitaria autenticada. Usar datos ficticios.
 
-La persistencia vectorial usa SQLite y coseno exhaustivo hasta 5000 fragmentos, como alternativa arquitectónica a Chroma. No se declara un índice ANN. No hay integraciones con expedientes ni despliegue público de semana 4.
+La persistencia vectorial usa SQLite y coseno exhaustivo hasta 5000 fragmentos, como alternativa arquitectónica a Chroma. No se declara un índice ANN. No hay integraciones con expedientes. La imagen incluye semilla léxica sin credenciales; activar híbrido exige claves de ejecución y reindexación. `/ready` comprueba corpus elegible y `/health` el proceso. En Cloud Run el estado local no es duradero: `RAG_DATA_DIR` selecciona ubicación, pero no aporta persistencia compartida. Ver [operación y límites](docs/06-rag.md).
 
-Documentación técnica: [arquitectura](docs/03-arquitectura.md), [fuentes](docs/04-fuentes.md), [decisiones](docs/09-decisiones.md), [automatización](docs/10-automatizacion.md), [calidad](docs/11-plan-de-calidad.md). Los archivos de talleres se implementaron para esta entrega; no se presentan como descargas originales no aportadas. La revisión y ampliación de FAQ reales del equipo sigue siendo trabajo humano.
+Documentación técnica: [arquitectura](docs/03-arquitectura.md), [fuentes](docs/04-fuentes.md), [RAG](docs/06-rag.md), [evaluación](docs/07-evaluacion.md), [decisiones](docs/09-decisiones.md), [automatización](docs/10-automatizacion.md), [calidad](docs/11-plan-de-calidad.md). Los archivos de talleres se implementaron para esta entrega; no se presentan como descargas originales no aportadas. La revisión y ampliación de FAQ reales del equipo sigue siendo trabajo humano.
 
 Se utilizó asistencia de Codex para análisis, implementación y ejecución de verificaciones. Los integrantes deben revisar las reglas, los casos y las fuentes y poder explicar la solución; no se atribuyen contribuciones ni commits que no consten en el historial.

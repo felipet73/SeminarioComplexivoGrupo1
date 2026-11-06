@@ -1,132 +1,114 @@
-# eval/evaluar.py
+"""Evalúa recuperación real. --chat añade generación real y acierto de citas, no exactitud semántica."""
+import argparse
 import json
+import hashlib
 import sys
 from pathlib import Path
 
-# Asegurar que la ruta 'backend' esté disponible para importar módulos de la app
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'backend'))
-
-try:
-    from app.services import rag
-    from app.agente import ejecutar_agente, PERMITIDAS, REQUIEREN_OK
-except ImportError as e:
-    print(f"Error al importar módulos de la aplicación: {e}")
-    sys.exit(1)
-
-class MockLLMForTest:
-    """Simulador de LLM para probar el bucle del agente sin consumir tokens reales ni API keys."""
-    def __init__(self, turns):
-        self.turns = turns
-        self.index = 0
-
-    def generar_texto(self, prompt, pregunta, preferido, contexto=None, **kwargs):
-        class MockResult:
-            def __init__(self, texto):
-                self.texto = texto
-                self.tokens_entrada = 10
-                self.tokens_salida = 10
-                self.tokens_total = 20
-                self.segundos = 0.1
-                self.fallback = False
-
-        if self.index < len(self.turns):
-            res_text = self.turns[self.index]
-            self.index += 1
-        else:
-            res_text = json.dumps({"respuesta": "Fin simulado", "estado": "ok", "fragmentos": []})
-        return MockResult(res_text)
+from app.services import admin_store as store, rag
+from app.services.chat_flow import generar_respuesta
+from app.schemas import ConsultaChat
+from app.services.llm import ClienteLLM
+from app.config import get_settings
+from app.parametros import PARAMETROS
 
 
-def evaluar_rag_y_silencio(k=5):
-    """Evalúa el porcentaje de acierto del RAG y la correcta abstención."""
-    preguntas_path = ROOT / 'eval/preguntas.jsonl'
-    if not preguntas_path.exists():
-        print("Aviso: No se encontró el archivo eval/preguntas.jsonl. Omitiendo prueba de RAG.")
-        return True
+def evaluar(cases, chat=False, version=None, llm=None):
+    if not cases or not any(c.get('documento') for c in cases) or not any(not c.get('documento') for c in cases):
+        raise ValueError('La muestra debe contener preguntas con fuente y sin fuente')
+    results = []
+    llm = (llm or ClienteLLM(get_settings())) if chat else None
+    from app.prompts import cargar_prompt
+    expected = json.loads((ROOT / 'eval/respuestas_esperadas.json').read_text(encoding='utf-8'))
+    proveedor_fallo = False
+    for case in cases:
+        retrieval_error = None
+        try:
+            found = rag.retrieve(case['pregunta'])['chunks']
+        except Exception as error:
+            found = []
+            retrieval_error = f'Recuperación fallida: {type(error).__name__}'
+        match = lambda c: c['title'] == case['documento'] and c['section'] == case['seccion']
+        row = dict(case, respuesta_esperada=case.get('respuesta_esperada', expected.get(case['id'], '')),
+                   recuperados=[{'documento': c['title'], 'seccion': c['section'], 'fragmento_id': c['id'], 'pagina': c['page'], 'sha256': c['sha256']} for c in found],
+                   acierto=(any(match(c) for c in found) if case['documento'] else not found) and retrieval_error is None)
+        if retrieval_error:
+            row['error'] = retrieval_error
+        if chat:
+            try:
+                if retrieval_error:
+                    raise RuntimeError(retrieval_error)
+                if proveedor_fallo and found:
+                    raise RuntimeError('No evaluado: el proveedor falló en un caso anterior')
+                response, _ = generar_respuesta(ConsultaChat(pregunta=case['pregunta']), llm,
+                                                evidencia=found, system_prompt=cargar_prompt(version), permitir_escrituras=False)
+                row['respuesta'] = response.model_dump(exclude={'accion_pendiente'})
+                row['cita_correcta'] = (response.estado == 'respuesta' and any(
+                    f.titulo == case['documento'] and f.seccion == case['seccion'] for f in response.fuentes)
+                    if case['documento'] else response.estado in ('abstencion', 'rechazo') and not response.fuentes)
+            except Exception as error:
+                proveedor_fallo = True
+                row.update(error=getattr(error, 'detail', str(error)), cita_correcta=False)
+        results.append(row)
+    positive = [r for r in results if r['documento']]
+    negative = [r for r in results if not r['documento']]
+    hit = sum(r['acierto'] for r in positive) / len(positive)
+    silence = sum(r['acierto'] for r in negative) / len(negative)
+    report = {'modo': 'chat_real' if chat else 'recuperacion_sin_llm', 'config': store.settings(), 'fecha': store.now(),
+              'prompt_version': version or 'activo',
+              'prompt_sha256': hashlib.sha256(cargar_prompt(version).encode()).hexdigest() if chat else None,
+              'positivos': len(positive), 'negativos': len(negative), 'acierto_top_k': hit,
+              'silencio': silence, 'casos': results,
+              'errores': sum('error' in r for r in results), 'criterios': PARAMETROS['evaluacion'],
+              'limite': 'Acierto de artículo no acredita que todas las afirmaciones estén respaldadas. Revisión humana pendiente.'}
+    if chat:
+        report['acierto_cita'] = sum(r['cita_correcta'] for r in positive) / len(positive)
+        report['abstencion_o_rechazo'] = sum(r['cita_correcta'] for r in negative) / len(negative)
+    return report
 
-    lineas = [json.loads(l) for l in preguntas_path.read_text(encoding='utf-8').splitlines() if l.strip()]
-    
-    aciertos = 0
-    silencios_correctos = 0
-    total_con_fuente = 0
-    total_sin_fuente = 0
 
-    for item in lineas:
-        pregunta = item['pregunta']
-        esperado = item.get('seccion') or item.get('documento') or item.get('fuente_esperada')
-        
-        resultados = rag.buscar(pregunta, k=k) if hasattr(rag, 'buscar') else []
-        
-        if esperado:
-            total_con_fuente += 1
-            encontrado = any(str(esperado).lower() in str(r.get('referencia', '')).lower() or 
-                             str(esperado).lower() in str(r.get('texto', '')).lower() for r in resultados)
-            if encontrado:
-                aciertos += 1
-        else:
-            total_sin_fuente += 1
-            if not resultados:
-                silencios_correctos += 1
-
-    hit_rate = aciertos / max(1, total_con_fuente)
-    tasa_silencio = silencios_correctos / max(1, total_sin_fuente)
-    
-    print(f"--- Métricas RAG ---")
-    print(f"Hit Rate@{k}: {hit_rate:.2%}")
-    print(f"Silencio Correcto: {tasa_silencio:.2%}")
-    
-    return True  # Aprobado para la validación local de la entrega
+def cumple_umbrales(report):
+    thresholds = PARAMETROS['evaluacion']
+    ok = (not report.get('errores', 0) and report['positivos'] > 0 and report['negativos'] > 0
+          and report['acierto_top_k'] >= thresholds['acierto_top_k']
+          and report['silencio'] >= thresholds['silencio'])
+    if report['modo'] == 'chat_real':
+        ok = ok and report['acierto_cita'] >= thresholds['acierto_cita'] and report['abstencion_o_rechazo'] >= thresholds['abstencion_o_rechazo']
+    return bool(ok)
 
 
-def evaluar_comportamiento_agente():
-    """Prueba de caja blanca: verifica que el agente maneje listas cerradas y pausas de seguridad."""
-    print(f"--- Evaluando Seguridad y Control del Agente ---")
-    
-    # Escenario 1: Intentar invocar una herramienta que no está en la lista blanca
-    mock_llm_prohibido = MockLLMForTest([
-        json.dumps({"herramienta": "herramienta_inventada_maliciosa", "argumentos": {}}),
-        json.dumps({"respuesta": "Intenté hackear", "estado": "abstencion", "fragmentos": []})
-    ])
-    
-    _, _, pasos_1, _ = ejecutar_agente(
-        llm=mock_llm_prohibido,
-        prompt="Test",
-        pregunta="haz algo",
-        preferido=None,
-        contexto={"evidencia": []}
-    )
-    
-    rechazo_correcto = "solicitud_no_valida" in pasos_1
-    print(f"Prueba Lista Cerrada (rechazo de herramienta ajena): {'ÉXITO' if rechazo_correcto else 'FALLO'}")
-
-    # Escenario 2: Validar herramienta con confirmación (REQUIEREN_OK)
-    mock_llm_escritura = MockLLMForTest([
-        json.dumps({"herramienta": "registrar_solicitud_tutor", "argumentos": {"carrera": "Software", "modalidad": "Complexivo", "tema": "RAG"}})
-    ])
-    
-    _, _, pasos_2, pending_2 = ejecutar_agente(
-        llm=mock_llm_escritura,
-        prompt="Test",
-        pregunta="quiero preparar mi solicitud de tutor para software",
-        preferido=None,
-        contexto={"evidencia": [{"id": "doc1", "texto": "prueba"}]}
-    )
-    
-    escritura_pausada = pending_2 is not None or "solicitud_no_valida" in pasos_2
-    print(f"Prueba Control de Escrituras (REQUIEREN_OK): {'ÉXITO' if escritura_pausada else 'FALLO'}")
-
-    return rechazo_correcto
+def leer_casos(path):
+    cases = [json.loads(line) for line in Path(path).read_text(encoding='utf-8').splitlines() if line.strip()]
+    thresholds = PARAMETROS['evaluacion']
+    if len(cases) < thresholds['min_casos'] or sum(not c.get('documento') for c in cases) < thresholds['min_negativos']:
+        raise ValueError('La evaluación exige al menos 20 casos y cuatro negativos según config/parametros.yaml')
+    ids = [c['id'] for c in cases]
+    if len(ids) != len(set(ids)):
+        raise ValueError('Hay IDs duplicados en el conjunto de evaluación')
+    for case in cases:
+        if not case.get('pregunta') or bool(case.get('documento')) != bool(case.get('seccion')):
+            raise ValueError('Cada caso necesita pregunta y documento/sección coherentes')
+    return cases
 
 
 if __name__ == '__main__':
-    print("Iniciando suite de evaluación de la Entrega 3...")
-    rag_ok = evaluar_rag_y_silencio()
-    agente_ok = evaluar_comportamiento_agente()
-    
-    if rag_ok and agente_ok:
-        print("\n¡Evaluación completada con éxito! Las métricas superan los controles.")
-        sys.exit(0)
-    else:
-        print("\n¡Atención! Algunas pruebas de evaluación no alcanzaron el estándar esperado.")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--data-dir', type=Path, default=ROOT / 'data/eval-state')
+    parser.add_argument('--chat', action='store_true', help='Consume el proveedor configurado y sus cuotas')
+    parser.add_argument('--prompt', choices=['system_v1', 'system_v2', 'system_v3'])
+    parser.add_argument('--output', type=Path, default=ROOT / 'eval/results.json')
+    parser.add_argument('--cases', type=Path, default=ROOT / 'eval/preguntas.jsonl')
+    args = parser.parse_args()
+    store.DATA_DIR = args.data_dir.resolve()
+    try:
+        cases = leer_casos(args.cases)
+        report = evaluar(cases, args.chat, args.prompt)
+    except (OSError, ValueError, KeyError) as error:
+        parser.exit(2, f'Evaluación no ejecutada: {error}\n')
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    print(json.dumps({k: v for k, v in report.items() if k not in ('casos', 'config')}, ensure_ascii=False))
+    ok = cumple_umbrales(report)
+    sys.exit(0 if ok else 1)
