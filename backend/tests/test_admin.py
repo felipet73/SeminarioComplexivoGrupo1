@@ -141,19 +141,22 @@ def test_hibrido_persistente_y_fallback_lexico(client,monkeypatch):
     assert r['chunks']
     assert next(s for s in r['trace'] if s['id']=='vector')['status']=='error'
 
-def test_traza_recuperacion_sin_fuentes_y_lexica_no_usa_vectores(client, monkeypatch):
+def test_traza_recuperacion_sin_fuentes_y_lexica_no_usa_vectores(client,monkeypatch):
     signin(client)
-    def no_embed(*args): raise AssertionError('La ruta léxica no debe generar embeddings')
-    monkeypatch.setattr(rag, 'embed', no_embed)
-    
-    empty = client.post('/api/admin/rag/search', headers=HEADERS, json={'query': 'titulación'}).json()
-    assert empty['chunks'] == [] and len(empty['trace']) >= 1
-    
-    doc = upload(client)
-    client.post(f'/api/admin/rag/index/{doc["id"]}', headers=HEADERS, json={})
-    
-    found = client.post('/api/admin/rag/search', headers=HEADERS, json={'query': 'titulación'}).json()
-    assert found['trace'][-1]['details']['milisegundos'] >= 0
+    def no_embed(*args):raise AssertionError('La ruta léxica no debe generar embeddings')
+    monkeypatch.setattr(rag,'embed',no_embed)
+    empty=client.post('/api/admin/rag/search',headers=HEADERS,json={'query':'titulación'}).json()
+    assert empty['chunks']==[] and len(empty['trace'])==6
+    assert next(s for s in empty['trace'] if s['id']=='vector')['status']=='skipped'
+    doc=upload(client)
+    index=client.post(f'/api/admin/rag/index/{doc["id"]}',headers=HEADERS,json={}).json()
+    assert len(index['trace'])==4
+    assert index['trace'][2]['status']=='skipped'
+    found=client.post('/api/admin/rag/search',headers=HEADERS,json={'query':'titulación'}).json()
+    assert found['chunks']
+    assert next(s for s in found['trace'] if s['id']=='vector')['details']['vectores_leidos']==0
+    assert found['trace'][-1]['details']['fragmentos']==len(found['chunks'])
+    assert found['trace'][-1]['details']['milisegundos']>=0
 
 def test_simulacion_versiones_metricas_y_evaluador(client,monkeypatch):
     signin(client)
