@@ -1,0 +1,9 @@
+.mensaje:has(.checklist-academico){max-width:100%}
+.checklist-academico{min-width:0;overflow-wrap:anywhere}
+.checklist-academico h3{margin:16px 0 8px;font-size:14px;color:var(--azul-noche)}
+.checklist-academico ul{list-style:none;margin:14px 0;padding:0}
+.checklist-academico li{margin:0 0 12px;padding:12px;border:1px solid var(--borde);border-radius:8px;background:#f8fbff}
+.checklist-academico label{display:flex;align-items:center;gap:8px;font-size:12px;line-height:1.4;color:var(--azul)}
+.checklist-academico input{flex-shrink:0;width:16px;height:16px;margin:0;accent-color:var(--azul)}
+.checklist-academico blockquote{margin:10px 0 0;font-size:13px;line-height:1.6;color:var(--texto)}
+.checklist-academico small{overflow-wrap:anywhere}

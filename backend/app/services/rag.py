@@ -14,6 +14,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from defusedxml import ElementTree
 from app.config import get_settings
+from app.parametros import PARAMETROS, RAG_DEFAULTS
 from app.services import admin_store as store
 from app.services.metrics import registrar
 from app.services.tracing import step
@@ -73,10 +74,23 @@ def eligible(doc, today=None):
     return bool(doc['enabled'] and doc['approved'] and doc['valid_from'] <= today and
                 (not doc['valid_to'] or doc['valid_to'] >= today))
 
-def save_document(name, content, meta, actor, doc_id=None, expected=None):
+def validar_ocr(content, pages):
+    """OCR de ingesta local: mismo número y orden de páginas que el original PDF."""
+    from pypdf import PdfReader
+    reader = PdfReader(io.BytesIO(content))
+    if reader.is_encrypted or len(reader.pages) > 200 or len(pages) != len(reader.pages):
+        raise ValueError('El OCR no corresponde a las páginas del PDF')
+    if any(type(p.get('page')) is not int or p['page'] != i+1 or not isinstance(p.get('text'), str) for i,p in enumerate(pages)):
+        raise ValueError('Páginas OCR inválidas o desordenadas')
+    if not 20 <= sum(len(p['text']) for p in pages) <= 1_000_000:
+        raise ValueError('Texto OCR insuficiente o demasiado grande')
+    return pages
+
+
+def save_document(name, content, meta, actor, doc_id=None, expected=None, *, ocr_pages=None):
     if not content or len(content) > MAX_BYTES:
         raise ValueError('Archivo vacío o mayor a 10 MB.')
-    pages = extract(name, content)
+    pages = extract(name, content) if ocr_pages is None else validar_ocr(content, ocr_pages)
     name = re.split(r'[/\\]', name)[-1][:180]
     with store.db() as conn:
         old = store.get(conn,'document',doc_id) if doc_id else None
@@ -284,12 +298,12 @@ def retrieve(query, config=None):
             lexical = [dict(r) for r in conn.execute(f'''SELECT c.id,c.doc_id,c.revision,c.title,c.section,c.page,c.text, bm25(chunk_search) AS rank FROM chunk_search
                 JOIN chunks c ON c.id=chunk_search.id WHERE chunk_search MATCH ? AND c.doc_id IN ({placeholders})
                 ORDER BY rank LIMIT 40''',[match]+params)]
-            lexical = [c for c in lexical if lexical_coverage(terms, c['title']+' '+c['section']+' '+c['text']) >= config.get('min_lexical_coverage', .6)]
+            lexical = [c for c in lexical if lexical_coverage(terms, c['title']+' '+c['section']+' '+c['text']) >= config.get('min_lexical_coverage', RAG_DEFAULTS['min_lexical_coverage'])]
         candidates = {c['id']:c for c in lexical}
-        scores = {c['id']:1/(60+i+1) for i,c in enumerate(lexical)}
+        scores = {c['id']:1/(PARAMETROS['rrf_k']+i+1) for i,c in enumerate(lexical)}
         semantic = []
         rows = [dict(r) for r in conn.execute(f'SELECT * FROM chunks WHERE doc_id IN ({placeholders}) AND vector IS NOT NULL AND embedding_model=? LIMIT 5000',params+[config['embedding_model']])] if config['strategy']=='hybrid' else []
-    trace.append(step('lexical','Buscar palabras','FTS5/BM25 ordena hasta 40 candidatos; se descartan pasajes con cobertura insuficiente de términos de la consulta. No usa vectores.',terminos=len(terms),candidatos=len(lexical),cobertura_minima=config.get('min_lexical_coverage', .6)))
+    trace.append(step('lexical','Buscar palabras','FTS5/BM25 ordena hasta 40 candidatos; se descartan pasajes con cobertura insuficiente de términos de la consulta. No usa vectores.',terminos=len(terms),candidatos=len(lexical),cobertura_minima=config.get('min_lexical_coverage', RAG_DEFAULTS['min_lexical_coverage'])))
     vector_status='skipped'
     if rows:
         try:
@@ -303,7 +317,7 @@ def retrieve(query, config=None):
             semantic.sort(key=lambda x:x[0],reverse=True)
             for i,(_,row) in enumerate(semantic[:40]):
                 candidates[row['id']] = row
-                scores[row['id']] = scores.get(row['id'],0)+1/(60+i+1)
+                scores[row['id']] = scores.get(row['id'],0)+1/(PARAMETROS['rrf_k']+i+1)
             vector_status='completed'
         except Exception:
             vector_status='error'
@@ -317,5 +331,5 @@ def retrieve(query, config=None):
         doc = docs[chunk['doc_id']]
         result.append({k:chunk[k] for k in ('id','doc_id','revision','title','section','page','text')} |
                       {'source_url':doc['source_url'],'kind':doc['kind'],'sha256':doc['sha256'],'score':round(scores[chunk['id']],5)})
-    trace.extend([step('rank','Fusionar y seleccionar','Se suman posiciones con Reciprocal Rank Fusion: 1/(60+posición). Si no hay ranking semántico, solo aporta BM25. Se limita al top-k; la puntuación no es una probabilidad de exactitud.',candidatos=len(candidates),top_k=config['top_k']),step('return','Devolver fragmentos','Se devuelve texto y procedencia para inspección o contexto del bot. Esta prueba no genera una respuesta con IA.',fragmentos=len(result),milisegundos=round((time.perf_counter()-started)*1000,2))])
+    trace.extend([step('rank','Fusionar y seleccionar',f'Se fusionan posiciones con RRF y constante {PARAMETROS["rrf_k"]}. Sin ranking semantico solo aporta BM25; la puntuacion no es una probabilidad.',candidatos=len(candidates),top_k=config['top_k']),step('return','Devolver fragmentos','Se devuelve texto y procedencia para inspección o contexto del bot. Esta prueba no genera una respuesta con IA.',fragmentos=len(result),milisegundos=round((time.perf_counter()-started)*1000,2))])
     return {'chunks':result,'strategy':'hybrid' if semantic else 'lexical','warning':warning,'trace':trace}

@@ -1,0 +1,75 @@
+{
+  "fecha_utc": "2026-11-06T13:59:21.108923+00:00",
+  "frontend": "https://seminario-complexivo-grupo1.vercel.app",
+  "backend": "https://titulacion-rag-386902880383.us-central1.run.app",
+  "correctos": 3,
+  "total": 6,
+  "comprobaciones": [
+    {
+      "comprobacion": "ruta_frontend/",
+      "cumple": true,
+      "url": "https://seminario-complexivo-grupo1.vercel.app/",
+      "metodo": "GET",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "allow_origin": "*",
+      "allow_credentials": null
+    },
+    {
+      "comprobacion": "ruta_frontend/admin",
+      "cumple": false,
+      "url": "https://seminario-complexivo-grupo1.vercel.app/admin",
+      "metodo": "GET",
+      "status": 404,
+      "content_type": "text/plain; charset=utf-8",
+      "allow_origin": null,
+      "allow_credentials": null
+    },
+    {
+      "comprobacion": "ruta_frontend/metricas",
+      "cumple": false,
+      "url": "https://seminario-complexivo-grupo1.vercel.app/metricas",
+      "metodo": "GET",
+      "status": 404,
+      "content_type": "text/plain; charset=utf-8",
+      "allow_origin": null,
+      "allow_credentials": null
+    },
+    {
+      "comprobacion": "backend_health",
+      "cumple": true,
+      "url": "https://titulacion-rag-386902880383.us-central1.run.app/health",
+      "metodo": "GET",
+      "status": 200,
+      "content_type": "application/json",
+      "allow_origin": null,
+      "allow_credentials": null,
+      "json": {
+        "status": "ok",
+        "service": "titulacion-rag-api",
+        "version": "2.0.0"
+      }
+    },
+    {
+      "comprobacion": "cors_publico",
+      "cumple": true,
+      "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat/stream",
+      "metodo": "OPTIONS",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "allow_origin": "https://seminario-complexivo-grupo1.vercel.app",
+      "allow_credentials": null
+    },
+    {
+      "comprobacion": "proxy_admin_sin_sesion",
+      "cumple": false,
+      "url": "https://seminario-complexivo-grupo1.vercel.app/api/admin/session",
+      "metodo": "GET",
+      "status": 404,
+      "content_type": "text/plain; charset=utf-8",
+      "allow_origin": null,
+      "allow_credentials": null
+    }
+  ],
+  "limite": "No valida login real, persistencia, modelos ni despliegue de código nuevo."
+}

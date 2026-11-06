@@ -15,13 +15,7 @@ from app.services import admin_store as store, rag
 from app.services.llm import ClienteLLM
 from app.services.metrics import registrar, resumen
 
-# --- 1. IMPORTAR LA SEGURIDAD QUE CREAMOS (CORREGIDO) ---
-from app.seguridad import registrar_rutas_seguridad
-
 app = FastAPI(title="Asistente Académico UNIANDES", version="2.0.0")
-
-# --- 2. REGISTRAR LAS RUTAS DE SEGURIDAD (/admin/login, etc.) ---
-registrar_rutas_seguridad(app)
 
 app.include_router(admin_router)
 from app.tool_routes import agente_router
@@ -78,6 +72,19 @@ def health() -> dict[str, str]:
       "service": "titulacion-rag-api",
       "version": "2.0.0",
   }
+
+
+@app.get('/ready')
+def ready():
+  """Comprueba el índice elegible local; no consume API ni certifica el proveedor."""
+  with store.db() as conn:
+    config = store.get(conn, 'config', 'rag')
+    count = sum(d.get('chunks', 0) for d in store.all_records(conn, 'document')
+                if rag.eligible(d) and d.get('indexed_revision') == d['revision']
+                and d.get('index_signature') == rag.signature(config))
+  if not count:
+    raise HTTPException(503, 'No hay fuentes elegibles con índice actualizado')
+  return {'status':'ready', 'fragmentos_elegibles':count, 'estrategia':config['strategy'], 'proveedor_verificado':False}
 
 
 @app.exception_handler(RequestValidationError)

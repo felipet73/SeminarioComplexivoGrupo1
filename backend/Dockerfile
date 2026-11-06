@@ -9,12 +9,18 @@ WORKDIR /app/backend
 
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN useradd --create-home app && mkdir -p /app/data && chown app:app /app/data
 
-COPY backend/ .
-COPY config/ /app/config/
+COPY --chown=app:app backend/ .
+COPY --chown=app:app config/ /app/config/
+COPY --chown=app:app scripts/ingest.py /app/scripts/ingest.py
+COPY --chown=app:app data/raw/ /app/data/raw/
 
-RUN useradd --create-home app && chown -R app:app /app
 USER app
+
+# Semilla reproducible sin claves ni llamadas a proveedores durante el build.
+# La activación híbrida se realiza después, con secretos de ejecución y reindexación.
+RUN python /app/scripts/ingest.py --data-dir /app/data/admin --strategy lexical
 
 EXPOSE 8080
 

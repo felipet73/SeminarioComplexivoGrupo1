@@ -1,7 +1,7 @@
 export type Prompt={version:number;content:string;description:string;revision:number;updated:string};
 export type Doc={id:string;name:string;title:string;kind:'normativa'|'informativo';source_url:string;valid_from:string;valid_to:string|null;approved:boolean;enabled:boolean;notes:string;revision:number;indexed_revision:number|null;chunks:number;sha256:string;updated:string;eligible?:boolean;index_current?:boolean};
-export type Config={active_prompt:number;chunk_size:number;overlap:number;top_k:number;strategy:'lexical'|'hybrid';embedding_model:string;min_similarity:number;revision:number};
-export type Bootstrap={prompts:Prompt[];documents:Doc[];config:Config;reference_cases:Case[];models:{id:string;name:string;configured:boolean}[]};
+export type Config={active_prompt:number;chunk_size:number;overlap:number;top_k:number;strategy:'lexical'|'hybrid';embedding_model:string;min_similarity:number;min_lexical_coverage:number;revision:number};
+export type Bootstrap={prompts:Prompt[];documents:Doc[];config:Config;embedding_thresholds?:Record<string,number>;reference_cases:Case[];models:{id:string;name:string;configured:boolean}[]};
 export type Chunk={id:string;title:string;section:string;page:number;text:string;revision:number;score?:number};
 export type Paso={id:string;title:string;description:string;status:'completed'|'skipped'|'error'|'pending'|'running';details?:Record<string,string|number|boolean|null>};
 export type Case={question:string;expected:string;contexto?:import('../ContextoAcademico').Contexto};
