@@ -14,7 +14,7 @@ def comprobar(url):
         try:
             assert get('/health')['status'] == 'ok'
             break
-        except (URLError, TimeoutError):
+        except (URLError, TimeoutError, ConnectionError):
             if intento == 19:
                 raise
             time.sleep(1)
