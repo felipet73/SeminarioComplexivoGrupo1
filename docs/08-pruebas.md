@@ -37,7 +37,7 @@ El runner devuelve exit 1 si falla cualquier caso seleccionado o si se seleccion
 
 ## Resultado contra producción
 
-La primera corrida de esta revisión obtuvo **23/34**, con cero omitidos. Véase [reporte completo](evidencias/semana-4/pruebas-url-inicial.json). El chat sigue devolviendo 500, faltan rutas de la versión nueva y la administración antigua aún existe. No se declara producción aprobada. El [informe de seguridad](evidencias/semana-4/analisis-observaciones-docente.md) detalla la credencial histórica aceptada, sin publicar sus valores o token.
+La corrida publicada de esta revisión obtuvo **23/34**, con cero omitidos. Véase [reporte completo](evidencias/semana-4/pruebas-url-inicial.json). El chat sigue devolviendo 500, faltan rutas de la versión nueva y la administración antigua aún existe. No se declara producción aprobada. El [informe de seguridad](evidencias/semana-4/analisis-observaciones-docente.md) detalla la credencial histórica aceptada, sin publicar sus valores o token.
 
 ## Pruebas locales y CI
 

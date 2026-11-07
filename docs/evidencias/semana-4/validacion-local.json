@@ -37,5 +37,8 @@
     "usuario": "app"
   },
   "smoke_contenedor": "aprobado con SHA esperado, rutas retiradas y SSE",
-  "despliegue_remoto_realizado": false
+  "despliegue_remoto_realizado": false,
+  "gitleaks_historial_exit_code": 0,
+  "gitleaks_historial_hallazgos": 0,
+  "nota_gitleaks": "Los patrones predeterminados no detectan la credencial legacy de baja entropia; la auditoria AST de historial sigue en exit 1."
 }
