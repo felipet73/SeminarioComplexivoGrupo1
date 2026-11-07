@@ -89,5 +89,15 @@
       "ChatGPT",
       "Codex"
     ]
+  },
+  "verificacion_comun_confirmada_por_usuario": {
+    "aplica_a": "Los tres integrantes",
+    "actividades": [
+      "Desplegó y ejecutó localmente el proyecto.",
+      "Realizó pull requests.",
+      "Verificó pruebas locales.",
+      "Verificó pruebas del repositorio mediante GitHub Actions."
+    ],
+    "fuente": "Declaración del equipo en este chat; no se asignan PR o ejecuciones concretas sin identificadores."
   }
 }

@@ -284,6 +284,8 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 | Cevallos Mazon Widman Yadiro | `WidmanCevallos`, `Widman Yadiro Cevallos Mazon` | Automatización de QA y desarrollo. | Gemini. |
 | Torres Lopez Christian Felipe | `Felipe Torres`, `Felipe Torres Lopez` | Desarrollo y despliegues. | ChatGPT y Codex. |
 
+**Verificación realizada por todos los integrantes:** cada integrante desplegó y ejecutó el proyecto en su entorno local, realizó pull requests y verificó las pruebas tanto localmente como en el repositorio mediante GitHub Actions. Esta declaración fue confirmada por el equipo; no atribuye por sí sola la revisión de una salida específica de IA.
+
 **Declaración de IA:** se utilizó asistencia de Codex para análisis, implementación, pruebas, documentación y material de presentación. Se revisaron y corrigieron resultados mediante tests, contratos y evidencia explícita; los modelos también intervienen en el producto según lo descrito. Un commit firmado con la configuración del equipo no demuestra autoría manual ni identifica quién revisó cada salida. Las responsabilidades y herramientas de IA de la tabla fueron confirmadas por el equipo. Queda por detallar qué tareas concretas asistió cada herramienta y cómo revisó sus resultados cada integrante; no se deducen esos detalles de su responsabilidad principal ni se inventan porcentajes individuales.
 
 Material de entrega: [checklist s4a–s4k](docs/14-checklist-entrega-final.md), [presentación PDF](docs/presentacion-entrega4.pdf), [informe técnico PDF](docs/analisis-tecnico-preliminar.pdf), [observaciones de sustentación](docs/evidencias/semana-4/observaciones-sustentacion.md).
