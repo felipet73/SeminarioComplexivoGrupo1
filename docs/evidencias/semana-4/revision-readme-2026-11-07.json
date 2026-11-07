@@ -1,0 +1,75 @@
+{
+  "fecha": "2026-11-07",
+  "ejemplo_aportado_sha256": "5b04fe29b3e99b1ba0725a9747eec7d32c7e05c01bfd7d4eb59c0caeb1ad6562",
+  "orden_h2_igual_al_ejemplo": true,
+  "secciones": [
+    "Qué problema resuelve y para quién",
+    "Demo",
+    "Arquitectura",
+    "Cómo ejecutarlo en local",
+    "Variables de entorno",
+    "Despliegue",
+    "Datos en producción",
+    "Pruebas y evaluación",
+    "Integración estable con el modelo",
+    "Decisiones y riesgos",
+    "Limitaciones conocidas",
+    "Integrantes y responsabilidades"
+  ],
+  "requisitos_captura": [
+    "problema y usuarios",
+    "ejecución local",
+    "despliegue y URL",
+    "decisiones y riesgos",
+    "integrantes y responsabilidades",
+    "arquitectura",
+    "variables de entorno sin valores secretos",
+    "pruebas/evaluación con resultados",
+    "limitaciones"
+  ],
+  "campos_humanos_por_confirmar": [
+    "Responsabilidad y revisión de IA de cada integrante; no se inventaron."
+  ],
+  "referencia_remota": {
+    "headSha": "c1a5f3fbdf21d4e1c44426df14c3ab2bbb9d5301",
+    "conclusion": "success",
+    "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186",
+    "jobs": [
+      {
+        "nombre": "frontend",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "navegador",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "Revisar secretos con Gitleaks",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "backend",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "contenedor",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "evaluacion-real",
+        "conclusion": "skipped"
+      },
+      {
+        "nombre": "desplegar",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "adaptaciones_al_ejemplo": [
+    "Rutas de requirements, venv y smoke ajustadas al repositorio.",
+    "Workflow real ci.yml y servicio titulacion-rag; no se copió deploy --source del ejemplo.",
+    "No se afirma base externa inexistente ni cuota por usuario/IP.",
+    "Sin tiempo de arranque en frío no acreditado; resultados reales separados por conjunto.",
+    "Archivo docs/riesgos.md añadido y ADR enlazados por rutas existentes."
+  ]
+}
