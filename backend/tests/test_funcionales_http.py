@@ -10,7 +10,8 @@ spec.loader.exec_module(funcionales)
 
 def test_respuesta_del_articulo_correcto_en_documento_incorrecto_no_aprueba():
     case = dict(status=200, contrato='respuesta_citada', documento='Reglamento de prueba', articulo='26')
-    row = dict(status=200, json={'estado':'respuesta','fuentes':[{'titulo':'Otra norma','seccion':'Artículo 26','fragmento_id':'real'}]})
+    row = dict(status=200, json={'estado':'respuesta','respuesta':'Texto normativo con cita.', 'modelo_utilizado':'modelo-de-prueba',
+                               'fuentes':[{'titulo':'Otra norma','seccion':'Artículo 26','fragmento_id':'real'}]})
     assert not funcionales.cumple(case, row, '')
     row['json']['fuentes'][0]['titulo'] = 'Reglamento de prueba'
     assert funcionales.cumple(case, row, '')
@@ -44,3 +45,22 @@ def test_dataset_corto_o_duplicado_falla_antes_de_la_red():
 def test_contrato_desconocido_no_se_convierte_en_aprobado():
     with pytest.raises(ValueError):
         funcionales.cumple(dict(status=200, contrato='mal-escrito'), {'status':200}, '')
+
+
+@pytest.mark.parametrize('campo,valor', [('respuesta', ''), ('respuesta', '  '), ('modelo_utilizado', None)])
+def test_citas_sin_respuesta_generada_no_aprueban(campo, valor):
+    case = dict(status=200, contrato='respuesta_citada', documento='Norma', articulo='26')
+    data = dict(estado='respuesta', respuesta='Respuesta citada.', modelo_utilizado='modelo-de-prueba',
+                fuentes=[dict(titulo='Norma', seccion='Artículo 26', fragmento_id='f1')])
+    data[campo] = valor
+    assert not funcionales.cumple(case, dict(status=200, json=data), '')
+
+
+def test_cita_por_proxy_exige_evento_final_sse():
+    case = dict(status=200, contrato='respuesta_citada', documento='Norma', articulo='26', content_type='text/event-stream')
+    row = dict(status=200, content_type='text/event-stream', sse_valido=False,
+               json=dict(estado='respuesta', respuesta='Respuesta citada.', modelo_utilizado='modelo-de-prueba',
+                         fuentes=[dict(titulo='Norma', seccion='Artículo 26', fragmento_id='f1')]))
+    assert not funcionales.cumple(case, row, '')
+    row['sse_valido'] = True
+    assert funcionales.cumple(case, row, '')

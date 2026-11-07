@@ -275,7 +275,7 @@ jobs:
       - name: Verificar revisión, corpus, rutas retiradas y chat
         run: python scripts/smoke_container.py --url "$BACKEND_URL" --expected-revision "$GITHUB_SHA"
       - name: Casos funcionales contra las URLs públicas
-        run: python scripts/pruebas_funcionales.py --backend "$BACKEND_URL" --frontend "$FRONTEND_URL" --expected-revision "$GITHUB_SHA" --output eval/results-produccion-funcional.json
+        run: python scripts/pruebas_funcionales.py --backend "$BACKEND_URL" --frontend "$FRONTEND_URL" --expected-revision "$GITHUB_SHA" --incluir-modelo --output eval/results-produccion-funcional.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

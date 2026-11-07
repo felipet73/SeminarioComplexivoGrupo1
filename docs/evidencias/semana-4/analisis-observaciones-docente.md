@@ -22,7 +22,7 @@ El token legacy emitido no demuestra acceso al panel actual `/api/admin`, que ut
 | Despliegue sin pipeline/needs | Job `desplegar`, condicionado a main, con cinco jobs necesarios. Promueve la imagen probada y exige SHA y casos HTTP posteriores | Configurar proyecto, Artifact Registry y WIF o secreto JSON; ejecutar y conservar Actions remoto |
 | Docker y ejecución | Usuario no root, PORT, semilla sin claves, exclusión de credenciales, revisión de build; comandos en README/docs | Aplicar la imagen al servicio existente; no se hizo un cambio remoto |
 | `docs/08-pruebas.md` | Creado con 34 casos, denominadores, criterios exactos, comandos y límites | Evidencia posterior al despliegue, sin cambiar expectativas para maquillar fallos |
-| 15+ casos reales contra URL, incluida inyección | Ejecutados **34**: **21 aprobados**, 11 fallidos, sin omitidos. [Reporte](pruebas-url-inicial.json) | 32/32 contratos y 34/34 incluyendo generación; p95 actual solo describe una corrida con fallos |
+| 15+ casos reales contra URL, incluida inyección | Ejecutados **34**: **23 aprobados**, 11 fallidos, sin omitidos. [Reporte](pruebas-url-inicial.json) | 32/32 contratos y, con el caso SSE generativo añadido, 35/35 incluyendo generación; p95 actual solo describe una corrida con fallos |
 | Presentación PDF | Resumen de sustentación en `docs/presentacion-entrega4.pdf`, con resultados reales y pendientes | Revisión y preparación oral del equipo |
 | Evidencias semana 4 | Directorio creado con informes de producción, seguridad, historial y validaciones | Añadir la corrida remota posterior a la nueva revisión |
 | Límite de consultas inexistente | Presupuesto global de 30 POST por 60 s y proceso, compartido por chat/stream/agente; 429 y Retry-After expuesto por CORS; pruebas de ventana, alias y proveedor no ejecutado | No es una cuota distribuida ni por usuario. Reiniciar o escalar reinicia/amplía presupuesto; requiere control de plataforma si crece |
@@ -59,3 +59,23 @@ Los cambios locales del equipo en workflow/smoke se conservaron en `respaldo/pro
 La primera versión del conjunto HTTP tenía dos expectativas mal preparadas: GET a una ruta que solo acepta POST y un login inválido antes del guard CSRF. Se corrigieron ruta/cuerpo a operaciones válidas y se repitió la corrida completa; el informe publicado usa las expectativas corregidas. No se aceptaron estados alternativos ni se cambiaron los resultados esperados para ocultar fallos del backend.
 
 Para regenerar el PDF en un entorno de documentación: instalar `docs/requirements.txt` y ejecutar `python scripts/generar_resumen_entrega4.py`. Sus seis páginas se renderizaron e inspeccionaron; los PNG intermedios quedan en `tmp/pdfs/entrega4/` y no forman parte del artefacto de entrega.
+
+
+## Complemento de las capturas del docente — 7 de noviembre de 2026
+
+Se contrastaron las tres capturas aportadas con la rama `fix/entrega4-seguridad-y-despliegue`, base `7476e3f`. Los porcentajes de las capturas describen la revisión histórica; no se sustituyen por un porcentaje de cumplimiento estimado.
+
+- **Falla crítica / secretos:** el módulo y las rutas legacy ya están retirados del código. El detector activo y su prueba cubren constantes débiles; la auditoría histórica sigue fallando de forma explícita. Sigue pendiente revocación y verificación remota de todas las revisiones accesibles. No se reescribió el historial ni se reutilizó la credencial para probar autenticación.
+- **Pruebas debilitadas:** se conservan estados exactos, citas, campos/opciones de contexto, eventos token y done, trazas y bloqueo de proveedores reales en pytest. Los cambios de este complemento añaden regresiones del verificador, sin relajar aserciones ni umbrales existentes.
+- **Pipeline / chat 500 / URL pública:** el despliegue exige ahora los 35 casos, con dos consultas generativas directas y una por Vercel SSE. El verificador requiere texto, modelo identificado y cita correcta; readiness y rechazo de inyección no sustituyen generación. La lectura SSE admite respuestas citadas mayores de 8 KiB con un límite de 1 MiB. Un fallo posterior al deploy exige intervención y no restaura automáticamente una revisión antigua vulnerable.
+- **Docker, documentación, PDF y evidencias:** ya existen Dockerfile sin privilegios, exclusión de credenciales, semilla léxica, documentación de build/start, `docs/08-pruebas.md`, presentación PDF y evidencia histórica en semana 4. Se conserva la distinción entre pruebas locales y servicio publicado; el PDF previo no acredita ejecución de este complemento.
+- **Límite de tasa y decisiones:** presupuesto global por proceso de 30 consultas/minuto ya probado y documentado; no equivale a control distribuido, cuota por usuario ni persistencia duradera.
+- **Corpus / agente real / autoría:** aprobación del OCR, incorporación de normativa aplicable, repetición de las seis consultas reales y declaración individual del uso de IA siguen requiriendo al equipo. Se conserva el resultado histórico 5/6 y no se rebaja el criterio para obtener 6/6.
+
+### Condiciones externas de cierre
+
+Configurar/revisar WIF y variables de GitHub, protección del entorno `production`, secretos de ejecución de Cloud Run, rotación de valores expuestos y tráfico a la revisión corregida. Después ejecutar el pipeline y conservar SHA y reporte de 35/35 contra ambas URLs. En este chat GitHub API y Cloud Run devolvieron 403 por la política de acceso: no hay una comprobación remota nueva ni un despliegue acreditado. No se modificó ni publicó la configuración del entorno cloud.
+
+### Evidencia local del complemento
+
+[Reporte reproducible con hashes de los archivos verificados](complemento-revision-2026-11-07.json): 104 pruebas backend aprobadas, cobertura 88,73 %, Ruff y detector activo aprobados. Tras ajustar el límite de lectura SSE se repitieron las 13 pruebas del verificador: 13/13. Las pruebas de generación real contra las URLs públicas no se ejecutaron; 35 es el conjunto exigido por el pipeline, no un resultado remoto aprobado. El frontend y la imagen no cambian en este complemento.

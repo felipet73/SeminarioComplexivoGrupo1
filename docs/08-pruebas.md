@@ -8,13 +8,13 @@ Desde la raíz, con Python 3.12; el runner solo necesita biblioteca estándar:
 
 ```powershell
 python scripts/pruebas_funcionales.py --output eval/results-funcionales.json
-# Añade dos consultas generativas al proveedor configurado en el backend:
+# Añade tres consultas generativas (dos directas y una SSE por Vercel):
 python scripts/pruebas_funcionales.py --incluir-modelo --output eval/results-funcionales-modelo.json
 # Exige que la URL sirva exactamente el commit desplegado:
 python scripts/pruebas_funcionales.py --expected-revision COMMIT_SHA --output eval/results-funcionales.json
 ```
 
-La entrada `python backend/tests/smoke.py URL_BACKEND` se conserva por compatibilidad. `--solo-backend` omite explícitamente las cuatro comprobaciones de Vercel. Los resultados informan todos los IDs omitidos; no se cuentan como aprobados. Sin `--incluir-modelo` se ejecutan 32 casos, incluidos consulta de requisitos y checklist contra el corpus real, pero no generación de texto por el LLM. Si la búsqueda usa embeddings, esas herramientas pueden consumir el proveedor de embeddings. Con el flag se ejecutan 34 casos. Las dos respuestas generativas exigen estado `respuesta`, documento y artículo esperados y un fragmento citado.
+La entrada `python backend/tests/smoke.py URL_BACKEND` se conserva por compatibilidad. `--solo-backend` omite explícitamente las comprobaciones de Vercel (cuatro contratos y, si se activa generación, un caso SSE). Los resultados informan todos los IDs omitidos; no se cuentan como aprobados. Sin `--incluir-modelo` se ejecutan 32 casos, incluidos consulta de requisitos y checklist contra el corpus real, pero no generación de texto por el LLM. Si la búsqueda usa embeddings, esas herramientas pueden consumir el proveedor de embeddings. Con el flag se ejecutan 35 casos. Las tres respuestas generativas exigen texto no vacío, modelo identificado, estado `respuesta`, documento y artículo esperados y un fragmento citado; el caso por Vercel exige además un evento SSE `done` válido.
 
 ## Casos y expectativas
 
@@ -31,13 +31,13 @@ La entrada `python backend/tests/smoke.py URL_BACKEND` se conserva por compatibi
 | Calendario (6) | Fin de semana, año bisiesto y cero: fechas exactas; días negativos/booleanos y fecha imposible: 422 |
 | Herramientas (4) | Entradas vacías: 422; requisitos con pasajes trazables; checklist con citas y `completo=false` |
 | Fuente (1) | Revisión/documento inexistente: 404 |
-| Generación opcional (2) | RRA artículo 26: quién determina requisitos/opciones; RRA artículo 31: investigación formativa. Estado respuesta y cita del artículo/documento correcto |
+| Generación (3; obligatoria tras desplegar) | RRA artículo 26: quién determina requisitos/opciones; RRA artículo 31: investigación formativa. Dos consultas directas y repetición del artículo 26 por el proxy SSE de Vercel; respuesta, modelo y cita del artículo/documento correcto |
 
 El runner devuelve exit 1 si falla cualquier caso seleccionado o si se seleccionan menos de 15. Guarda estado esperado/obtenido, contrato, artículo/documento esperado, duración por caso y p95. No guarda contraseñas, tokens, cookies, capacidades ni texto libre completo. Una respuesta 200 por sí sola no aprueba las comprobaciones de contrato.
 
 ## Resultado contra producción
 
-La corrida publicada de esta revisión obtuvo **23/34**, con cero omitidos. Véase [reporte completo](evidencias/semana-4/pruebas-url-inicial.json). El chat sigue devolviendo 500, faltan rutas de la versión nueva y la administración antigua aún existe. No se declara producción aprobada. El [informe de seguridad](evidencias/semana-4/analisis-observaciones-docente.md) detalla la credencial histórica aceptada, sin publicar sus valores o token.
+La corrida histórica publicada antes de añadir el caso SSE generativo obtuvo **23/34**, con cero omitidos. Véase [reporte completo](evidencias/semana-4/pruebas-url-inicial.json). El chat sigue devolviendo 500, faltan rutas de la versión nueva y la administración antigua aún existe. No se declara producción aprobada. El [informe de seguridad](evidencias/semana-4/analisis-observaciones-docente.md) detalla la credencial histórica aceptada, sin publicar sus valores o token.
 
 ## Pruebas locales y CI
 
@@ -47,6 +47,6 @@ Las regresiones añadidas cubren credenciales de baja entropía, alias del chat 
 
 ## Evaluación repetida y límites
 
-Repetir las corridas contra las dos URLs después de desplegar la nueva revisión y conservar los JSON en `docs/evidencias/semana-4/`. Se requiere 32/32 para los contratos sin generación y 34/34 para declarar también superadas las dos consultas generativas. El pipeline verifica el SHA; resultados locales no reemplazan esta comprobación remota.
+Repetir las corridas contra las dos URLs después de desplegar la nueva revisión y conservar los JSON en `docs/evidencias/semana-4/`. Se requiere 32/32 para los contratos sin generación y 35/35 para declarar también superadas las tres consultas generativas. El job de despliegue incluye `--incluir-modelo`: no puede aprobar omitiendo estos casos. Consume la cuota del proveedor configurado en Cloud Run; no necesita copiar claves LLM al runner. El pipeline verifica el SHA; resultados locales no reemplazan esta comprobación remota.
 
 La evaluación del RAG y del agente sigue en `docs/07-evaluacion.md`: el resultado histórico estricto del agente es 5/6 listas finales citadas. Los casos HTTP no prueban exhaustividad normativa, persistencia entre revisiones, identidad institucional ni calidad semántica de cada afirmación. El OCR pendiente no se aprueba por ejecutar estas pruebas.

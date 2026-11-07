@@ -27,7 +27,8 @@ def consultar(url, *, method='GET', headers=None, payload=None):
         except HTTPError as error:
             response = error
         with response:
-            body = response.read(8192).decode('utf-8', errors='replace')
+            # Una respuesta citada puede superar 8 KiB; mantener una lectura acotada.
+            body = response.read(1024 * 1024).decode('utf-8', errors='replace')
             row = {'url':url, 'metodo':method, 'status':response.status,
                    'content_type':response.headers.get('Content-Type',''),
                    'allow_origin':response.headers.get('Access-Control-Allow-Origin'),
@@ -41,7 +42,7 @@ def consultar(url, *, method='GET', headers=None, payload=None):
                     if 'event: done' in lines:
                         try:
                             final = json.loads(next(line[5:].strip() for line in lines if line.startswith('data:')))
-                            row.update(sse_valido=True, sse_estado=final.get('estado'),
+                            row.update(json=final, sse_valido=True, sse_estado=final.get('estado'),
                                        sse_sin_fuentes=final.get('fuentes') == [])
                         except (ValueError, StopIteration, AttributeError):
                             row['sse_valido'] = False
