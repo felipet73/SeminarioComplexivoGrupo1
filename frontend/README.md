@@ -1,5 +1,7 @@
 # Frontend
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](../docs/14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 El formulario de fuentes incluye «Cancelar»: al editar/reemplazar sale de esa acción y vuelve al alta limpia; al agregar limpia campos, archivo, casillas y errores. No guarda ni elimina documentos, y permanece deshabilitado durante el guardado.
 
 RAG y Análisis muestran diagramas de nodos sincronizados con pasos y datos devueltos por backend. Los botones «?» ofrecen ayuda ampliada para configurar e interpretar cada proceso. Las simulaciones generan respuestas y mediciones, **sin evaluación adicional con IA**. Ver [ayudas y trazas](../docs/10-ayudas-y-trazas-rag.md).

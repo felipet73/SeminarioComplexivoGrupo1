@@ -1,5 +1,7 @@
 # 04. Inventario de fuentes — Semana 1
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 **Fecha de revisión preliminar:** 19-10-2026. **Estado:** localización inicial, NO dictamen de vigencia. Una fuente hallada no está automáticamente aprobada para dar respuestas RAG.
 
 | ID | Documento | Organismo / URL oficial | Vigencia verificada | Formato | Fragmentación prevista |

@@ -1,5 +1,7 @@
 # Evaluación reproducible y resultados
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Revisión del 5–6 de noviembre de 2026. Las cifras anteriores del 1–2 de noviembre son históricas; los informes de esta revisión están en `docs/evidencias/semana-3/2026-11-05/`, fecha de inicio de la sesión. Sus marcas de tiempo usan UTC.
 
 La ampliación posterior de CORS y proxy Vercel elevó la suite a 75 pruebas backend, cobertura 88,43 %, y 18 frontend; los 10 escenarios de navegador también pasaron. Ese seguimiento y la comprobación HTTP pública (3/6 antes de publicar las correcciones) se documentan en [configuración de producción del 6 de noviembre](evidencias/semana-3/configuracion-produccion-2026-11-06.md). Las tablas siguientes conservan los resultados de su revisión original.
@@ -53,3 +55,7 @@ CI en push/PR ejecuta backend/cobertura, lint, búsqueda/flujo sin modelos, fron
 ## Qué no miden estas cifras
 
 Acierto de artículo y validación de ID no certifican que cada afirmación esté implicada por el pasaje. La revisión semántica y de vigencia sigue siendo humana. La muestra no es un conjunto reservado independiente: se ha usado durante el desarrollo y no demuestra generalización. Ampliar casos al aprobar nuevas fuentes, incluyendo requisitos internos, perfiles contradictorios y preguntas sin respuesta. Los metadatos de aprobación no sustituyen una resolución institucional.
+
+## Corte final local del 7 de noviembre
+
+Recuperación léxica repetida sobre estado aislado: **14/16 positivos, 4/4 negativos, 0 errores**, igual al baseline histórico. Contratos de flujo con modelo doble: **20/20**. [Resultado fechado](evidencias/semana-4/recuperacion-lexica-final-2026-11-07.json). Los 35 casos públicos de Actions 42378740379 intento 2 no sustituyen el golden set de 20 con chat, la comparación híbrida ni seis checklists reales; s4e permanece parcial. Para la corrida manual activar `evaluar_modelo_real=true`; en main puede desplegar además de evaluar.

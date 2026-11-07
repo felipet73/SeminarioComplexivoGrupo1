@@ -1,7 +1,6 @@
 """Genera el resumen PDF y renders; instalar docs/requirements.txt en entorno aparte."""
 from pathlib import Path
 import json
-from xml.etree import ElementTree
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -26,9 +25,11 @@ def generar():
         pdfmetrics.registerFontFamily('Helvetica')
     font = 'Texto' if 'Texto' in pdfmetrics.getRegisteredFontNames() else 'Helvetica'
     bold = 'Negrita' if font == 'Texto' else 'Helvetica-Bold'
-    remote = json.loads((ROOT / 'docs/evidencias/semana-4/pruebas-url-inicial.json').read_text('utf-8'))
-    suite = ElementTree.parse(ROOT / 'docs/evidencias/semana-4/pytest-local.xml').getroot().find('testsuite')
-    tests = suite.attrib['tests']
+    evidence = json.loads((ROOT / 'docs/evidencias/semana-4/analisis-preliminar-2026-11-07.json').read_text('utf-8'))
+    tests = evidence['pytest_actual']['tests']
+    if evidence['actions']['conclusion'] != 'success':
+        raise ValueError('No hay despliegue aprobado para esta presentación')
+    total = evidence['pruebas_publicas']['casos_definidos']
     doc = canvas.Canvas(str(OUT), pagesize=(W, H))
     doc.setTitle('Grupo 1 - Titulación y normativa académica - Entrega 4')
     doc.setAuthor('Grupo 1 - UNIANDES; asistencia de Codex declarada en README')
@@ -49,7 +50,7 @@ def generar():
         text(title, 44, H-75, 31, strong=True)
         text(subtitle, 44, H-126, 15, GRAY)
         doc.setFont(font, 10); doc.setFillColor(HexColor(GRAY))
-        doc.drawString(44, 22, 'Grupo 1 | Evidencia del 6 de noviembre de 2026 (Ecuador)')
+        doc.drawString(44, 22, 'Grupo 1 | Evidencia del 7 de noviembre de 2026 (Ecuador)')
         doc.drawRightString(W-44, 22, f'{n} / 6')
 
     def block(title, body, x, y, width=410, color=TEAL):
@@ -58,8 +59,8 @@ def generar():
 
     page(1, 'Titulación y normativa académica', 'Asistente educativo con RAG, citas y herramientas de alcance controlado')
     text('Entrega 4: qué funciona y qué sigue abierto', 44, 345, 28, strong=True)
-    text('La incidencia del despliegue sigue abierta', 44, 280, 25, RED, True)
-    text('Cloud Run todavía acepta la credencial administrativa histórica y devuelve 500 en el chat. El código corregido está preparado, pero el servicio activo debe actualizarse.', 44, 228, 21, width=840)
+    text('Servicio corregido y pruebas públicas aprobadas', 44, 280, 25, RED, True)
+    text('Orientación educativa con citas, abstención y confirmación humana. Cloud Run ejecuta 0dab82d: 35/35 casos públicos aprobados. El historial y la evaluación final completa siguen pendientes.', 44, 228, 21, width=840)
     text('Aguilar Rogel Olmes Patricio · Cevallos Mazon Widman Yadiro · Torres Lopez Christian Felipe', 44, 100, 14, GRAY)
     doc.showPage()
 
@@ -78,29 +79,29 @@ def generar():
 
     page(3, 'Los resultados locales y remotos son distintos', 'Denominadores y límites conservados en los informes')
     block('Pruebas locales', f'<b>{tests}</b> casos de backend aprobados.<br/>Cobertura: <b>88,73 %</b>.<br/>Sin claves de modelos ni .env privado.',44,340)
-    block('URLs públicas', f'<b>{remote["correctos"]}/{remote["total"]}</b> casos aprobados.<br/>Se ejecutaron también las dos consultas generativas; fallaron por HTTP 500.',500,340,color=RED)
-    text('El preflight CORS funciona; el error 500 del backend produce una respuesta sin cabeceras CORS.',44,185,19,width=850)
-    text('Fuentes: pytest-local.xml y pruebas-url-inicial.json en docs/evidencias/semana-4/.',44,90,14,GRAY)
+    block('URLs públicas', f'<b>{total}/{total}</b> casos aprobados.<br/>Dos consultas generativas directas y una SSE por Vercel.<br/>Actions 42378740379, intento 2.',500,340,color=TEAL)
+    text('p95 del reporte exitoso: pendiente de adjuntar el JSON por caso. No usar el dato del intento fallido ni confundir estas tres consultas con evaluación completa.',44,185,19,width=850)
+    text('Fuentes: analisis-preliminar-2026-11-07.json y Actions, intento 2. Código 0dab82d.',44,90,14,GRAY)
     doc.showPage()
 
-    page(4, 'La seguridad exige actualizar el servicio', 'La eliminación en main no revoca una imagen antigua')
-    block('Preparado en el repositorio', 'Módulo inseguro y rutas retirados.<br/>Detector de credenciales débiles.<br/>Límite de 30 consultas por minuto y proceso.<br/>Commit visible en /health.',44,340)
-    block('Pendiente en producción', 'Desplegar la imagen corregida.<br/>Verificar 404 en rutas antiguas.<br/>Revocar cualquier valor reutilizado.<br/>Coordinar limpieza del historial.',500,340,color=RED)
-    text('La verificación de autenticación descartó el token y no realizó operaciones administrativas.',44,123,17,GRAY)
+    page(4, 'Seguridad: corregido hoy y exposición histórica', 'No confundir exclusiones de Gitleaks con credenciales legacy')
+    block('Acreditado en la revisión probada', 'Módulo inseguro y rutas retirados.<br/>Detector de credenciales débiles.<br/>Límite de 30 consultas por minuto y proceso.<br/>Commit visible en /health.',44,340)
+    block('Pendiente de cierre residual', 'Falsos positivos: tokens de ejemplo de un advisory de filelock.<br/>Credenciales JWT/password legacy: funcionales antes, retiradas hoy.<br/>Revocar reutilizaciones y limpiar historial coordinadamente.',500,340,color=RED)
+    text('Las rutas antiguas probadas devuelven 404. El historial aún contiene valores: no declarar s4b completo.',44,123,17,GRAY)
     doc.showPage()
 
     page(5, 'El pipeline promueve la imagen que pasó pruebas', 'Solo main; despliegue condicionado por cinco jobs')
     text('Secretos + backend + frontend + navegador + contenedor',44,340,24,TEAL,True)
     text('Imagen probada → Artifact Registry → Cloud Run → pruebas públicas',44,280,23,strong=True)
-    text('Las comprobaciones posteriores exigen el SHA, corpus disponible, retirada de rutas y SSE completo. Los 32 contratos sin generación deben aprobar.',44,220,20,width=850)
-    text('Se requiere configurar o confirmar proyecto, repositorio de imágenes y autenticación WIF o secreto JSON de despliegue. No se ha ejecutado este job remoto.',44,118,17,RED,width=850)
+    text('Las comprobaciones posteriores exigen el SHA, corpus disponible, retirada de rutas y SSE completo. Los 35 casos incluyen generación real y deben aprobar.',44,220,20,width=850)
+    text('WIF, Artifact Registry y Cloud Run ya se usaron en el job aprobado. Las claves viven en Secret Manager; la cuenta de ejecución requiere acceso a cada secreto.',44,118,17,TEAL,width=850)
     doc.showPage()
 
     page(6, 'Cierre de entrega con pendientes explícitos', 'Prioridades para el equipo y la sustentación')
-    block('Primero: servicio público', 'Actualizar Cloud Run y comprobar el commit.<br/>Repetir 32 contratos y dos casos generativos.<br/>Conservar evidencia del cierre de la credencial.',44,340)
-    block('Revisión humana', 'Aprobar OCR y aplicabilidad del instructivo.<br/>Repetir el agente: histórico estricto 5/6.<br/>Definir persistencia duradera.<br/>Confirmar aportes y uso de IA por integrante.',500,340)
-    text('La semilla de documentos no conserva las cargas posteriores. Un límite de instancia no hace persistente SQLite.',44,125,17,GRAY)
-    text('Guía de verificación: docs/08-pruebas.md. Matriz: docs/evidencias/semana-4/analisis-observaciones-docente.md.',44,70,12,GRAY)
+    block('Demo pública y evidencia', 'Respuesta con cita y abrir la fuente.<br/>Fuera de tema y abstención.<br/>Borrador demo con confirmación humana.<br/>Capturas y vídeo real de respaldo de 2 min.',44,340)
+    block('Revisión humana', 'Aprobar OCR y aplicabilidad del instructivo.<br/>Repetir el agente: histórico estricto 5/6.<br/>Ensayar reinicio y resolver durabilidad.<br/>Confirmar aportes y uso de IA individual.',500,340)
+    text('12 min de exposición + 3 de preguntas. ZIP máximo 20 MB: el corpus actual supera ese límite; resolver antes de entregar.',44,125,17,GRAY)
+    text('Guía de cierre: docs/14-checklist-entrega-final.md. Fecha oficial 9/11, 23:59 Ecuador; prórroga 11/11.',44,70,12,GRAY)
     doc.save()
     PREVIEWS.mkdir(parents=True, exist_ok=True)
     pdf = pymupdf.open(OUT)

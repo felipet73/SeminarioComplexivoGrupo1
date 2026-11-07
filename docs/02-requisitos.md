@@ -1,5 +1,7 @@
 # 02. Requisitos de software — Semana 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 ## Historias de usuario y criterios de aceptación (Gherkin)
 
 ### HU-01 — Consultar una norma
@@ -84,4 +86,4 @@
 
 ## Evidencias de aceptación pendientes
 
-Registrar test, fecha, ejecutor, build, ambiente, esperado, obtenido y captura/registro. Las metas anteriores **no se consideran aprobadas aún**.
+Registrar test, fecha, ejecutor, build, ambiente, esperado, obtenido y captura/registro. No se consideran todas aprobadas en bloque. Cobertura, despliegue y contratos públicos tienen evidencia posterior; carga concurrente, disponibilidad 24 h, axe y otras metas no medidas siguen sin acreditarse. Los criterios HU-05/06 de cumplimiento y feriados se redujeron a checklist pendiente de verificar y calendario simulado sin feriados; no equivalen a cálculo institucional. Ver checklist vigente.

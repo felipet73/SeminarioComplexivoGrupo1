@@ -1,5 +1,7 @@
 # ADR: agente educativo y alcance controlado
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Actualización del 6 de noviembre de 2026: el chat comparte un presupuesto global por proceso de 30 POST en 60 segundos entre `/api/chat`, `/api/chat/stream` y `/api/agente`, definido en `config/parametros.yaml`. Se responde 429 con Retry-After accesible por CORS antes de invocar el flujo. No se confía en cabeceras de IP enviadas por el cliente ni se declara una cuota por usuario o distribuida. Reiniciar el proceso reinicia la ventana; múltiples instancias amplían el presupuesto.
 
 El módulo de credenciales legacy está eliminado. Un detector AST bloquea contraseñas/claves constantes de baja entropía en código de aplicación, mientras `--historial-legacy` informa la presencia histórica sin imprimir valores. La credencial sigue aceptándose en la imagen antigua de Cloud Run; retirar el archivo de Git no revoca ese servicio. La incidencia se cierra con actualización, retirada de rutas y rotación de usos expuestos, no con un ignore del escáner.

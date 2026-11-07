@@ -1,5 +1,7 @@
 # Evidencias de la semana 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 **No se han adjuntado aún** capturas de la encuesta, commits de los tres integrantes, actas de revisión ni confirmaciones institucionales. No sustituir evidencia de campo por documentos fabricados.
 
 ## Archivos que debe aportar el equipo

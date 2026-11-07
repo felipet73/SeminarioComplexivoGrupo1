@@ -1,5 +1,7 @@
 # Implementación de Semana 2
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 - Backend FastAPI con contrato OpenAPI, JSON y streaming SSE.
 - Gemini principal y OpenAI de respaldo, reintentos, límite de entrada y log sin texto personal.
 - Salvaguardas de dominio e inyección antes del modelo.

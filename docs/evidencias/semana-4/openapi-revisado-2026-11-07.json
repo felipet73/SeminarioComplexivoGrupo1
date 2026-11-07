@@ -1,0 +1,2224 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Asistente Académico UNIANDES",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/api/admin/login": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Signin",
+        "operationId": "signin_api_admin_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/session": {
+      "get": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Session",
+        "operationId": "session_api_admin_session_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/logout": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Signout",
+        "operationId": "signout_api_admin_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/bootstrap": {
+      "get": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Bootstrap",
+        "operationId": "bootstrap_api_admin_bootstrap_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/prompts": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Create Prompt",
+        "operationId": "create_prompt_api_admin_prompts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/prompts/{version}": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Edit Prompt",
+        "operationId": "edit_prompt_api_admin_prompts__version__post",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Version"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/config": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Save Config",
+        "operationId": "save_config_api_admin_config_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RAGConfig"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/documents": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Upload Document",
+        "operationId": "upload_document_api_admin_documents_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_document_api_admin_documents_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/documents/{doc_id}": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Edit Document",
+        "operationId": "edit_document_api_admin_documents__doc_id__post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/documents/{doc_id}/replace": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Replace Document",
+        "operationId": "replace_document_api_admin_documents__doc_id__replace_post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_replace_document_api_admin_documents__doc_id__replace_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/documents/{doc_id}/file": {
+      "get": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Download Document",
+        "operationId": "download_document_api_admin_documents__doc_id__file_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "revision",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Revision"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/history": {
+      "get": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "History",
+        "operationId": "history_api_admin_history_get",
+        "parameters": [
+          {
+            "name": "resource",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Resource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/rag/chunks": {
+      "get": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Chunks",
+        "operationId": "chunks_api_admin_rag_chunks_get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/rag/index/{doc_id}": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Index Document",
+        "operationId": "index_document_api_admin_rag_index__doc_id__post",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/rag/search": {
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Search",
+        "operationId": "search_api_admin_rag_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Search"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/analysis": {
+      "get": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Analyses",
+        "operationId": "analyses_api_admin_analysis_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Start Analysis",
+        "operationId": "start_analysis_api_admin_analysis_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/analysis/{job_id}": {
+      "get": {
+        "tags": [
+          "Administración"
+        ],
+        "summary": "Get Analysis",
+        "operationId": "get_analysis_api_admin_analysis__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/herramientas": {
+      "get": {
+        "tags": [
+          "Herramientas educativas"
+        ],
+        "summary": "Contratos",
+        "operationId": "contratos_api_herramientas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/herramientas/calcular-plazo": {
+      "post": {
+        "tags": [
+          "Herramientas educativas"
+        ],
+        "summary": "Simular Calendario",
+        "description": "Simula días hábiles declarados. No determina un plazo institucional ni incluye feriados.",
+        "operationId": "simular_calendario_api_herramientas_calcular_plazo_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlazoIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlazoOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/herramientas/consultar-requisitos": {
+      "post": {
+        "tags": [
+          "Herramientas educativas"
+        ],
+        "summary": "Consultar Requisitos",
+        "operationId": "consultar_requisitos_api_herramientas_consultar_requisitos_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequisitosIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsultaOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/herramientas/generar-checklist": {
+      "post": {
+        "tags": [
+          "Herramientas educativas"
+        ],
+        "summary": "Generar Checklist",
+        "operationId": "generar_checklist_api_herramientas_generar_checklist_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChecklistIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChecklistOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/herramientas/agente/confirmar/{action_id}": {
+      "post": {
+        "tags": [
+          "Herramientas educativas"
+        ],
+        "summary": "Confirmar",
+        "operationId": "confirmar_api_herramientas_agente_confirmar__action_id__post",
+        "parameters": [
+          {
+            "name": "action_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Action Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agente/confirmar/{action_id}": {
+      "post": {
+        "tags": [
+          "Agente educativo"
+        ],
+        "summary": "Confirmar",
+        "operationId": "confirmar_api_agente_confirmar__action_id__post",
+        "parameters": [
+          {
+            "name": "action_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Action Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ready": {
+      "get": {
+        "summary": "Ready",
+        "description": "Comprueba el índice elegible local; no consume API ni certifica el proveedor.",
+        "operationId": "ready_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sources/{doc_id}/{revision}": {
+      "get": {
+        "summary": "Source",
+        "operationId": "source_api_sources__doc_id___revision__get",
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "revision",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Revision"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/metricas": {
+      "get": {
+        "summary": "Metricas",
+        "operationId": "metricas_api_metricas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Metricas Api Metricas Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "summary": "Chat",
+        "operationId": "chat_api_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultaChat"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaAsistente"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agente": {
+      "post": {
+        "tags": [
+          "Agente educativo"
+        ],
+        "summary": "Chat",
+        "operationId": "chat_api_agente_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultaChat"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaAsistente"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/stream": {
+      "post": {
+        "summary": "Chat Stream",
+        "operationId": "chat_stream_api_chat_stream_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultaChat"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccionPendiente": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "herramienta": {
+            "type": "string",
+            "title": "Herramienta"
+          },
+          "argumentos": {
+            "$ref": "#/components/schemas/SolicitudTutorIn"
+          },
+          "vence": {
+            "type": "string",
+            "title": "Vence"
+          },
+          "alcance": {
+            "type": "string",
+            "title": "Alcance",
+            "default": "Borrador académico de demostración: se guarda localmente tras confirmar; no se envía a la universidad ni asigna tutor."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "token",
+          "herramienta",
+          "argumentos",
+          "vence"
+        ],
+        "title": "AccionPendiente"
+      },
+      "AnalysisCase": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 3,
+            "title": "Question"
+          },
+          "expected": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Expected",
+            "default": ""
+          },
+          "contexto": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "enum": [
+                "carrera",
+                "curso",
+                "modalidad",
+                "periodo",
+                "jornada",
+                "tema",
+                "objetivo",
+                "sede",
+                "modalidad_titulacion"
+              ]
+            },
+            "type": "object",
+            "title": "Contexto"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "AnalysisCase"
+      },
+      "AnalysisInput": {
+        "properties": {
+          "versions": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Versions"
+          },
+          "model": {
+            "type": "string",
+            "enum": [
+              "gemini",
+              "openai"
+            ],
+            "title": "Model",
+            "default": "gemini"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisCase"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Cases"
+          },
+          "use_rag": {
+            "type": "boolean",
+            "title": "Use Rag",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "versions",
+          "cases"
+        ],
+        "title": "AnalysisInput"
+      },
+      "Body_replace_document_api_admin_documents__doc_id__replace_post": {
+        "properties": {
+          "metadata": {
+            "type": "string",
+            "title": "Metadata"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "title": "Expected Revision"
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metadata",
+          "expected_revision",
+          "file"
+        ],
+        "title": "Body_replace_document_api_admin_documents__doc_id__replace_post"
+      },
+      "Body_upload_document_api_admin_documents_post": {
+        "properties": {
+          "metadata": {
+            "type": "string",
+            "title": "Metadata"
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metadata",
+          "file"
+        ],
+        "title": "Body_upload_document_api_admin_documents_post"
+      },
+      "CampoNecesario": {
+        "properties": {
+          "campo": {
+            "type": "string",
+            "enum": [
+              "carrera",
+              "curso",
+              "modalidad",
+              "periodo",
+              "jornada",
+              "tema",
+              "objetivo",
+              "sede",
+              "modalidad_titulacion"
+            ],
+            "title": "Campo"
+          },
+          "etiqueta": {
+            "type": "string",
+            "title": "Etiqueta"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "texto",
+              "select"
+            ],
+            "title": "Tipo"
+          },
+          "opciones": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Opciones"
+          },
+          "max_length": {
+            "type": "integer",
+            "title": "Max Length"
+          }
+        },
+        "type": "object",
+        "required": [
+          "campo",
+          "etiqueta",
+          "tipo",
+          "max_length"
+        ],
+        "title": "CampoNecesario"
+      },
+      "ChecklistIn": {
+        "properties": {
+          "perfil_estudiante": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Perfil Estudiante"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "perfil_estudiante"
+        ],
+        "title": "ChecklistIn"
+      },
+      "ChecklistItem": {
+        "properties": {
+          "requisito": {
+            "type": "string",
+            "title": "Requisito"
+          },
+          "fragmento_id": {
+            "type": "string",
+            "title": "Fragmento Id"
+          },
+          "documento": {
+            "type": "string",
+            "title": "Documento"
+          },
+          "seccion": {
+            "type": "string",
+            "title": "Seccion"
+          },
+          "pagina": {
+            "type": "integer",
+            "title": "Pagina"
+          },
+          "estado": {
+            "type": "string",
+            "const": "pendiente_de_verificar",
+            "title": "Estado",
+            "default": "pendiente_de_verificar"
+          }
+        },
+        "type": "object",
+        "required": [
+          "requisito",
+          "fragmento_id",
+          "documento",
+          "seccion",
+          "pagina"
+        ],
+        "title": "ChecklistItem"
+      },
+      "ChecklistOut": {
+        "properties": {
+          "perfil_declarado": {
+            "type": "string",
+            "title": "Perfil Declarado"
+          },
+          "perfil_interpretado": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Perfil Interpretado"
+          },
+          "datos_por_confirmar": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Datos Por Confirmar"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ChecklistItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "completo": {
+            "type": "boolean",
+            "const": false,
+            "title": "Completo",
+            "default": false
+          },
+          "advertencia": {
+            "type": "string",
+            "title": "Advertencia",
+            "default": "Pasajes normativos por verificar para este perfil. No acreditan cumplimiento ni exhaustividad; confirmar aplicabilidad y normativa interna."
+          }
+        },
+        "type": "object",
+        "required": [
+          "perfil_declarado",
+          "items"
+        ],
+        "title": "ChecklistOut"
+      },
+      "ConsultaChat": {
+        "properties": {
+          "pregunta": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 3,
+            "title": "Pregunta",
+            "examples": [
+              "¿Qué requisitos debo revisar para titularme?"
+            ]
+          },
+          "carrera": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Carrera"
+          },
+          "modalidad": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Modalidad"
+          },
+          "modelo_preferido": {
+            "type": "string",
+            "enum": [
+              "gemini",
+              "openai"
+            ],
+            "title": "Modelo Preferido",
+            "default": "gemini"
+          },
+          "curso": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Curso"
+          },
+          "periodo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Periodo"
+          },
+          "jornada": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jornada"
+          },
+          "tema": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tema"
+          },
+          "objetivo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Objetivo"
+          },
+          "sede": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sede"
+          },
+          "modalidad_titulacion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Modalidad Titulacion"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pregunta"
+        ],
+        "title": "ConsultaChat"
+      },
+      "ConsultaOut": {
+        "properties": {
+          "pasajes": {
+            "items": {
+              "$ref": "#/components/schemas/PasajeOut"
+            },
+            "type": "array",
+            "title": "Pasajes"
+          },
+          "advertencia": {
+            "type": "string",
+            "title": "Advertencia"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pasajes",
+          "advertencia"
+        ],
+        "title": "ConsultaOut"
+      },
+      "DecisionIn": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 32,
+            "title": "Token"
+          },
+          "aprobar": {
+            "type": "boolean",
+            "title": "Aprobar"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "token",
+          "aprobar"
+        ],
+        "title": "DecisionIn"
+      },
+      "DecisionOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "mensaje": {
+            "type": "string",
+            "title": "Mensaje"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "estado",
+          "mensaje"
+        ],
+        "title": "DecisionOut"
+      },
+      "DocUpdate": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 3,
+            "title": "Title"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "normativa",
+              "informativo"
+            ],
+            "title": "Kind",
+            "default": "informativo"
+          },
+          "source_url": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Source Url",
+            "default": ""
+          },
+          "valid_from": {
+            "type": "string",
+            "format": "date",
+            "title": "Valid From"
+          },
+          "valid_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valid To"
+          },
+          "approved": {
+            "type": "boolean",
+            "title": "Approved",
+            "default": false
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Notes",
+            "default": ""
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "valid_from",
+          "expected_revision"
+        ],
+        "title": "DocUpdate"
+      },
+      "Fuente": {
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "seccion": {
+            "type": "string",
+            "title": "Seccion"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "pagina": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pagina"
+          },
+          "fragmento_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fragmento Id"
+          },
+          "sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sha256"
+          }
+        },
+        "type": "object",
+        "required": [
+          "titulo",
+          "seccion",
+          "url"
+        ],
+        "title": "Fuente"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Login": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "Login"
+      },
+      "PasajeOut": {
+        "properties": {
+          "fragmento_id": {
+            "type": "string",
+            "title": "Fragmento Id"
+          },
+          "texto": {
+            "type": "string",
+            "title": "Texto"
+          },
+          "seccion": {
+            "type": "string",
+            "title": "Seccion"
+          },
+          "pagina": {
+            "type": "integer",
+            "title": "Pagina"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fragmento_id",
+          "texto",
+          "seccion",
+          "pagina"
+        ],
+        "title": "PasajeOut"
+      },
+      "PlazoIn": {
+        "properties": {
+          "fecha_inicio": {
+            "type": "string",
+            "format": "date",
+            "title": "Fecha Inicio"
+          },
+          "dias_habiles": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 0.0,
+            "title": "Dias Habiles"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fecha_inicio",
+          "dias_habiles"
+        ],
+        "title": "PlazoIn"
+      },
+      "PlazoOut": {
+        "properties": {
+          "fecha_resultado": {
+            "type": "string",
+            "format": "date",
+            "title": "Fecha Resultado"
+          },
+          "dias_habiles": {
+            "type": "integer",
+            "title": "Dias Habiles"
+          },
+          "alcance": {
+            "type": "string",
+            "title": "Alcance"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fecha_resultado",
+          "dias_habiles",
+          "alcance"
+        ],
+        "title": "PlazoOut"
+      },
+      "PromptInput": {
+        "properties": {
+          "content": {
+            "type": "string",
+            "maxLength": 40000,
+            "minLength": 20,
+            "title": "Content"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 3,
+            "title": "Description"
+          },
+          "expected_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "content",
+          "description"
+        ],
+        "title": "PromptInput"
+      },
+      "RAGConfig": {
+        "properties": {
+          "active_prompt": {
+            "type": "integer",
+            "maximum": 999.0,
+            "minimum": 1.0,
+            "title": "Active Prompt"
+          },
+          "chunk_size": {
+            "type": "integer",
+            "maximum": 4000.0,
+            "minimum": 300.0,
+            "title": "Chunk Size",
+            "default": 1400
+          },
+          "overlap": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Overlap",
+            "default": 160
+          },
+          "top_k": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "default": 4
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "lexical",
+              "hybrid"
+            ],
+            "title": "Strategy",
+            "default": "hybrid"
+          },
+          "embedding_model": {
+            "type": "string",
+            "enum": [
+              "gemini-embedding-001",
+              "text-embedding-3-small"
+            ],
+            "title": "Embedding Model",
+            "default": "gemini-embedding-001"
+          },
+          "min_similarity": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Min Similarity",
+            "default": 0.65
+          },
+          "min_lexical_coverage": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Min Lexical Coverage",
+            "default": 0.6
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "active_prompt",
+          "revision"
+        ],
+        "title": "RAGConfig"
+      },
+      "RequisitosIn": {
+        "properties": {
+          "modalidad": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Modalidad"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "modalidad"
+        ],
+        "title": "RequisitosIn"
+      },
+      "RespuestaAsistente": {
+        "properties": {
+          "respuesta": {
+            "type": "string",
+            "title": "Respuesta"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "respuesta",
+              "abstencion",
+              "aclaracion",
+              "rechazo",
+              "confirmacion"
+            ],
+            "title": "Estado"
+          },
+          "requiere_revision_humana": {
+            "type": "boolean",
+            "title": "Requiere Revision Humana",
+            "default": false
+          },
+          "fuentes": {
+            "items": {
+              "$ref": "#/components/schemas/Fuente"
+            },
+            "type": "array",
+            "title": "Fuentes"
+          },
+          "campos_necesarios": {
+            "items": {
+              "$ref": "#/components/schemas/CampoNecesario"
+            },
+            "type": "array",
+            "title": "Campos Necesarios"
+          },
+          "pasos_agente": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Pasos Agente"
+          },
+          "traza_agente": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Traza Agente"
+          },
+          "checklist": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChecklistOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accion_pendiente": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AccionPendiente"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "modelo_utilizado": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Modelo Utilizado"
+          },
+          "fallback_activado": {
+            "type": "boolean",
+            "title": "Fallback Activado",
+            "default": false
+          },
+          "tiempo_segundos": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Tiempo Segundos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "respuesta",
+          "estado",
+          "tiempo_segundos"
+        ],
+        "title": "RespuestaAsistente"
+      },
+      "Search": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 3,
+            "title": "Query"
+          }
+        },
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "title": "Search"
+      },
+      "SolicitudTutorIn": {
+        "properties": {
+          "carrera": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Carrera"
+          },
+          "modalidad": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Modalidad"
+          },
+          "tema": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 3,
+            "title": "Tema"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "carrera",
+          "modalidad",
+          "tema"
+        ],
+        "title": "SolicitudTutorIn"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

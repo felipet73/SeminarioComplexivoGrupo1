@@ -1,6 +1,8 @@
 # Flujo automatizado de orientación
 
-El pipeline actual agrega despliegue posterior a secretos, backend, frontend, navegador y contenedor mediante `needs`. En main se conserva y promueve la imagen probada a Artifact Registry/Cloud Run; después se comprueba SHA, corpus, rutas retiradas, SSE y 32 contratos HTTP públicos. Requiere configurar o confirmar identidad Google Cloud y repositorio de imágenes; no se afirma que el job nuevo haya sido ejecutado. La documentación operativa está en [13-despliegue.md](13-despliegue.md) y los casos en [08-pruebas.md](08-pruebas.md).
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
+El pipeline actual agrega despliegue posterior a secretos, backend, frontend, navegador y contenedor mediante `needs`. En main se conserva y promueve la imagen probada a Artifact Registry/Cloud Run; después se comprueba SHA, corpus, rutas retiradas, SSE y 35 casos HTTP públicos, incluidos tres generativos. Actions 42378740379, intento 2, aprobó el despliegue de `0dab82d`; WIF y el repositorio de imágenes ya se utilizaron. No equivale a la evaluación completa del agente. La documentación operativa está en [13-despliegue.md](13-despliegue.md) y los casos en [08-pruebas.md](08-pruebas.md).
 
 La entrada se valida con `ConsultaChat`. `backend/app/flujo.py` expone orientar y resolver, usadas por la API y la evaluación. El flujo bloquea inyección conocida, recupera fuentes aprobadas y vigentes, aplica umbrales de pertinencia, y se abstiene sin llamar al modelo si no hay evidencia. Las consultas de preparación de borradores usan contexto de titulación en lugar de los valores libres del formulario para buscar.
 

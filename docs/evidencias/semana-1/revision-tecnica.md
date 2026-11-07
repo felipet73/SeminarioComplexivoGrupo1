@@ -1,5 +1,7 @@
 # Revisión técnica de Semana 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 **Fecha:** 20-10-2026  
 **Alcance:** revisión del repositorio y contraste con la consigna del Caso 01, Grupo 1. No sustituye la revisión docente ni la verificación institucional de fuentes.
 
