@@ -1,5 +1,7 @@
 # Ayudas y trazas interactivas del administrador
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Actualización: 28 de octubre de 2026. No requiere dependencias nuevas. Reiniciar backend y recargar frontend para disponer del contrato ampliado.
 
 ## Ayudas de configuración

@@ -1,5 +1,7 @@
 # Análisis de observaciones del docente — Grupo 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Actualización del 6 de noviembre: véase el [diagnóstico de sincronización y CI](../2026-11-06/diagnostico-ci-y-sincronizacion.md), con los fallos observados en Actions, la corrección en rama separada y la validación desde un checkout limpio. Los resultados históricos de esta página conservan su fecha y alcance.
 
 Trabajo iniciado el 5 y verificado hasta el 6 de noviembre de 2026. Referencias: archivo local `Guia_practica_Entrega3_por_proyecto (3).html`, sección **3 · El camino, paso a paso**, pestaña **Lo que piden a todos** y capturas de revisión entregadas por el equipo. Se revisaron backend, frontend y archivos de CI; el despliegue existente en Google Cloud Run fue confirmado por el equipo, no inspeccionado remotamente.

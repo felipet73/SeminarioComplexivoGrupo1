@@ -6,7 +6,7 @@ Integrantes: Aguilar Rogel Olmes Patricio; Cevallos Mazon Widman Yadiro; Torres 
 
 Proyecto educativo con FastAPI, React/Vite, Gemini con respaldo OpenAI, RAG con citas verificadas y agente de herramientas de alcance controlado. Orienta a partir de las fuentes aportadas; no emite resoluciones ni modifica expedientes.
 
-## Estado real de la Entrega 3
+## Estado comprobado — 7 de noviembre de 2026
 
 | Punto | Implementación y evidencia |
 |---|---|
@@ -14,9 +14,11 @@ Proyecto educativo con FastAPI, React/Vite, Gemini con respaldo OpenAI, RAG con 
 | RAG | BM25 + embeddings, persistencia SQLite, filtros de vigencia/aprobación, umbrales, RRF, citas y abstención sin modelo cuando no hay evidencia |
 | Agente controlado | Lista cerrada, Pydantic de entrada/salida, MAX_ITER, herramientas de consulta/checklist/calendario y borrador demo con confirmación, caducidad, idempotencia y auditoría |
 | Evaluación | Evaluador restaurado y probado contra falsos aprobados: BM25 14/16, híbrido 16/16, chat real con cita 16/16 y negativas 4/4. Gemini eligió/ejecutó checklist en 6/6 consultas; produjo cinco listas con cita y una abstención (criterio estricto: 5/6) |
-| Calidad | 99 pruebas backend, cobertura 88,73 %, pruebas de proxy/CSRF, límite del chat, credenciales fijas y revisión desplegada. Frontend: 18 pruebas y 10 escenarios de navegador. Evidencias y alcance en docs/08-pruebas.md |
+| Calidad | 104 pruebas backend, cobertura 88,73 %, pruebas de proxy/CSRF, límite del chat, credenciales fijas y revisión desplegada. Frontend: 18 pruebas y 10 escenarios de navegador. Evidencias y alcance en docs/08-pruebas.md |
 
-La matriz de Entrega 3 está en [análisis y evidencias del 5–6 de noviembre](docs/evidencias/semana-3/2026-11-05/analisis-observaciones-docente.md). La revisión actual de seguridad, despliegue y requisitos de Entrega 4 está en [semana 4](docs/evidencias/semana-4/analisis-observaciones-docente.md). La [auditoría del 1 de noviembre](docs/12-auditoria-entrega3-grupo1.md) conserva antecedentes. La corrección anterior aprobó los cuatro jobs de [Actions](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42310236801), pero el servicio público todavía ejecuta código antiguo: el chat devuelve 500 y la credencial legacy sigue aceptándose. El nuevo pipeline está preparado; no se presenta como desplegado.
+La matriz de Entrega 3 está en [análisis y evidencias del 5–6 de noviembre](docs/evidencias/semana-3/2026-11-05/analisis-observaciones-docente.md). La revisión actual de seguridad, despliegue y requisitos de Entrega 4 está en [semana 4](docs/evidencias/semana-4/analisis-observaciones-docente.md). La [auditoría del 1 de noviembre](docs/12-auditoria-entrega3-grupo1.md) conserva antecedentes. La corrección anterior aprobó los cuatro jobs de [Actions](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42310236801), y la ejecución posterior [42378740379, intento 2](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42378740379/attempts/2) aprobó el despliegue de `0dab82d` y los 35 casos públicos. Las rutas legacy probadas ya están retiradas. Persisten hallazgos en el historial Git y pendientes de revisión humana, evaluación estricta del agente y persistencia; no se declara cumplimiento total. Ver el [análisis técnico preliminar](docs/analisis-tecnico-preliminar.pdf) y su [fuente](docs/analisis-tecnico-preliminar.md).
+
+Estado detallado frente al comité: [checklist final s4a–s4k](docs/14-checklist-entrega-final.md). Auditoría de falsos positivos y credenciales funcionales: [historial](docs/15-auditoria-credenciales-historicas.md). La presentación está actualizada; los pendientes humanos, de historial y ZIP no se marcan completos.
 
 ## Inicio rápido
 

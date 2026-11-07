@@ -1,14 +1,18 @@
 # Revisión de observaciones del docente - Entrega 4, Grupo 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Fecha local: 6 de noviembre de 2026 (algunos informes registran 7 de noviembre en UTC). Referencias: capturas de revisión entregadas por el equipo, guía HTML de Entrega 3 y ejemplo de workflow de la captura de Entrega 4. La ficha del docente revisó main `f8e0a1b`; esta auditoría parte del merge posterior `15a6044` y de los refuerzos preparados localmente. No se reescribe el estado histórico de las evidencias de semana 3.
 
-## Falla crítica: confirmada en el servicio desplegado
+## Hallazgo histórico: confirmado antes de la corrección desplegada
 
 `seguridad.py` ya no existe en main desde `08ef882`, y las rutas antiguas no se registran en el código actual. Sin embargo, Cloud Run aún publica esas rutas. Una única prueba de autenticación con la credencial histórica devolvió **200 y presencia de token**. El token se descartó, no se guardaron sus valores y no se ejecutó ninguna operación administrativa. [Evidencia sin secretos](credencial-antigua.json).
 
 El servicio activo necesita reconstrucción y actualización. La incidencia **sigue abierta en producción** hasta comprobar retirada de rutas, commit, revocación y casos funcionales. El nuevo detector AST identifica las credenciales de baja entropía que los patrones anteriores no detectaban. El [informe de historial](historial-credenciales.json) conserva cuatro posiciones en dos versiones del módulo; ese análisis devuelve exit 1. No se borró historial remoto ni se publicó un force push.
 
 El token legacy emitido no demuestra acceso al panel actual `/api/admin`, que utiliza otra autenticación. No se intentó usarlo allí ni se afirma acceso a documentos o modificación de datos.
+
+La descripción anterior conserva el diagnóstico inicial. Para el estado posterior al despliegue, consultar la actualización al final de este documento.
 
 ## Matriz de cumplimiento y límites
 
@@ -79,3 +83,7 @@ Configurar/revisar WIF y variables de GitHub, protección del entorno `productio
 ### Evidencia local del complemento
 
 [Reporte reproducible con hashes de los archivos verificados](complemento-revision-2026-11-07.json): 104 pruebas backend aprobadas, cobertura 88,73 %, Ruff y detector activo aprobados. Tras ajustar el límite de lectura SSE se repitieron las 13 pruebas del verificador: 13/13. Las pruebas de generación real contra las URLs públicas no se ejecutaron; 35 es el conjunto exigido por el pipeline, no un resultado remoto aprobado. El frontend y la imagen no cambian en este complemento.
+
+## Actualización posterior al despliegue — 7 de noviembre, 09:38 Ecuador
+
+Actions [42378740379, intento 2](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42378740379/attempts/2) aprobó el SHA `0dab82d`, el smoke con rutas legacy retiradas y los 35 casos públicos. Sustituye el estado operativo fallido de los apartados históricos anteriores; sus reportes no se sobrescriben. El job `evaluacion-real` permaneció omitido y el detector histórico continúa dando exit 1. La revocación completa, revisión humana del OCR, evaluación generativa 6/6 y persistencia duradera no se declaran cerradas. Ver [informe técnico PDF](../../analisis-tecnico-preliminar.pdf), [fuente](../../analisis-tecnico-preliminar.md) y [evidencia resumida](analisis-preliminar-2026-11-07.json).

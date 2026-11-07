@@ -1,5 +1,7 @@
 # Sincronización de main y corrección de CI — Grupo 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Fecha: 6 de noviembre de 2026. Esta revisión complementa el [análisis de las observaciones del docente](../2026-11-05/analisis-observaciones-docente.md). No sustituye las limitaciones registradas allí.
 
 ## Conservación y comparación

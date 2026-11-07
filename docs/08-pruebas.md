@@ -1,5 +1,7 @@
 # Pruebas funcionales y criterio de aceptación - Grupo 1
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Las URLs evaluadas son el [backend de Cloud Run](https://titulacion-rag-386902880383.us-central1.run.app) y el [frontend de Vercel](https://seminario-complexivo-grupo1.vercel.app/). El contrato y los datos de prueba están en `eval/casos_http.json`; el runner es `scripts/pruebas_funcionales.py`. No se usan frases de ejemplo ni se acepta una abstención como respuesta normativa correcta.
 
 ## Ejecución
@@ -37,7 +39,7 @@ El runner devuelve exit 1 si falla cualquier caso seleccionado o si se seleccion
 
 ## Resultado contra producción
 
-La corrida histórica publicada antes de añadir el caso SSE generativo obtuvo **23/34**, con cero omitidos. Véase [reporte completo](evidencias/semana-4/pruebas-url-inicial.json). El chat sigue devolviendo 500, faltan rutas de la versión nueva y la administración antigua aún existe. No se declara producción aprobada. El [informe de seguridad](evidencias/semana-4/analisis-observaciones-docente.md) detalla la credencial histórica aceptada, sin publicar sus valores o token.
+La corrida histórica publicada antes de añadir el caso SSE generativo obtuvo **23/34**, con cero omitidos. Véase [reporte completo](evidencias/semana-4/pruebas-url-inicial.json). En esa corrida el chat fallaba y las rutas legacy seguían disponibles. Es evidencia histórica: la ejecución posterior 42378740379, intento 2, aprobó el SHA `0dab82d` y los 35 casos actuales. Ver el [análisis técnico actualizado](analisis-tecnico-preliminar.md) y la [evidencia resumida](evidencias/semana-4/analisis-preliminar-2026-11-07.json). Esto no acredita revocación completa de credenciales históricas ni la evaluación estricta 6/6 del agente. El [informe de seguridad](evidencias/semana-4/analisis-observaciones-docente.md) detalla la credencial histórica aceptada, sin publicar sus valores o token.
 
 ## Pruebas locales y CI
 
