@@ -1,42 +1,72 @@
 name: Pruebas Grupo 1
+
 permissions:
   contents: read
+
 concurrency:
   group: pruebas-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 on:
   push:
   pull_request:
   workflow_dispatch:
+
 jobs:
+  secretos:
+    name: Revisar secretos con Gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Escanear todo el historial
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LOG_OPTS: "--all"
+          GITLEAKS_ENABLE_SUMMARY: "true"
+
   backend:
     runs-on: ubuntu-latest
     # El CI normal valida contratos con dobles, sin consumir proveedores.
     # Las claves solo se utilizan en el job manual evaluacion-real.
     env:
-      GEMINI_API_KEY: ''
-      OPENAI_API_KEY: ''
-      AI_API_KEY: ''
+      GEMINI_API_KEY: ""
+      OPENAI_API_KEY: ""
+      AI_API_KEY: ""
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
           cache: pip
           cache-dependency-path: |
             backend/requirements.txt
             backend/requirements-dev.txt
+
       - run: python -m pip install --upgrade pip
+
       - run: pip install --no-cache-dir -r backend/requirements-dev.txt
+
       - run: ruff check backend scripts eval
+
       - run: python scripts/check_secrets.py
+
       - run: python -m pytest -q backend/tests --cov=app --cov-fail-under=85 --cov-report=xml --junitxml=eval/tests-backend.xml
         env:
           PYTHONPATH: backend
+
       - run: python scripts/ingest.py --data-dir data/eval-state --strategy lexical
+
       - run: python eval/evaluar.py
+
       - run: python eval/evaluar_flujo.py
+
       - run: pip-audit --local --format=json --output eval/results-auditoria-python.json
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -45,6 +75,7 @@ jobs:
             eval/results*.json
             coverage.xml
             eval/tests-backend.xml
+
   frontend:
     runs-on: ubuntu-latest
     defaults:
@@ -52,39 +83,55 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
+
       - run: npm ci
+
       - run: npm test
+
       - run: npm run build
+
       - run: npm audit --audit-level=high
+
   navegador:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
+
       - run: python -m venv backend/.venv
+
       - run: backend/.venv/bin/pip install --upgrade pip
+
       - run: backend/.venv/bin/pip install --no-cache-dir -r backend/requirements.txt
+
       - run: npm ci
         working-directory: frontend
+
       - run: npx playwright install --with-deps chromium
         working-directory: frontend
+
       - run: npm run test:admin
         working-directory: frontend
+
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: navegador-fallos
           path: frontend/test-results/
+
   evaluacion-real:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
@@ -93,32 +140,45 @@ jobs:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
+
       - run: python -m pip install --upgrade pip
+
       - run: pip install --no-cache-dir -r backend/requirements.txt
+
       - name: Verificar secreto de embeddings
-        run: python -c "import os; assert os.environ.get('OPENAI_API_KEY'), 'Configura el secreto OPENAI_API_KEY del repositorio'"
+        run: |
+          python -c "import os; assert os.environ.get('OPENAI_API_KEY'), 'Configura el secreto OPENAI_API_KEY del repositorio'"
+
       - run: python -u eval/comparar.py --embedding-model text-embedding-3-small
+
       - run: python eval/evaluar.py --data-dir data/eval-hybrid --chat --prompt system_v3 --output eval/results-chat.json
+
       - name: Evaluar agente real, elección y seis listas con citas
         run: python -u eval/evaluar_agente_real.py --modelo gemini --output eval/results-agente-real.json
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: evaluacion-real
           path: eval/results*.json
+
   contenedor:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Construir imagen sin credenciales de modelos
         run: docker build -f backend/Dockerfile -t titulacion-rag:ci .
+
       - name: Probar arranque, corpus y contrato HTTP
         run: |
           docker run -d --name titulacion-rag-ci -p 8080:8080 -e PORT=8080 titulacion-rag:ci
           python scripts/smoke_container.py --url http://127.0.0.1:8080
+
       - name: Logs del contenedor
         if: always()
         run: docker logs titulacion-rag-ci || true
