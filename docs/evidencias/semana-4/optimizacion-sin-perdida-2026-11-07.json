@@ -1,0 +1,64 @@
+{
+  "fecha": "2026-11-07",
+  "base": "6151271",
+  "zip_base_bytes": 26512973,
+  "zip_base_MiB": 25.28,
+  "corpus_raw_comprimido_bytes": 21201054,
+  "imagen": {
+    "original_bytes": 2249430,
+    "webp_bytes": 1695730,
+    "dimensiones": [
+      1254,
+      1254
+    ],
+    "pixeles_rgba_identicos": true,
+    "sha256_pixeles": "1d5549a4f8f91f1e3565571d7f6d8266ab310a90e7b34f567407db2772f483c1"
+  },
+  "corpus_modificado": false,
+  "pdf_firmado_no_reescrito": "data/raw/Reglamento-de-Regimen-Academico.pdf",
+  "candidatos_pdf_solo_tmp": [
+    {
+      "origen": "data/raw/03_2017-11-09_MANUAL_VINCULACION_UNIANDES.pdf",
+      "candidato": "tmp/optimizacion/03_2017-11-09_MANUAL_VINCULACION_UNIANDES.pdf",
+      "original": 2193741,
+      "optimizado": 2057296,
+      "ahorro": 136445
+    },
+    {
+      "origen": "data/raw/2020-MANUAL-PARA-LA-ELABORACION-EJECUCION-SEGUIMIENTO-Y-CONTROL-DEL-PLAN-OPERATIVO-ANUAL-POA-1.pdf",
+      "candidato": "tmp/optimizacion/2020-MANUAL-PARA-LA-ELABORACION-EJECUCION-SEGUIMIENTO-Y-CONTROL-DEL-PLAN-OPERATIVO-ANUAL-POA-1.pdf",
+      "original": 2678780,
+      "optimizado": 2504311,
+      "ahorro": 174469
+    },
+    {
+      "origen": "data/raw/4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf",
+      "candidato": "tmp/optimizacion/4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf",
+      "original": 8347923,
+      "optimizado": 8162426,
+      "ahorro": 185497
+    },
+    {
+      "origen": "data/raw/LOES.pdf",
+      "candidato": "tmp/optimizacion/LOES.pdf",
+      "original": 259952,
+      "optimizado": 236948,
+      "ahorro": 23004
+    },
+    {
+      "origen": "data/raw/UNIANDES-Instructivo-Titulacion-2017.pdf",
+      "candidato": "tmp/optimizacion/UNIANDES-Instructivo-Titulacion-2017.pdf",
+      "original": 8850203,
+      "optimizado": 8841558,
+      "ahorro": 8645
+    },
+    {
+      "origen": "docs/evidencias/semana-2/ImagenesSemana2.pdf",
+      "candidato": "tmp/optimizacion/ImagenesSemana2.pdf",
+      "original": 845896,
+      "optimizado": 843278,
+      "ahorro": 2618
+    }
+  ],
+  "conclusion": "La compresión sin pérdida ensayada no resuelve 20 MB. Hace falta decisión sobre transformación validada de corpus o modalidad externa acordada."
+}

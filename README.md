@@ -128,3 +128,7 @@ La sesión de Codex produjo análisis, código, pruebas, documentación y un res
 | Torres Lopez Christian Felipe | `Felipe Torres`, `Felipe Torres Lopez` | Confirmar tareas, herramienta/modelo usado, revisión realizada y ejemplos que pueda explicar |
 
 Estas asociaciones deben ser validadas por el equipo; no se inventa qué integrante revisó cada cambio ni qué parte escribió sin asistencia.
+
+## Empaquetado y evaluación final sin desplegar
+
+Ver [tamaño y plan de cierre](docs/17-plan-cierre-y-tamano.md). `python scripts/empaquetar_entrega.py --medir` mide archivos conocidos por Git, excluye secretos locales/dependencias y devuelve exit 1 si supera 20.000.000 bytes. No genera un ZIP entregable sobredimensionado. El nuevo workflow manual **Evaluación final sin despliegue** repite recuperación, chat y agente reales sin actualizar Cloud Run; requiere claves en Secrets de Actions y conserva los criterios estrictos.
