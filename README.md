@@ -14,9 +14,9 @@ Proyecto educativo con FastAPI, React/Vite, Gemini con respaldo OpenAI, RAG con 
 | RAG | BM25 + embeddings, persistencia SQLite, filtros de vigencia/aprobación, umbrales, RRF, citas y abstención sin modelo cuando no hay evidencia |
 | Agente controlado | Lista cerrada, Pydantic de entrada/salida, MAX_ITER, herramientas de consulta/checklist/calendario y borrador demo con confirmación, caducidad, idempotencia y auditoría |
 | Evaluación | Evaluador restaurado y probado contra falsos aprobados: BM25 14/16, híbrido 16/16, chat real con cita 16/16 y negativas 4/4. Gemini eligió/ejecutó checklist en 6/6 consultas; produjo cinco listas con cita y una abstención (criterio estricto: 5/6) |
-| Calidad | 75 pruebas backend, cobertura 88,43 %, 18 frontend y 10 navegador; pruebas de proxy y CSRF, Ruff, auditorías y gitleaks sin hallazgos, build/smoke de contenedor y CI. Actions remoto se verifica tras publicar |
+| Calidad | 99 pruebas backend, cobertura 88,73 %, pruebas de proxy/CSRF, límite del chat, credenciales fijas y revisión desplegada. Frontend: 18 pruebas y 10 escenarios de navegador. Evidencias y alcance en docs/08-pruebas.md |
 
-La matriz actual de **todos los pasos mínimos, recomendados y avanzados**, incluyendo las nuevas observaciones, está en [análisis y evidencias del 5–6 de noviembre](docs/evidencias/semana-3/2026-11-05/analisis-observaciones-docente.md). La [auditoría del 1 de noviembre](docs/12-auditoria-entrega3-grupo1.md) conserva antecedentes. El equipo confirmó que ya está desplegado en Google Cloud Run; esta revisión no modifica el servicio ni afirma haber observado su configuración o una corrida remota de Actions.
+La matriz de Entrega 3 está en [análisis y evidencias del 5–6 de noviembre](docs/evidencias/semana-3/2026-11-05/analisis-observaciones-docente.md). La revisión actual de seguridad, despliegue y requisitos de Entrega 4 está en [semana 4](docs/evidencias/semana-4/analisis-observaciones-docente.md). La [auditoría del 1 de noviembre](docs/12-auditoria-entrega3-grupo1.md) conserva antecedentes. La corrección anterior aprobó los cuatro jobs de [Actions](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42310236801), pero el servicio público todavía ejecuta código antiguo: el chat devuelve 500 y la credencial legacy sigue aceptándose. El nuevo pipeline está preparado; no se presenta como desplegado.
 
 ## Inicio rápido
 
@@ -84,7 +84,22 @@ python eval/evaluar_agente_real.py --modelo gemini
 
 Consume API y requiere las claves correspondientes. Gemini también puede seleccionarse para embeddings. Los informes incluyen denominadores, fuentes/artículos esperados, respuestas esperadas y obtenidas. El runner del agente usa Gemini sin fallback y conserva trazas; su criterio estricto exige seis listas finales con citas y actualmente falla con 5/6. La consulta de complexivo se abstuvo por falta de normativa institucional aprobada. No se inventan puntuaciones por el nombre del prompt. La validación de citas no certifica que cada afirmación esté respaldada: se necesita revisión humana de contenido.
 
-El workflow ejecuta pruebas y evaluación sin red de modelos en cada push/PR. Su ejecución manual agrega la comparación y el chat reales usando los secretos `GEMINI_API_KEY` y `OPENAI_API_KEY` del repositorio. La última corrida remota debe comprobarse en Actions tras publicar los cambios.
+El workflow ejecuta pruebas y evaluación sin red de modelos en cada push/PR. La ejecución manual permite activar `evaluar_modelo_real` para agregar comparación y chat reales usando los secretos `GEMINI_API_KEY` y `OPENAI_API_KEY` del repositorio. El job de despliegue solo opera en main y requiere que secretos, backend, frontend, navegador y contenedor aprueben. Promueve la imagen probada y verifica commit y contratos públicos. Configuración requerida en [despliegue](docs/13-despliegue.md); su ejecución real debe observarse en Actions.
+
+## Docker y comprobación pública
+
+Desde la raíz del repositorio:
+
+```powershell
+$revisionProyecto = git rev-parse HEAD
+docker build --build-arg APP_REVISION=$revisionProyecto -f backend/Dockerfile -t titulacion-rag:local .
+docker run --rm -p 8080:8080 titulacion-rag:local
+# En otra terminal:
+python scripts/smoke_container.py --url http://127.0.0.1:8080 --expected-revision $revisionProyecto
+python scripts/pruebas_funcionales.py --output eval/results-funcionales.json
+```
+
+El primer smoke comprueba la imagen local sin modelos. El segundo comando evalúa las URLs de producción predeterminadas: no confundir sus resultados. Hay 32 contratos HTTP y dos casos generativos opcionales con `--incluir-modelo`; criterios y evidencia en [docs/08-pruebas.md](docs/08-pruebas.md). El resumen para la sustentación está en [PDF](docs/presentacion-entrega4.pdf).
 
 ## Alcance y límites
 
@@ -99,3 +114,15 @@ La persistencia vectorial usa SQLite y coseno exhaustivo hasta 5000 fragmentos, 
 Documentación técnica: [arquitectura](docs/03-arquitectura.md), [fuentes](docs/04-fuentes.md), [RAG](docs/06-rag.md), [evaluación](docs/07-evaluacion.md), [decisiones](docs/09-decisiones.md), [automatización](docs/10-automatizacion.md), [calidad](docs/11-plan-de-calidad.md). Los archivos de talleres se implementaron para esta entrega; no se presentan como descargas originales no aportadas. La revisión y ampliación de FAQ reales del equipo sigue siendo trabajo humano.
 
 Se utilizó asistencia de Codex para análisis, implementación y ejecución de verificaciones. Los integrantes deben revisar las reglas, los casos y las fuentes y poder explicar la solución; no se atribuyen contribuciones ni commits que no consten en el historial.
+
+### Declaración de IA y aportes por integrante
+
+La sesión de Codex produjo análisis, código, pruebas, documentación y un resumen PDF; los commits de esta asistencia se firman con la configuración Git del equipo y no acreditan por sí solos autoría humana. Cada integrante debe completar y validar su declaración antes de sustentar.
+
+| Integrante | Identidades observadas en Git | Declaración individual pendiente |
+|---|---|---|
+| Aguilar Rogel Olmes Patricio | `olmesaguilar` | Confirmar tareas, herramienta/modelo usado, revisión realizada y ejemplos que pueda explicar |
+| Cevallos Mazon Widman Yadiro | `WidmanCevallos`, `Widman Yadiro Cevallos Mazon` | Confirmar tareas, herramienta/modelo usado, revisión realizada y ejemplos que pueda explicar |
+| Torres Lopez Christian Felipe | `Felipe Torres`, `Felipe Torres Lopez` | Confirmar tareas, herramienta/modelo usado, revisión realizada y ejemplos que pueda explicar |
+
+Estas asociaciones deben ser validadas por el equipo; no se inventa qué integrante revisó cada cambio ni qué parte escribió sin asistencia.
