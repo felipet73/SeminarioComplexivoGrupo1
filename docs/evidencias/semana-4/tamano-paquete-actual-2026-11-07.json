@@ -1,0 +1,115 @@
+{
+  "fecha_utc": "2026-11-07T15:53:17.595421+00:00",
+  "commit": "6151271847bfb6cce40b393c7b9cbb04f96b1e81",
+  "working_tree_con_cambios": true,
+  "bytes": 26028140,
+  "MiB": 24.82,
+  "max_bytes": 20000000,
+  "cumple_limite": false,
+  "zip_creado": false,
+  "archivos": 256,
+  "excluidos": [],
+  "mayores": [
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/raw/4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf",
+      "bytes": 8347923,
+      "comprimidos": 7919468
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/raw/UNIANDES-Instructivo-Titulacion-2017.pdf",
+      "bytes": 8850203,
+      "comprimidos": 7817046
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/raw/2020-MANUAL-PARA-LA-ELABORACION-EJECUCION-SEGUIMIENTO-Y-CONTROL-DEL-PLAN-OPERATIVO-ANUAL-POA-1.pdf",
+      "bytes": 2678780,
+      "comprimidos": 2137241
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/raw/03_2017-11-09_MANUAL_VINCULACION_UNIANDES.pdf",
+      "bytes": 2193741,
+      "comprimidos": 2052282
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/frontend/assets/AsistenteIAUNIANDES.webp",
+      "bytes": 1695730,
+      "comprimidos": 1694716
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/raw/Reglamento-de-Regimen-Academico.pdf",
+      "bytes": 1133635,
+      "comprimidos": 1025267
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-2/ImagenesSemana2.pdf",
+      "bytes": 845896,
+      "comprimidos": 772608
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-3/2026-11-05/checklist-movil-modelo-doble.png",
+      "bytes": 422130,
+      "comprimidos": 414495
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-3/confirmacion-movil.png",
+      "bytes": 366313,
+      "comprimidos": 359159
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-1/Evidenciabackend1.png",
+      "bytes": 254487,
+      "comprimidos": 242176
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-3/RespuestaDocumentada.png",
+      "bytes": 244190,
+      "comprimidos": 230925
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/raw/LOES.pdf",
+      "bytes": 259952,
+      "comprimidos": 229413
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/referencias/CASO-01-Grupo-1.pdf",
+      "bytes": 204638,
+      "comprimidos": 197760
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-3/auditoria-python.json",
+      "bytes": 412253,
+      "comprimidos": 119340
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-3/CI-Implementado.png",
+      "bytes": 125188,
+      "comprimidos": 116881
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/analisis-tecnico-preliminar.pdf",
+      "bytes": 92394,
+      "comprimidos": 76120
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-3/EndPoints.png",
+      "bytes": 87723,
+      "comprimidos": 75811
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/frontend/package-lock.json",
+      "bytes": 126070,
+      "comprimidos": 30307
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/docs/evidencias/semana-1/Evidenciabackend2.png",
+      "bytes": 31775,
+      "comprimidos": 26817
+    },
+    {
+      "archivo": "SeminarioComplexivoGrupo1/data/raw/UNIANDES-Instructivo-Titulacion-2017.ocr.json",
+      "bytes": 64923,
+      "comprimidos": 18748
+    }
+  ],
+  "alcance": "Solo archivos conocidos por Git; ejecutar detector de secretos antes de entregar. No acredita historial limpio."
+}

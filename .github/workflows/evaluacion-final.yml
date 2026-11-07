@@ -1,0 +1,46 @@
+name: Evaluación final sin despliegue
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: evaluacion-final-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  comparar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      AI_API_KEY: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - name: Verificar claves sin mostrarlas
+        run: |
+          python - <<'PY'
+          import os
+          for name in ('GEMINI_API_KEY', 'OPENAI_API_KEY'):
+              assert os.environ.get(name), f'Configura el secreto {name} en Actions (no basta Cloud Run)'
+          PY
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r backend/requirements.txt
+      - name: Comparar recuperación léxica e híbrida
+        id: preparacion
+        run: python -u eval/comparar.py --embedding-model text-embedding-3-small --output eval/results-final-comparacion.json
+      - name: Golden set generativo de 20 preguntas
+        run: python -u eval/evaluar.py --data-dir data/eval-hybrid --chat --prompt system_v3 --output eval/results-final-chat.json
+      - name: Seis checklists con criterio estricto y sin fallback
+        if: ${{ !cancelled() && steps.preparacion.outcome == 'success' }}
+        run: python -u eval/evaluar_agente_real.py --modelo gemini --output eval/results-final-agente.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evaluacion-final-${{ github.sha }}
+          path: eval/results-final-*.json
+          if-no-files-found: warn

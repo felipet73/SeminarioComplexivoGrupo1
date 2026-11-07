@@ -1,0 +1,26 @@
+{
+  "fecha": "2026-11-07",
+  "alcance": "imagen local con usuario no root; no nueva validación de producción",
+  "causa_reproducida": {
+    "imagen_anterior": "titulacion-rag:review",
+    "uid": 1000,
+    "ruta": "/app/logs/metrics.jsonl",
+    "mensaje": "No se pudo escribir la telemetría local",
+    "consultas_tras_registro": 0
+  },
+  "correccion": "Crear /app/logs con propietario app:app durante build; Cache-Control y fetch no-store; smoke comprueba incremento",
+  "verificacion": {
+    "revision_de_prueba": "metricas-local-6151271",
+    "estado_consulta": "rechazo",
+    "consultas_antes": 1,
+    "consultas_despues": 2,
+    "cache_control": "no-store",
+    "proveedor_consumido": false,
+    "smoke_metricas": "aprobado"
+  },
+  "tests_backend": 105,
+  "cobertura": 88.73,
+  "tests_frontend": 18,
+  "build_frontend": "aprobado",
+  "limitacion": "Archivo de métricas por instancia, no almacenamiento duradero entre reinicios/despliegues."
+}

@@ -42,3 +42,7 @@ No se declaran metas cumplidas sin evidencia. Los bloqueos por palabras clave y 
 Desde `backend`: `.\.venv\Scripts\python.exe -m pytest -q`. Pruebas de métricas usan almacenamiento temporal; pruebas LLM usan dobles y nunca claves reales. Desde `frontend`: `npm run build`, `npm run test`, `npm run test:e2e`. El dashboard inicia vacío y se alimenta de consultas posteriores a esta implementación; no se rellenan datos ficticios en producción.
 
 Evidencia local del 24-10-2026: backend 12 pruebas, frontend 8 pruebas y Playwright 3 flujos. Los flujos de navegador comprueban envío de contexto/modelo, respuesta sin duplicación y `/metricas` móvil sin desbordamiento horizontal. Capturas reproducibles en `frontend/test-results/chat-contexto.png` y `metricas-movil.png` (datos simulados solo en tests, archivos ignorados por Git). Chromium se instaló en la caché local de Playwright para ejecutar estos flujos.
+
+## Corrección de escritura de métricas en la imagen de producción
+
+El 7 de noviembre se reprodujo una falta de permisos de `/app/logs`: el usuario sin privilegios no podía crear el archivo y se devolvían contadores vacíos. El Dockerfile crea ahora el directorio con propietario `app:app`; endpoint y fetch usan no-store y el smoke valida incremento tras una consulta. La imagen local corregida pasó 1→2 consultas; ver `docs/evidencias/semana-4/metricas-permisos-2026-11-07.json`. Requiere desplegar la corrección; no agrega durabilidad entre instancias.
