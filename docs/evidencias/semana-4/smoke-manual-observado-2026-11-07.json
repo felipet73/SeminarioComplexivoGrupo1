@@ -1,0 +1,18 @@
+{
+  "fecha_dia": "2026-11-07",
+  "fuente": "Captura de consola de smoke.py aportada por el equipo en este chat",
+  "reporte_json_completo_adjuntado": false,
+  "resultado_observado": {
+    "correctos": 35,
+    "total": 35,
+    "omitidos": [],
+    "incluye_modelo": true,
+    "p95_segundos": 2.453,
+    "revision_esperada": null
+  },
+  "limites": [
+    "No se exigió SHA en ese comando.",
+    "No es una prueba de carga ni disponibilidad.",
+    "No sustituye el JSON completo por caso ni se le atribuye un commit sin evidencia."
+  ]
+}
