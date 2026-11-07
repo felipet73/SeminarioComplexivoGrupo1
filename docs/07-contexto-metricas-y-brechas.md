@@ -1,5 +1,7 @@
 # Contexto académico, observabilidad y revisión de cumplimiento
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Este documento registra el corte anterior a la administración. La actualización de prompts, RAG persistente y laboratorio se detalla en [08-admin-rag-y-analisis.md](08-admin-rag-y-analisis.md); sus brechas reemplazan las entradas históricas que ahora están implementadas.
 
 Fecha: 24 de octubre de 2026. Revisión del código frente a `docs/01-propuesta.md`, `02-requisitos.md`, `03-arquitectura.md`, `04-fuentes.md`, `05-prompts.md` y las condiciones de Semana 2 registradas en `06-semana-2-implementacion.md`. Esto es una revisión técnica, no una aprobación docente o institucional.

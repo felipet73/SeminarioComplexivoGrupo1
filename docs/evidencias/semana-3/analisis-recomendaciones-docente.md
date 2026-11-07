@@ -1,5 +1,7 @@
 # Análisis de las recomendaciones del docente e implementación — Grupo 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 **Proyecto:** Titulación y normativa académica — UNIANDES.  
 **Corte de la verificación:** 1 de noviembre de 2026.  
 **Referencia:** `Guia_practica_Entrega3_por_proyecto (3).html`, observaciones del grupo 1, sección «3 · El camino, paso a paso» y requisitos de «Lo que piden a todos».

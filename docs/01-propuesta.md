@@ -1,5 +1,7 @@
 # 01. Propuesta de solución — Semana 1
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 **Proyecto:** Asistente inteligente de titulación y normativa académica de UNIANDES (RAG + agente de trámites).  
 **Carrera:** Software · Caso 01, grupo 1 · **Estado:** propuesta de Semana 1; backend base implementado y validación docente e institucional pendiente.
 **Fuentes del alcance:** guía de caso UNIANDES y documento «Fase 1: las 15 preguntas frecuentes comunes» (aportados por el equipo).

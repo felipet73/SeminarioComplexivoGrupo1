@@ -1,5 +1,7 @@
 # Chat de producción: HTTP 500 mostrado como error CORS
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Verificación: 6 de noviembre de 2026, hora de Ecuador. El informe [produccion-chat-500.json](produccion-chat-500.json) registra la fecha UTC y las respuestas del despliegue real.
 
 ## Lo comprobado

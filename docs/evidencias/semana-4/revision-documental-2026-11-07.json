@@ -1,0 +1,135 @@
+{
+  "fecha": "2026-11-07",
+  "archivos_revisados": [
+    {
+      "archivo": "backend/README.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/01-propuesta.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/02-requisitos.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/03-arquitectura.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/04-fuentes.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/05-levantamiento-15-preguntas.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/05-prompts.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/06-rag.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/06-semana-2-implementacion.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/07-contexto-metricas-y-brechas.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/07-evaluacion.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/08-admin-rag-y-analisis.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/08-pruebas.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/09-aclaraciones-y-campos-necesarios.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/09-decisiones.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/10-automatizacion.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/10-ayudas-y-trazas-rag.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/11-plan-de-calidad.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/12-auditoria-entrega3-grupo1.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/13-despliegue.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/ADR-0003.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-1/README.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-1/decisiones.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-1/revision-1.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-1/revision-tecnica.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-3/2026-11-05/analisis-observaciones-docente.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-3/2026-11-06/diagnostico-chat-produccion.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-3/2026-11-06/diagnostico-ci-y-sincronizacion.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-3/analisis-recomendaciones-docente.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-3/configuracion-produccion-2026-11-06.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "docs/evidencias/semana-4/analisis-observaciones-docente.md",
+      "tratamiento": "histórico preservado con referencia vigente"
+    },
+    {
+      "archivo": "frontend/README.md",
+      "tratamiento": "guía operativa con referencia vigente"
+    }
+  ],
+  "prompts_no_modificados": true,
+  "criterio": "No convertir pruebas históricas fallidas en aprobadas; estado central en docs/14-checklist-entrega-final.md"
+}

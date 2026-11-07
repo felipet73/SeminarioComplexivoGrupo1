@@ -1,5 +1,7 @@
 # Registro de decisiones iniciales
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 | ID | Fecha | Decisión propuesta | Motivo | Estado |
 |---|---|---|---|---|
 | ADR-001 | 2026-10-19 | Backend FastAPI | Coincide con la recomendación del material FAQ, facilita ecosistema Python RAG | Propuesta; validar en revisión |

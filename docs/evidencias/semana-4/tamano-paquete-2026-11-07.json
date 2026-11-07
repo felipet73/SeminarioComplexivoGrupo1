@@ -1,0 +1,18 @@
+{
+  "fecha": "2026-11-07",
+  "alcance": "medición local de archivos conocidos del working tree para entrega; no paquete publicado",
+  "archivos": 262,
+  "compresion": "ZIP DEFLATE nivel 9",
+  "bytes": 28818950,
+  "MiB": 27.48,
+  "maximo_MB_docente": 20,
+  "cumple_limite": false,
+  "excluye": [
+    ".git",
+    ".env (excepto ejemplos vacíos y URL pública de frontend)",
+    ".venv",
+    "node_modules",
+    "__pycache__"
+  ],
+  "accion": "No se entrega este ZIP sobredimensionado; acordar optimización/corpus con docente sin romper manifiesto ni correspondencia con GitHub."
+}
