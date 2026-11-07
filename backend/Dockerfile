@@ -10,7 +10,8 @@ WORKDIR /app/backend
 COPY backend/requirements.txt .
 RUN python -m pip install --no-cache-dir --upgrade pip \
     && python -m pip install --no-cache-dir -r requirements.txt
-RUN useradd --create-home app && mkdir -p /app/data && chown app:app /app/data
+RUN useradd --create-home app && mkdir -p /app/data /app/logs \
+    && chown app:app /app/data /app/logs
 
 COPY --chown=app:app backend/ .
 COPY --chown=app:app config/ /app/config/

@@ -31,6 +31,7 @@ def comprobar(url, expected_revision=None):
                   headers={'Content-Type':'application/json'})
     with urlopen(req, timeout=5) as response:
         assert json.load(response)['fecha_resultado'] == '2026-11-02'
+    consultas_antes = get('/api/metricas')['consultas']
     # El endpoint SSE debe atravesar el mismo flujo que una consulta válida.
     # La inyección se rechaza localmente antes de consultar fuentes o proveedores.
     req = Request(url.rstrip('/')+'/api/chat/stream',
@@ -42,6 +43,7 @@ def comprobar(url, expected_revision=None):
     assert 'event: token' in events and 'event: done' in events
     done = json.loads(events.split('event: done\ndata: ', 1)[1].strip())
     assert done['estado'] == 'rechazo' and done['fuentes'] == []
+    assert get('/api/metricas')['consultas'] >= consultas_antes + 1, 'La API no registró la métrica de consulta'
     try:
         get('/admin/recargar-reglamentos')
     except HTTPError as error:
@@ -55,7 +57,7 @@ def comprobar(url, expected_revision=None):
         assert error.code == 404, 'La ruta de credenciales antiguas sigue disponible'
     else:
         raise AssertionError('La ruta de credenciales antiguas sigue disponible')
-    print(json.dumps({'health':'ok', 'ready':ready, 'herramientas':'ok', 'calendario':'ok', 'chat_sse':'ok'}))
+    print(json.dumps({'health':'ok', 'ready':ready, 'herramientas':'ok', 'calendario':'ok', 'chat_sse':'ok', 'metricas':'ok'}))
 
 
 if __name__ == '__main__':
