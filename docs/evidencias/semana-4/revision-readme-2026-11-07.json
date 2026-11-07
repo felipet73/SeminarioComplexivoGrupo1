@@ -28,7 +28,7 @@
     "limitaciones"
   ],
   "campos_humanos_por_confirmar": [
-    "Responsabilidad y revisión de IA de cada integrante; no se inventaron."
+    "Herramienta de IA, tarea asistida y revisión realizada por cada integrante."
   ],
   "referencia_remota": {
     "headSha": "c1a5f3fbdf21d4e1c44426df14c3ab2bbb9d5301",
@@ -71,5 +71,10 @@
     "No se afirma base externa inexistente ni cuota por usuario/IP.",
     "Sin tiempo de arranque en frío no acreditado; resultados reales separados por conjunto.",
     "Archivo docs/riesgos.md añadido y ADR enlazados por rutas existentes."
-  ]
+  ],
+  "responsabilidades_confirmadas_por_usuario": {
+    "Aguilar Rogel Olmes Patricio": "Procesos y pruebas manuales.",
+    "Cevallos Mazon Widman Yadiro": "Automatización de QA y desarrollo.",
+    "Torres Lopez Christian Felipe": "Desarrollo y despliegues."
+  }
 }
