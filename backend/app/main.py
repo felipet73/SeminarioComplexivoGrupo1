@@ -14,6 +14,7 @@ from app.schemas import ConsultaChat, RespuestaAsistente
 from app.services import admin_store as store, rag
 from app.services.llm import ClienteLLM
 from app.services.metrics import registrar, resumen
+from app.rate_limit import limite_chat
 
 app = FastAPI(title="Asistente Académico UNIANDES", version="2.0.0")
 
@@ -27,6 +28,11 @@ app.include_router(agente_router)
 
 @app.middleware("http")
 async def proteger_admin(request, call_next):
+  if request.method == 'POST' and request.url.path in ('/api/chat', '/api/chat/stream', '/api/agente'):
+    espera = limite_chat.admitir()
+    if espera is not None:
+      return JSONResponse(status_code=429, content={'detail':'Se alcanzó el límite temporal de consultas. Intenta de nuevo más tarde.'},
+                          headers={'Retry-After':str(espera), 'Cache-Control':'no-store'})
   if request.url.path.startswith("/api/admin"):
     try:
       if (
@@ -54,6 +60,7 @@ app.add_middleware(
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
+    expose_headers=['Retry-After'],
 )
 
 
@@ -66,11 +73,12 @@ def responder(payload: ConsultaChat, llm: ClienteLLM) -> RespuestaAsistente:
 
 
 @app.get("/health")
-def health() -> dict[str, str]:
+def health(config: Settings = Depends(get_settings)) -> dict[str, str]:
   return {
       "status": "ok",
       "service": "titulacion-rag-api",
       "version": "2.0.0",
+      "revision": config.app_revision,
   }
 
 

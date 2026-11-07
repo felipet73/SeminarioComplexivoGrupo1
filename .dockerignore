@@ -6,6 +6,7 @@ __pycache__/
 .ruff_cache/
 .git/
 .env
+gha-creds-*.json
 .env.*
 !.env.example
 *.db

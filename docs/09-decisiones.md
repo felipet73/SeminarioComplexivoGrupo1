@@ -1,5 +1,11 @@
 # ADR: agente educativo y alcance controlado
 
+Actualización del 6 de noviembre de 2026: el chat comparte un presupuesto global por proceso de 30 POST en 60 segundos entre `/api/chat`, `/api/chat/stream` y `/api/agente`, definido en `config/parametros.yaml`. Se responde 429 con Retry-After accesible por CORS antes de invocar el flujo. No se confía en cabeceras de IP enviadas por el cliente ni se declara una cuota por usuario o distribuida. Reiniciar el proceso reinicia la ventana; múltiples instancias amplían el presupuesto.
+
+El módulo de credenciales legacy está eliminado. Un detector AST bloquea contraseñas/claves constantes de baja entropía en código de aplicación, mientras `--historial-legacy` informa la presencia histórica sin imprimir valores. La credencial sigue aceptándose en la imagen antigua de Cloud Run; retirar el archivo de Git no revoca ese servicio. La incidencia se cierra con actualización, retirada de rutas y rotación de usos expuestos, no con un ignore del escáner.
+
+El despliegue preparado exige los cinco jobs de calidad, promueve la imagen que pasó el smoke y verifica el SHA mediante `/health.revision`. La etiqueta identifica el build declarado, no una firma criptográfica. La persistencia de SQLite y sesiones sigue siendo local; max-instances 1 no resuelve esa limitación. Las decisiones de infraestructura y la revisión/aprobación del OCR requieren intervención del equipo. Detalles en [operación y despliegue](13-despliegue.md).
+
 Fecha: 31 de octubre de 2026. Grupo 1. Implementación de la Entrega 3; no es una transcripción de los archivos originales del taller, que no se aportaron.
 
 El chat usa `backend/app/agente.py` desde el flujo compartido con el laboratorio. El modelo devuelve un JSON final o una solicitud de herramienta. Se valida con Pydantic antes de ejecutar; no se interpreta código ni se permite elegir funciones arbitrarias. `PERMITIDAS` contiene buscar_fragmentos, consultar_requisitos, generar_checklist, calcular_plazo y registrar_solicitud_tutor. `MAX_ITER=4`, configurado en `config/parametros.yaml`, limita las llamadas al modelo por consulta. Una salida inválida o el agotamiento del bucle produce abstención.

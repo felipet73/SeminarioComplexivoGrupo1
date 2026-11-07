@@ -23,6 +23,9 @@ USER app
 # La activación híbrida se realiza después, con secretos de ejecución y reindexación.
 RUN python /app/scripts/ingest.py --data-dir /app/data/admin --strategy lexical
 
+ARG APP_REVISION=unknown
+ENV APP_REVISION=${APP_REVISION}
+
 EXPOSE 8080
 
 CMD ["sh", "-c", "exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT}"]

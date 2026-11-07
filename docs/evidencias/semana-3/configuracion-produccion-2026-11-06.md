@@ -1,5 +1,7 @@
 # Configuración del backend de producción — 6 de noviembre de 2026
 
+Actualización posterior: el frontend y su proxy ya responden correctamente, pero Cloud Run devuelve 500 en el chat y conserva rutas de una versión antigua. Véase el [diagnóstico del chat desplegado](2026-11-06/diagnostico-chat-produccion.md). El comando de verificación agrega ahora readiness y retirada de ruta; `--chat-smoke` permite comprobar también el SSE sin usar un proveedor. Los resultados 3/6 de esta página corresponden a la comprobación histórica anterior.
+
 El equipo indicó como URL del backend `https://titulacion-rag-386902880383.us-central1.run.app/`.
 
 Se añadió `frontend/.env.production` con `VITE_API_URL=https://titulacion-rag-386902880383.us-central1.run.app`. Vite la incorpora durante el build; el desarrollo conserva su backend local. Las variables del proceso de build pueden sobrescribir el archivo. El cliente normaliza espacios y barras finales para evitar rutas dobles. Chat, métricas, confirmación y enlaces a fuentes comparten esta configuración. También se retiraron direcciones localhost fijas del componente administrativo antiguo, que no forma parte del enrutador activo.
