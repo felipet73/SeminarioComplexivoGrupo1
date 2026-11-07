@@ -3,6 +3,7 @@
   "max_dias_habiles": 730,
   "embedding_texts_per_minute": 80,
   "embedding_retries": 2,
+  "chat_rate_limit": {"max_solicitudes": 30, "ventana_segundos": 60},
   "rag": {
     "active_prompt": 3, "chunk_size": 1400, "overlap": 160, "top_k": 4,
     "strategy": "hybrid", "embedding_model": "gemini-embedding-001",

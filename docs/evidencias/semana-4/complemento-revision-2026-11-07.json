@@ -1,0 +1,36 @@
+{
+  "fecha_utc": "2026-11-07T12:38:50.837154+00:00",
+  "rama": "fix/entrega4-seguridad-y-despliegue",
+  "commit_base": "7476e3f94b3e32d21db199913128500d63681a75",
+  "alcance": "Cambios locales sobre el commit base; sin push, merge ni despliegue.",
+  "pytest": {
+    "tests": 104,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cobertura_porcentaje": 88.73,
+  "ruff": "aprobado",
+  "secretos_codigo_activo": "aprobado",
+  "regresiones_verificador_tras_ajuste_lectura": {
+    "aprobadas": 13,
+    "fallidas": 0
+  },
+  "casos_http_definidos": 35,
+  "casos_generativos": 3,
+  "casos_remotos_ejecutados_en_este_complemento": 0,
+  "pendientes": [
+    "Acceso a GitHub API y Cloud Run rechazado con 403 en la revisión previa del mismo chat.",
+    "Verificar configuración de GitHub/GCP y ejecutar pipeline remoto con 35/35.",
+    "Rotar valores expuestos y comprobar retirada de rutas en todas las revisiones accesibles.",
+    "Coordinar limpieza de historial si se exige; no se reescribieron referencias.",
+    "Revisión humana del OCR y normativa; repetir evaluación real del agente manteniendo criterio 6/6.",
+    "Infraestructura de persistencia duradera y declaración de uso de IA por integrante."
+  ],
+  "sha256_archivos": {
+    ".github/workflows/ci.yml": "a9ec2224af2ff141a1ee7e7feaaa654fa223549ae9e9b503acf3bcc396c724ba",
+    "scripts/pruebas_funcionales.py": "e0bb2dd5fc6761feff1f73e6a888a9ca90de8f726e1e0d8859cf62f823f6dfa5",
+    "scripts/verificar_produccion.py": "892d70144d356acb90c018a45b43facf2f6e16a551b9ebff622bc84ddcfe1389",
+    "eval/casos_http.json": "cd6e2d546eedf6435bc3fab85a32a2d70aab3a4bc42ff560096597cd8529399b"
+  }
+}

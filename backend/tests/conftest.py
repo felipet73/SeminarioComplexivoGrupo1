@@ -16,12 +16,16 @@ def fuente_indexada():
 
 @pytest.fixture(autouse=True)
 def metricas_aisladas(tmp_path, monkeypatch):
+    from app import main
+    from app.rate_limit import LimiteConsultas
+    monkeypatch.setattr(main, 'limite_chat', LimiteConsultas(30, 60))
     # Ni el .env privado ni las claves del equipo deben decidir el resultado.
     monkeypatch.setitem(Settings.model_config, 'env_file', None)
     for name in ('GEMINI_API_KEY', 'OPENAI_API_KEY', 'AI_API_KEY'):
         # También impide heredar claves del .env en los subprocesos del evaluador.
         monkeypatch.setenv(name, '')
     get_settings.cache_clear()
+    monkeypatch.setenv('APP_REVISION', 'test-revision')
 
     def proveedor_real_prohibido(*args, **kwargs):
         raise AssertionError('Las pruebas deben simular los proveedores externos')

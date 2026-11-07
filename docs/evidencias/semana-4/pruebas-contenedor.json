@@ -1,0 +1,647 @@
+{
+  "fecha_utc": "2026-11-07T04:03:24.303183+00:00",
+  "backend": "http://127.0.0.1:18087",
+  "frontend": "https://seminario-complexivo-grupo1.vercel.app",
+  "revision_esperada": "4e7a8c9cfe952ed61beb66871454f8bb732b504a",
+  "incluye_modelo": false,
+  "solo_backend": true,
+  "correctos": 28,
+  "total": 28,
+  "omitidos": [
+    "front-inicio",
+    "front-admin",
+    "front-metricas",
+    "proxy-sesion",
+    "modelo-r01",
+    "modelo-r04"
+  ],
+  "p95_segundos": 0.039,
+  "casos": [
+    {
+      "id": "salud-revision",
+      "esperado": {
+        "status": 200,
+        "contrato": "salud",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/health",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": "4e7a8c9cfe952ed61beb66871454f8bb732b504a",
+      "segundos": 0.015,
+      "ok": true
+    },
+    {
+      "id": "corpus-listo",
+      "esperado": {
+        "status": 200,
+        "contrato": "ready",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/ready",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.026,
+      "ok": true
+    },
+    {
+      "id": "login-legacy-retirado",
+      "esperado": {
+        "status": 404,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/admin/login",
+        "metodo": "POST",
+        "status": 404,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.006,
+      "ok": true
+    },
+    {
+      "id": "recarga-legacy-retirada",
+      "esperado": {
+        "status": 404,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/admin/recargar-reglamentos",
+        "metodo": "POST",
+        "status": 404,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.015,
+      "ok": true
+    },
+    {
+      "id": "sesion-protegida",
+      "esperado": {
+        "status": 401,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/admin/session",
+        "metodo": "GET",
+        "status": 401,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.005,
+      "ok": true
+    },
+    {
+      "id": "bootstrap-protegido",
+      "esperado": {
+        "status": 401,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/admin/bootstrap",
+        "metodo": "GET",
+        "status": 401,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.005,
+      "ok": true
+    },
+    {
+      "id": "historial-protegido",
+      "esperado": {
+        "status": 401,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/admin/history",
+        "metodo": "GET",
+        "status": 401,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.006,
+      "ok": true
+    },
+    {
+      "id": "login-sin-csrf",
+      "esperado": {
+        "status": 403,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/admin/login",
+        "metodo": "POST",
+        "status": 403,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.031,
+      "ok": true
+    },
+    {
+      "id": "contratos-herramientas",
+      "esperado": {
+        "status": 200,
+        "contrato": "herramientas",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.013,
+      "ok": true
+    },
+    {
+      "id": "chat-vacio",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/chat",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.008,
+      "ok": true
+    },
+    {
+      "id": "chat-corto",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/chat",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.006,
+      "ok": true
+    },
+    {
+      "id": "modelo-invalido",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/chat",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.007,
+      "ok": true
+    },
+    {
+      "id": "inyeccion-chat",
+      "esperado": {
+        "status": 200,
+        "contrato": "rechazo",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/chat",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": "rechazo",
+      "revision_obtenida": null,
+      "segundos": 0.028,
+      "ok": true
+    },
+    {
+      "id": "inyeccion-stream",
+      "esperado": {
+        "status": 200,
+        "contrato": "rechazo_sse",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/chat/stream",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "text/event-stream; charset=utf-8",
+        "allow_origin": null,
+        "allow_credentials": null,
+        "sse_valido": true,
+        "sse_estado": "rechazo",
+        "sse_sin_fuentes": true
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.016,
+      "ok": true
+    },
+    {
+      "id": "inyeccion-agente",
+      "esperado": {
+        "status": 200,
+        "contrato": "rechazo",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/agente",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": "rechazo",
+      "revision_obtenida": null,
+      "segundos": 0.006,
+      "ok": true
+    },
+    {
+      "id": "cors-permitido",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/chat/stream",
+        "metodo": "OPTIONS",
+        "status": 200,
+        "content_type": "text/plain; charset=utf-8",
+        "allow_origin": "https://seminario-complexivo-grupo1.vercel.app",
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.004,
+      "ok": true
+    },
+    {
+      "id": "cors-denegado",
+      "esperado": {
+        "status": 400,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/chat/stream",
+        "metodo": "OPTIONS",
+        "status": 400,
+        "content_type": "text/plain; charset=utf-8",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.003,
+      "ok": true
+    },
+    {
+      "id": "calendario-fin-semana",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": {
+          "fecha_resultado": "2026-11-02"
+        },
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.03,
+      "ok": true
+    },
+    {
+      "id": "calendario-bisiesto",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": {
+          "fecha_resultado": "2024-02-29"
+        },
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.006,
+      "ok": true
+    },
+    {
+      "id": "calendario-cero",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": {
+          "fecha_resultado": "2026-10-30"
+        },
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.007,
+      "ok": true
+    },
+    {
+      "id": "dias-negativos",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.017,
+      "ok": true
+    },
+    {
+      "id": "dias-booleanos",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.005,
+      "ok": true
+    },
+    {
+      "id": "fecha-invalida",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.025,
+      "ok": true
+    },
+    {
+      "id": "requisitos-invalidos",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/consultar-requisitos",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.006,
+      "ok": true
+    },
+    {
+      "id": "checklist-invalido",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/generar-checklist",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.005,
+      "ok": true
+    },
+    {
+      "id": "requisitos-con-evidencia",
+      "esperado": {
+        "status": 200,
+        "contrato": "pasajes",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/consultar-requisitos",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.039,
+      "ok": true
+    },
+    {
+      "id": "checklist-con-citas",
+      "esperado": {
+        "status": 200,
+        "contrato": "checklist",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/herramientas/generar-checklist",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.049,
+      "ok": true
+    },
+    {
+      "id": "fuente-inexistente",
+      "esperado": {
+        "status": 404,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "http://127.0.0.1:18087/api/sources/fuente-inexistente/1",
+        "metodo": "GET",
+        "status": 404,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.026,
+      "ok": true
+    }
+  ],
+  "limite": "Las citas estructurales no prueban implicación semántica. Persistencia y revisión humana del corpus no se certifican aquí."
+}
