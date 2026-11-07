@@ -57,6 +57,7 @@ def test_contexto_llega_desde_endpoint_y_metricas_publicas(fuente_indexada):
         assert client.post('/api/chat',json={'pregunta':'x'}).status_code == 422
         metricas = client.get('/api/metricas')
         assert metricas.status_code == 200
+        assert metricas.headers['cache-control'] == 'no-store'
         assert metricas.json()['consultas'] == 2
         assert metricas.json()['tipos_respuesta'] == {'abstencion':1, 'validacion':1}
         assert 'Software' not in metricas.text

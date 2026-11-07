@@ -2,7 +2,7 @@ from __future__ import annotations
 from collections.abc import Iterator
 import json
 from uuid import uuid4
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -122,7 +122,8 @@ def source(doc_id: str, revision: int):
 
 
 @app.get("/api/metricas")
-def metricas() -> dict:
+def metricas(response: Response) -> dict:
+  response.headers['Cache-Control'] = 'no-store'
   return resumen()
 
 

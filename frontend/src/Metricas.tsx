@@ -39,7 +39,7 @@ export default function Metricas() {
     setCargando(true);
     setError('');
     try {
-      const r = await fetch(`${API}/api/metricas`, { signal });
+      const r = await fetch(`${API}/api/metricas`, { signal, cache: 'no-store' });
       if (!r.ok) throw new Error('No se pudieron cargar las métricas. Verifica el backend.');
       setDatos(await r.json());
       setActualizado(new Date().toLocaleTimeString('es-EC'));

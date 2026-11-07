@@ -1,6 +1,6 @@
 import Checklist from './Checklist';
 import { Activity, startTransition, useActionState, useEffect, useEffectEvent, useOptimistic, useRef, useState } from 'react';
-import assistantImage from '../assets/AsistenteIAUNIANDES.png';
+import assistantImage from '../assets/AsistenteIAUNIANDES.webp';
 import { API, ApiError, enviarConsulta, type ModeloPreferido, type Respuesta } from './api';
 import './styles.css';
 import './enhancements.css';

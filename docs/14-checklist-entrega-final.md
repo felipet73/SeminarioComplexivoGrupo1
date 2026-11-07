@@ -58,3 +58,7 @@ Opciones a acordar: optimizar recursos con validación de calidad e integridad y
 ## Qué no debe marcarse aún
 
 No marcar todas las casillas por tener CI verde. El docente pide historial limpio, evaluación final comparable, índice que sobreviva a reinicio, aportes individuales, evidencias de sustentación y ZIP dentro del límite. El reporte actual permite acreditar varios puntos, pero deja explícitas estas condiciones y cómo verificarlas.
+
+## Optimización y tareas de código posteriores
+
+La conversión de capturas a PDF en `6151271` redujo el ZIP medido a 25,28 MiB. Esta rama añade WebP sin pérdida, empaquetador con límite y evaluación manual sin despliegue. El corpus comprimido por sí solo ocupa 21.201.054 bytes: optimizar imágenes de documentación no basta para 20 MB. Las medidas previas se conservan como históricas. Ver [plan actualizado](17-plan-cierre-y-tamano.md) para acciones por s4b/s4c/s4e, opciones de corpus y pruebas que faltan. Ninguno de esos pendientes se cierra por tener preparados los scripts.

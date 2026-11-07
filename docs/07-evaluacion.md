@@ -59,3 +59,7 @@ Acierto de artículo y validación de ID no certifican que cada afirmación est�
 ## Corte final local del 7 de noviembre
 
 Recuperación léxica repetida sobre estado aislado: **14/16 positivos, 4/4 negativos, 0 errores**, igual al baseline histórico. Contratos de flujo con modelo doble: **20/20**. [Resultado fechado](evidencias/semana-4/recuperacion-lexica-final-2026-11-07.json). Los 35 casos públicos de Actions 42378740379 intento 2 no sustituyen el golden set de 20 con chat, la comparación híbrida ni seis checklists reales; s4e permanece parcial. Para la corrida manual activar `evaluar_modelo_real=true`; en main puede desplegar además de evaluar.
+
+## Runner separado para cierre de s4e
+
+El workflow manual `.github/workflows/evaluacion-final.yml` permite repetir comparación, golden set generativo y seis checklists sin desplegar. Necesita `GEMINI_API_KEY` y `OPENAI_API_KEY` en Secrets de Actions; no hereda Secret Manager. Los resultados se guardan como artefacto y un fallo mantiene la corrida roja. Esta automatización preparada no acredita una corrida real nueva ni cambia el 5/6 histórico.
