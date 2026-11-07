@@ -278,13 +278,13 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 
 ## Integrantes y responsabilidades
 
-| Integrante | Identidades registradas en Git | Responsabilidad y verificación individual |
+| Integrante | Identidades registradas en Git | Responsabilidad confirmada por el equipo |
 |---|---|---|
-| Aguilar Rogel Olmes Patricio | `olmesaguilar` | Por confirmar por el integrante: tareas asumidas, uso de IA, revisión y evidencia que puede explicar. |
-| Cevallos Mazon Widman Yadiro | `WidmanCevallos`, `Widman Yadiro Cevallos Mazon` | Por confirmar por el integrante: tareas asumidas, uso de IA, revisión y evidencia que puede explicar. |
-| Torres Lopez Christian Felipe | `Felipe Torres`, `Felipe Torres Lopez` | Por confirmar por el integrante: tareas asumidas, uso de IA, revisión y evidencia que puede explicar. |
+| Aguilar Rogel Olmes Patricio | `olmesaguilar` | Procesos y pruebas manuales. |
+| Cevallos Mazon Widman Yadiro | `WidmanCevallos`, `Widman Yadiro Cevallos Mazon` | Automatización de QA y desarrollo. |
+| Torres Lopez Christian Felipe | `Felipe Torres`, `Felipe Torres Lopez` | Desarrollo y despliegues. |
 
-**Declaración de IA:** se utilizó asistencia de Codex para análisis, implementación, pruebas, documentación y material de presentación. Se revisaron y corrigieron resultados mediante tests, contratos y evidencia explícita; los modelos también intervienen en el producto según lo descrito. Un commit firmado con la configuración del equipo no demuestra autoría manual ni identifica quién revisó cada salida. Cada integrante debe completar y validar su responsabilidad antes de declarar cumplido ese requisito; no se inventan aportes o porcentajes individuales.
+**Declaración de IA:** se utilizó asistencia de Codex para análisis, implementación, pruebas, documentación y material de presentación. Se revisaron y corrigieron resultados mediante tests, contratos y evidencia explícita; los modelos también intervienen en el producto según lo descrito. Un commit firmado con la configuración del equipo no demuestra autoría manual ni identifica quién revisó cada salida. Las responsabilidades de la tabla fueron confirmadas por el equipo en esta revisión. Queda por detallar el uso individual de IA: herramienta utilizada, tarea asistida y revisión realizada por cada integrante. No se atribuyen herramientas, revisiones ni porcentajes individuales sin confirmación.
 
 Material de entrega: [checklist s4a–s4k](docs/14-checklist-entrega-final.md), [presentación PDF](docs/presentacion-entrega4.pdf), [informe técnico PDF](docs/analisis-tecnico-preliminar.pdf), [observaciones de sustentación](docs/evidencias/semana-4/observaciones-sustentacion.md).
 
