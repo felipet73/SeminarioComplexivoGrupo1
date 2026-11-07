@@ -28,7 +28,7 @@
     "limitaciones"
   ],
   "campos_humanos_por_confirmar": [
-    "Herramienta de IA, tarea asistida y revisión realizada por cada integrante."
+    "Tareas concretas asistidas y revisión de resultados por cada integrante."
   ],
   "referencia_remota": {
     "headSha": "c1a5f3fbdf21d4e1c44426df14c3ab2bbb9d5301",
@@ -76,5 +76,18 @@
     "Aguilar Rogel Olmes Patricio": "Procesos y pruebas manuales.",
     "Cevallos Mazon Widman Yadiro": "Automatización de QA y desarrollo.",
     "Torres Lopez Christian Felipe": "Desarrollo y despliegues."
+  },
+  "herramientas_ia_confirmadas_por_usuario": {
+    "Aguilar Rogel Olmes Patricio": [
+      "Gemini",
+      "ChatGPT"
+    ],
+    "Cevallos Mazon Widman Yadiro": [
+      "Gemini"
+    ],
+    "Torres Lopez Christian Felipe": [
+      "ChatGPT",
+      "Codex"
+    ]
   }
 }
