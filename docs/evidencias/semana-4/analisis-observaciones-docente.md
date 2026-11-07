@@ -48,6 +48,7 @@ Los cambios locales del equipo en workflow/smoke se conservaron en `respaldo/pro
 | Playwright con API real aislada y modelo doble | 10/10 |
 | Ruff y actionlint | Aprobados |
 | Detector de credenciales del código activo | Exit 0 |
+| Gitleaks con `--all`, patrones predeterminados y redacción | Exit 0; [informe](gitleaks-historial.json) vacío. No detecta la credencial débil legacy, por eso se añade AST |
 | Auditoría explícita del historial legacy | Exit 1, riesgo histórico pendiente |
 | Imagen local, smoke con SHA | Aprobado; `/health` identifica `4e7a8c9cfe952ed61beb66871454f8bb732b504a`, rutas antiguas 404 y rechazo SSE correcto |
 | Casos HTTP contra imagen local | 28/28 de backend sin generación; se excluyen explícitamente cuatro rutas Vercel y dos casos LLM |
