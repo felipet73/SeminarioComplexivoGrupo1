@@ -1,5 +1,7 @@
 # Arquitectura implementada — Entrega 3
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 El frontend es React 19 con Vite y TypeScript. El backend es FastAPI. El estado privado, los originales y los índices se guardan en `data/admin/`, ignorado por Git. Las fuentes reproducibles están en `data/raw/manifest.json` y su vigencia se configura en `config/fuentes.yaml`.
 
 ```mermaid

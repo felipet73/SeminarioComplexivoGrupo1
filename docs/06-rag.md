@@ -1,5 +1,7 @@
 # RAG: fuentes, recuperación y límites
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Revisión del 5–6 de noviembre de 2026, Grupo 1. Implementación: `backend/app/services/rag.py`; parámetros: `config/parametros.yaml`; criterios de elegibilidad: `config/fuentes.yaml`.
 
 ## Ingesta y procedencia

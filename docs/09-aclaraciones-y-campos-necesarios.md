@@ -1,5 +1,7 @@
 # Consultas con datos académicos faltantes
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 El bot principal puede solicitar datos relevantes sin obligar a completar todo el formulario de contexto. La IA responde JSON con `estado: "aclaracion"` y `campos_necesarios`, una lista de identificadores permitidos. Las reglas se agregan en backend a cualquier versión activa del system prompt.
 
 Ejemplo de salida de la IA:

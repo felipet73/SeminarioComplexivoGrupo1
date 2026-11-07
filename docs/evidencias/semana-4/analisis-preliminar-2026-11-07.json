@@ -1,0 +1,77 @@
+{
+  "fecha_revision_local": "2026-11-07",
+  "zona_horaria": "America/Guayaquil",
+  "commit_codigo": "0dab82dd9258e9794684ea806b055d61a04d5bb5",
+  "ficha_captura": {
+    "fecha": "2026-11-06 18:00",
+    "commit": "f8e0a1b",
+    "fuente": "capturas aportadas por usuario; ficha externa no modificada"
+  },
+  "actions": {
+    "conclusion": "success",
+    "head_sha": "0dab82dd9258e9794684ea806b055d61a04d5bb5",
+    "html_url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42378740379",
+    "id": 42378740379,
+    "run_attempt": 2,
+    "status": "completed",
+    "updated_at": "2026-11-07T14:38:07Z"
+  },
+  "jobs": [
+    {
+      "nombre": "desplegar",
+      "conclusion": "success"
+    },
+    {
+      "nombre": "backend",
+      "conclusion": "success"
+    },
+    {
+      "nombre": "navegador",
+      "conclusion": "success"
+    },
+    {
+      "nombre": "Revisar secretos con Gitleaks",
+      "conclusion": "success"
+    },
+    {
+      "nombre": "evaluacion-real",
+      "conclusion": "skipped"
+    },
+    {
+      "nombre": "contenedor",
+      "conclusion": "success"
+    },
+    {
+      "nombre": "frontend",
+      "conclusion": "success"
+    }
+  ],
+  "pruebas_publicas": {
+    "casos_definidos": 35,
+    "conclusion_paso": "success",
+    "fuente": "API de Actions y seguimiento del intento 2; contrato del runner exige todos los casos seleccionados",
+    "json_por_caso_intento_2_descargado": false,
+    "limitacion": "El dominio de artefactos no está permitido por la red del entorno. No se fabrica un reporte por caso."
+  },
+  "pytest_actual": {
+    "tests": 104,
+    "fallos": 0,
+    "errores": 0,
+    "omitidos": 0,
+    "cobertura_porcentaje": 88.73
+  },
+  "secretos": {
+    "modulo_legacy_presente_en_head": false,
+    "detector_activo_exit": 0,
+    "detector_historial_exit": 1,
+    "hallazgos_solo_posiciones": [
+      "3e38895fff1e60d983b7bf43206e86d69c1be2c2:backend/app/seguridad.py:9",
+      "3e38895fff1e60d983b7bf43206e86d69c1be2c2:backend/app/seguridad.py:19",
+      "1348b065feaba46b6dfea20bf26b1f7d8b455dc8:backend/app/seguridad.py:10",
+      "1348b065feaba46b6dfea20bf26b1f7d8b455dc8:backend/app/seguridad.py:20"
+    ],
+    "revocacion_completa_acreditada": false
+  },
+  "operaciones_openapi": 31,
+  "sin_credenciales_en_este_reporte": true
+}

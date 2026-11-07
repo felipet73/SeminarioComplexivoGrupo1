@@ -1,5 +1,7 @@
 # Evaluación de prompts - Semana 2
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Se versionaron `backend/app/prompts/system_v1.md`, `system_v2.md` y `system_v3.md`. La tercera añade límites de dominio, resistencia a instrucciones incrustadas y abstención. No pide citas al modelo: el RAG aún no existe.
 
 | Tipo | Consulta |

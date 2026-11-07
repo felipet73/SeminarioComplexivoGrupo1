@@ -1,6 +1,10 @@
 # Operación y despliegue - Vercel y Cloud Run
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Servicio existente: `titulacion-rag`, región `us-central1`, [URL backend](https://titulacion-rag-386902880383.us-central1.run.app). Frontend: [Vercel](https://seminario-complexivo-grupo1.vercel.app/), Root Directory `frontend`. El proxy y fallback SPA se definen en `frontend/vercel.json`.
+
+El despliegue de `0dab82d` aprobó Actions 42378740379, intento 2, con 35/35 casos públicos. WIF/Artifact Registry/Cloud Run ya se utilizaron; las instrucciones siguientes sirven para reproducirlos. Revocación e historial se tratan aparte en la [auditoría](15-auditoria-credenciales-historicas.md).
 
 ## Construcción verificable
 
@@ -18,7 +22,7 @@ La semilla léxica incluida permite readiness y pruebas sin claves. La imagen us
 
 Para usar proveedores o administración local, pasar un archivo de entorno privado con `--env-file .env`, sin incluirlo en la imagen ni pegar claves en comandos o documentación. El arranque y el smoke no necesitan claves de modelos.
 
-## Pipeline preparado
+## Pipeline ejecutado y verificado
 
 `.github/workflows/ci.yml` conserva las pruebas en push/PR y añade `desplegar` con `needs: [secretos, backend, frontend, navegador, contenedor]`. Solo puede desplegar en main, por push o ejecución manual. Las evaluaciones con API reales son manuales y requieren activar `evaluar_modelo_real`.
 
@@ -26,7 +30,7 @@ El job contenedor guarda **la misma imagen que pasó el smoke**, etiquetada con 
 
 No se cancelan workflows main a mitad del despliegue al entrar otro push. PR y otras ramas conservan cancelación de corridas anteriores. El entorno de GitHub es `production`; sus revisores y restricciones deben configurarse por el equipo si se desea aprobación manual.
 
-## Configuración que falta en GitHub y Google Cloud
+## Configuración utilizada en GitHub y Google Cloud
 
 | Tipo | Nombre | Valor requerido |
 |---|---|---|
@@ -42,7 +46,7 @@ Las claves LLM y `ADMIN_PASSWORD` pertenecen a la configuración/secrets **de ej
 
 ## Cierre de la falla crítica
 
-La prueba remota inicial confirmó que `/admin/login` aún aceptaba la credencial histórica. El código actual ya elimina ese módulo y ambas rutas. Para cerrar la incidencia:
+La prueba remota inicial confirmó que `/admin/login` aún aceptaba la credencial histórica. El código actual ya elimina ese módulo y ambas rutas. Los pasos 1, 2 y las pruebas públicas del 4 ya están acreditados para la revisión probada. El paso 3 y la limpieza de referencias siguen pendientes de constancia. Secuencia de cierre:
 
 1. Construir/publicar una imagen del commit revisado y desplegarla en el servicio indicado, con todo el tráfico dirigido a la revisión corregida.
 2. Comprobar SHA y que POST a ambas rutas antiguas devuelve **404**; no basta que exijan un token.

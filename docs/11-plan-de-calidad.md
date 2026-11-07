@@ -1,5 +1,7 @@
 # Plan de calidad de la Entrega 3
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Se aplican los pasos comunes y específicos del grupo 1 de la guía HTML aportada. La matriz completa está en `docs/12-auditoria-entrega3-grupo1.md`.
 
 | Control | Ejecución | Criterio |
@@ -24,3 +26,7 @@ Actualización del 5–6 de noviembre: 64 pruebas backend con 88,29 % de cobertu
 CI audita con `pip-audit --local` el entorno realmente instalado en Python 3.12, incluye la construcción y smoke HTTP del contenedor, y agrega las seis consultas reales de agente en ejecución manual. La aprobación íntegra del instructivo OCR y la repetición satisfactoria del criterio estricto de checklist siguen pendientes. No se cambia ese criterio para hacer pasar la corrida.
 
 Riesgos concretos: fechas de vigencia y aprobación provienen del equipo; documentos sin texto requieren OCR externo; el cálculo no contempla feriados; los datos académicos son autodeclarados; las acciones solo tienen alcance demo local; la búsqueda exhaustiva de vectores está limitada a 5000 fragmentos. No se afirma certificación jurídica ni conexión con expedientes reales.
+
+## Resultado actual y separación del historial
+
+Backend: **104 aprobadas, cobertura 88,73 %**; frontend 18 y navegador 10 según evidencia conservada y jobs remotos aprobados. Actions 42378740379 intento 2 aprobó despliegue y 35 casos públicos. `evaluacion-real` omitido. La recuperación repetida conserva 14/16 positivos y 4/4 negativas; flujo con doble 20/20. El detector AST del historial legacy sigue fallando y las exclusiones de Gitleaks son falsos positivos distintos; ver `docs/15-auditoria-credenciales-historicas.md`.

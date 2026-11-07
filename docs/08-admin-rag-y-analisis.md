@@ -1,5 +1,7 @@
 # Administración, fuentes RAG y laboratorio de prompts
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Implementación del 24 de octubre de 2026. `/admin` pertenece al frontend React. Los recursos se sirven exclusivamente desde endpoints protegidos `/api/admin/*`; ocultar la pantalla no es el mecanismo de seguridad.
 
 ## Acceso y ejecución

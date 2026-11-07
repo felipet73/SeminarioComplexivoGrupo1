@@ -1,3 +1,6 @@
 # Los hashes del corpus representan bytes: Git no debe convertir LF/CRLF.
 data/raw/** -text
 *.sh text eol=lf
+
+# Los informes PDF son binarios; no aplicar diff ni normalización de texto.
+*.pdf binary

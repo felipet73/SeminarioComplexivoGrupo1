@@ -1,5 +1,7 @@
 # Backend
 
+> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](../docs/14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Administración protegida en `/api/admin/*`: sesión HttpOnly, prompts .md con revisiones, originales y metadatos de fuentes en `data/admin`, índices FTS5/vectores y simulaciones con evaluación IA. Define `ADMIN_PASSWORD` en `.env` y reinstala dependencias (`python-multipart`, `pypdf`, `defusedxml`). Para acceder desde navegador usa `/admin` en el frontend (proxy de mismo origen). Ver [operación y seguridad](../docs/08-admin-rag-y-analisis.md).
 
 El chat recupera evidencia de fuentes aprobadas/vigentes, valida JSON y IDs de citas y se abstiene ante salida inválida. SQLite debe residir en volumen persistente; ejecutar un solo worker mientras sesiones/cola sean locales. Las pruebas usan datos, archivos y prompts temporales.

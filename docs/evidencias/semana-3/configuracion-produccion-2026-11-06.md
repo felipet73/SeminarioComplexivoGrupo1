@@ -1,5 +1,7 @@
 # Configuración del backend de producción — 6 de noviembre de 2026
 
+> **Registro histórico:** conserva criterios, cifras y pendientes de su fecha; no es el estado actual. Consultar el [checklist vigente s4a–s4k](../../14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+
 Actualización posterior: el frontend y su proxy ya responden correctamente, pero Cloud Run devuelve 500 en el chat y conserva rutas de una versión antigua. Véase el [diagnóstico del chat desplegado](2026-11-06/diagnostico-chat-produccion.md). El comando de verificación agrega ahora readiness y retirada de ruta; `--chat-smoke` permite comprobar también el SSE sin usar un proveedor. Los resultados 3/6 de esta página corresponden a la comprobación histórica anterior.
 
 El equipo indicó como URL del backend `https://titulacion-rag-386902880383.us-central1.run.app/`.
