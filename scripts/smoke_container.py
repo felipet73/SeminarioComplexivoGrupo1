@@ -6,13 +6,16 @@ from urllib.request import urlopen, Request
 from urllib.error import URLError, HTTPError
 
 
-def comprobar(url):
+def comprobar(url, expected_revision=None):
     def get(path):
         with urlopen(url.rstrip('/')+path, timeout=5) as response:
             return json.load(response)
     for intento in range(20):
         try:
-            assert get('/health')['status'] == 'ok'
+            health = get('/health')
+            assert health['status'] == 'ok'
+            if expected_revision:
+                assert health.get('revision') == expected_revision, 'La revisión desplegada no coincide con la probada'
             break
         except (URLError, TimeoutError, ConnectionError):
             if intento == 19:
@@ -45,10 +48,19 @@ def comprobar(url):
         assert error.code == 404
     else:
         raise AssertionError('No debe existir la ruta administrativa retirada')
+    try:
+        req = Request(url.rstrip('/')+'/admin/login', data=b'{}', headers={'Content-Type':'application/json'})
+        urlopen(req, timeout=5)
+    except HTTPError as error:
+        assert error.code == 404, 'La ruta de credenciales antiguas sigue disponible'
+    else:
+        raise AssertionError('La ruta de credenciales antiguas sigue disponible')
     print(json.dumps({'health':'ok', 'ready':ready, 'herramientas':'ok', 'calendario':'ok', 'chat_sse':'ok'}))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--url', default='http://127.0.0.1:8080')
-    comprobar(parser.parse_args().url)
+    parser.add_argument('--expected-revision')
+    args = parser.parse_args()
+    comprobar(args.url, args.expected_revision)

@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class Settings(BaseSettings):
     app_name: str = "Asistente Académico UNIANDES"
     app_env: str = "development"
+    app_revision: str = 'unknown'
     cors_origins: str = "http://localhost:5173"
     ai_provider: str = "gemini"
     ai_model: str = "gemini-3.5-flash-lite"

@@ -19,6 +19,7 @@ dist/
 !frontend/.env.production
 *.pem
 *.key
+gha-creds-*.json
 # Local RAG state and archives
 .chroma/
 chroma_data/
