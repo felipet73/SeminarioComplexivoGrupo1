@@ -71,8 +71,8 @@
     "metodo": "GET"
   },
   {
-    "id": "documentos-protegidos",
-    "ruta": "/api/admin/documents",
+    "id": "historial-protegido",
+    "ruta": "/api/admin/history",
     "status": 401,
     "metodo": "GET"
   },
@@ -81,7 +81,10 @@
     "ruta": "/api/admin/login",
     "status": 403,
     "metodo": "POST",
-    "cuerpo": {}
+    "cuerpo": {
+      "username": "usuario-ficticio-http",
+      "password": "credencial-ficticia-http"
+    }
   },
   {
     "id": "contratos-herramientas",

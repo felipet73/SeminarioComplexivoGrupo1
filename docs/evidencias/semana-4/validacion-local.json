@@ -1,0 +1,41 @@
+{
+  "fecha_utc": "2026-11-07T04:06:48.090243+00:00",
+  "pytest_windows": {
+    "tests": "99",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "15.815"
+  },
+  "python_windows": "3.10.6",
+  "pytest_linux": {
+    "tests": "99",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "59.806"
+  },
+  "python_linux": "3.12.16",
+  "cobertura_linux_porcentaje": 88.73,
+  "frontend_vitest": {
+    "tests": 18,
+    "exit_code": 0
+  },
+  "frontend_build_exit_code": 0,
+  "playwright": {
+    "tests": 10,
+    "exit_code": 0
+  },
+  "ruff_exit_code": 0,
+  "actionlint_exit_code": 0,
+  "workflow_sha256": "465586b859ac7e1d873799864ee1909221c825d78a02cbd7f17c11f05d753eb8",
+  "detector_codigo_activo_exit_code": 0,
+  "detector_historial_legacy_exit_code": 1,
+  "imagen_local": {
+    "tag": "titulacion-rag:semana4",
+    "id": "sha256:b97bf9cd73eb8e652c2e40f11e83e0ca88359075c34d60663f6ad8473afe80cf",
+    "usuario": "app"
+  },
+  "smoke_contenedor": "aprobado con SHA esperado, rutas retiradas y SSE",
+  "despliegue_remoto_realizado": false
+}

@@ -1,0 +1,11 @@
+{
+  "exit_code": 1,
+  "alcance": "modulo legacy en todas las referencias Git",
+  "hallazgos": [
+    "3e38895fff1e60d983b7bf43206e86d69c1be2c2:backend/app/seguridad.py:9",
+    "3e38895fff1e60d983b7bf43206e86d69c1be2c2:backend/app/seguridad.py:19",
+    "1348b065feaba46b6dfea20bf26b1f7d8b455dc8:backend/app/seguridad.py:10",
+    "1348b065feaba46b6dfea20bf26b1f7d8b455dc8:backend/app/seguridad.py:20"
+  ],
+  "valores_secretos_publicados": false
+}
