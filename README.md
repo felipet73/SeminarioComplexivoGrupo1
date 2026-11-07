@@ -99,7 +99,7 @@ python scripts/smoke_container.py --url http://127.0.0.1:8080 --expected-revisio
 python scripts/pruebas_funcionales.py --output eval/results-funcionales.json
 ```
 
-El primer smoke comprueba la imagen local sin modelos. El segundo comando evalúa las URLs de producción predeterminadas: no confundir sus resultados. Hay 32 contratos HTTP y dos casos generativos opcionales con `--incluir-modelo`; criterios y evidencia en [docs/08-pruebas.md](docs/08-pruebas.md). El resumen para la sustentación está en [PDF](docs/presentacion-entrega4.pdf).
+El primer smoke comprueba la imagen local sin modelos. El segundo comando evalúa las URLs de producción predeterminadas: no confundir sus resultados. Hay 32 contratos HTTP y tres casos generativos (dos directos y uno por proxy SSE) con `--incluir-modelo`, obligatorios en el job de despliegue; criterios y evidencia en [docs/08-pruebas.md](docs/08-pruebas.md). El resumen para la sustentación está en [PDF](docs/presentacion-entrega4.pdf).
 
 ## Alcance y límites
 

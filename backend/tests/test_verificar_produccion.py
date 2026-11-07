@@ -1,6 +1,7 @@
 """El preflight correcto no basta para declarar sano un chat que devuelve 500."""
 import importlib.util
 import io
+import json
 from pathlib import Path
 from urllib.parse import urlsplit
 import httpx
@@ -67,3 +68,14 @@ def test_cors_correcto_con_chat_roto_no_aprueba(despliegue_simulado, fallo):
     assert rows['chat_directo']['cumple'] is False
     assert rows['chat_proxy']['cumple'] is False
     assert report['correctos'] == 8 and report['total'] == 10
+
+
+def test_lee_respuesta_citada_sse_mayor_de_8k_con_citas(monkeypatch):
+    final = dict(estado='respuesta', respuesta='Normativa ' * 1000, modelo_utilizado='modelo-de-prueba',
+                 fuentes=[dict(titulo='Norma', seccion='Artículo 26', fragmento_id='f1')])
+    body = 'event: token\ndata: {"texto":"Normativa"}\n\nevent: done\ndata: '+json.dumps(final)+'\n\n'
+    monkeypatch.setattr(verificacion, 'urlopen', lambda *a, **kw: RespuestaURL(
+        httpx.Response(200, text=body, headers={'Content-Type':'text/event-stream'})))
+    row = verificacion.consultar(BACK+'/api/chat/stream', method='POST', payload={'pregunta':'Consulta normativa'})
+    assert row['sse_valido'] is True
+    assert row['json'] == final

@@ -310,5 +310,20 @@
     "cuerpo": {
       "pregunta": "¿Qué es la investigación formativa?"
     }
+  },
+  {
+    "id": "modelo-r01-proxy-sse",
+    "ruta": "/api/chat/stream",
+    "status": 200,
+    "metodo": "POST",
+    "contrato": "respuesta_citada",
+    "requiere_modelo": true,
+    "documento": "Reglamento Regimen Academico",
+    "articulo": "26",
+    "cuerpo": {
+      "pregunta": "¿Quién determina los requisitos y opciones de titulación en el tercer nivel?"
+    },
+    "destino": "frontend",
+    "content_type": "text/event-stream"
   }
 ]

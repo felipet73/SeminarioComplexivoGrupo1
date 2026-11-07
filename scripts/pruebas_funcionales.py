@@ -53,7 +53,9 @@ def cumple(caso, row, frontend, revision=None):
                 and all(p.get('fragmento_id') and p.get('documento') and p.get('seccion') and p.get('pagina', 0)>0
                         and p.get('estado') == 'pendiente_de_verificar' for p in items))
     if contrato == 'respuesta_citada':
-        return data.get('estado') == 'respuesta' and any(
+        if caso.get('content_type') == 'text/event-stream' and not row.get('sse_valido'):
+            return False
+        return bool(data.get('respuesta', '').strip() and data.get('modelo_utilizado')) and data.get('estado') == 'respuesta' and any(
             normalizar(f.get('titulo','')) == normalizar(caso['documento'])
             and re.search(r'\b'+re.escape(caso['articulo'])+r'\b', f.get('seccion',''))
             and f.get('fragmento_id') for f in data.get('fuentes', []))
@@ -101,7 +103,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--backend', default='https://titulacion-rag-386902880383.us-central1.run.app')
     parser.add_argument('--frontend', default='https://seminario-complexivo-grupo1.vercel.app')
-    parser.add_argument('--incluir-modelo', action='store_true', help='Agrega dos consultas generativas con artículo esperado; consume el proveedor del backend')
+    parser.add_argument('--incluir-modelo', action='store_true', help='Agrega consultas generativas directas y por proxy SSE; consume el proveedor del backend')
     parser.add_argument('--solo-backend', action='store_true')
     parser.add_argument('--expected-revision')
     parser.add_argument('--output', type=Path, default=ROOT / 'eval/results-funcionales.json')
