@@ -42,5 +42,7 @@ jobs:
         if: always()
         with:
           name: evaluacion-final-${{ github.sha }}
-          path: eval/results-final-*.json
+          path: |
+            eval/results-final-*.json
+            logs/metrics.jsonl*
           if-no-files-found: warn

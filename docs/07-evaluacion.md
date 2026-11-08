@@ -63,3 +63,20 @@ Recuperación léxica repetida sobre estado aislado: **14/16 positivos, 4/4 nega
 ## Runner separado para cierre de s4e
 
 El workflow manual `.github/workflows/evaluacion-final.yml` permite repetir comparación, golden set generativo y seis checklists sin desplegar. Necesita `GEMINI_API_KEY` y `OPENAI_API_KEY` en Secrets de Actions; no hereda Secret Manager. Los resultados se guardan como artefacto y un fallo mantiene la corrida roja. Esta automatización preparada no acredita una corrida real nueva ni cambia el 5/6 histórico.
+
+## Evaluación final aportada el 8 de noviembre de 2026 UTC
+
+Se conservan los [tres JSON completos aportados por el equipo](evidencias/semana-4/2026-11-08-evaluacion-final/). Sus fechas internas van de 03:12 a 03:14 UTC. El identificador de ejecución de Actions y el SHA del runner no están incluidos en esos JSON ni se infieren del SHA publicado en Cloud Run. Falta añadir esa vinculación para completar trazabilidad.
+
+| Medición | Resultado |
+| --- | --- |
+| Recuperación léxica, 16 positivos | 14/16 (87,5 %) |
+| Recuperación híbrida OpenAI `text-embedding-3-small`, 16 positivos | 16/16 (100 %) |
+| Silencio fuera de dominio, ambos recuperadores | 4/4 (100 %) |
+| Chat real: artículo esperado citado | 16/16 (100 %) |
+| Chat real: abstención/rechazo en negativos | 4/4 (100 %) |
+| Agente estricto Gemini sin fallback | 0/6; seis errores genéricos de indisponibilidad |
+
+Los 16 positivos del chat usaron `gemini-3.5-flash-lite` sin fallback. Los cuatro negativos fueron dos rechazos y dos abstenciones sin uso de modelo. La indisponibilidad posterior del agente no prueba una clave permanentemente inválida ni una mala elección de herramientas. Los reportes anteriores no conservan el estado HTTP/categoría del error: no permiten atribuirlo a cuota, autenticación o conectividad. El nuevo diagnóstico conserva únicamente categorías conocidas y estado HTTP, y el workflow adjunta la telemetría local sanitizada para una siguiente ejecución. No se rebajan los seis criterios estrictos ni se convierte este 0/6 en un aprobado.
+
+En relación con los cortes de semana 3 documentados arriba, se repiten 20 preguntas (16 positivas y cuatro negativas) y seis casos del agente; recuperación y citas siguen siendo controles de artículo, no una garantía semántica de cada frase. Este corte usa embeddings OpenAI; no atribuir diferencias solo al código sin controlar corpus, modelos y configuración. El 5/6 histórico del agente conserva su fecha y no sustituye el 0/6 final observado. La revisión humana del OCR sigue pendiente.
