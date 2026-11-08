@@ -31,6 +31,8 @@ La limpieza del historial es una decisión separada con docente/equipo: respaldo
 
 ## 3. Ejecutar la evaluación final comparable
 
+**Actualización:** este paso ya se ejecutó y aprobó en [Actions 42443602234](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42443602234), SHA `16081c8`: agente estricto 6/6, recuperación/chat aprobados. [Resultados y comparación](07-evaluacion.md). Los comandos siguientes se conservan para reproducibilidad; no representan una tarea aún sin ejecutar.
+
 En GitHub Settings → Secrets and variables → Actions, configurar `GEMINI_API_KEY` y `OPENAI_API_KEY`. Los secretos de Cloud Run no pasan automáticamente a Actions; `AI_API_KEY` no sustituye esos nombres.
 
 En Actions → **Evaluación final sin despliegue** → Run workflow, seleccionar main. Este workflow consume API pero no despliega. Descargar el artefacto `evaluacion-final-<SHA>` y versionar sus tres reportes `results-final-comparacion.json`, `results-final-chat.json` y `results-final-agente.json`, si fueron producidos. Conservar errores y resultados parciales si falla. Comparar en `docs/07-evaluacion.md` con semana 3: mismo golden set, recuperación léxica/híbrida, citas/abstención y criterio estricto del agente; anotar modelos y diferencias de configuración/corpus.

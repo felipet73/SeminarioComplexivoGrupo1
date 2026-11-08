@@ -1,0 +1,9 @@
+{
+  "run_id": 42443602234,
+  "run_url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42443602234",
+  "head_sha": "16081c8224ba07d1b0b917f89266f6bb562fb0e5",
+  "conclusion": "success",
+  "workflow": "evaluacion-final.yml",
+  "sources": "JSON y telemetría aportados por el equipo; estado y SHA contrastados con API de GitHub.",
+  "alcance": "Evaluación en runner aislado, no nueva prueba HTTP de Cloud Run. Citas por artículo y checklist no vacío; no certifica exhaustividad semántica ni aprobación humana del OCR."
+}

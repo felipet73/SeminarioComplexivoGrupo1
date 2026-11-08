@@ -1,6 +1,6 @@
 # Evaluación reproducible y resultados
 
-> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+> **Último corte: 8 de noviembre de 2026 UTC.** Evaluación final aprobada: comparación, chat y agente estricto 6/6 en Actions 42443602234. Ver el cierre al final de este documento y el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Los resultados anteriores se conservan como históricos.
 
 Revisión del 5–6 de noviembre de 2026. Las cifras anteriores del 1–2 de noviembre son históricas; los informes de esta revisión están en `docs/evidencias/semana-3/2026-11-05/`, fecha de inicio de la sesión. Sus marcas de tiempo usan UTC.
 
@@ -92,3 +92,24 @@ La captura posterior de AI Studio muestra para Gemini 3.5 Flash Lite **17/15 RPM
 Corrección preparada: `EVAL_LLM_MIN_INTERVAL_SECONDS=6` en el workflow, aplicado por el cliente a **cada intento** y a las vueltas del agente; `LLM_RETRIES=2` solo en ese runner. El cliente compartido conserva el ritmo entre casos, con aproximadamente diez inicios/minuto por proceso. El intervalo por defecto del cliente de producción continúa en cero; no se modifica su política de reintentos. Las cuotas son compartidas por proyecto: otras llamadas simultáneas pueden seguir causando 429; el ritmo no garantiza aprobación ni sustituye aumentar cuota si es necesario. El embedding continúa con OpenAI, no Gemini.
 
 Pendiente: fusionar la corrección e iniciar una ejecución nueva sobre main, con el proyecto sin otras pruebas intensivas simultáneas. Los seis casos estrictos del agente y su prohibición de fallback siguen intactos. El segundo intento se conserva como fallo real y no se reemplaza por un aprobado supuesto.
+
+
+## Cierre de evaluación final: tercer intento aprobado
+
+[Actions 42443602234](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42443602234), workflow **Evaluación final sin despliegue**, terminó en **success** sobre **`16081c8224ba07d1b0b917f89266f6bb562fb0e5`**. La captura indica duración total de 4 min 11 s. Se contrastaron estado y SHA mediante la API de GitHub y se conservan los [JSON completos, telemetría y metadatos](evidencias/semana-4/2026-11-08-evaluacion-final-aprobada/). Fechas de los reportes: 8 de noviembre, 03:39–03:43 UTC (7 de noviembre por la noche en Ecuador).
+
+| Métrica, mismo conjunto de preguntas | Semana 3 documentada | Final aprobada |
+| --- | --- | --- |
+| Recuperación léxica | 14/16, 87,5 % | 14/16, 87,5 % |
+| Recuperación híbrida OpenAI text-embedding-3-small | 16/16 | 16/16 |
+| Silencio en negativos de recuperación | 4/4 | 4/4 |
+| Artículo esperado citado en chat real | 16/16 | 16/16 |
+| Abstención/rechazo en negativos del chat | 4/4 | 4/4 |
+| Elección y ejecución real de generar_checklist | 6/6 | 6/6 |
+| Checklist final no vacío con fuentes, criterio estricto | 5/6 | **6/6** |
+
+Los seis casos a1–a6 cumplen: estado respuesta, checklist con elementos, fuentes y ejecución real de la herramienta, sin fallback. Las 16 respuestas positivas del chat usaron `gemini-3.5-flash-lite` sin respaldo; los cuatro negativos no usaron modelo. La telemetría conserva 28 llamadas LLM exitosas a Gemini y ninguna con error de proveedor en este intento. Los dos intentos fallidos anteriores se conservan y el segundo acredita 429 por límite de solicitudes.
+
+El intervalo de seis segundos y los reintentos acotados resolvieron la saturación observada en esta ejecución. No garantizan disponibilidad universal bajo otros consumos compartidos. El resultado acredita **s4e** en el alcance automatizado definido; no demuestra respaldo semántico de cada frase ni exhaustividad de requisitos. La mejora 5/6 → 6/6 es un resultado observado, no prueba de que se haya corregido la normativa institucional: no se cambió el corpus ni se aprobó el OCR para obtenerlo. La variación del modelo también puede influir.
+
+Se mantiene separada la revisión humana pendiente de las fuentes/OCR y su aplicabilidad. Esta ejecución es del runner aislado, no un nuevo smoke contra producción ni una validación de persistencia de cambios administrativos. No hace falta volver a ejecutarla para documentar este resultado; conservar SHA y reportes.
