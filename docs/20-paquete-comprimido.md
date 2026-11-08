@@ -36,7 +36,7 @@ No se repitió la evaluación híbrida/generativa con proveedores en esta rama p
 ## Pasos del equipo
 
 1. Revisar la legibilidad de ambos derivados completos, especialmente letra pequeña, artículos, tablas y numeración. La revisión del OCR es una actuación separada; no cambiar `approved` para pasar pruebas.
-2. Fusionar el PR de evidencia de evaluación final y, después de revisar los derivados y CI, este PR de compresión. El paquete final debe contener ambos cambios.
+2. Esta rama integra también la evidencia del PR #29 para medir el paquete con la evaluación aprobada incluida. Puede fusionarse primero #29 y, después de revisar los derivados y CI, este PR de compresión. El paquete final debe contener ambos cambios.
 3. Actualizar main local, esperar su despliegue, repetir las pruebas públicas con su SHA y conservar el reporte final con nombre propio.
 4. Con archivos legítimos conocidos por Git y secretos revisados, ejecutar desde la raíz:
 
