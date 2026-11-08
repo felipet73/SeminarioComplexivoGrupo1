@@ -42,3 +42,24 @@ def test_rechaza_evidencia_insuficiente(case):
         after['url'] = 'https://otro.example'
     with pytest.raises(ValueError):
         module.compare(before,after)
+
+
+def test_rechaza_fallback_de_getpass_que_mostraria_la_entrada(monkeypatch):
+    import warnings
+
+    def fallback(*args, **kwargs):
+        warnings.warn('No se controla el eco', module.getpass.GetPassWarning)
+        raise AssertionError('No debe llegar a leer entrada con eco')
+
+    monkeypatch.setattr(module.getpass,'getpass',fallback)
+    with pytest.raises(ValueError, match='Read-Host'):
+        module.read_password()
+
+
+def test_lee_y_elimina_password_temporal_sin_usar_terminal(monkeypatch):
+    monkeypatch.setenv('PERSISTENCE_ADMIN_PASSWORD','valor-ficticio-de-prueba')
+    monkeypatch.setattr(module.getpass,'getpass',lambda *args: pytest.fail('No usar terminal'))
+    assert module.read_password(True) == 'valor-ficticio-de-prueba'
+    assert 'PERSISTENCE_ADMIN_PASSWORD' not in module.os.environ
+    with pytest.raises(ValueError):
+        module.read_password(True)

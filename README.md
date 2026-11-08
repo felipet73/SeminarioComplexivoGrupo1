@@ -224,7 +224,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 
 | Verificación real | Resultado y alcance |
 |---|---|
-| Backend actual | **139 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de pruebas de persistencia. [XML y resumen local](docs/evidencias/semana-4/persistencia-neon/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
+| Backend actual | **141 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de entrada segura. [XML y resumen local](docs/evidencias/semana-4/entrada-segura/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
 | Frontend y navegador | **18 pruebas**, build y **10 escenarios** Playwright con API aislada y modelo doble; jobs remotos aprobados. |
 | Producción | **35/35**, incluidos tres casos generativos, rutas retiradas y contratos públicos; [Actions 42389025186](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186). El smoke adicional exige incremento de métricas. |
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
