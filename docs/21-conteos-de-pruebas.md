@@ -45,3 +45,7 @@ El resultado de una suite no acredita por sí solo los otros conjuntos. Conserva
 ## Corte ampliado de persistencia: 139
 
 Siete casos nuevos del comparador remoto (igualdad, pérdidas en documentos/prompts/configuración y rechazo de capturas vacías, misma revisión u otro servicio). Suite completa local: **139 aprobadas, 89,11 % app**, cero fallos/errores/omitidos. [XML y resumen](evidencias/semana-4/persistencia-neon/). No se cambian los cortes históricos de 132 ni anteriores. Las fases Docker de reinicio/migración son integración adicional, no casos pytest sumados al total 139.
+
+## Entrada segura Windows: 141
+
+Dos regresiones nuevas: impedir fallback con eco de getpass y leer/eliminar contraseña del entorno temporal del proceso. Suite completa local: **141 aprobadas, cobertura app 89,11 %**; [XML y resumen](evidencias/semana-4/entrada-segura/). El ensayo PostgreSQL y corte 139 se conservan como evidencia histórica. No se ejecutó prueba remota nueva.

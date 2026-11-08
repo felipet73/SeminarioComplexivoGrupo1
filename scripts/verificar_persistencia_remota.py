@@ -9,6 +9,8 @@ from datetime import datetime, timezone
 import getpass
 import hashlib
 import json
+import os
+import warnings
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
@@ -35,7 +37,22 @@ def compare(before, after):
             'alcance': 'Igualdad de metadatos, originales descargados, historial y muestras de hasta 512 fragmentos por documento; prompts y configuración. Revisión Cloud Run declarada por operador. No verifica vectores completos, reinicio de Neon, generación ni métricas.'}
 
 
-def capture(url, deployment, username):
+def read_password(from_env=False):
+    if from_env:
+        password = os.environ.pop('PERSISTENCE_ADMIN_PASSWORD', '')
+        if not password:
+            raise ValueError('Falta la contraseña temporal del proceso')
+        return password
+    # getpass puede recurrir a input() si no controla el eco: impedir ese fallback.
+    with warnings.catch_warnings():
+        warnings.simplefilter('error', getpass.GetPassWarning)
+        try:
+            return getpass.getpass('Contraseña administrativa (entrada oculta): ')
+        except getpass.GetPassWarning:
+            raise ValueError('La terminal no permite ocultar la entrada; usar Read-Host -AsSecureString y --password-env') from None
+
+
+def capture(url, deployment, username, password_env=False):
     parsed = urlsplit(url)
     if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.path not in ('', '/'):
         raise ValueError('Usar origen HTTPS sin credenciales, ruta ni parámetros')
@@ -47,7 +64,7 @@ def capture(url, deployment, username):
                 raise ValueError(f'GET {path.split("?")[0]} devolvió HTTP {response.status_code}')
             return response.content if binary else response.json()
 
-        password = getpass.getpass('Contraseña administrativa (no se guarda): ')
+        password = read_password(password_env)
         try:
             login = session.post(url+'/api/admin/login', headers={'X-Admin-Request':'1'},
                                  json={'username':username,'password':password}, timeout=60, allow_redirects=False)
@@ -88,6 +105,7 @@ def main():
     cap.add_argument('--url', required=True)
     cap.add_argument('--revision-cloud-run', required=True)
     cap.add_argument('--username', default='admin')
+    cap.add_argument('--password-env', action='store_true', help='Lee y elimina PERSISTENCE_ADMIN_PASSWORD del entorno temporal del proceso')
     cap.add_argument('--output', type=Path, required=True)
     comp = modes.add_parser('comparar')
     comp.add_argument('--antes', type=Path, required=True)
@@ -95,7 +113,7 @@ def main():
     comp.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     try:
-        result = capture(args.url,args.revision_cloud_run,args.username) if args.mode == 'capturar' else compare(
+        result = capture(args.url,args.revision_cloud_run,args.username,args.password_env) if args.mode == 'capturar' else compare(
             json.loads(args.antes.read_text()),json.loads(args.despues.read_text()))
         args.output.parent.mkdir(parents=True,exist_ok=True)
         args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

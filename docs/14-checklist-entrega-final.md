@@ -25,7 +25,7 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 - [x] Módulo legacy eliminado de HEAD y rutas antiguas retiradas en la URL probada.
 - [x] Despliegue con SHA verificable y pipeline dependiente de seis controles previos.
 - [x] 35 casos públicos, incluida generación real directa y por proxy SSE; se resolvieron los tres 503 anteriores.
-- [x] Tests estrictos restaurados y aislados de claves reales: **139 backend, cobertura de app 89,11 %**, en rama de pruebas de persistencia; [XML y resumen](evidencias/semana-4/persistencia-neon/). Los cortes de 130 y anteriores se conservan fechados en [el registro de conteos](21-conteos-de-pruebas.md). Frontend/navegador mantienen sus evidencias separadas.
+- [x] Tests estrictos restaurados y aislados de claves reales: **141 backend, cobertura de app 89,11 %**, en rama de entrada segura; [XML y resumen](evidencias/semana-4/entrada-segura/). Los cortes de 130 y anteriores se conservan fechados en [el registro de conteos](21-conteos-de-pruebas.md). Frontend/navegador mantienen sus evidencias separadas.
 - [x] Límite de consultas compartido, errores seguros y documentación técnica de endpoints/secuencias.
 - [x] Falsos positivos de las seis exclusiones de Gitleaks identificados y separados de credenciales legacy.
 - [x] Ramas saneadas con respaldo y publicación coordinada; clon nuevo y controles histórico/activo aprobados.

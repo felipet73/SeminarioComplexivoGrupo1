@@ -101,3 +101,24 @@ $LASTEXITCODE
 Exit 0 indica igualdad; 1, diferencias; 2, error o evidencia insuficiente. Si cambia un hash, investigar sin borrar datos ni aprobar el resultado manualmente. La herramienta verifica originales descargados contra SHA registrado, metadatos, historial, prompts, configuración y muestras de hasta 512 fragmentos por documento (límite actual del endpoint). No acredita todos los vectores, recuperación citada ni disponibilidad continua. Completar una consulta citada y los 35 casos HTTP con SHA esperado; conservar reportes y capturas de revisiones en `docs/evidencias/semana-4/` tras revisarlos.
 
 La suite Docker sí prueba el reinicio del servidor PostgreSQL local, nuevas conexiones, archivos/índice/prompts/configuración/vectores/auditoría y rollback. Esa evidencia no se presenta como un reinicio de Neon ni de Cloud Run. Las sesiones, métricas y límites siguen locales al proceso. Indexar un documento no equivale a aprobar OCR o vigencia normativa.
+
+
+### Terminal Windows que muestra la contraseña
+
+Cancelar con Ctrl+C si se observa eco. El script rechaza el fallback de getpass con eco. Para terminales incompatibles, PowerShell obtiene la contraseña mediante su propio lector seguro y la entrega exclusivamente al entorno temporal del proceso (no como argumento ni literal en el historial):
+
+```powershell
+$revisionActual = Read-Host "Revisión Cloud Run con 100% del tráfico"
+$claveSegura = Read-Host "Contraseña administrativa" -AsSecureString
+try {
+    $env:PERSISTENCE_ADMIN_PASSWORD = [System.Net.NetworkCredential]::new("", $claveSegura).Password
+    python scripts/verificar_persistencia_remota.py capturar --url https://titulacion-rag-386902880383.us-central1.run.app --revision-cloud-run "$revisionActual" --password-env --output tmp/neon-antes.json
+    $resultadoCaptura = $LASTEXITCODE
+} finally {
+    Remove-Item Env:PERSISTENCE_ADMIN_PASSWORD -ErrorAction SilentlyContinue
+    $claveSegura = $null
+}
+$resultadoCaptura
+```
+
+Python elimina la variable de su entorno al leerla; PowerShell la elimina al terminar incluso si falla la ejecución. No se escribe un archivo de contraseña. No usar transcripciones ni capturas que muestren secretos. Repetir con nombre de revisión y salida `tmp/neon-despues.json` para la segunda captura.
