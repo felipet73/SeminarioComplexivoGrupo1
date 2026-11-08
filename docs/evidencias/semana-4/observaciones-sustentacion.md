@@ -8,4 +8,6 @@ Estado: **pendiente de registro por el equipo**. No se han aportado observacione
 
 Estados admitidos por la guía: **corregida** (con commit/evidencia), **en curso**, **descartada** (con razón comprobable). Añadir la prueba que muestre que cada corrección funciona; conservar el comentario original y su fecha.
 
-Adjuntar también vídeo de respaldo, capturas de health/pipeline/pruebas y nombre de la versión PDF usada en vivo cuando el equipo los aporte. Ver [checklist de entrega](../../14-checklist-entrega-final.md).
+**Presentación usada en vivo:** el equipo confirmó `docs/Presentacion.pdf` (10 páginas con infografías). `docs/presentacion-entrega4.pdf` es material anterior. Esta confirmación identifica el documento utilizado; no acredita comentarios del tribunal.
+
+Adjuntar también vídeo de respaldo y capturas de health/pipeline/pruebas cuando el equipo los aporte. Ver [checklist de entrega](../../14-checklist-entrega-final.md).
