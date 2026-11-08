@@ -34,6 +34,8 @@ jobs:
           GITLEAKS_ENABLE_SUMMARY: "true"
       - name: Detectar también credenciales fijas de baja entropía en código activo
         run: python scripts/check_secrets.py
+      - name: Impedir reintroducción del módulo legacy en el historial
+        run: python scripts/check_secrets.py --historial-legacy
 
   backend:
     runs-on: ubuntu-latest
