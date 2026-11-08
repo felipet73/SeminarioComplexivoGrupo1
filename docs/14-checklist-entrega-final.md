@@ -31,7 +31,7 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 - [x] Ramas saneadas con respaldo y publicación coordinada; clon nuevo y controles histórico/activo aprobados.
 - [ ] Eliminación completa del servidor: referencias antiguas de PR/cachés y copias externas pendientes; no se satisface solo con reescribir ramas.
 - [x] Evaluación final comparable y seis listas citadas: Actions 42443602234, agente estricto 6/6.
-- [ ] Aprobación humana del instructivo y de su OCR; no se deduce del 6/6.
+- [ ] Aprobación humana del instructivo y de su OCR. **\* Debe analizarse el improvement** de comprobación asistida al importar OCR; decisión futura documentada, no implementada y sin marcar revisión completa. No se deduce del 6/6. [ADR-0005](ADR-0005.md).
 - [ ] Persistencia de cambios, declaración individual, ensayo y observaciones del tribunal.
 
 ## Acciones concretas y orden recomendado
@@ -112,3 +112,9 @@ La evidencia [antes/después/comparación](evidencias/semana-4/neon-remoto/) acr
 ## Discrepancia de cita artículo 24/23
 
 Causa reproducida y corregida en código: el OCR `Art, 24` no se separaba y heredaba artículo 23. Falta desplegar/reindexar el instructivo en Neon y registrar consulta real corregida. No se modifica la evidencia histórica de persistencia ni el OCR/aprobación. [Diagnóstico y pasos](28-citas-articulo-24.md).
+
+## Revisión OCR: decisión futura, sin cierre del pendiente
+
+**\* Debe analizarse el improvement.** Diseñar una herramienta independiente del motor OCR que presente posibles inconsistencias por página/artículo, original y texto lado a lado, revisión humana de hallazgos y muestreo adicional. Evaluar OCR con IA como alternativa, sin selección ni activación de proveedor. La revisión actual sigue sin marcar; esta decisión no cambia aprobaciones del panel, políticas del corpus ni estados del OCR. [Alcance, alternativas y criterios](ADR-0005.md).
+
+El operador mostró reindexación de 87 fragmentos y respuesta con fuente artículo 24/página 9/revisión 2 después del PR #39; la discrepancia puntual 24/23 quedó verificada en la conversación. Esto no completa la revisión integral ni implementa el improvement.
