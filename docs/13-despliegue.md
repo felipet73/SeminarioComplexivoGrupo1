@@ -66,7 +66,7 @@ La semilla recupera el corpus inicial, pero las cargas administrativas, decision
 
 ## PostgreSQL: Neon activado por el equipo; Cloud SQL diferido
 
-La opción `RAG_DATABASE_URL` conserva datos, índices y originales en PostgreSQL. El equipo importó su respaldo en Neon y reportó activación y reindexación administrativa en Cloud Run. Falta registrar la comparación remota entre revisiones; ver [estado, incidente del reporte y prueba reproducible](26-neon-persistencia.md). Sin esa variable se usa SQLite y su disco efímero. El módulo `infra/cloudsql/` está validado pero no aplicado; Cloud SQL sigue diferido por costos. No se creó Cloud SQL para conectar Neon.
+La opción `RAG_DATABASE_URL` conserva datos, índices y originales en PostgreSQL. El equipo importó su respaldo en Neon y reportó activación y reindexación administrativa en Cloud Run. La comparación remota entre revisiones 00033/00034 está aprobada; ver [estado, incidente del reporte y prueba reproducible](26-neon-persistencia.md). Sin esa variable se usa SQLite y su disco efímero. El módulo `infra/cloudsql/` está validado pero no aplicado; Cloud SQL sigue diferido por costos. No se creó Cloud SQL para conectar Neon.
 
 `GET /api/admin/backup` exige sesión administrativa, responde no-store y exporta una copia SQLite más originales para migración; no incluye entorno ni credenciales del proceso. Su contenido puede ser privado: no versionarlo ni enviarlo en el ZIP de entrega. En PostgreSQL el endpoint deriva al respaldo administrado, no crea un dump web.
 

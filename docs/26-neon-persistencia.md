@@ -1,6 +1,6 @@
 # Activación de PostgreSQL en Neon: datos antes de cambiar el servicio
 
-Estado actualizado: **importación ejecutada y activación en Cloud Run reportada por el operador; ensayo remoto entre revisiones pendiente de evidencia**. Las capturas de Neon muestran 6 documentos, 3 prompts, 1 configuración, 1.047 fragmentos, 1.047 entradas de búsqueda, 6 archivos y 12 eventos de auditoría en el momento de importar. Después el operador indicó reindexación del instructivo (revisión 2) y compartió el panel con seis documentos indexados. Estos conteos son del corte de importación, no un nuevo inventario tras la reindexación. No prueban por sí solos durabilidad tras reiniciar.
+Estado actualizado: **persistencia remota verificada entre revisiones Cloud Run 00033-wvv y 00034-bgp**. [JSON completos y constancia de alcance](evidencias/semana-4/neon-remoto/constancia.md). Las capturas de Neon muestran 6 documentos, 3 prompts, 1 configuración, 1.047 fragmentos, 1.047 entradas de búsqueda, 6 archivos y 12 eventos de auditoría en el momento de importar. Después el operador indicó reindexación del instructivo (revisión 2) y compartió el panel con seis documentos indexados. Estos conteos son del corte de importación, no un nuevo inventario tras la reindexación. Esos conteos iniciales no prueban por sí solos durabilidad; la comparación posterior entre revisiones sí cuenta con JSON versionados.
 
 El secreto `rag-database-url`, versión 1, se vinculó como `RAG_DATABASE_URL` según la captura del formulario. El asistente no dispone del DSN, no consultó la base real ni operó Cloud Run. Cloud SQL continúa diferido por costos. La secuencia inferior queda como procedimiento reproducible, no como tareas todas pendientes para la base ya importada.
 
@@ -122,3 +122,7 @@ $resultadoCaptura
 ```
 
 Python elimina la variable de su entorno al leerla; PowerShell la elimina al terminar incluso si falla la ejecución. No se escribe un archivo de contraseña. No usar transcripciones ni capturas que muestren secretos. Repetir con nombre de revisión y salida `tmp/neon-despues.json` para la segunda captura.
+
+## Resultado del ensayo remoto
+
+El 8/11/2026, capturas UTC 14:36:51 y 14:48:28, mismo código `d9f90b3c960a4a0da438e456e01e98a636ff8805`, revisiones Cloud Run distintas: comparación aprobada para seis documentos, 1.047 fragmentos capturados, originales/historial/prompts/configuración. Captura de tráfico y respuesta con fuentes revisadas en conversación. [Constancia y límites](evidencias/semana-4/neon-remoto/constancia.md). La referencia artículo 24 frente a enlace artículo 23 queda como observación semántica separada; no invalida la igualdad de almacenamiento ni se da por resuelta. No se repitió aquí el smoke 35/35.
