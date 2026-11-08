@@ -62,3 +62,7 @@ No marcar todas las casillas por tener CI verde. El docente pide historial limpi
 ## Optimización y tareas de código posteriores
 
 La conversión de capturas a PDF en `6151271` redujo el ZIP medido a 25,28 MiB. Esta rama añade WebP sin pérdida, empaquetador con límite y evaluación manual sin despliegue. El corpus comprimido por sí solo ocupa 21.201.054 bytes: optimizar imágenes de documentación no basta para 20 MB. Las medidas previas se conservan como históricas. Ver [plan actualizado](17-plan-cierre-y-tamano.md) para acciones por s4b/s4c/s4e, opciones de corpus y pruebas que faltan. Ninguno de esos pendientes se cierra por tener preparados los scripts.
+
+## Corte posterior de main e3e8b22
+
+Actions 42422021200 aprobó el despliegue de `e3e8b22` y sus casos públicos. Ya existen responsabilidades/herramientas de IA y verificación común confirmadas en README; no siguen todas sin declarar. Se añadieron `docs/Presentacion.pdf` y `EvidenciasSemana4.pdf`, pero sigue sin versionarse el JSON completo exitoso ni constancia de no reutilización/rotación de valores legacy. El paquete actual es **27,39 MiB**, no 24,82 MiB. Ver [contraste detallado y pasos de cierre](18-verificacion-cierre-legacy.md). Se preservan cortes y mediciones previas como históricos.
