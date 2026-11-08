@@ -1,0 +1,11 @@
+{
+  "resultado": "aprobado",
+  "comprobaciones": {
+    "documents": true,
+    "prompts_sha256": true,
+    "config_sha256": true
+  },
+  "revision_cloud_run_antes": "titulacion-rag-00033-wvv",
+  "revision_cloud_run_despues": "titulacion-rag-00034-bgp",
+  "alcance": "Igualdad de metadatos, originales descargados, historial y muestras de hasta 512 fragmentos por documento; prompts y configuración. Revisión Cloud Run declarada por operador. No verifica vectores completos, reinicio de Neon, generación ni métricas."
+}

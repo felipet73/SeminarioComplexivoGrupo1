@@ -30,10 +30,14 @@ python -m pytest -q backend/tests --cov=app --cov-fail-under=85
 
 El script Docker usa el socket Linux `/var/run/docker.sock`; ejecutar en Linux, CI o WSL con Docker disponible. La herramienta remota siguiente funciona también desde PowerShell/Windows.
 
-## Pendiente concreto de producción
+## Estado inicial de producción (previo a recibir reportes)
 
 El operador compartió conteos de Neon (6 documentos, 3 prompts, 1 configuración, 1.047 fragmentos y entradas de búsqueda, 6 archivos, 12 eventos) y reportó activación/reindexación; el panel muestra el instructivo revisión 2. Las capturas no se adjuntaron como archivos al repositorio y no prueban un reinicio posterior.
 
 Falta ejecutar `scripts/verificar_persistencia_remota.py` antes/después de una nueva revisión Cloud Run con 100 % de tráfico, sin modificaciones administrativas entre capturas. [Comandos, límites y evidencia requerida](26-neon-persistencia.md). La herramienta compara originales/metadatos/historial, prompts/configuración y muestras de fragmentos; no consulta Google para verificar los nombres de revisión declarados por el operador. Adjuntar capturas de revisiones/tráfico y una consulta citada; ejecutar el smoke de 35 casos con SHA esperado. No versionar DSN, cookies, contraseñas ni el backup privado.
 
 Mientras falte esa evidencia, s4c permanece **parcial**. Tampoco se acreditan con estas pruebas un plan de recuperación de Neon, restauración de backups administrados, disponibilidad continua, persistencia de métricas/sesiones ni aprobación humana del OCR. No hay recursos Cloud SQL creados.
+
+## Actualización: reportes remotos recibidos y contrastados
+
+El operador adjuntó los reportes completos entre 00033-wvv y 00034-bgp; la comparación recalculada es aprobada. La captura muestra tráfico 100 % en la nueva revisión y una respuesta con fuentes. Se supera el pendiente anterior de igualdad remota, conservando sus límites. [Constancia, JSON y observación de artículo 24 frente a enlace 23](evidencias/semana-4/neon-remoto/constancia.md). No se atribuye a este ensayo un nuevo smoke 35/35 ni validación semántica total.

@@ -1,0 +1,19 @@
+{
+  "fecha_revision_evidencia_utc": "2026-11-08",
+  "resultado_recalculado": "aprobado",
+  "origen": "Reportes ejecutados y adjuntados por el operador; comparación recalculada localmente. Sin conexión remota desde el entorno del asistente.",
+  "documentos": 6,
+  "fragmentos_muestra_total": 1047,
+  "limites": "Hasta 512 fragmentos por documento, no vectores completos ni reinicio de Neon. Capturas de tráfico y respuesta citada observadas en conversación, sin archivos de imagen versionados.",
+  "archivos_originales_sha256": {
+    "neon-antes.json": "03ebd3e6a44e30fa5a08974ce792e5b096751a7f17aa61d53fa338d891e1e3a6",
+    "neon-despues.json": "ec5932c73767ed9db947aaafecdf7762efbbbf50fc19d31b2c604677ef1a1f0b",
+    "neon-comparacion.json": "3e0c5f0115815f29a781effd2117b84bf6648f56f907776e1f3ac4219cf41c35"
+  },
+  "normalizacion": "Solo CRLF a LF al versionar; contenido JSON completo sin cambios.",
+  "archivos_versionados_sha256": {
+    "neon-antes.json": "cbdcd8b47c99e0c83ed6b4604929ee42bc8ccc9605a6b11b9f4edda6a8cf177a",
+    "neon-despues.json": "26dbe829a93df9215223ba175f76ee3b072fa7b7ea1fb1dd055bc1b085f87758",
+    "neon-comparacion.json": "b838e4a1dbb7287fef85e4cb2ee94361ef0212d135518c19e5bc52c8274698c1"
+  }
+}
