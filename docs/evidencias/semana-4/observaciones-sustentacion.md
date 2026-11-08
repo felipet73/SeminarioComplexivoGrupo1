@@ -1,26 +1,33 @@
-# Observaciones reales de la sustentación y correcciones
+# Observaciones reales de la sustentación y aclaraciones
 
-## Fuente del registro
+## Fuente y aclaración del equipo
 
-El equipo aportó el siguiente balance en esta conversación: «La sustentación estuvo muy bien, la única falla fue que no obtuvimos respuesta solicitando información, pero quedó subsanado porque ya identificamos algunas».
+El equipo describió positivamente la sustentación y aclaró expresamente: «No fue falla del sistema, solo que en ese momento no tenía una pregunta que requiera información adicional, está 100 % probado posteriormente».
 
-Se registra como **relato del equipo sobre la sustentación**, no como transcripción literal ni acta firmada del tribunal. La fecha/hora exacta de la sesión, la pregunta fallida y la causa concreta corregida no fueron especificadas. Se solicitó ese detalle para completar trazabilidad; no se deduce de errores observados en otras ejecuciones.
+La observación corresponde a **un escenario que no se logró mostrar durante la demo**, no a una consulta fallida ni a una ausencia de respuesta del sistema. Se corrige la interpretación inicial del registro. Se documenta el relato del equipo, no una transcripción literal o acta firmada del tribunal. La fecha/hora exacta de la sesión no fue aportada.
 
 ## Observación reportada
 
-| ID | Fecha/hora Ecuador | Observación aportada | Estado y alcance | Acción y evidencia | Responsable |
+| ID | Fecha/hora Ecuador | Observación aclarada | Estado y alcance | Acción y evidencia | Responsable |
 | --- | --- | --- | --- | --- | --- |
-| SUST-01 | Fecha/hora de la sesión no aportadas | Una solicitud de información no obtuvo respuesta durante la demostración. El equipo indica que fue la única falla y que quedó subsanada. | **Corregida según confirmación del equipo**, con validación posterior general. Reproducción de la pregunta exacta pendiente de identificación. | Se conservan las verificaciones públicas 35/35 y la evaluación final aprobada de 20 preguntas y agente 6/6. Esos conjuntos respaldan funcionamiento posterior en sus casos, pero no demuestran por sí solos la corrección de la pregunta concreta de la demo. Ver referencias siguientes. | Equipo del proyecto; responsable específico de esta corrección no identificado. Los aportes por persona se declaran en README sin asignar esta incidencia a alguien por inferencia. |
+| SUST-01 | Fecha/hora de la sesión no aportadas | Durante la demostración no se dispuso de una pregunta que activara la solicitud de información adicional del asistente. No fue un fallo del sistema. | **Descartada como defecto del sistema por aclaración del equipo.** El comportamiento fue verificado posteriormente según confirmación del equipo. | Registrar el escenario de aclaración para futuras demos. Hay pruebas automatizadas específicas de campos adicionales; la verificación manual posterior es declarada por el equipo, sin adjuntar aquí un reporte de ese caso en producción. | Equipo del proyecto; no se atribuye una corrección de código ni una incidencia a un integrante porque no se reportó un defecto. |
 
-El equipo describió positivamente la sustentación. No se convierten ese balance ni la frase «la única falla» en una calificación oficial, acta del tribunal o garantía de ausencia de otras observaciones. No se aportaron otras observaciones específicas para registrar.
+La expresión «100 % probado» se conserva como confirmación del equipo de que verificó el comportamiento. No se convierte en una garantía universal ni en una métrica nueva sin dataset. No se necesita localizar una supuesta pregunta fallida, causa o commit de reparación: esa interpretación fue retirada. No se aportaron otras observaciones específicas.
 
-## Validaciones posteriores disponibles
+## Evidencia específica de solicitud de información adicional
 
-- Pruebas públicas completas: [JSON de revisión 279580e](produccion-279580e-20261107-214127.json), **35/35**, cero omitidos, fecha interna 8/11/2026 02:41 UTC. El reporte identifica su SHA, URLs y casos; no se vincula automáticamente con la pregunta de la demo ni con posteriores cambios de configuración.
-- Evaluación final: [Actions 42443602234](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42443602234), SHA `16081c8224ba07d1b0b917f89266f6bb562fb0e5`, **recuperación/chat aprobados y agente estricto 6/6 sin fallback**. [Reportes completos](2026-11-08-evaluacion-final-aprobada/).
-- Los 429 del segundo intento de evaluación se diagnosticaron como saturación por RPM y se corrigió el ritmo en `d5cca81`. Ese diagnóstico está acreditado para la evaluación automatizada; **no se atribuye a la falla de la sustentación sin confirmación específica**. Ver [evaluación y comparación](../../07-evaluacion.md).
+La suite actual incluye estas pruebas en [test_endpoints.py](../../../backend/tests/test_endpoints.py):
 
-Para completar SUST-01: añadir la pregunta exacta o una síntesis fiel, fecha de sesión, causa identificada, cambio/commit que la resolvió y repetición del mismo caso con resultado. Mantener las evidencias generales y los fallos anteriores, aunque se añada una comprobación específica.
+- `test_aclaracion_expone_controles_permitidos_y_omite_datos_ya_ingresados`: una salida de modelo simulada solicita carrera/curso; valida campos únicos, tipo y opciones, omisión de datos ya ingresados, respuesta SSE y abstención si la aclaración ya no puede completarse.
+- `test_no_solicita_datos_sensibles_o_campos_en_un_rechazo` comprueba que una solicitud de contraseña se descarta y que una consulta fuera de dominio sigue rechazándose.
+
+Estas pruebas usan un modelo doble y acreditan el contrato de la aplicación, no una elección espontánea del proveedor en producción. Sus resultados forman parte del [XML actual de 112 pruebas aprobadas](2026-11-08-conteo-pruebas/pytest-backend.xml). La comprobación manual posterior del escenario con el asistente real consta por declaración del equipo; no se atribuye a un caso de otro reporte.
+
+## Otras validaciones de alcance separado
+
+- [Pruebas públicas completas](produccion-279580e-20261107-214127.json): **35/35**, cero omitidos; fecha interna 8/11/2026 02:41 UTC y SHA `279580e`. No se presentan como la prueba específica de aclaración.
+- [Evaluación final, Actions 42443602234](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42443602234), SHA `16081c8224ba07d1b0b917f89266f6bb562fb0e5`: recuperación/chat aprobados y agente estricto 6/6 sin fallback. [Reportes completos](2026-11-08-evaluacion-final-aprobada/).
+- Los 429 de un intento anterior de evaluación fueron una saturación de solicitudes por minuto corregida mediante ritmo de llamadas. No se vinculan con la sustentación ni con la falta de un ejemplo de aclaración.
 
 ## Revisión técnica de cierre documental
 
