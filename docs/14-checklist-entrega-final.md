@@ -25,7 +25,7 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 - [x] Módulo legacy eliminado de HEAD y rutas antiguas retiradas en la URL probada.
 - [x] Despliegue con SHA verificable y pipeline dependiente de seis controles previos.
 - [x] 35 casos públicos, incluida generación real directa y por proxy SSE; se resolvieron los tres 503 anteriores.
-- [x] Tests estrictos restaurados y aislados de claves reales: **141 backend, cobertura de app 89,11 %**, en rama de entrada segura; [XML y resumen](evidencias/semana-4/entrada-segura/). Los cortes de 130 y anteriores se conservan fechados en [el registro de conteos](21-conteos-de-pruebas.md). Frontend/navegador mantienen sus evidencias separadas.
+- [x] Tests estrictos restaurados y aislados de claves reales: **147 backend, cobertura de app 89,11 %**, en rama de corrección de cita OCR; [XML y resumen](evidencias/semana-4/citas-articulo-24/). Los cortes de 130 y anteriores se conservan fechados en [el registro de conteos](21-conteos-de-pruebas.md). Frontend/navegador mantienen sus evidencias separadas.
 - [x] Límite de consultas compartido, errores seguros y documentación técnica de endpoints/secuencias.
 - [x] Falsos positivos de las seis exclusiones de Gitleaks identificados y separados de credenciales legacy.
 - [x] Ramas saneadas con respaldo y publicación coordinada; clon nuevo y controles histórico/activo aprobados.
@@ -108,3 +108,7 @@ Se conservan arriba los cortes históricos. El estado vigente ya no es «Neon en
 ## Cierre del ensayo remoto Neon (estado vigente)
 
 La evidencia [antes/después/comparación](evidencias/semana-4/neon-remoto/) acredita conservación del estado administrativo entre revisiones. Los apartados anteriores que indicaban ensayo pendiente son cortes históricos, superados por esta evidencia. Sigue separado el smoke nuevo 35/35 y la revisión semántica del ejemplo artículo 24/23. No se afirma recuperación de desastre o persistencia de sesiones/métricas.
+
+## Discrepancia de cita artículo 24/23
+
+Causa reproducida y corregida en código: el OCR `Art, 24` no se separaba y heredaba artículo 23. Falta desplegar/reindexar el instructivo en Neon y registrar consulta real corregida. No se modifica la evidencia histórica de persistencia ni el OCR/aprobación. [Diagnóstico y pasos](28-citas-articulo-24.md).
