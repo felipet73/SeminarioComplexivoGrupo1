@@ -1,0 +1,60 @@
+{
+  "fecha_utc": "2026-11-08T14:04:50.675783+00:00",
+  "commit_base": "2c6b9503f6a2c333e84ba2727653eb8672a7373c",
+  "alcance": "PostgreSQL 17 local, procesos nuevos con directorios locales diferentes y reinicio del servidor PostgreSQL; no prueba remota de Neon/Cloud Run.",
+  "reinicio_servidor_postgres": {
+    "documento": "ok",
+    "archivo": "ok",
+    "indice_y_cita": "ok",
+    "prompts": "ok",
+    "configuracion": "ok",
+    "auditoria": "ok",
+    "vectores_y_cache": "ok",
+    "rollback": "ok",
+    "sesion_anterior": "invalidada",
+    "nuevo_login": "ok"
+  },
+  "resultado": "aprobado",
+  "postgres_image_id": "sha256:aac5ed9e090c8b3e134bf1dcf3f9fe0787a29cecdf7867de8b53b5d8abc3eef2",
+  "fases": [
+    {
+      "escritura": "ok"
+    },
+    {
+      "documento": "ok",
+      "archivo": "ok",
+      "indice_y_cita": "ok",
+      "prompts": "ok",
+      "configuracion": "ok",
+      "auditoria": "ok",
+      "vectores_y_cache": "ok",
+      "rollback": "ok",
+      "sesion_anterior": "invalidada",
+      "nuevo_login": "ok"
+    }
+  ],
+  "proveedores_consumidos": false,
+  "datos": "Documento y configuración sintéticos; sin DSN, contraseña o cookie en el reporte.",
+  "migracion_sqlite": {
+    "fecha_utc": "2026-11-08T14:04:51.490520+00:00",
+    "resultado": "aprobado",
+    "registros": 6,
+    "fragmentos": 1,
+    "auditoria": 3,
+    "archivos": 1,
+    "sqlite_source_sha256": "478e86d3d37446070227f3e6ddc929c88c9784bd840252f7b186ef6ffd866b12",
+    "alcance": "Importación transaccional de copia SQLite y archivos; no cambia tráfico ni borra el origen. Sesiones en memoria no se migran.",
+    "credenciales_publicadas": false,
+    "destino_ocupado_rechazado": true,
+    "sin_serialize_y_hash_origen": true
+  },
+  "golden_set_postgres": {
+    "positivos": 16,
+    "negativos": 4,
+    "acierto_top_k": 0.875,
+    "silencio": 1.0,
+    "errores": 0
+  },
+  "arbol_trabajo_modificado": true,
+  "script_sha256": "c57f2038e17a8fd9a690d6e768b00f1c14ed37733c0f241a4129a937a34864a7"
+}

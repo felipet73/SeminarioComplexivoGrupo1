@@ -1,6 +1,12 @@
 # Activación de PostgreSQL en Neon: datos antes de cambiar el servicio
 
-Estado: **preparación para Neon; conexión real, migración y activación pendientes**. El equipo creó una base `titulacion` en PostgreSQL 17 y preparó el secreto `rag-database-url` con permiso de lectura para la cuenta de ejecución. El asistente no conoce su contenido ni verificó directamente la conexión. Cloud SQL continúa diferido por costos; Neon es una alternativa independiente, sujeta a los límites vigentes de su plan.
+Estado actualizado: **importación ejecutada y activación en Cloud Run reportada por el operador; ensayo remoto entre revisiones pendiente de evidencia**. Las capturas de Neon muestran 6 documentos, 3 prompts, 1 configuración, 1.047 fragmentos, 1.047 entradas de búsqueda, 6 archivos y 12 eventos de auditoría en el momento de importar. Después el operador indicó reindexación del instructivo (revisión 2) y compartió el panel con seis documentos indexados. Estos conteos son del corte de importación, no un nuevo inventario tras la reindexación. No prueban por sí solos durabilidad tras reiniciar.
+
+El secreto `rag-database-url`, versión 1, se vinculó como `RAG_DATABASE_URL` según la captura del formulario. El asistente no dispone del DSN, no consultó la base real ni operó Cloud Run. Cloud SQL continúa diferido por costos. La secuencia inferior queda como procedimiento reproducible, no como tareas todas pendientes para la base ya importada.
+
+### Incidente del reporte de migración
+
+El importador confirmó la transacción y luego falló con `AttributeError: sqlite3.Connection ... serialize` en el computador del operador. No falló la escritura transaccional. **No repetir la importación ni borrar la base para generar el reporte faltante.** PR #35 calcula el hash del archivo fuente antes de escribir y lo identifica como `sqlite_source_sha256`, sin requerir `serialize()`. No se reconstruye retrospectivamente un JSON de éxito inexistente. El ensayo automatizado ahora simula SQLite sin ese método, verifica el hash y rechaza un segundo intento contra destino ocupado.
 
 ## Conexión y certificados
 
@@ -70,3 +76,28 @@ Registrar nueva revisión, SHA, `/health`, `/ready`, documentos/índice/configur
 Después de recrear una instancia/revisión de forma controlada, verificar que siguen presentes el documento administrativo, su archivo y el índice, y que responde con fuentes. Guardar un reporte antes/después y repetir los 35 casos públicos ligados al SHA. Repetir la evaluación del alcance que se pretenda acreditar. No marcar s4c cumplido solo por crear el secreto o importar la base.
 
 El plan gratuito tiene cuotas de almacenamiento/cómputo/conexiones que deben revisarse en el panel vigente. Documentos, índices y vectores consumen espacio dentro de PostgreSQL. Cloud Run, Secret Manager y LLM conservan sus propias condiciones de facturación. No se creó ningún recurso Cloud SQL en este procedimiento.
+
+
+## Verificación remota reproducible, sin volver a migrar
+
+La herramienta no crea revisiones ni cambia documentos/configuración: inicia/cierra su propia sesión y descarga datos para calcular hashes. No consume modelos. Requiere acceso administrativo; contraseña por entrada oculta, nunca como argumento o variable versionada. Los reportes guardan IDs, revisiones y hashes, no texto documental ni cookies. Guardarlos primero en `tmp/` y revisarlos antes de versionar.
+
+1. Actualizar el clon con este PR. En Cloud Run anotar el nombre exacto de la revisión que tiene 100 % del tráfico. Detener ediciones administrativas durante ambas capturas.
+2. Capturar desde la URL directa del backend (no depende del proxy frontend):
+
+```powershell
+python scripts/verificar_persistencia_remota.py capturar --url https://titulacion-rag-386902880383.us-central1.run.app --revision-cloud-run NOMBRE_REAL_ANTES --output tmp/neon-antes.json
+```
+
+3. Crear una revisión nueva con la misma imagen y referencias de secretos. Se puede cambiar una variable inocua `PERSISTENCE_CHECK=neon-01`. No quitar `RAG_DATABASE_URL`. Esperar readiness y 100 % de tráfico. Guardar captura del nombre y tráfico; la etiqueta que recibe el script es una declaración del operador, no una consulta al API de Google.
+4. Capturar con el nombre real nuevo, luego comparar:
+
+```powershell
+python scripts/verificar_persistencia_remota.py capturar --url https://titulacion-rag-386902880383.us-central1.run.app --revision-cloud-run NOMBRE_REAL_DESPUES --output tmp/neon-despues.json
+python scripts/verificar_persistencia_remota.py comparar --antes tmp/neon-antes.json --despues tmp/neon-despues.json --output tmp/neon-comparacion.json
+$LASTEXITCODE
+```
+
+Exit 0 indica igualdad; 1, diferencias; 2, error o evidencia insuficiente. Si cambia un hash, investigar sin borrar datos ni aprobar el resultado manualmente. La herramienta verifica originales descargados contra SHA registrado, metadatos, historial, prompts, configuración y muestras de hasta 512 fragmentos por documento (límite actual del endpoint). No acredita todos los vectores, recuperación citada ni disponibilidad continua. Completar una consulta citada y los 35 casos HTTP con SHA esperado; conservar reportes y capturas de revisiones en `docs/evidencias/semana-4/` tras revisarlos.
+
+La suite Docker sí prueba el reinicio del servidor PostgreSQL local, nuevas conexiones, archivos/índice/prompts/configuración/vectores/auditoría y rollback. Esa evidencia no se presenta como un reinicio de Neon ni de Cloud Run. Las sesiones, métricas y límites siguen locales al proceso. Indexar un documento no equivale a aprobar OCR o vigencia normativa.
