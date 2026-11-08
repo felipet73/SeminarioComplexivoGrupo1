@@ -14,7 +14,8 @@ Constancia incorporada el **8 de noviembre de 2026 (UTC)**, a partir de la confi
 | Nueva versión mostrada | Versión **2**, habilitada; creación visible **7/11/26, 9:47 p. m.**, sin zona horaria visible. La captura más reciente muestra el encabezado `admin-password` y el recurso `projects/386902880383/secrets/admin-password` |
 | Versión anterior | Versión **1**, **inhabilitada** en la captura más reciente (anteriormente habilitada) |
 | Responsable | Operador que confirmó la actuación; nombre pendiente de incorporar |
-| Revisión de Cloud Run y SHA de aplicación después del cambio | Pendientes de adjuntar; no se infieren del último commit de Git |
+| Revisión de Cloud Run después del cambio | **`titulacion-rag-00019-zhn`**, con **100 % del tráfico**, según la captura posterior del historial de revisiones |
+| SHA de aplicación después del cambio | Pendiente de adjuntar desde `/health`; no se infiere del nombre de revisión ni del último commit de Git |
 | Evidencia disponible de la operación | Confirmación del operador y capturas sucesivas de metadatos revisadas en el chat; imágenes aún no versionadas en el repositorio. Falta reporte posterior ligado a la nueva revisión |
 
 No se registran valores de contraseñas, claves, tokens, hashes de contraseñas ni respuestas autenticadas del panel.
@@ -31,7 +32,7 @@ Para completar la trazabilidad, adjuntar únicamente metadatos: fecha/hora con z
 
 Las primeras capturas mostraban `ADMIN_PASSWORD` → `admin-password:latest` y las versiones 1 y 2 habilitadas. Las capturas posteriores actualizan esa evidencia: el secreto se identifica expresamente como `projects/386902880383/secrets/admin-password`, la versión **2** permanece habilitada y la **1** figura inhabilitada. En el formulario de Cloud Run, `ADMIN_PASSWORD` referencia explícitamente la versión **2**. Los proveedores conservan `gemini-api-key:latest` y `openai-api-key:latest`. No se muestran valores secretos.
 
-La fijación de la referencia a **2** y la inhabilitación de **1** están acreditadas visualmente en las pantallas aportadas. El formulario no muestra por sí solo una implementación completada ni identifica la revisión que recibe tráfico. Falta vincular esta configuración concreta a una revisión desplegada y comprobar el acceso después de esa última implementación; el acceso confirmado antes no se atribuye automáticamente a esta configuración posterior.
+La fijación de la referencia a **2** y la inhabilitación de **1** están acreditadas visualmente en las pantallas aportadas. El formulario no muestra por sí solo una implementación completada ni identifica la revisión que recibe tráfico. Una captura posterior del historial de revisiones muestra **`titulacion-rag-00019-zhn`** seleccionada, con **100 % del tráfico**, y los estados «Actualizando el servicio», «Creando revisión» y «Enrutando tráfico» completados. La secuencia de capturas documenta la configuración y el despliegue posterior, aunque la pantalla del historial no muestra simultáneamente la referencia del secreto. La revisión usa la cuenta de servicio `titulacion-run@agentetitulacion.iam.gserviceaccount.com`. Falta registrar su SHA desde `/health` y confirmar el acceso después de esta última configuración; el acceso confirmado antes no se atribuye automáticamente a ella. La fecha relativa «hace 3 minutos» no permite establecer una hora absoluta de implementación.
 
 Inhabilitar la versión 1 impide nuevas lecturas de esa versión, pero no borra valores ya cargados por instancias existentes ni elimina la contraseña del historial Git. No se afirma que todas las revisiones antiguas hayan dejado de ser accesibles. La versión no se muestra destruida y no es necesario destruirla para registrar su inhabilitación.
 
@@ -51,7 +52,8 @@ Después de identificar el SHA realmente desplegado, repetir el procedimiento de
 
 - **Confirmado por el operador:** cambio de contraseña administrativa, nuevo despliegue y acceso manual con la nueva contraseña.
 - **Acreditado mediante capturas posteriores:** secreto `admin-password` identificado, versión 2 habilitada, versión 1 inhabilitada y referencia `ADMIN_PASSWORD` fijada a 2 en el formulario de Cloud Run.
-- **Pendiente de trazabilidad técnica:** responsable nominal, fecha exacta con zona, versión efectivamente cargada por la revisión de Cloud Run y SHA publicado; reporte HTTP posterior asociado a esa actuación. La versión 2 y su fecha visible ya constan como metadatos de captura.
+- **Despliegue acreditado mediante captura posterior:** revisión `titulacion-rag-00019-zhn`, actualización/creación/enrutamiento completados y 100 % del tráfico del servicio. Las revisiones anteriores visibles tienen 0 %; ello no acredita ausencia de URLs etiquetadas accesibles.
+- **Pendiente de trazabilidad técnica:** responsable nominal, fecha exacta con zona, vinculación directa de la referencia del secreto con la revisión desplegada y SHA publicado; reporte HTTP posterior asociado a esa actuación. La versión 2 y su fecha visible ya constan como metadatos de captura.
 - **Pendientes independientes:** revisión de reutilización en otros entornos y revisiones accesibles; decisión y ejecución coordinadas sobre el historial Git.
 
 La rotación declarada mejora la protección del servicio actualizado. El requisito global de protección de credenciales sigue parcial mientras falte acreditar el resto de su alcance.
