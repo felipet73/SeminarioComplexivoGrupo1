@@ -66,3 +66,7 @@ La conversión de capturas a PDF en `6151271` redujo el ZIP medido a 25,28 MiB. 
 ## Corte posterior de main e3e8b22
 
 Actions 42422021200 aprobó el despliegue de `e3e8b22` y sus casos públicos. Ya existen responsabilidades/herramientas de IA y verificación común confirmadas en README; no siguen todas sin declarar. Se añadieron `docs/Presentacion.pdf` y `EvidenciasSemana4.pdf`, pero sigue sin versionarse el JSON completo exitoso ni constancia de no reutilización/rotación de valores legacy. El paquete actual es **27,39 MiB**, no 24,82 MiB. Ver [contraste detallado y pasos de cierre](18-verificacion-cierre-legacy.md). Se preservan cortes y mediciones previas como históricos.
+
+## Siguiente corte después del merge #23
+
+El [plan operativo actualizado](19-pasos-cierre-y-compresion.md) ordena los comandos y evidencias pendientes. Base `279580e`: paquete actual 28.727.410 bytes. Una propuesta temporal con compresión con pérdida mide 18.909.976 bytes, pero **no está aplicada ni es un ZIP entregable**: requiere revisión visual, trazabilidad de derivados, hashes/OCR e ingesta/pruebas. Los pendientes de credenciales, JSON completo, evaluación final y observaciones permanecen abiertos hasta aportar su evidencia.
