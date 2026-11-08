@@ -26,7 +26,6 @@ Este es un resultado local nuevo, no un job remoto ni prueba de carga. El porcen
 | 110 | Incremento verificable en el código; no se inventa un reporte histórico de 110 | +2 controles de ritmo/reintentos en `d5cca81` → 112 |
 | 112 | XML y resumen locales sobre `7b19cf3` | Corte anterior: se agregan 18 instancias para adaptador PostgreSQL, backup, transporte/error seguro y detector de DSN → 130 |
 | 130 | XML y resumen de preparación PostgreSQL sobre `f653a71` | Corte anterior local; cero casos eliminados respecto a 112 |
-
 | 132 | XML y resumen de rama TLS Neon | Último corte local: dos instancias nuevas de CA predeterminada/explícita, sin eliminar casos |
 
 Al comparar los XML históricos de 99 y 112 mediante `(classname, name)`, **ninguno de los 99 casos antiguos desapareció**, y aquel corte añadió exactamente **13 casos**. El nuevo corte 130 añade otros **18 respecto a 112**, sin eliminar ninguno; la lista está en el resumen de preparación PostgreSQL. El resumen contiene sus nombres. Los tests parametrizados cuentan como varias instancias ejecutadas, no como una única función Python.
