@@ -25,7 +25,7 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 - [x] Módulo legacy eliminado de HEAD y rutas antiguas retiradas en la URL probada.
 - [x] Despliegue con SHA verificable y pipeline dependiente de cinco controles previos.
 - [x] 35 casos públicos, incluida generación real directa y por proxy SSE; se resolvieron los tres 503 anteriores.
-- [x] Tests estrictos restaurados y aislados de claves reales: **130 backend, cobertura de app 89,09 %**, en rama de preparación PostgreSQL sobre `f653a71`; [XML y resumen](evidencias/semana-4/preparacion-postgres/). Frontend 18 y navegador 10 según sus evidencias separadas. El corte de 112 permanece como histórico, junto con 99/104/105, en [el registro de conteos](21-conteos-de-pruebas.md).
+- [x] Tests estrictos restaurados y aislados de claves reales: **132 backend, cobertura de app 89,11 %**, en rama TLS Neon; [XML y resumen](evidencias/semana-4/tls-neon/). Los cortes de 130 y anteriores se conservan fechados en [el registro de conteos](21-conteos-de-pruebas.md). Frontend/navegador mantienen sus evidencias separadas.
 - [x] Límite de consultas compartido, errores seguros y documentación técnica de endpoints/secuencias.
 - [x] Falsos positivos de las seis exclusiones de Gitleaks identificados y separados de credenciales legacy.
 - [x] Ramas saneadas con respaldo y publicación coordinada; clon nuevo y controles histórico/activo aprobados.
@@ -96,3 +96,7 @@ PostgreSQL/Cloud SQL queda técnicamente preparado y probado localmente. Su acti
 ## Publicación coordinada del historial — 8 de noviembre de 2026, Ecuador
 
 Se publicaron 27 ramas mediante operación atómica con leases. Main `2482401` aprobó [Actions 42453615683](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683) y despliegue. Los clones deben renovarse. [Resultado, mapa y pendientes de PR/cachés](24-cierre-historial-publicado.md); no se envió una solicitud a soporte ni se afirma purga completa. La decisión de costos de Cloud SQL sigue vigente.
+
+## Alternativa Neon en preparación
+
+El equipo creó la base PostgreSQL 17 y preparó el secreto de conexión en Secret Manager. Falta conservar/exportar el estado actual, incorporar CA confiable para TLS, importar y activar el secreto en Cloud Run, y acreditar persistencia remota. [Guía Neon](26-neon-persistencia.md). Cloud SQL continúa diferido por costos. El corte de pruebas TLS es 132 aprobadas, cobertura app 89,11 %, con dos casos nuevos respecto a 130; no acredita conexión real a Neon.

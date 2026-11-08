@@ -132,7 +132,7 @@ Referencia completa: [.env.example](.env.example) y [frontend/.env.example](fron
 | `LLM_TIMEOUT_SECONDS`, `LLM_RETRIES`, `LLM_MAX_INPUT_CHARS` | Timeout, reintentos técnicos y máximo de entrada. Defaults y alcance se detallan en integración estable. |
 | `RAG_DATA_DIR` | Directorio del proceso para SQLite y originales; cambiarlo no crea almacenamiento duradero. |
 | `PORT` | Puerto que usa el comando de arranque del contenedor. |
-| `RAG_DATABASE_URL` | **Secreto optativo del proceso**: activa PostgreSQL; vacío conserva SQLite. No poner su DSN en Git ni frontend. [Preparación, costos y migración](docs/22-postgresql-cloudsql.md). |
+| `RAG_DATABASE_URL` | **Secreto optativo del proceso**: activa PostgreSQL; vacío conserva SQLite. No poner su DSN en Git ni frontend. [Cloud SQL](docs/22-postgresql-cloudsql.md) / [Neon](docs/26-neon-persistencia.md): preparación y migración. |
 | `VITE_API_URL` | URL pública del backend incorporada al build del navegador; **no admite secretos**. |
 | `VITE_ADMIN_API_TARGET` | Destino del proxy administrativo de Vite en desarrollo. |
 | `GCP_PROJECT_ID`, `GCP_AR_REPOSITORY`, `GCP_WORKLOAD_IDENTITY_PROVIDER`, `GCP_SERVICE_ACCOUNT` | Variables de GitHub Actions para despliegue; son identificadores, no claves LLM. |
@@ -224,7 +224,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 
 | Verificación real | Resultado y alcance |
 |---|---|
-| Backend actual | **130 pruebas aprobadas, 89,09 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de preparación PostgreSQL. [XML y resumen local](docs/evidencias/semana-4/preparacion-postgres/). Los 112 anteriores se conservan con su fecha; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
+| Backend actual | **132 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama TLS Neon. [XML y resumen local](docs/evidencias/semana-4/tls-neon/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
 | Frontend y navegador | **18 pruebas**, build y **10 escenarios** Playwright con API aislada y modelo doble; jobs remotos aprobados. |
 | Producción | **35/35**, incluidos tres casos generativos, rutas retiradas y contratos públicos; [Actions 42389025186](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186). El smoke adicional exige incremento de métricas. |
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
@@ -273,7 +273,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 - Corpus: cinco fuentes aprobadas, 961 fragmentos; el instructivo UNIANDES con OCR aporta otros 86 **sin aprobar y no elegibles**. La aprobación y vigencia son decisiones humanas.
 - Checklist extractivo: `pendiente_de_verificar` y `completo=false`; no determina si un estudiante cumplió requisitos. El calendario excluye fines de semana y fecha inicial, **no feriados ni plazos institucionales**.
 - Los borradores requieren confirmación, caducan y son idempotentes; solo se guardan localmente, no se envían a terceros ni asignan tutor. La capacidad demo no prueba identidad universitaria.
-- En producción la persistencia sigue local hasta activar infraestructura: PostgreSQL/Cloud SQL está preparado con migración y ensayo local; el equipo decidió posponer su activación por costos hasta contar con presupuesto aprobado. La persistencia administrativa remota sigue pendiente. Las sesiones caducan al reiniciar y las métricas/límites siguen por proceso. [Alcance y procedimiento](docs/22-postgresql-cloudsql.md).
+- En producción la persistencia sigue local hasta activar infraestructura: PostgreSQL/Cloud SQL está preparado con migración y ensayo local; el equipo decidió posponer su activación por costos hasta contar con presupuesto aprobado. La alternativa Neon está en preparación, sin activación acreditada todavía. La persistencia administrativa remota sigue pendiente. Las sesiones caducan al reiniciar y las métricas/límites siguen por proceso. [Alcance y procedimiento](docs/22-postgresql-cloudsql.md).
 - Evaluación final completa frente a semana 3 acreditada en Actions 42443602234; revisión humana de OCR y exhaustividad semántica todavía pendientes.
 - Ramas saneadas mediante reescritura coordinada; clon nuevo y CI/despliegue aprobados en `2482401`. **25 refs antiguas de PR/cachés siguen pendientes de tratamiento con GitHub**; no se declara eliminación completa del servidor ni de copias externas. [Constancia y actualización de clones](docs/24-cierre-historial-publicado.md). Tampoco se garantiza resistencia a toda inyección o disponibilidad continua del proveedor.
 - Paquete optimizado: **menor de 20.000.000 bytes**, comprobado con el empaquetador. Dos PDF derivados y el avatar reducen tamaño; hashes y procedencia actualizados. [Transformación, validación y aceptación visual](docs/20-paquete-comprimido.md). Volver a medir después de añadir evidencias y generar la entrega desde main final.

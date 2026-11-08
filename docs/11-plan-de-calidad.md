@@ -1,6 +1,6 @@
 # Plan de calidad de la Entrega 3
 
-> **Corte actual de pruebas:** 130 casos backend aprobados, cobertura de app 89,09 %, según la [ejecución local y conciliación histórica](21-conteos-de-pruebas.md). La evaluación real posterior aprobó 6/6 del agente. El plan de Entrega 3 se conserva; consultar el [checklist vigente](14-checklist-entrega-final.md) para pendientes de Entrega 4.
+> **Corte actual de pruebas:** 132 casos backend aprobados, cobertura de app 89,11 %, según la [ejecución local y conciliación histórica](21-conteos-de-pruebas.md). La evaluación real posterior aprobó 6/6 del agente. El plan de Entrega 3 se conserva; consultar el [checklist vigente](14-checklist-entrega-final.md) para pendientes de Entrega 4.
 
 Se aplican los pasos comunes y específicos del grupo 1 de la guía HTML aportada. La matriz completa está en `docs/12-auditoria-entrega3-grupo1.md`.
 
