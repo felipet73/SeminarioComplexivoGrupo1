@@ -1,5 +1,7 @@
 # Análisis técnico preliminar y contraste de observaciones
 
+> **Informe histórico del corte indicado abajo.** Sus 104 pruebas y resultado estricto del agente no son el último estado: el conteo vigente es 112 con cobertura de app 88,84 % ([evidencia y evolución](21-conteos-de-pruebas.md)); la evaluación real posterior aprobó 6/6 ([resultados](07-evaluacion.md)). El PDF preliminar conserva su propio corte y no sustituye esos reportes.
+
 ## 1. Dictamen y alcance
 
 Proyecto: Asistente de Titulación y Normativa Académica, Grupo 1, UNIANDES. Fecha: 7 de noviembre de 2026, Ecuador (UTC−5). Código revisado: main 0dab82dd9258e9794684ea806b055d61a04d5bb5. Este informe describe implementación y evidencia; no certifica seguridad absoluta ni validez jurídica de la orientación.

@@ -1,6 +1,6 @@
 # Pruebas funcionales y criterio de aceptación - Grupo 1
 
-> **Estado de entrega al 7 de noviembre de 2026:** Consultar el [checklist vigente s4a–s4k](14-checklist-entrega-final.md). Despliegue y 35 casos públicos aprobados; el historial, evaluación final comparable y demás pendientes se distinguen allí.
+> **Conteo vigente, 8 de noviembre de 2026 UTC:** 112 pruebas backend aprobadas y 88,84 % de cobertura de `app` en ejecución local. Ver [XML, resumen y explicación de cortes anteriores](21-conteos-de-pruebas.md). El smoke público de 35 casos y la evaluación real del agente 6/6 son conjuntos separados; ver [checklist](14-checklist-entrega-final.md).
 
 Las URLs evaluadas son el [backend de Cloud Run](https://titulacion-rag-386902880383.us-central1.run.app) y el [frontend de Vercel](https://seminario-complexivo-grupo1.vercel.app/). El contrato y los datos de prueba están en `eval/casos_http.json`; el runner es `scripts/pruebas_funcionales.py`. No se usan frases de ejemplo ni se acepta una abstención como respuesta normativa correcta.
 
