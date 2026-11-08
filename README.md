@@ -132,6 +132,7 @@ Referencia completa: [.env.example](.env.example) y [frontend/.env.example](fron
 | `LLM_TIMEOUT_SECONDS`, `LLM_RETRIES`, `LLM_MAX_INPUT_CHARS` | Timeout, reintentos técnicos y máximo de entrada. Defaults y alcance se detallan en integración estable. |
 | `RAG_DATA_DIR` | Directorio del proceso para SQLite y originales; cambiarlo no crea almacenamiento duradero. |
 | `PORT` | Puerto que usa el comando de arranque del contenedor. |
+| `RAG_DATABASE_URL` | **Secreto optativo del proceso**: activa PostgreSQL; vacío conserva SQLite. No poner su DSN en Git ni frontend. [Preparación, costos y migración](docs/22-postgresql-cloudsql.md). |
 | `VITE_API_URL` | URL pública del backend incorporada al build del navegador; **no admite secretos**. |
 | `VITE_ADMIN_API_TARGET` | Destino del proxy administrativo de Vite en desarrollo. |
 | `GCP_PROJECT_ID`, `GCP_AR_REPOSITORY`, `GCP_WORKLOAD_IDENTITY_PROVIDER`, `GCP_SERVICE_ACCOUNT` | Variables de GitHub Actions para despliegue; son identificadores, no claves LLM. |
@@ -140,14 +141,14 @@ Referencia completa: [.env.example](.env.example) y [frontend/.env.example](fron
 
 En producción se usan **Secret Manager y referencias de Cloud Run**; la cuenta de ejecución requiere acceso a cada secreto. Los Secrets de **GitHub Actions** para evaluación se configuran aparte: no heredan los de Cloud Run. La autenticación de despliegue usa **WIF**, sin clave JSON permanente; `GCP_SA_KEY` es solo la alternativa implementada si no se usa WIF.
 
-La configuración de negocio se referencia en [config/parametros.yaml](config/parametros.yaml): agente de 4 vueltas, presupuesto de 30 consultas/60 segundos/proceso, fragmentación 1400/160, top-k 4, umbrales y criterios de evaluación. El panel guarda su configuración RAG en SQLite. La imagen siembra explícitamente modo léxico; no asumir que el default híbrido del archivo sea el estado de producción.
+La configuración de negocio se referencia en [config/parametros.yaml](config/parametros.yaml): agente de 4 vueltas, presupuesto de 30 consultas/60 segundos/proceso, fragmentación 1400/160, top-k 4, umbrales y criterios de evaluación. El panel guarda su configuración RAG en SQLite por defecto; el backend PostgreSQL optativo está preparado, aún sin activar. La imagen siembra explícitamente modo léxico; no asumir que el default híbrido del archivo sea el estado de producción.
 
 ## Despliegue
 
 El flujo implementado está en [.github/workflows/ci.yml](.github/workflows/ci.yml):
 
-1. Push/PR ejecuta secretos, backend, frontend, navegador y contenedor.
-2. `desplegar` requiere el éxito de esos cinco jobs y solo opera en `main` por push o activación manual.
+1. Push/PR ejecuta secretos, backend, frontend, navegador, contenedor y persistencia PostgreSQL aislada.
+2. `desplegar` requiere el éxito de esos seis jobs y solo opera en `main` por push o activación manual.
 3. Conserva la imagen Docker que pasó el smoke, autentica con GitHub OIDC/WIF y publica en Artifact Registry con etiqueta SHA.
 4. Actualiza Cloud Run y verifica SHA, corpus, retirada legacy, SSE y registro de métricas. Ejecuta obligatoriamente 35 casos públicos con generación real.
 5. Un fallo posterior deja el job rojo; **no hay rollback automático**. Vercel publica el frontend desde Git mediante su integración.
@@ -223,7 +224,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 
 | Verificación real | Resultado y alcance |
 |---|---|
-| Backend actual | **112 pruebas aprobadas, 88,84 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos. [XML y resumen local](docs/evidencias/semana-4/2026-11-08-conteo-pruebas/). [Evolución de los conteos históricos](docs/21-conteos-de-pruebas.md). No se presenta esta ejecución local como un nuevo job de CI. |
+| Backend actual | **130 pruebas aprobadas, 89,09 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de preparación PostgreSQL. [XML y resumen local](docs/evidencias/semana-4/preparacion-postgres/). Los 112 anteriores se conservan con su fecha; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
 | Frontend y navegador | **18 pruebas**, build y **10 escenarios** Playwright con API aislada y modelo doble; jobs remotos aprobados. |
 | Producción | **35/35**, incluidos tres casos generativos, rutas retiradas y contratos públicos; [Actions 42389025186](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186). El smoke adicional exige incremento de métricas. |
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
@@ -261,6 +262,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 ## Decisiones y riesgos
 
 - [ADR y decisiones técnicas/éticas](docs/09-decisiones.md): alcance controlado, lista cerrada, confirmación humana, citas y alternativa SQLite/FTS5/vectores a Chroma.
+- [PostgreSQL durable propuesto](docs/ADR-0004.md): backend optativo probado; activación de Cloud SQL pospuesta por costos.
 - [Decisión objetivo sobre datos](docs/ADR-0003.md): distingue infraestructura deseada de la persistencia local realmente desplegada.
 - [Registro de riesgos](docs/riesgos.md): mitigaciones, evidencia y riesgo residual; no contiene valores de secretos.
 - [Auditoría de credenciales históricas](docs/15-auditoria-credenciales-historicas.md): las exclusiones de Gitleaks son falsos positivos de un advisory; el mecanismo JWT legacy contenía credenciales funcionales y sigue en commits antiguos. Código y rutas actuales retirados no equivalen a historial limpio ni acreditan revocación en otras copias.
@@ -271,7 +273,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 - Corpus: cinco fuentes aprobadas, 961 fragmentos; el instructivo UNIANDES con OCR aporta otros 86 **sin aprobar y no elegibles**. La aprobación y vigencia son decisiones humanas.
 - Checklist extractivo: `pendiente_de_verificar` y `completo=false`; no determina si un estudiante cumplió requisitos. El calendario excluye fines de semana y fecha inicial, **no feriados ni plazos institucionales**.
 - Los borradores requieren confirmación, caducan y son idempotentes; solo se guardan localmente, no se envían a terceros ni asignan tutor. La capacidad demo no prueba identidad universitaria.
-- Persistencia, sesiones, presupuesto y métricas son locales; no hay garantía de conservar cambios entre instancias. Queda pendiente el ensayo de reinicio y una solución duradera si se usan datos importantes.
+- En producción la persistencia sigue local hasta activar infraestructura: PostgreSQL/Cloud SQL está preparado con migración y ensayo local; el equipo decidió posponer su activación por costos hasta contar con presupuesto aprobado. La persistencia administrativa remota sigue pendiente. Las sesiones caducan al reiniciar y las métricas/límites siguen por proceso. [Alcance y procedimiento](docs/22-postgresql-cloudsql.md).
 - Evaluación final completa frente a semana 3 acreditada en Actions 42443602234; revisión humana de OCR y exhaustividad semántica todavía pendientes.
 - Historial Git con credenciales legacy pendiente de remediación coordinada; no se oculta con nuevas exclusiones. Tampoco se garantiza resistencia a toda inyección o disponibilidad continua del proveedor.
 - Paquete optimizado: **menor de 20.000.000 bytes**, comprobado con el empaquetador. Dos PDF derivados y el avatar reducen tamaño; hashes y procedencia actualizados. [Transformación, validación y aceptación visual](docs/20-paquete-comprimido.md). Volver a medir después de añadir evidencias y generar la entrega desde main final.

@@ -18,3 +18,11 @@ def test_permite_secretos_vacios_y_lectura_desde_entorno():
     code = 'admin_password: str = ""\nSECRET_KEY = os.environ["JWT_SECRET"]'
     assert detector.revisar_texto('backend/app/config.py', code) == []
     assert detector.revisar_texto('backend/tests/config.py', 'SECRET_KEY = "solo-doble-de-prueba"') == []
+
+
+def test_detecta_dsn_postgres_con_password_sin_imprimirlo():
+    value = 'postgresql://' + 'usuario:valor-ficticio@localhost/base'
+    result = detector.revisar_texto('config.txt', value)
+    assert result == ['config.txt:1']
+    assert 'valor-ficticio' not in str(result)
+    assert detector.revisar_texto('config.txt', 'RAG_DATABASE_URL=') == []

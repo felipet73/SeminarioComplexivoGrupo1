@@ -1,0 +1,59 @@
+{
+  "fecha_utc": "2026-11-08T05:14:40.495885+00:00",
+  "base_main": "f653a7149b36156cd7697b65b1cf6392305a9ce3",
+  "alcance": "Rama de preparacion con cambios sobre main, ejecucion local; no activacion de Cloud SQL, no nuevos tests de produccion ni llamadas a modelos.",
+  "pytest": {
+    "tests": 130,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cobertura_app_porcentaje": 89.09,
+  "pruebas_agregadas_desde_112": [
+    "tests.test_backup::test_respaldo_copia_base_y_fuentes_pero_no_entorno",
+    "tests.test_backup::test_respaldo_exige_autenticacion",
+    "tests.test_backup::test_respaldo_rechaza_postgres_y_exceso_de_tamano",
+    "tests.test_detector_secretos::test_detecta_dsn_postgres_con_password_sin_imprimirlo",
+    "tests.test_postgres::test_adaptador_parametriza_y_conserva_acceso_por_clave_e_indice",
+    "tests.test_postgres::test_archivo_postgres_no_depende_de_ruta_local_y_sanitiza_nombre",
+    "tests.test_postgres::test_busqueda_postgres_no_interpela_texto_ni_documentos_en_sql",
+    "tests.test_postgres::test_conexion_tiene_lock_transaccional_y_cierra_incluso_si_falla",
+    "tests.test_postgres::test_dsn_malformado_no_filtra_su_contenido",
+    "tests.test_postgres::test_escritura_prompt_postgres_y_lectura_blob",
+    "tests.test_postgres::test_fallo_de_conexion_no_publica_detalle_del_controlador",
+    "tests.test_postgres::test_prompt_persistido_no_se_reemplaza_por_archivo_de_imagen",
+    "tests.test_postgres::test_ready_devuelve_503_seguro_si_postgres_no_esta_disponible",
+    "tests.test_postgres::test_store_postgres_confirma_y_revierte_transacciones",
+    "tests.test_postgres::test_transporte_remoto_exige_verificacion_tls[dbname=test user=user service=externo-False]",
+    "tests.test_postgres::test_transporte_remoto_exige_verificacion_tls[postgresql://user@/test?host=/cloudsql/proyecto:region:instancia-True]",
+    "tests.test_postgres::test_transporte_remoto_exige_verificacion_tls[postgresql://user@db.example/test-False]",
+    "tests.test_postgres::test_transporte_remoto_exige_verificacion_tls[postgresql://user@db.example/test?sslmode=verify-full-True]"
+  ],
+  "pruebas_eliminadas": [],
+  "terraform": {
+    "version": "1.14.0",
+    "provider_google": "7.46.2",
+    "fmt": "aprobado",
+    "init_backend_false": "aprobado",
+    "validate": "aprobado",
+    "plan_autenticado_ejecutado": false,
+    "apply_ejecutado": false
+  },
+  "dependencias_vulnerables_pip_audit": 0,
+  "sha256_archivos": {
+    "backend/app/services/postgres_store.py": "a2114bed58dfff824053f3d0c9212d34e485a057960a8129ee46bf404e5def75",
+    "backend/app/services/admin_store.py": "78387687b4de1679677a94b05f805470d212c63f539bf8e04f8a3e0c070d15dd",
+    "backend/app/services/rag.py": "73fefbc8fb1c1b5ac3a42af70c06384b4a821740c7bab0dcb95d14523f596df8",
+    "backend/app/services/backup.py": "03fc5c09e4885f35e5d200564fe096f7a74e992578be1c74c88be612f1d45394",
+    "backend/app/admin_routes.py": "ff50c0f17e495c899dcfa8eada459e308662889c949421e93a924c11f30c50c3",
+    "backend/app/main.py": "e2ca795f599d66dccb328342ee323463028b623ff515a2c7de94840bcf24bee3",
+    "scripts/probar_postgres.py": "14409b9cc7c903afa989dba754e46175defbefd6407b71d42ffa1c098cd8b21f",
+    "scripts/migrar_sqlite_postgres.py": "7e29453d74fe38b3e5a8bb924d99e2f849d563ce4842fda11cffdf7edae31ef7",
+    "scripts/crear_dsn_cloudsql.py": "cc0ec31d2d938ab1d9ac5853311373a4dac1fcc8b5832a5a52829de01f1a018c",
+    "scripts/verificar_reinicio_contenedor.py": "2e34e6c00ad922e109c0d212409fb35b52e38b997003d24a0d4636f5f05c3735",
+    "infra/cloudsql/main.tf": "30cbc49c944e47d4acbbbd55e5c2762fc82829cb2a9d177c845315b78d2a6c84"
+  },
+  "xml_sha256": "02b3ada6abe5550c90e327dddaaf147f9ddf11e5049c94ab5939eaf6351352b4",
+  "ensayos_posteriores_commit": "b5ef62f",
+  "auditoria_dependencias_sha256": "f03ed827b5f28aea24bfbe915ed125b143d7acfc927b03b1f8ad6b3989dc8b85"
+}

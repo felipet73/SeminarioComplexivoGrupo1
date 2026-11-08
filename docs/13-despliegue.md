@@ -24,7 +24,7 @@ Para usar proveedores o administración local, pasar un archivo de entorno priva
 
 ## Pipeline ejecutado y verificado
 
-`.github/workflows/ci.yml` conserva las pruebas en push/PR y añade `desplegar` con `needs: [secretos, backend, frontend, navegador, contenedor]`. Solo puede desplegar en main, por push o ejecución manual. Las evaluaciones con API reales son manuales y requieren activar `evaluar_modelo_real`.
+`.github/workflows/ci.yml` conserva las pruebas en push/PR y añade `desplegar` con `needs: [secretos, backend, frontend, navegador, contenedor, postgres]`. El job PostgreSQL valida persistencia/migración con datos ficticios en Docker y no crea recursos de Google Cloud. Solo puede desplegar en main, por push o ejecución manual. Las evaluaciones con API reales son manuales y requieren activar `evaluar_modelo_real`.
 
 El job contenedor guarda **la misma imagen que pasó el smoke**, etiquetada con el SHA. El job de despliegue descarga ese artefacto, publica en Artifact Registry y actualiza el servicio existente; no reconstruye otra imagen después de probar. Se verifica SHA, readiness, retirada de rutas y SSE, y luego los 35 casos contra las URLs públicas, incluidos tres de generación real (dos directos y uno por proxy SSE de Vercel). El job exige `--incluir-modelo`; una abstención, respuesta vacía, falta de modelo, cita incorrecta, HTTP 500 o SSE incompleto falla la validación. Estas tres consultas consumen cuota del proveedor de ejecución, sin exponer sus claves al runner. Un fallo posterior al deploy deja el job rojo: requiere intervención; no se anuncia rollback automático a una revisión posiblemente vulnerable.
 
@@ -62,3 +62,12 @@ Ni la ruta antigua ni su clave son usadas por la autenticación actual `admin_au
 Una limpieza del historial requiere una copia espejo de respaldo, enumerar ramas/tags afectados, coordinar todos los clones y reescribir la ruta retirada, con publicación forzada autorizada y revisión de referencias de PR/cachés. No sustituye la revocación del servicio activo. La [guía de GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository) detalla ese procedimiento.
 
 La semilla recupera el corpus inicial, pero las cargas administrativas, decisiones y sesiones locales no son persistencia compartida. `RAG_DATA_DIR` cambia la ubicación, no crea almacenamiento duradero. El límite de una instancia tampoco asegura durabilidad ni exclusión entre revisiones durante un despliegue. Un bucket montado por Cloud Storage FUSE no ofrece el bloqueo de archivos requerido por SQLite; [limitaciones oficiales](https://docs.cloud.google.com/run/docs/configuring/services/cloud-storage-volume-mounts#limitations). No se presenta ese montaje como solución. La persistencia duradera necesita una decisión y configuración de infraestructura antes de usar datos importantes; los borradores siguen siendo demostraciones con datos ficticios.
+
+
+## PostgreSQL preparado, activación diferida por costos
+
+La opción `RAG_DATABASE_URL` conserva datos e índices y originales en PostgreSQL. Sin configurarla, el servicio sigue en SQLite. El módulo `infra/cloudsql/` pasó validación sintáctica/provider pero **no se aplicó**. El equipo decidió el 8/11/2026 (Ecuador) diferir la activación por costos, sin fecha comprometida. Para retomarla se revisará presupuesto/plan, se exportarán/migrarán datos y se conectará Cloud Run antes de acreditar persistencia remota. [ADR](ADR-0004.md) y [procedimiento de activación, migración y pruebas](22-postgresql-cloudsql.md).
+
+`GET /api/admin/backup` exige sesión administrativa, responde no-store y exporta una copia SQLite más originales para migración; no incluye entorno ni credenciales del proceso. Su contenido puede ser privado: no versionarlo ni enviarlo en el ZIP de entrega. En PostgreSQL el endpoint deriva al respaldo administrado, no crea un dump web.
+
+CI también recrea dos contenedores sin volumen para verificar la semilla. La evidencia local de ese ensayo no se etiqueta como reinicio remoto de Cloud Run. La constancia de rotación de contraseña ya se encuentra en [actuación legacy](evidencias/semana-4/actuacion-credenciales-legacy.md); la limpieza del historial tiene [simulación y coordinación separadas](23-limpieza-historial-preparada.md).

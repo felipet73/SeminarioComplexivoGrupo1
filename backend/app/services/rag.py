@@ -101,9 +101,7 @@ def save_document(name, content, meta, actor, doc_id=None, expected=None, *, ocr
         doc_id = doc_id or store.new_id()
         revision = old['revision'] + 1 if old else 1
         relative = f'files/{doc_id}/{revision}{Path(name).suffix.lower()}'
-        target = store.DATA_DIR / relative
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(content)
+        store.write_blob(conn, relative, content)
         result = dict(meta, id=doc_id, name=name, revision=revision, updated=store.now(),
                       sha256=hashlib.sha256(content).hexdigest(), path=relative, pages=pages,
                       indexed_revision=None, chunks=0)
@@ -275,7 +273,7 @@ def index_document(doc_id, actor):
     trace=[step('document','Leer revisión','Se usa el texto extraído de la revisión seleccionada; no se vuelve a descargar la fuente.',revision=doc['revision'],paginas=len(doc['pages'])),
            step('split','Dividir por artículos','Se reconocen encabezados de artículos y se crean ventanas con solapamiento, conservando página y sección.',fragmentos=len(chunks),tamano=config['chunk_size'],solapamiento=config['overlap']),
            step('vectors','Generar vectores','En híbrido, el proveedor seleccionado genera embeddings de 768 dimensiones por lotes de hasta 16 fragmentos. La caché evita repetir textos. En léxico este paso se omite.','completed' if config['strategy']=='hybrid' else 'skipped',vectores=sum(v is not None for v in vectors),modelo=config['embedding_model']),
-           step('commit','Guardar índice','Una transacción sustituye los fragmentos de esta fuente en chunks y chunk_search (FTS5). Los vectores se guardan como JSON en chunks.vector; no hay un índice vectorial ANN separado.',tabla='chunks',indice_lexico='chunk_search',milisegundos=round((time.perf_counter()-started)*1000,2))]
+           step('commit','Guardar índice','Una transacción sustituye los fragmentos de esta fuente en chunks y chunk_search (FTS según el backend). Los vectores se guardan como JSON en chunks.vector; no hay un índice vectorial ANN separado.',tabla='chunks',indice_lexico='chunk_search',milisegundos=round((time.perf_counter()-started)*1000,2))]
     return {'document':public_doc(current), 'chunks':chunks,'trace':trace}
 
 def retrieve(query, config=None):
@@ -287,7 +285,7 @@ def retrieve(query, config=None):
         docs = {d['id']:d for d in store.all_records(conn,'document') if eligible(d) and d['indexed_revision']==d['revision'] and d.get('index_signature')==signature(config)}
         trace.append(step('filter','Filtrar fuentes','Se admiten solo documentos habilitados, aprobados, vigentes y con revisión e índice compatibles.',documentos_admitidos=len(docs)))
         if not docs:
-            trace.extend([step('lexical','Buscar palabras','Sin fuentes elegibles no se ejecuta FTS5.','skipped'),step('vector','Consultar vectores','No se leen vectores ni se llama al servicio de embeddings.','skipped'),step('rank','Ordenar candidatos','No hay candidatos que ordenar.','skipped'),step('return','Devolver fragmentos','La recuperación finaliza sin evidencia; no llama a un modelo generativo.',fragmentos=0,milisegundos=round((time.perf_counter()-started)*1000,2))])
+            trace.extend([step('lexical','Buscar palabras','Sin fuentes elegibles no se ejecuta búsqueda léxica.','skipped'),step('vector','Consultar vectores','No se leen vectores ni se llama al servicio de embeddings.','skipped'),step('rank','Ordenar candidatos','No hay candidatos que ordenar.','skipped'),step('return','Devolver fragmentos','La recuperación finaliza sin evidencia; no llama a un modelo generativo.',fragmentos=0,milisegundos=round((time.perf_counter()-started)*1000,2))])
             return {'chunks':[], 'strategy':'lexical','warning':'No hay documentos vigentes, aprobados e indexados con la configuración actual.','trace':trace}
         params = list(docs)
         placeholders = ','.join('?' for _ in params)
@@ -295,15 +293,20 @@ def retrieve(query, config=None):
         lexical = []
         if terms:
             match = ' OR '.join('"'+t+'"' for t in terms)
-            lexical = [dict(r) for r in conn.execute(f'''SELECT c.id,c.doc_id,c.revision,c.title,c.section,c.page,c.text, bm25(chunk_search) AS rank FROM chunk_search
-                JOIN chunks c ON c.id=chunk_search.id WHERE chunk_search MATCH ? AND c.doc_id IN ({placeholders})
-                ORDER BY rank LIMIT 40''',[match]+params)]
+            if store.is_postgres():
+                from app.services.postgres_store import lexical as search_postgres
+                lexical = search_postgres(conn, match, params)
+            else:
+                lexical = [dict(r) for r in conn.execute(f'''SELECT c.id,c.doc_id,c.revision,c.title,c.section,c.page,c.text, bm25(chunk_search) AS rank FROM chunk_search
+                    JOIN chunks c ON c.id=chunk_search.id WHERE chunk_search MATCH ? AND c.doc_id IN ({placeholders})
+                    ORDER BY rank LIMIT 40''',[match]+params)]
             lexical = [c for c in lexical if lexical_coverage(terms, c['title']+' '+c['section']+' '+c['text']) >= config.get('min_lexical_coverage', RAG_DEFAULTS['min_lexical_coverage'])]
         candidates = {c['id']:c for c in lexical}
         scores = {c['id']:1/(PARAMETROS['rrf_k']+i+1) for i,c in enumerate(lexical)}
         semantic = []
         rows = [dict(r) for r in conn.execute(f'SELECT * FROM chunks WHERE doc_id IN ({placeholders}) AND vector IS NOT NULL AND embedding_model=? LIMIT 5000',params+[config['embedding_model']])] if config['strategy']=='hybrid' else []
-    trace.append(step('lexical','Buscar palabras','FTS5/BM25 ordena hasta 40 candidatos; se descartan pasajes con cobertura insuficiente de términos de la consulta. No usa vectores.',terminos=len(terms),candidatos=len(lexical),cobertura_minima=config.get('min_lexical_coverage', RAG_DEFAULTS['min_lexical_coverage'])))
+    motor_lexico = 'PostgreSQL FTS español/ts_rank_cd' if store.is_postgres() else 'FTS5/BM25'
+    trace.append(step('lexical','Buscar palabras',motor_lexico+' ordena hasta 40 candidatos; se descartan pasajes con cobertura insuficiente de términos de la consulta. No usa vectores.',terminos=len(terms),candidatos=len(lexical),cobertura_minima=config.get('min_lexical_coverage', RAG_DEFAULTS['min_lexical_coverage'])))
     vector_status='skipped'
     if rows:
         try:

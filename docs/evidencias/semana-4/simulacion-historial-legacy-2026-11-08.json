@@ -1,0 +1,20 @@
+{
+  "base_main": "f653a7149b36156cd7697b65b1cf6392305a9ce3",
+  "alcance": "Simulacion en copia espejo local de refs disponibles; no push, no reescritura del repositorio de trabajo o GitHub. No acredita limpieza de PR/caches/copias remotas.",
+  "ruta_eliminada": "backend/app/seguridad.py",
+  "refs_antes": 17,
+  "refs_despues": 16,
+  "refs_cambiadas": 15,
+  "commits_antes": 98,
+  "commits_despues": 98,
+  "commits_con_ruta_despues": 0,
+  "main_antes": null,
+  "main_filtrado": "0a7e784c52eed2aec8ab95a2b85edbd32ab0389c",
+  "origin_main_antes": "f653a7149b36156cd7697b65b1cf6392305a9ce3",
+  "origin_main_filtrado": null,
+  "github_modificado": false,
+  "respaldo": "Copia espejo privada fuera del repositorio; no se entrega ni versiona por contener historial sensible.",
+  "fecha_utc": "2026-11-08T05:14:40.499351+00:00",
+  "main_logico_antes": "f653a7149b36156cd7697b65b1cf6392305a9ce3",
+  "nota_refs": "La copia inicial no tenia refs/heads/main: origin/main se normalizo a main. No es inventario de todas las refs del servidor GitHub."
+}
