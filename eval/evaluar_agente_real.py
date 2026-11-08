@@ -4,6 +4,7 @@ Una abstención segura queda registrada y falla el objetivo de disponibilidad de
 checklist; no se confunde con una respuesta inventada ni se reemplaza por otra.
 """
 import argparse
+import os
 import hashlib
 import json
 import sys
@@ -53,7 +54,7 @@ def evaluar(modelo='gemini'):
     if not (settings.gemini_api_key if modelo == 'gemini' else settings.openai_api_key):
         raise ValueError(f'Falta credencial del proveedor {modelo}')
     rows = []
-    llm = ClienteLLM(settings)
+    llm = ClienteLLM(settings, min_interval_seconds=float(os.environ.get('EVAL_LLM_MIN_INTERVAL_SECONDS', '0')))
     for caso in CASOS:
         row = dict(caso)
         try:
