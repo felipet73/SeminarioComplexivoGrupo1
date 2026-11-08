@@ -1,6 +1,6 @@
 # Paquete comprimido para revisión final
 
-Se sustituyen dos PDF por copias derivadas con imágenes reducidas y el avatar por un WebP de menor tamaño. Se conservan ambas presentaciones y todas las fuentes/documentos. La transformación es **con pérdida**, no una mejora de contenido ni una aprobación normativa. Esta rama se prepara para revisión visual del equipo antes del merge.
+Se sustituyen dos PDF por copias derivadas con imágenes reducidas y el avatar por un WebP de menor tamaño. Se conservan ambas presentaciones y todas las fuentes/documentos. La transformación es **con pérdida**, no una mejora de contenido ni una aprobación normativa. El operador revisó el material presentado y confirmó: «Ok, se ven bien». Se registra su aceptación visual de las copias mostradas, sin atribuirle una revisión exhaustiva de todas las páginas ni del OCR.
 
 ## Archivos y procedencia
 
@@ -18,7 +18,7 @@ El PDF con firma digital detectada `Reglamento-de-Regimen-Academico.pdf` permane
 
 Se usaron PyMuPDF 1.28.2 y Pillow 13.0.0: para imágenes JPEG/PNG de al menos 300.000 píxeles, conversión RGB, reducción LANCZOS al 50 % de ancho/alto y JPEG optimizado de calidad 50. Solo se reemplazaron streams que resultaron menores; se guardó cada PDF con limpieza de objetos y DEFLATE. No se rasterizaron las páginas de texto. El detalle visual disminuye; esta transformación no debe aplicarse a documentos firmados.
 
-Se comprobó igualdad de texto extraído de **todas las páginas** con PyMuPDF y con pypdf, el extractor de la aplicación. En el PDF escaneado el texto extraíble está vacío antes y después: ese control no acredita legibilidad. Se compararon visualmente como muestra las páginas 5, 8 y 20 del instructivo y 11, 31 y 61 del seguimiento: artículos, formularios y tablas legibles en la muestra. Falta la revisión visual completa por el equipo; no se presenta como realizada ni como aprobación humana del OCR.
+Se comprobó igualdad de texto extraído de **todas las páginas** con PyMuPDF y con pypdf, el extractor de la aplicación. En el PDF escaneado el texto extraíble está vacío antes y después: ese control no acredita legibilidad. Se compararon visualmente como muestra las páginas 5, 8 y 20 del instructivo y 11, 31 y 61 del seguimiento: artículos, formularios y tablas legibles en la muestra. Después de presentar las comparaciones y el ZIP, el operador confirmó que se ven bien. El alcance exacto de páginas revisadas por el operador no se especificó; no se presenta como una comprobación exhaustiva ni como aprobación humana del OCR.
 
 El OCR **no se regeneró** ni corrigió: su lista de 29 páginas/textos permanece idéntica. El campo `original_sha256`, requerido por la ingesta, se vincula al PDF derivado que ahora se ingiere. Se conserva explícitamente `ocr_source_sha256` con el hash del PDF del que se obtuvo realmente el OCR, más `pdf_derivation` y el commit de origen. No se atribuye al OCR una ejecución sobre el derivado. Se actualiza también el hash del sidecar en el manifiesto. `review_status=pending_full_human_review` y `approved=false` se mantienen.
 
@@ -35,7 +35,7 @@ No se repitió la evaluación híbrida/generativa con proveedores en esta rama p
 
 ## Pasos del equipo
 
-1. Revisar la legibilidad de ambos derivados completos, especialmente letra pequeña, artículos, tablas y numeración. La revisión del OCR es una actuación separada; no cambiar `approved` para pasar pruebas.
+1. La aceptación visual del material presentado ya fue confirmada por el operador. Conservar esa constancia y los controles de páginas/texto. La revisión exhaustiva de normativa/OCR sigue siendo una actuación separada; no cambiar `approved` para pasar pruebas.
 2. Esta rama integra también la evidencia del PR #29 para medir el paquete con la evaluación aprobada incluida. Puede fusionarse primero #29 y, después de revisar los derivados y CI, este PR de compresión. El paquete final debe contener ambos cambios.
 3. Actualizar main local, esperar su despliegue, repetir las pruebas públicas con su SHA y conservar el reporte final con nombre propio.
 4. Con archivos legítimos conocidos por Git y secretos revisados, ejecutar desde la raíz:

@@ -58,5 +58,10 @@
   "ocr_text_changed": false,
   "ocr_approved": false,
   "signed_pdf_modified": false,
-  "note": "Compresion aplicada en rama para revision; medir paquete final y validar ingesta. No acredita revision humana completa de los PDF ni aprobacion del OCR."
+  "note": "Compresion aplicada en rama para revision; medir paquete final y validar ingesta. No acredita revision humana completa de los PDF ni aprobacion del OCR.",
+  "operator_visual_confirmation": {
+    "statement": "Ok se ven bien",
+    "scope": "Aceptacion del material presentado (comparaciones y ZIP); no se especifica revision exhaustiva de todas las paginas.",
+    "ocr_approval": false
+  }
 }
