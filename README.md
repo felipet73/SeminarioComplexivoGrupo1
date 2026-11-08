@@ -229,7 +229,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
 | Recuperación léxica final local | **14/16 positivos, 4/4 negativas, cero errores**, igual al baseline histórico; [reporte](docs/evidencias/semana-4/recuperacion-lexica-final-2026-11-07.json). Flujo con modelo doble: **20/20**. |
 | Evaluación híbrida/chat de semana 3 | Híbrido **16/16** artículos y chat con citas **16/16**, negativas **4/4**, según [evaluación y archivos históricos](docs/07-evaluacion.md). No se presentan como una nueva corrida final. |
-| Agente real, último resultado estricto | Elección/ejecución de checklist **6/6**, listas finales citadas **5/6**. Falta normativa institucional aprobada para el caso de complexivo; no se rebaja el criterio para convertirlo en aprobado. |
+| Agente real, último resultado estricto | **6/6** elección/ejecución y listas finales no vacías con fuentes, sin fallback. [Evaluación final aprobada](docs/07-evaluacion.md), Actions 42443602234, SHA `16081c8`. El 5/6 anterior se conserva como histórico; no acredita exhaustividad ni aprobación del OCR. |
 
 Para repetir la evaluación completa con claves y cuota, desde raíz:
 
@@ -239,7 +239,7 @@ python eval/evaluar.py --data-dir data/eval-hybrid --chat --prompt system_v3 --o
 python eval/evaluar_agente_real.py --modelo gemini
 ```
 
-También existe [.github/workflows/evaluacion-final.yml](.github/workflows/evaluacion-final.yml), **Evaluación final sin despliegue**, activado manualmente. Requiere Secrets de Actions y no actualiza Cloud Run. Preparar ese workflow no equivale a ejecutarlo. En cambio, activar manualmente el workflow principal en `main` puede desplegar además de evaluar.
+También existe [.github/workflows/evaluacion-final.yml](.github/workflows/evaluacion-final.yml), **Evaluación final sin despliegue**, activado manualmente. Requiere Secrets de Actions y no actualiza Cloud Run. La ejecución [42443602234](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42443602234) aprobó comparación, chat y seis casos estrictos; [reportes completos](docs/evidencias/semana-4/2026-11-08-evaluacion-final-aprobada/). En cambio, activar manualmente el workflow principal en `main` puede desplegar además de evaluar.
 
 Criterios completos: [docs/08-pruebas.md](docs/08-pruebas.md), [docs/07-evaluacion.md](docs/07-evaluacion.md), [plan de calidad](docs/11-plan-de-calidad.md). Las citas estructurales no certifican implicación semántica de cada afirmación; hace falta revisión humana.
 
@@ -272,7 +272,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 - Checklist extractivo: `pendiente_de_verificar` y `completo=false`; no determina si un estudiante cumplió requisitos. El calendario excluye fines de semana y fecha inicial, **no feriados ni plazos institucionales**.
 - Los borradores requieren confirmación, caducan y son idempotentes; solo se guardan localmente, no se envían a terceros ni asignan tutor. La capacidad demo no prueba identidad universitaria.
 - Persistencia, sesiones, presupuesto y métricas son locales; no hay garantía de conservar cambios entre instancias. Queda pendiente el ensayo de reinicio y una solución duradera si se usan datos importantes.
-- Evaluación final completa frente a semana 3 y resultado estricto del agente todavía pendientes de nueva evidencia; tres consultas públicas no sustituyen esos conjuntos.
+- Evaluación final completa frente a semana 3 acreditada en Actions 42443602234; revisión humana de OCR y exhaustividad semántica todavía pendientes.
 - Historial Git con credenciales legacy pendiente de remediación coordinada; no se oculta con nuevas exclusiones. Tampoco se garantiza resistencia a toda inyección o disponibilidad continua del proveedor.
 - Paquete medido: aproximadamente **24,82 MiB**, todavía sobre el máximo docente de **20.000.000 bytes**. El corpus comprimido por sí solo supera 20 MB. [Plan y medición](docs/17-plan-cierre-y-tamano.md); no se entrega un ZIP sobredimensionado ni se alteran hashes para ocultarlo.
 
