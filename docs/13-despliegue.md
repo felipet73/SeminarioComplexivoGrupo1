@@ -64,9 +64,9 @@ Una limpieza del historial requiere una copia espejo de respaldo, enumerar ramas
 La semilla recupera el corpus inicial, pero las cargas administrativas, decisiones y sesiones locales no son persistencia compartida. `RAG_DATA_DIR` cambia la ubicación, no crea almacenamiento duradero. El límite de una instancia tampoco asegura durabilidad ni exclusión entre revisiones durante un despliegue. Un bucket montado por Cloud Storage FUSE no ofrece el bloqueo de archivos requerido por SQLite; [limitaciones oficiales](https://docs.cloud.google.com/run/docs/configuring/services/cloud-storage-volume-mounts#limitations). No se presenta ese montaje como solución. La persistencia duradera necesita una decisión y configuración de infraestructura antes de usar datos importantes; los borradores siguen siendo demostraciones con datos ficticios.
 
 
-## PostgreSQL preparado, sin activación automática
+## PostgreSQL preparado, activación diferida por costos
 
-La opción `RAG_DATABASE_URL` conserva datos e índices y originales en PostgreSQL. Sin configurarla, el servicio sigue en SQLite. El módulo `infra/cloudsql/` pasó validación sintáctica/provider pero **no se aplicó**. Se requiere revisar costo y plan, exportar/migrar datos y conectar Cloud Run antes de acreditar persistencia remota. [ADR](ADR-0004.md) y [procedimiento de activación, migración y pruebas](22-postgresql-cloudsql.md).
+La opción `RAG_DATABASE_URL` conserva datos e índices y originales en PostgreSQL. Sin configurarla, el servicio sigue en SQLite. El módulo `infra/cloudsql/` pasó validación sintáctica/provider pero **no se aplicó**. El equipo decidió el 8/11/2026 (Ecuador) diferir la activación por costos, sin fecha comprometida. Para retomarla se revisará presupuesto/plan, se exportarán/migrarán datos y se conectará Cloud Run antes de acreditar persistencia remota. [ADR](ADR-0004.md) y [procedimiento de activación, migración y pruebas](22-postgresql-cloudsql.md).
 
 `GET /api/admin/backup` exige sesión administrativa, responde no-store y exporta una copia SQLite más originales para migración; no incluye entorno ni credenciales del proceso. Su contenido puede ser privado: no versionarlo ni enviarlo en el ZIP de entrega. En PostgreSQL el endpoint deriva al respaldo administrado, no crea un dump web.
 
