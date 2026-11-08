@@ -10,7 +10,7 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 | --- | --- | --- |
 | s4a — URL pública en README y health | **Cumplido en la revisión probada** | URLs reales, smoke de SHA y 35 casos públicos aprobados; mostrar navegador privado durante la demo. |
 | s4b — Credenciales solo en plataforma, incluido historial limpio | **Ramas saneadas; PR/cachés y alcance externo parcial** | Contraseña actual rotada, versión 1 inhabilitada y mecanismo JWT retirado. Reescritura coordinada de 27 ramas publicada; clon nuevo y CI/despliegue `2482401` aprobados. Cinco fingerprints de falsos positivos adaptados, sin exclusiones para credenciales legacy. [Constancia](24-cierre-historial-publicado.md). Restan 25 refs de PR afectadas/cachés, revisión de otras copias/revisiones accesibles y detalle nominal/fecha exacta de rotación si se exige. No se declara purga completa del servidor. |
-| s4c — Índice persistente tras reinicio | **Parcial: implementación preparada; activación diferida por costos** | Semilla probada en dos contenedores nuevos. PostgreSQL optativo conserva datos, archivos, índice y prompts entre procesos; exportación/migración SQLite probadas. Cloud SQL no creado: el equipo decidió posponer su activación por costos el 8/11/2026 (Ecuador), sin fecha comprometida. Se retomará con presupuesto aprobado, migración y ensayo remoto; la persistencia administrativa de producción no se marca cumplida. [Plan y evidencia local](22-postgresql-cloudsql.md). |
+| s4c — Índice persistente tras reinicio | **Parcial: Neon activado por el equipo; ensayo remoto pendiente** | Importación observada: 6 documentos, 1.047 fragmentos y 6 archivos; operador reportó activación/reindexación. Suite PostgreSQL ampliada prueba procesos nuevos, reinicio del servidor local y migración sin serialize. Falta comparación remota entre revisiones con consulta citada. Cloud SQL continúa diferido por costos. [Estado y comandos](26-neon-persistencia.md). |
 | s4d — 15+ casos públicos, incluida inyección | **Cumplido en ejecución; completar material visual** | 35/35 con fecha, SHA y tres consultas generativas, más inyección y rutas retiradas. Guardar el JSON por caso del intento 2 y su p95; no reutilizar el p95 del intento fallido. La red del chat bloquea descargar el artefacto, no se inventa su contenido. |
 | s4e — Evaluación final repetida frente a semana 3 | **Cumplido en el alcance automatizado** | Mismo golden set de 20 preguntas y seis casos del agente; léxico 14/16, híbrido/citas 16/16, negativas 4/4 y agente estricto 6/6, sin fallback. [Comparación y límites](07-evaluacion.md), Actions 42443602234, SHA `16081c8`; JSON completos versionados. No acredita exhaustividad semántica ni aprobación del OCR. |
 | s4f — Tasa y errores seguros | **Cumplido en alcance implementado** | 30 consultas/60 s/proceso, alias compartidos, 429/Retry-After, timeout, respaldo y errores categorizados sin excepción cruda; tests estrictos. No es cuota distribuida ni por usuario. |
@@ -23,9 +23,9 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 ## Qué ya está cerrado de la ficha antigua
 
 - [x] Módulo legacy eliminado de HEAD y rutas antiguas retiradas en la URL probada.
-- [x] Despliegue con SHA verificable y pipeline dependiente de cinco controles previos.
+- [x] Despliegue con SHA verificable y pipeline dependiente de seis controles previos.
 - [x] 35 casos públicos, incluida generación real directa y por proxy SSE; se resolvieron los tres 503 anteriores.
-- [x] Tests estrictos restaurados y aislados de claves reales: **132 backend, cobertura de app 89,11 %**, en rama TLS Neon; [XML y resumen](evidencias/semana-4/tls-neon/). Los cortes de 130 y anteriores se conservan fechados en [el registro de conteos](21-conteos-de-pruebas.md). Frontend/navegador mantienen sus evidencias separadas.
+- [x] Tests estrictos restaurados y aislados de claves reales: **139 backend, cobertura de app 89,11 %**, en rama de pruebas de persistencia; [XML y resumen](evidencias/semana-4/persistencia-neon/). Los cortes de 130 y anteriores se conservan fechados en [el registro de conteos](21-conteos-de-pruebas.md). Frontend/navegador mantienen sus evidencias separadas.
 - [x] Límite de consultas compartido, errores seguros y documentación técnica de endpoints/secuencias.
 - [x] Falsos positivos de las seis exclusiones de Gitleaks identificados y separados de credenciales legacy.
 - [x] Ramas saneadas con respaldo y publicación coordinada; clon nuevo y controles histórico/activo aprobados.
@@ -97,6 +97,10 @@ PostgreSQL/Cloud SQL queda técnicamente preparado y probado localmente. Su acti
 
 Se publicaron 27 ramas mediante operación atómica con leases. Main `2482401` aprobó [Actions 42453615683](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683) y despliegue. Los clones deben renovarse. [Resultado, mapa y pendientes de PR/cachés](24-cierre-historial-publicado.md); no se envió una solicitud a soporte ni se afirma purga completa. La decisión de costos de Cloud SQL sigue vigente.
 
-## Alternativa Neon en preparación
+## Neon: importación y activación reportadas
 
-El equipo creó la base PostgreSQL 17 y preparó el secreto de conexión en Secret Manager. Falta conservar/exportar el estado actual, incorporar CA confiable para TLS, importar y activar el secreto en Cloud Run, y acreditar persistencia remota. [Guía Neon](26-neon-persistencia.md). Cloud SQL continúa diferido por costos. El corte de pruebas TLS es 132 aprobadas, cobertura app 89,11 %, con dos casos nuevos respecto a 130; no acredita conexión real a Neon.
+El equipo creó la base PostgreSQL 17, guardó el respaldo privado, importó y reportó activación mediante Secret Manager en Cloud Run. Falta acreditar la conservación entre revisiones con reportes antes/después. [Guía Neon](26-neon-persistencia.md). Cloud SQL continúa diferido por costos. El corte de pruebas TLS es 132 aprobadas, cobertura app 89,11 %, con dos casos nuevos respecto a 130; no acredita conexión real a Neon.
+
+## Actualización Neon y persistencia
+
+Se conservan arriba los cortes históricos. El estado vigente ya no es «Neon en preparación»: el operador importó, vinculó el secreto y reportó reindexación en producción. Falta la evidencia antes/después de recrear revisión, con descarga íntegra y consulta citada. No repetir la migración por el error del reporte posterior al commit. [Incidente y ensayo remoto](26-neon-persistencia.md). La suite ampliada y evidencia local se describen en [el cierre de pruebas](27-pruebas-persistencia.md).

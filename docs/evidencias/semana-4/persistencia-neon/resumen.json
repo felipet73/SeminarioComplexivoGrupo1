@@ -1,0 +1,11 @@
+{
+  "resultado": "aprobado",
+  "tests": 139,
+  "fallos": 0,
+  "errores": 0,
+  "omitidos": 0,
+  "cobertura_app_porcentaje": 89.11,
+  "commit_base": "2c6b9503f6a2c333e84ba2727653eb8672a7373c",
+  "arbol_trabajo_modificado": true,
+  "alcance": "Suite local aislada y PostgreSQL Docker 17, sin credenciales Neon/Cloud Run ni consumo de LLM. Ensayo remoto pendiente."
+}

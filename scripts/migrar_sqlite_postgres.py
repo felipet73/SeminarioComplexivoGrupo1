@@ -24,6 +24,8 @@ def migrate(source_dir, report_path):
     target = os.environ.get('RAG_DATABASE_URL')
     if not target:
         raise ValueError('Configura RAG_DATABASE_URL como variable privada del proceso')
+    # Hash de la copia de origen, calculado antes de modificar el destino.
+    source_sha256 = hashlib.sha256(source_file.read_bytes()).hexdigest()
     snapshot = sqlite3.connect(':memory:')
     snapshot.row_factory = sqlite3.Row
     source = sqlite3.connect(source_file.as_uri()+'?mode=ro', uri=True)
@@ -75,7 +77,7 @@ def migrate(source_dir, report_path):
                 store.write_blob(conn,relative,content)
         report = {'fecha_utc':datetime.now(timezone.utc).isoformat(), 'resultado':'aprobado',
                   'registros':len(records), 'fragmentos':len(chunks),'auditoria':len(audits),'archivos':len(files),
-                  'sqlite_snapshot_sha256':hashlib.sha256(snapshot.serialize()).hexdigest(),
+                  'sqlite_source_sha256':source_sha256,
                   'alcance':'Importación transaccional de copia SQLite y archivos; no cambia tráfico ni borra el origen. Sesiones en memoria no se migran.',
                   'credenciales_publicadas':False}
         report_path = Path(report_path)

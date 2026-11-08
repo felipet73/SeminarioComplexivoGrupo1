@@ -100,7 +100,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install --no-cache-dir -r backend/requirements.txt
-      - name: Reiniciar procesos, migrar SQLite y repetir golden set sin modelos
+      - name: Reiniciar procesos y PostgreSQL, migrar sin serialize y repetir golden set
         run: python scripts/probar_postgres.py --with-corpus --report eval/persistencia-postgres.json
       - uses: actions/upload-artifact@v4
         if: always()

@@ -130,9 +130,32 @@ def run(output, with_corpus=False):
                     log.chmod(0o600)
                     raise RuntimeError(f'Falló fase {stage}; revisar tmp/postgres-diagnostico.log')
                 stages.append(json.loads(completed.stdout.strip().splitlines()[-1]))
+            # Reinicio real del servidor de prueba: no basta con renovar el cliente.
+            subprocess.run(docker+['restart',name],check=True,capture_output=True)
+            for attempt in range(60):
+                if subprocess.run(docker+['exec',name,'pg_isready','-h','127.0.0.1','-U','rag_test','-d','rag_test'],capture_output=True).returncode == 0:
+                    break
+                time.sleep(1)
+            else:
+                raise RuntimeError('PostgreSQL no volvió después del reinicio')
+            # Docker puede reasignar un puerto efímero al reiniciar el contenedor.
+            restarted_info = json.loads(subprocess.check_output(docker+['inspect',name]))[0]
+            port = restarted_info['NetworkSettings']['Ports']['5432/tcp'][0]['HostPort']
+            env['RAG_DATABASE_URL'] = f'postgresql://rag_test:{password}@127.0.0.1:{port}/rag_test'
+            env['RAG_DATA_DIR'] = str(temp/'disco-despues-reinicio-pg')
+            restarted = subprocess.run([sys.executable,__file__,'--worker','read','--state',str(state)],
+                                       cwd=ROOT,env=env,text=True,capture_output=True)
+            if restarted.returncode:
+                log = ROOT/'tmp/postgres-diagnostico.log'
+                log.parent.mkdir(parents=True,exist_ok=True)
+                log.write_text(restarted.stderr.replace(password,'[redactado]').replace(env['ADMIN_PASSWORD'],'[redactado]'))
+                log.chmod(0o600)
+                raise RuntimeError('Falló lectura después de reiniciar PostgreSQL; revisar tmp/postgres-diagnostico.log')
+            restart_checks = json.loads(restarted.stdout.strip().splitlines()[-1])
             report = {'fecha_utc':datetime.now(timezone.utc).isoformat(),
                       'commit_base':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-                      'alcance':'PostgreSQL 17 local, dos procesos nuevos con directorios locales diferentes; no Cloud Run ni prueba de reinicio del servidor PostgreSQL.',
+                      'alcance':'PostgreSQL 17 local, procesos nuevos con directorios locales diferentes y reinicio del servidor PostgreSQL; no prueba remota de Neon/Cloud Run.',
+                      'reinicio_servidor_postgres':restart_checks,
                       'resultado':'aprobado','postgres_image_id':info['Image'],'fases':stages,'proveedores_consumidos':False,
                       'datos':'Documento y configuración sintéticos; sin DSN, contraseña o cookie en el reporte.'}
             # Importación real desde SQLite y rechazo de un destino ya ocupado.
@@ -152,13 +175,27 @@ def run(output, with_corpus=False):
                 archive.extractall(exported_dir)
             command = [sys.executable,'scripts/migrar_sqlite_postgres.py','--source-dir',str(exported_dir),
                        '--report',str(migration_report)]
-            subprocess.run(command,cwd=ROOT,env=migrated,check=True,capture_output=True)
+            # Simula instalaciones SQLite que no exponen Connection.serialize.
+            portable = (
+                'import sqlite3,runpy,sys\n'
+                'original=sqlite3.connect\n'
+                'class Portable(sqlite3.Connection):\n'
+                ' def __getattribute__(self,name):\n'
+                '  if name=="serialize": raise AttributeError("serialize no disponible")\n'
+                '  return super().__getattribute__(name)\n'
+                'sqlite3.connect=lambda *a,**kw: original(*a,factory=Portable,**kw)\n'
+                'sys.argv=sys.argv[1:]\n'
+                'runpy.run_path(sys.argv[0],run_name="__main__")\n'
+            )
+            subprocess.run([sys.executable,'-c',portable]+command[1:],cwd=ROOT,env=migrated,check=True,capture_output=True)
             subprocess.run([sys.executable,__file__,'--worker','read','--state',str(state)],
                            cwd=ROOT,env=migrated,check=True,capture_output=True)
             refused = subprocess.run(command,cwd=ROOT,env=migrated,capture_output=True)
             assert refused.returncode == 2, 'No sobrescribir un destino ocupado'
             report['migracion_sqlite'] = json.loads(migration_report.read_text())
             report['migracion_sqlite']['destino_ocupado_rechazado'] = True
+            assert report['migracion_sqlite']['sqlite_source_sha256'] == hashlib.sha256((exported_dir/'admin.sqlite3').read_bytes()).hexdigest()
+            report['migracion_sqlite']['sin_serialize_y_hash_origen'] = True
             if with_corpus:
                 # Se usa un DB distinto: el documento sintético no altera el golden set.
                 subprocess.run(docker+['exec',name,'createdb','-U','rag_test','rag_corpus'], check=True, capture_output=True)

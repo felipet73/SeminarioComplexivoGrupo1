@@ -28,7 +28,7 @@ flowchart LR
     U[Estudiante / administrador] --> F[React + TypeScript + Vite / Vercel]
     F --> A[FastAPI + Pydantic + Uvicorn / Cloud Run]
     A --> R[RAG: fuentes elegibles, FTS5/BM25, coseno y RRF]
-    R --> D[SQLite: fragmentos, vectores, revisiones y auditoría]
+    R --> D[SQLite local o PostgreSQL: fragmentos, vectores, revisiones y auditoría]
     A --> G[Agente: lista cerrada, máximo 4 vueltas]
     G --> L[Gemini / OpenAI: generación y respaldo]
     G --> T[Herramientas Python y confirmación demo]
@@ -37,7 +37,7 @@ flowchart LR
 
 - **Frontend:** chat, campos de contexto/aclaración, citas, confirmación, administración y métricas. `frontend/vercel.json` configura la SPA y el proxy `/api`; en desarrollo Vite usa un proxy específico para administración.
 - **Backend:** contratos HTTP, autenticación, flujo compartido de chat/simulación y validación final de JSON, IDs citados y revisión de fuentes.
-- **RAG:** ingesta con SHA-256, páginas y secciones; recuperación léxica o híbrida. SQLite FTS5/BM25 más vectores de 768 dimensiones, coseno exhaustivo y fusión RRF; no se usa Chroma ni ANN. Límite local: 5000 fragmentos.
+- **RAG:** ingesta con SHA-256, páginas y secciones; recuperación léxica o híbrida. SQLite FTS5/BM25 o PostgreSQL FTS español/ts_rank_cd, más vectores de 768 dimensiones, coseno exhaustivo y fusión RRF; no se usa Chroma ni ANN. Límite local: 5000 fragmentos.
 - **Modelos:** generación con `gemini-3.5-flash-lite` y `gpt-4.1-mini` por defecto. Embeddings independientes: `gemini-embedding-001` o `text-embedding-3-small`; se elige uno y no se mezclan sus vectores.
 - **Agente:** `buscar_fragmentos`, `consultar_requisitos`, `generar_checklist`, `calcular_plazo` y `registrar_solicitud_tutor`. Solo ejecuta funciones permitidas con argumentos validados; el borrador requiere decisión humana.
 
@@ -141,7 +141,7 @@ Referencia completa: [.env.example](.env.example) y [frontend/.env.example](fron
 
 En producción se usan **Secret Manager y referencias de Cloud Run**; la cuenta de ejecución requiere acceso a cada secreto. Los Secrets de **GitHub Actions** para evaluación se configuran aparte: no heredan los de Cloud Run. La autenticación de despliegue usa **WIF**, sin clave JSON permanente; `GCP_SA_KEY` es solo la alternativa implementada si no se usa WIF.
 
-La configuración de negocio se referencia en [config/parametros.yaml](config/parametros.yaml): agente de 4 vueltas, presupuesto de 30 consultas/60 segundos/proceso, fragmentación 1400/160, top-k 4, umbrales y criterios de evaluación. El panel guarda su configuración RAG en SQLite por defecto; el backend PostgreSQL optativo está preparado, aún sin activar. La imagen siembra explícitamente modo léxico; no asumir que el default híbrido del archivo sea el estado de producción.
+La configuración de negocio se referencia en [config/parametros.yaml](config/parametros.yaml): agente de 4 vueltas, presupuesto de 30 consultas/60 segundos/proceso, fragmentación 1400/160, top-k 4, umbrales y criterios de evaluación. El panel guarda su configuración RAG en SQLite por defecto; el equipo activó PostgreSQL en Neon mediante Secret Manager y reportó funcionamiento; falta registrar la comparación remota tras recrear la revisión. La imagen siembra explícitamente modo léxico; no asumir que el default híbrido del archivo sea el estado de producción.
 
 ## Despliegue
 
@@ -177,16 +177,16 @@ En PowerShell se puede definir `$revision = git rev-parse HEAD` y usar `--build-
 
 | Dato | Dónde vive y qué ocurre al recrear la instancia |
 |---|---|
-| Corpus original y semilla léxica | Dentro de la imagen; restaura el corpus base al arrancar. No conserva nuevas cargas por ese mecanismo. |
-| Fragmentos, FTS5 y vectores activos | SQLite en `data/admin/` por defecto, configurable con `RAG_DATA_DIR`; los cambios locales no tienen durabilidad garantizada en Cloud Run. |
-| Cargas, metadatos, borradores confirmados y auditoría | Directorio local y SQLite; no se ha implementado almacenamiento externo duradero. Usar datos ficticios. |
-| Configuración RAG y prompts | Defaults/archivos en imagen y registros/revisiones en SQLite; ediciones locales pueden perderse al recrear. |
+| Corpus original y semilla léxica | Dentro de la imagen para arranque inicial; con PostgreSQL activo se conserva el estado administrativo en la base externa. |
+| Fragmentos, FTS5 y vectores activos | PostgreSQL en Neon cuando está definido `RAG_DATABASE_URL`; SQLite/FTS5 sigue siendo el modo local por defecto. La prueba remota entre revisiones está pendiente de registrar. |
+| Cargas, metadatos, borradores confirmados y auditoría | Registros y originales BYTEA en PostgreSQL con la conexión activada; SQLite y archivos locales sin esa variable. No se certifica uso institucional por esta migración. |
+| Configuración RAG y prompts | Registros/revisiones en PostgreSQL activo; los defaults de imagen no reemplazan prompts persistidos. En modo SQLite las ediciones locales pueden perderse. |
 | Historial de conversación | Memoria de la interfaz, sin memoria conversacional persistente en servidor; puede perderse al recargar. |
 | Sesiones admin y presupuesto de consultas | Memoria del proceso; se reinician con él. |
 | Métricas | Archivo local rotatorio `logs/metrics.jsonl`; puede perderse con la instancia. El permiso de escritura del contenedor está corregido. |
 | Credenciales | Secret Manager/referencias de ejecución; los valores no se guardan en el frontend o repositorio. Persiste exposición histórica legacy documentada. |
 
-**Qué aceptamos perder y por qué:** el historial de conversación es de sesión y el alcance académico es una demo. Esto no autoriza a tratar cargas, auditoría o borradores como registros institucionales duraderos. Para conservarlos se necesita infraestructura y adaptación verificadas; cambiar solo el directorio o limitar instancias no basta. El ensayo remoto de reinicio con respuesta citada sigue pendiente de evidencia. Ver [decisión objetivo de persistencia](docs/ADR-0003.md) y [plan de cierre](docs/17-plan-cierre-y-tamano.md).
+**Qué aceptamos perder y por qué:** el historial de conversación es de sesión y el alcance académico es una demo. Esto no autoriza a tratar cargas, auditoría o borradores como registros institucionales duraderos. Se implementó almacenamiento PostgreSQL y el equipo reportó su activación en Neon; falta verificar y registrar el ensayo remoto entre revisiones. El ensayo remoto de reinicio con respuesta citada sigue pendiente de evidencia. Ver [decisión objetivo de persistencia](docs/ADR-0003.md) y [plan de cierre](docs/17-plan-cierre-y-tamano.md).
 
 ## Pruebas y evaluación
 
@@ -224,7 +224,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 
 | Verificación real | Resultado y alcance |
 |---|---|
-| Backend actual | **132 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama TLS Neon. [XML y resumen local](docs/evidencias/semana-4/tls-neon/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
+| Backend actual | **139 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de pruebas de persistencia. [XML y resumen local](docs/evidencias/semana-4/persistencia-neon/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
 | Frontend y navegador | **18 pruebas**, build y **10 escenarios** Playwright con API aislada y modelo doble; jobs remotos aprobados. |
 | Producción | **35/35**, incluidos tres casos generativos, rutas retiradas y contratos públicos; [Actions 42389025186](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186). El smoke adicional exige incremento de métricas. |
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
@@ -262,7 +262,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 ## Decisiones y riesgos
 
 - [ADR y decisiones técnicas/éticas](docs/09-decisiones.md): alcance controlado, lista cerrada, confirmación humana, citas y alternativa SQLite/FTS5/vectores a Chroma.
-- [PostgreSQL durable propuesto](docs/ADR-0004.md): backend optativo probado; activación de Cloud SQL pospuesta por costos.
+- [PostgreSQL durable propuesto](docs/ADR-0004.md): backend PostgreSQL probado y Neon activado según el equipo; Cloud SQL continúa pospuesto por costos.
 - [Decisión objetivo sobre datos](docs/ADR-0003.md): distingue infraestructura deseada de la persistencia local realmente desplegada.
 - [Registro de riesgos](docs/riesgos.md): mitigaciones, evidencia y riesgo residual; no contiene valores de secretos.
 - [Auditoría de credenciales históricas](docs/15-auditoria-credenciales-historicas.md): las exclusiones de Gitleaks son falsos positivos de un advisory; el mecanismo JWT legacy contenía credenciales funcionales y sigue en commits antiguos. Código y rutas actuales retirados no equivalen a historial limpio ni acreditan revocación en otras copias.
@@ -273,7 +273,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 - Corpus: cinco fuentes aprobadas, 961 fragmentos; el instructivo UNIANDES con OCR aporta otros 86 **sin aprobar y no elegibles**. La aprobación y vigencia son decisiones humanas.
 - Checklist extractivo: `pendiente_de_verificar` y `completo=false`; no determina si un estudiante cumplió requisitos. El calendario excluye fines de semana y fecha inicial, **no feriados ni plazos institucionales**.
 - Los borradores requieren confirmación, caducan y son idempotentes; solo se guardan localmente, no se envían a terceros ni asignan tutor. La capacidad demo no prueba identidad universitaria.
-- En producción la persistencia sigue local hasta activar infraestructura: PostgreSQL/Cloud SQL está preparado con migración y ensayo local; el equipo decidió posponer su activación por costos hasta contar con presupuesto aprobado. La alternativa Neon está en preparación, sin activación acreditada todavía. La persistencia administrativa remota sigue pendiente. Las sesiones caducan al reiniciar y las métricas/límites siguen por proceso. [Alcance y procedimiento](docs/22-postgresql-cloudsql.md).
+- PostgreSQL en Neon activado según el equipo; importación y conteos observados, pendiente comparación remota antes/después de nueva revisión. Cloud SQL sigue diferido por costos. Sesiones, métricas y límites permanecen por proceso. [Estado y verificación](docs/26-neon-persistencia.md).
 - Evaluación final completa frente a semana 3 acreditada en Actions 42443602234; revisión humana de OCR y exhaustividad semántica todavía pendientes.
 - Ramas saneadas mediante reescritura coordinada; clon nuevo y CI/despliegue aprobados en `2482401`. **25 refs antiguas de PR/cachés siguen pendientes de tratamiento con GitHub**; no se declara eliminación completa del servidor ni de copias externas. [Constancia y actualización de clones](docs/24-cierre-historial-publicado.md). Tampoco se garantiza resistencia a toda inyección o disponibilidad continua del proveedor.
 - Paquete optimizado: **menor de 20.000.000 bytes**, comprobado con el empaquetador. Dos PDF derivados y el avatar reducen tamaño; hashes y procedencia actualizados. [Transformación, validación y aceptación visual](docs/20-paquete-comprimido.md). Volver a medir después de añadir evidencias y generar la entrega desde main final.

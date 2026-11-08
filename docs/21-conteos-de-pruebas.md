@@ -41,3 +41,7 @@ No se edita un XML histórico de 99 para decir 112, ni se cambia el reporte de m
 - Evaluación: 20 preguntas, comparación de recuperadores y seis casos reales de agente; conjunto de calidad/IA independiente, sin equivalencia con cobertura de código.
 
 El resultado de una suite no acredita por sí solo los otros conjuntos. Conservar sus SHA, fechas, entornos y reportes separados.
+
+## Corte ampliado de persistencia: 139
+
+Siete casos nuevos del comparador remoto (igualdad, pérdidas en documentos/prompts/configuración y rechazo de capturas vacías, misma revisión u otro servicio). Suite completa local: **139 aprobadas, 89,11 % app**, cero fallos/errores/omitidos. [XML y resumen](evidencias/semana-4/persistencia-neon/). No se cambian los cortes históricos de 132 ni anteriores. Las fases Docker de reinicio/migración son integración adicional, no casos pytest sumados al total 139.
