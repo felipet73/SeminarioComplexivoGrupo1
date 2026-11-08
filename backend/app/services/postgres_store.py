@@ -75,8 +75,14 @@ def connect(url):
         raise ValueError('PostgreSQL remoto requiere sslmode=verify-full; Cloud SQL usa socket Unix o proxy local.')
     # No registrar DSN: puede contener contraseña. El conector de Cloud Run usa
     # socket Unix autenticado por IAM; TCP externo debe usar TLS verificado.
+    tls_options = {}
+    if not local and not options.get('sslrootcert'):
+        # libpq no siempre usa el almacén del sistema (especialmente en Windows).
+        # Mozilla CA permite verificar cadena y hostname sin un root.crt manual.
+        import certifi
+        tls_options['sslrootcert'] = certifi.where()
     try:
-        raw = psycopg.connect(url, row_factory=dict_row, connect_timeout=10)
+        raw = psycopg.connect(url, row_factory=dict_row, connect_timeout=10, **tls_options)
     except psycopg.Error:
         raise StorageUnavailable('Almacenamiento no disponible') from None
     try:

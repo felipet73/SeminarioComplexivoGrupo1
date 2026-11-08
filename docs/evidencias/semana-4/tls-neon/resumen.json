@@ -1,0 +1,15 @@
+{
+  "commit_base": "e4375070a50f4395d0980ca658793c1db455c673",
+  "alcance": "Rama TLS Neon sobre main; pruebas locales con proveedores/driver remotos simulados. No prueba de conexión a Neon ni activación de producción.",
+  "pytest": {
+    "tests": 132,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cobertura_app_porcentaje": 89.11,
+  "cambio_desde_130": "Dos instancias parametrizadas para CA pública por defecto y respeto a raíz explícita; sin eliminar casos anteriores.",
+  "neon_conexion_real_probada": false,
+  "secreto_conocido_por_asistente": false,
+  "xml_sha256": "be1075140e55a3689b832ea48117373f634869b493527c3d9614fb19a0541c8a"
+}

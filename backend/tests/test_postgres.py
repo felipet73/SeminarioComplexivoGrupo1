@@ -208,3 +208,30 @@ def test_dsn_malformado_no_filtra_su_contenido():
         with pg.connect('opcion_invalida=valor-privado-ficticio'):
             pass
     assert 'valor-privado' not in str(error.value)
+
+
+@pytest.mark.parametrize('url,custom_root', [
+    ('postgresql://user@db.example/test?sslmode=verify-full&channel_binding=require', None),
+    ('postgresql://user@db.example/test?sslmode=verify-full&sslrootcert=/private/ca.pem', '/private/ca.pem'),
+])
+def test_ca_remota_disponible_sin_reemplazar_raiz_explicita(monkeypatch, url, custom_root):
+    import certifi
+    import psycopg
+    from pathlib import Path
+    captured = {}
+    raw = Raw()
+
+    def conectar(connection, **kwargs):
+        captured.update(kwargs)
+        assert connection == url  # Se conserva channel_binding y el resto del DSN.
+        return raw
+
+    monkeypatch.setattr(psycopg, 'connect', conectar)
+    with pg.connect(url):
+        pass
+    if custom_root:
+        assert 'sslrootcert' not in captured  # libpq lee el valor explícito del URI.
+    else:
+        assert captured['sslrootcert'] == certifi.where()
+        assert Path(captured['sslrootcert']).is_file()
+    assert raw.closed
