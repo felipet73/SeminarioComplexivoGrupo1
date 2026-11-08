@@ -14,6 +14,10 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       AI_API_KEY: ''
+      # 6 s entre intentos: como máximo unas 10 llamadas/minuto por runner.
+      # Se aplica también dentro del bucle del agente y a sus reintentos.
+      EVAL_LLM_MIN_INTERVAL_SECONDS: '6'
+      LLM_RETRIES: '2'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

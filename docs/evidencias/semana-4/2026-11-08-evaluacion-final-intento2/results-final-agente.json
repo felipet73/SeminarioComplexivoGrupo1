@@ -1,0 +1,79 @@
+{
+  "fecha": "2026-11-08T03:26:52.119027+00:00",
+  "modo": "agente_modelo_real_sin_fallback",
+  "proveedor": "gemini",
+  "modelo": "gemini-3.5-flash-lite",
+  "prompt_sha256": "f8023d76849aab75bf7d7c2b02672b70ed5f48d47c5b31ef53ff1e6c839a6f04",
+  "config": {
+    "active_prompt": 3,
+    "chunk_size": 1400,
+    "overlap": 160,
+    "top_k": 4,
+    "strategy": "hybrid",
+    "embedding_model": "text-embedding-3-small",
+    "min_similarity": 0.55,
+    "min_lexical_coverage": 0.6,
+    "revision": 2
+  },
+  "casos": [
+    {
+      "id": "a1",
+      "pregunta": "Genera un checklist con los requisitos de integración curricular para un estudiante de grado.",
+      "curso": "grado",
+      "cumple": false,
+      "error": "El servicio de IA no está disponible. Intenta nuevamente en unos minutos.",
+      "categoria_proveedor": "cuota_o_limite",
+      "status_proveedor": 429
+    },
+    {
+      "id": "a2",
+      "pregunta": "Necesito una lista de verificación de titulación de posgrado; usa generar_checklist para organizar los requisitos.",
+      "curso": "posgrado",
+      "cumple": false,
+      "error": "El servicio de IA no está disponible. Intenta nuevamente en unos minutos.",
+      "categoria_proveedor": "cuota_o_limite",
+      "status_proveedor": 429
+    },
+    {
+      "id": "a3",
+      "pregunta": "Genera un checklist de requisitos de titulación para grado con examen complexivo.",
+      "curso": "grado",
+      "modalidad_titulacion": "examen complexivo",
+      "cumple": false,
+      "error": "El servicio de IA no está disponible. Intenta nuevamente en unos minutos.",
+      "categoria_proveedor": "cuota_o_limite",
+      "status_proveedor": 429
+    },
+    {
+      "id": "a4",
+      "pregunta": "Organiza un checklist para titularme mediante proyecto de investigación en grado.",
+      "curso": "grado",
+      "modalidad_titulacion": "proyecto de investigación",
+      "cumple": false,
+      "error": "El servicio de IA no está disponible. Intenta nuevamente en unos minutos.",
+      "categoria_proveedor": "cuota_o_limite",
+      "status_proveedor": 429
+    },
+    {
+      "id": "a5",
+      "pregunta": "Genera un checklist de requisitos de titulación de maestría; distingue lo que falta verificar.",
+      "curso": "maestría",
+      "cumple": false,
+      "error": "El servicio de IA no está disponible. Intenta nuevamente en unos minutos.",
+      "categoria_proveedor": "cuota_o_limite",
+      "status_proveedor": 429
+    },
+    {
+      "id": "a6",
+      "pregunta": "Necesito una lista de verificación de requisitos de titulación de tercer nivel, basada en los artículos recuperados.",
+      "curso": "tercer nivel",
+      "cumple": false,
+      "error": "El servicio de IA no está disponible. Intenta nuevamente en unos minutos.",
+      "categoria_proveedor": "cuota_o_limite",
+      "status_proveedor": 429
+    }
+  ],
+  "aciertos": 0,
+  "total": 6,
+  "limite": "Verifica elección y ejecución real, citas y lista no vacía. No mide exhaustividad ni respaldo semántico de cada frase."
+}

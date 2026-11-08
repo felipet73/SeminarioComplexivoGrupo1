@@ -1,6 +1,7 @@
 """Clientes con uso real reportado por SDK, reintentos y trazas sin datos personales."""
 from __future__ import annotations
 import random
+import math
 import json
 import time
 from dataclasses import dataclass
@@ -67,8 +68,23 @@ def clasificar_error(error: Exception) -> tuple[str, int | None]:
     return 'salida_o_conexion', status
 
 class ClienteLLM:
-    def __init__(self, settings: Settings):
+    def __init__(self, settings: Settings, *, min_interval_seconds: float = 0):
+        if not math.isfinite(min_interval_seconds) or min_interval_seconds < 0:
+            raise ValueError('El intervalo entre llamadas debe ser finito y no negativo')
         self.settings = settings
+        self.min_interval_seconds = min_interval_seconds
+        self._ultimo_intento = None
+
+    def _esperar_turno(self):
+        # El evaluador reutiliza el cliente en todos los casos y vueltas del agente.
+        # En producción el intervalo por defecto es cero.
+        if not self.min_interval_seconds:
+            return
+        if self._ultimo_intento is not None:
+            restante = self.min_interval_seconds - (time.monotonic() - self._ultimo_intento)
+            if restante > 0:
+                time.sleep(restante)
+        self._ultimo_intento = time.monotonic()
 
     def _proveedores(self, preferido: str):
         s = self.settings
@@ -94,6 +110,7 @@ class ClienteLLM:
             raise ProveedorNoDisponible('Configura GEMINI_API_KEY u OPENAI_API_KEY en el backend.','sin_configuracion')
         for provider, model, fallback in providers:
             for intento in range(self.settings.llm_retries + 1):
+                self._esperar_turno()
                 intento_inicio = time.perf_counter()
                 try:
                     r = provider.generar(system_prompt, mensaje)
