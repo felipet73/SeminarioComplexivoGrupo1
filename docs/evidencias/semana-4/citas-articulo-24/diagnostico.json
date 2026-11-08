@@ -1,0 +1,24 @@
+{
+  "resultado": "corregido_en_codigo_local_pendiente_reindexar_produccion",
+  "commit_base": "0be9ec4",
+  "causa": "OCR Art, 24 no reconocido por separador; contenido heredaba etiqueta Artículo 23. PDF página 9 revisado visualmente.",
+  "ocr_sha256": "46b3b5fa2f2e3d222af1ea022f54716661e58c988c70a3b0a80865ccfcc2279b",
+  "antes": [
+    {
+      "seccion": "Artículo 23",
+      "pagina": 9
+    }
+  ],
+  "despues": [
+    {
+      "seccion": "Artículo 24",
+      "pagina": 9
+    }
+  ],
+  "fragmentos_instructivo_antes": 86,
+  "fragmentos_instructivo_despues": 87,
+  "fragmentos_corpus_local_despues": 1048,
+  "tests_backend": 147,
+  "cobertura_app_porcentaje": 89.11,
+  "alcance": "Texto OCR existente sin modificar. Ensayo local, modelo simulado para contrato de fuentes; sin llamadas LLM reales ni acceso a Neon. No aprueba OCR ni vigencia."
+}

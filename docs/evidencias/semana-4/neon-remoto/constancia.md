@@ -28,3 +28,7 @@ Las imágenes se observaron en la conversación; no se dispone de sus archivos o
 Se acredita conservación del estado administrativo capturado entre dos revisiones Cloud Run, usando PostgreSQL Neon activado por el operador. Se observa una respuesta con fuentes después del cambio. No es una prueba de reinicio del servidor Neon, recuperación de desastre, durabilidad de métricas/sesiones, ni validación semántica completa. El endpoint limita a 512 fragmentos por documento; en este corte se capturaron 1.047 en total. No compara todos los vectores. La prueba local de PostgreSQL cubre vectores/caché y reinicio del servidor por separado.
 
 No se ejecutó un nuevo smoke público 35/35 como parte de estos reportes. Los resultados anteriores mantienen su SHA y fecha; no se atribuyen automáticamente a esta revisión.
+
+## Seguimiento de la discrepancia artículo 24/23
+
+Se reprodujo el encabezado OCR `Art, 24` dentro del fragmento etiquetado artículo 23 y se preparó corrección del separador con regresiones. No cambia el resultado histórico de esta comparación. La aplicación al índice remoto y nueva consulta siguen pendientes. [Diagnóstico y reindexación](../../../28-citas-articulo-24.md).

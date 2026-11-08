@@ -49,3 +49,7 @@ Siete casos nuevos del comparador remoto (igualdad, pérdidas en documentos/prom
 ## Entrada segura Windows: 141
 
 Dos regresiones nuevas: impedir fallback con eco de getpass y leer/eliminar contraseña del entorno temporal del proceso. Suite completa local: **141 aprobadas, cobertura app 89,11 %**; [XML y resumen](evidencias/semana-4/entrada-segura/). El ensayo PostgreSQL y corte 139 se conservan como evidencia histórica. No se ejecutó prueba remota nueva.
+
+## Corrección de artículo OCR: 147
+
+Seis regresiones nuevas (4 variantes de encabezado, OCR real página 9 y fuente del flujo con modelo simulado). Suite local **147 aprobadas, cobertura app 89,11 %**. [XML, diagnóstico y recuperación](evidencias/semana-4/citas-articulo-24/). Los conteos anteriores se conservan como cortes históricos.

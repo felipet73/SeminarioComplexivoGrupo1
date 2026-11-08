@@ -22,7 +22,7 @@ from app.services.tracing import step
 MAX_BYTES = 10 * 1024 * 1024
 EMBED_TIMES = deque()
 EMBED_LOCK = Lock()
-ARTICLE = re.compile(r'(?im)^\s*(?:art(?:ículo|iculo|\.)?|artículo)\s*\.?\s*(\d+[a-z]?(?:[.-]\d+)?)\b[^\n]{0,160}')
+ARTICLE = re.compile(r'(?im)^\s*(?:art(?:ículo|iculo|\.)?|artículo)\s*[.,]?\s*(\d+[a-z]?(?:[.-]\d+)?)\b[^\n]{0,160}')
 STOP = set('a al de del la el en y o las los un una que qué como cómo para por con es se mi mis sobre debo quiero necesito cuáles cual cuál'.split())
 STOP.update('quien quién quienes quiénes cuantos cuántos cuanto cuánto donde dónde cuando cuándo son ser debe deben tiene tienen qué cómo puedo puede consulta dime explica explicar según'.split())
 STOP.update('genera generar checklist lista verificación verificacion duda dudas favor ayuda ayudar quiero saber dice disposición disposicion'.split())
