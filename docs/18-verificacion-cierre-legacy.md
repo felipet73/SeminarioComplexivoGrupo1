@@ -1,5 +1,7 @@
 # Verificación del diagnóstico de cierre de la credencial legacy
 
+> Corte histórico: para el estado posterior a la publicación de ramas y los pendientes de PR/cachés, consultar [la constancia vigente](24-cierre-historial-publicado.md). Los resultados anteriores no se reetiquetan.
+
 Revisión sobre `main` **`e3e8b22545724af521b7b35bf4d60590cfaa13fe`**. Este documento contrasta evidencia existente; no prueba contraseñas antiguas, no muestra valores secretos y no realiza cambios de IAM ni reescritura de historial.
 
 ## Resultado: diagnóstico mayormente correcto, con actualizaciones

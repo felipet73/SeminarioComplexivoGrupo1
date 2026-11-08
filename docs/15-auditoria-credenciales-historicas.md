@@ -1,5 +1,7 @@
 # Auditoría de credenciales históricas y exclusiones de Gitleaks
 
+> **Actualización posterior:** las ramas fueron saneadas y publicadas el 8/11/2026; main `2482401` aprobó CI/despliegue. Cinco fingerprints de los mismos falsos positivos se adaptaron a sus SHA filtrados. Esta auditoría conserva IDs/evidencias de su corte original; refs internas de PR/cachés siguen pendientes. [Constancia vigente](24-cierre-historial-publicado.md).
+
 Fecha: 7 de noviembre de 2026. Código operativo comprobado: main `0dab82d`; despliegue aprobado en Actions 42378740379, intento 2. Análisis de objetos Git realizado sin imprimir, copiar ni probar valores secretos. La fuente del dictamen y posiciones se conserva en [JSON](evidencias/semana-4/auditoria-secretos-y-comite-2026-11-07.json).
 
 ## Respuesta: eran dos problemas diferentes

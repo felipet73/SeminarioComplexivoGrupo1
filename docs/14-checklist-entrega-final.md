@@ -9,7 +9,7 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 | Punto | Estado actual | Evidencia / acción de cierre |
 | --- | --- | --- |
 | s4a — URL pública en README y health | **Cumplido en la revisión probada** | URLs reales, smoke de SHA y 35 casos públicos aprobados; mostrar navegador privado durante la demo. |
-| s4b — Credenciales solo en plataforma, incluido historial limpio | **Parcial** | Código y rutas legacy retirados, WIF y secretos de ejecución. Exclusiones de Gitleaks justificadas por falsos positivos; otros valores funcionales siguen en historial. Rotación de ADMIN_PASSWORD, nuevo despliegue y acceso con la nueva contraseña confirmados por el operador; ver [constancia](evidencias/semana-4/actuacion-credenciales-legacy.md). Faltan metadatos y pruebas posteriores a esa actuación, revisión de otros entornos/copias y limpieza coordinada del historial si se exige el literal del requisito. Ver [auditoría](15-auditoria-credenciales-historicas.md). |
+| s4b — Credenciales solo en plataforma, incluido historial limpio | **Ramas saneadas; PR/cachés y alcance externo parcial** | Contraseña actual rotada, versión 1 inhabilitada y mecanismo JWT retirado. Reescritura coordinada de 27 ramas publicada; clon nuevo y CI/despliegue `2482401` aprobados. Cinco fingerprints de falsos positivos adaptados, sin exclusiones para credenciales legacy. [Constancia](24-cierre-historial-publicado.md). Restan 25 refs de PR afectadas/cachés, revisión de otras copias/revisiones accesibles y detalle nominal/fecha exacta de rotación si se exige. No se declara purga completa del servidor. |
 | s4c — Índice persistente tras reinicio | **Parcial: implementación preparada; activación diferida por costos** | Semilla probada en dos contenedores nuevos. PostgreSQL optativo conserva datos, archivos, índice y prompts entre procesos; exportación/migración SQLite probadas. Cloud SQL no creado: el equipo decidió posponer su activación por costos el 8/11/2026 (Ecuador), sin fecha comprometida. Se retomará con presupuesto aprobado, migración y ensayo remoto; la persistencia administrativa de producción no se marca cumplida. [Plan y evidencia local](22-postgresql-cloudsql.md). |
 | s4d — 15+ casos públicos, incluida inyección | **Cumplido en ejecución; completar material visual** | 35/35 con fecha, SHA y tres consultas generativas, más inyección y rutas retiradas. Guardar el JSON por caso del intento 2 y su p95; no reutilizar el p95 del intento fallido. La red del chat bloquea descargar el artefacto, no se inventa su contenido. |
 | s4e — Evaluación final repetida frente a semana 3 | **Cumplido en el alcance automatizado** | Mismo golden set de 20 preguntas y seis casos del agente; léxico 14/16, híbrido/citas 16/16, negativas 4/4 y agente estricto 6/6, sin fallback. [Comparación y límites](07-evaluacion.md), Actions 42443602234, SHA `16081c8`; JSON completos versionados. No acredita exhaustividad semántica ni aprobación del OCR. |
@@ -28,7 +28,8 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 - [x] Tests estrictos restaurados y aislados de claves reales: **130 backend, cobertura de app 89,09 %**, en rama de preparación PostgreSQL sobre `f653a71`; [XML y resumen](evidencias/semana-4/preparacion-postgres/). Frontend 18 y navegador 10 según sus evidencias separadas. El corte de 112 permanece como histórico, junto con 99/104/105, en [el registro de conteos](21-conteos-de-pruebas.md).
 - [x] Límite de consultas compartido, errores seguros y documentación técnica de endpoints/secuencias.
 - [x] Falsos positivos de las seis exclusiones de Gitleaks identificados y separados de credenciales legacy.
-- [ ] Requisito literal de historial sin credenciales: no se satisface solo eliminando HEAD.
+- [x] Ramas saneadas con respaldo y publicación coordinada; clon nuevo y controles histórico/activo aprobados.
+- [ ] Eliminación completa del servidor: referencias antiguas de PR/cachés y copias externas pendientes; no se satisface solo con reescribir ramas.
 - [x] Evaluación final comparable y seis listas citadas: Actions 42443602234, agente estricto 6/6.
 - [ ] Aprobación humana del instructivo y de su OCR; no se deduce del 6/6.
 - [ ] Persistencia de cambios, declaración individual, ensayo y observaciones del tribunal.
@@ -91,3 +92,7 @@ PostgreSQL/Cloud SQL optativo y exportación/importación están implementados y
 ## Decisión de costos del equipo — 8 de noviembre de 2026, Ecuador
 
 PostgreSQL/Cloud SQL queda técnicamente preparado y probado localmente. Su activación se difiere por costos y se realizará oportunamente con presupuesto aprobado y validación remota. No se crean recursos ahora ni se presume una dispensa del requisito docente; la operación actual conserva SQLite y su limitación de persistencia administrativa. [Decisión y guía futura](ADR-0004.md).
+
+## Publicación coordinada del historial — 8 de noviembre de 2026, Ecuador
+
+Se publicaron 27 ramas mediante operación atómica con leases. Main `2482401` aprobó [Actions 42453615683](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683) y despliegue. Los clones deben renovarse. [Resultado, mapa y pendientes de PR/cachés](24-cierre-historial-publicado.md); no se envió una solicitud a soporte ni se afirma purga completa. La decisión de costos de Cloud SQL sigue vigente.
