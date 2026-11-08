@@ -1,0 +1,58 @@
+{
+  "commit_base": "7b19cf37609d82c17c440bf457160a4a6f222123",
+  "alcance": "Ejecucion local sobre codigo de main; rama con cambios documentales, sin llamadas a proveedores reales. No es nueva ejecucion de CI ni smoke HTTP.",
+  "comando": "python -m pytest -q backend/tests --cov=app --cov-fail-under=85 --cov-report=json:tmp/cobertura-conteo.json --junitxml=docs/evidencias/semana-4/2026-11-08-conteo-pruebas/pytest-backend.xml",
+  "fecha_inicio_xml": "2026-11-08T04:03:19.987717+00:00",
+  "pytest": {
+    "tests": 112,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "cobertura_app_porcentaje": 88.84,
+  "umbral_cobertura": 85,
+  "xml_sha256": "d83ca7fb02dd78aa9f6f2dd5a1b1e5d0a98902629242fd429c816143f39537f6",
+  "comparacion_xml_historico": {
+    "archivo": "docs/evidencias/semana-4/pytest-linux.xml",
+    "casos_historicos": 99,
+    "casos_actuales": 112,
+    "casos_eliminados": [],
+    "casos_agregados": [
+      "tests.test_empaquetar_entrega::test_excluye_archivos_privados_aunque_esten_versionados_y_zip_es_reproducible",
+      "tests.test_evaluador::test_agente_conserva_diagnostico_sanitizado_del_proveedor[autenticacion-403]",
+      "tests.test_evaluador::test_agente_conserva_diagnostico_sanitizado_del_proveedor[cuota_o_limite-429]",
+      "tests.test_evaluador::test_agente_conserva_diagnostico_sanitizado_del_proveedor[modelo_no_disponible-404]",
+      "tests.test_evaluador::test_agente_conserva_diagnostico_sanitizado_del_proveedor[proveedor-503]",
+      "tests.test_evaluador::test_agente_conserva_diagnostico_sanitizado_del_proveedor[timeout-None]",
+      "tests.test_funcionales_http::test_cita_por_proxy_exige_evento_final_sse",
+      "tests.test_funcionales_http::test_citas_sin_respuesta_generada_no_aprueban[modelo_utilizado-None]",
+      "tests.test_funcionales_http::test_citas_sin_respuesta_generada_no_aprueban[respuesta-  ]",
+      "tests.test_funcionales_http::test_citas_sin_respuesta_generada_no_aprueban[respuesta-]",
+      "tests.test_llm::test_cliente_normal_no_introduce_esperas",
+      "tests.test_llm::test_intervalo_evaluacion_cubre_vueltas_y_reintentos",
+      "tests.test_verificar_produccion::test_lee_respuesta_citada_sse_mayor_de_8k_con_citas"
+    ]
+  },
+  "secuencia_documentada": [
+    {
+      "tests": 99,
+      "evidencia": "pytest-linux.xml, timestamp 2026-11-07T04:02:10 UTC"
+    },
+    {
+      "tests": 104,
+      "evidencia": "complemento-revision-2026-11-07.json; +4 contratos HTTP y +1 lector SSE, commit 5ce60b9"
+    },
+    {
+      "tests": 105,
+      "evidencia": "metricas-permisos-2026-11-07.json; +1 empaquetador, commit 4fd7ade"
+    },
+    {
+      "tests": 110,
+      "evidencia": "+5 instancias parametrizadas de diagnostico, commit 4d90eaf"
+    },
+    {
+      "tests": 112,
+      "evidencia": "+2 controles de ritmo, commit d5cca81; XML actual completo"
+    }
+  ]
+}
