@@ -3,7 +3,7 @@
   "documents": [
     {
       "file": "4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf",
-      "sha256": "76e0a6fb8626ea264a8522d73bfcf72cbd973e7e3d9becebb31679daf692518e",
+      "sha256": "d1a23fc5d80910404e7c3a99da939143972c702bc5f69caf196ef4381b3fd975",
       "exported_at": "2026-10-31",
       "metadata": {
         "title": "Instructivo para la ejecucion de seguimiento a graduados",
@@ -17,7 +17,16 @@
       },
       "origin": "admin_upload",
       "acquired_at": "2026-10-30T23:24:43.323602+00:00",
-      "downloaded_at": null
+      "downloaded_at": null,
+      "derivation": {
+        "type": "lossy_image_recompression",
+        "source_git_revision": "16081c8224ba07d1b0b917f89266f6bb562fb0e5",
+        "source_sha256": "76e0a6fb8626ea264a8522d73bfcf72cbd973e7e3d9becebb31679daf692518e",
+        "scale": 0.5,
+        "jpeg_quality": 50,
+        "pages": 72,
+        "note": "Copia derivada para entrega; fuente anterior recuperable de Git. Texto extraido preservado; no certifica revision humana completa."
+      }
     },
     {
       "file": "03_2017-11-09_MANUAL_VINCULACION_UNIANDES.pdf",
@@ -93,7 +102,7 @@
     },
     {
       "file": "UNIANDES-Instructivo-Titulacion-2017.pdf",
-      "sha256": "a66f211d1970cb360a4685b17a6764230017db4061ac7b61532a27de7300a412",
+      "sha256": "f8f0544048367f57368e1add75a5e5e3283f248bb69554d496d054da1e07cf5a",
       "metadata": {
         "title": "UNIANDES Instructivo de Titulacion 2017",
         "kind": "normativa",
@@ -108,7 +117,16 @@
       "acquired_at": "2026-11-06T04:54:46.786172+00:00",
       "downloaded_at": "2026-11-06T04:54:46.786172+00:00",
       "ocr_file": "UNIANDES-Instructivo-Titulacion-2017.ocr.json",
-      "ocr_sha256": "556a1f22b919a8158adcd0eb227885539d5a79d3a0c2a6ec3be6b714377f82bf"
+      "ocr_sha256": "46b3b5fa2f2e3d222af1ea022f54716661e58c988c70a3b0a80865ccfcc2279b",
+      "derivation": {
+        "type": "lossy_image_recompression",
+        "source_git_revision": "16081c8224ba07d1b0b917f89266f6bb562fb0e5",
+        "source_sha256": "a66f211d1970cb360a4685b17a6764230017db4061ac7b61532a27de7300a412",
+        "scale": 0.5,
+        "jpeg_quality": 50,
+        "pages": 29,
+        "note": "Copia derivada para entrega; fuente anterior recuperable de Git. Texto extraido preservado; no certifica revision humana completa."
+      }
     }
   ]
 }

@@ -274,7 +274,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 - Persistencia, sesiones, presupuesto y métricas son locales; no hay garantía de conservar cambios entre instancias. Queda pendiente el ensayo de reinicio y una solución duradera si se usan datos importantes.
 - Evaluación final completa frente a semana 3 acreditada en Actions 42443602234; revisión humana de OCR y exhaustividad semántica todavía pendientes.
 - Historial Git con credenciales legacy pendiente de remediación coordinada; no se oculta con nuevas exclusiones. Tampoco se garantiza resistencia a toda inyección o disponibilidad continua del proveedor.
-- Paquete medido: aproximadamente **24,82 MiB**, todavía sobre el máximo docente de **20.000.000 bytes**. El corpus comprimido por sí solo supera 20 MB. [Plan y medición](docs/17-plan-cierre-y-tamano.md); no se entrega un ZIP sobredimensionado ni se alteran hashes para ocultarlo.
+- Paquete optimizado: **menor de 20.000.000 bytes**, comprobado con el empaquetador. Dos PDF derivados y el avatar reducen tamaño; hashes y procedencia actualizados. [Transformación, validación y aceptación visual](docs/20-paquete-comprimido.md). Volver a medir después de añadir evidencias y generar la entrega desde main final.
 
 ## Integrantes y responsabilidades
 
