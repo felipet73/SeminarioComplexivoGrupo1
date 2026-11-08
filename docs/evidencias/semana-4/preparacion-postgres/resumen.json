@@ -53,5 +53,7 @@
     "scripts/verificar_reinicio_contenedor.py": "2e34e6c00ad922e109c0d212409fb35b52e38b997003d24a0d4636f5f05c3735",
     "infra/cloudsql/main.tf": "30cbc49c944e47d4acbbbd55e5c2762fc82829cb2a9d177c845315b78d2a6c84"
   },
-  "xml_sha256": "02b3ada6abe5550c90e327dddaaf147f9ddf11e5049c94ab5939eaf6351352b4"
+  "xml_sha256": "02b3ada6abe5550c90e327dddaaf147f9ddf11e5049c94ab5939eaf6351352b4",
+  "ensayos_posteriores_commit": "b5ef62f",
+  "auditoria_dependencias_sha256": "f03ed827b5f28aea24bfbe915ed125b143d7acfc927b03b1f8ad6b3989dc8b85"
 }
