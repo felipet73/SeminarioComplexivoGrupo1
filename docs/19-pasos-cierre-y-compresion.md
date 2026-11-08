@@ -60,7 +60,7 @@ Si las copias son aceptables, conservar originales oficiales fuera del ZIP con p
 - Dependencias, cachés, `.git`, logs, bases locales y `.env` privados ya quedan excluidos por el empaquetador. Borrarlos del disco no reduce el ZIP de archivos versionados.
 - Solo se encontraron tres copias idénticas pequeñas de reportes de flujo de semana 3 (2.538 bytes cada una). Suprimir dos apenas ahorra unos 5 KB antes de compresión; no compensa romper referencias de evidencia histórica.
 - Conservar pruebas, reportes fallidos fechados, OCR y fuentes mientras sean requeridos por la ingesta o evaluación. Un reporte antiguo fallido documenta un corte, no implica que producción actual falle.
-- `docs/Presentacion.pdf` y `docs/presentacion-entrega4.pdf` tienen contenidos diferentes. El equipo debe identificar cuál usó en vivo antes de retirar alguna. La propuesta medida no necesita borrar ninguna. El intento de recomprimir la presentación de diez páginas aumentó su tamaño y fue descartado.
+- `docs/Presentacion.pdf` y `docs/presentacion-entrega4.pdf` tienen contenidos diferentes. El equipo confirmó que utilizó **`docs/Presentacion.pdf` (10 páginas con infografías)** en la sustentación. Conservarlo como presentación final; el PDF de seis diapositivas es material anterior. La propuesta medida no necesita borrar ninguna. El intento de recomprimir la presentación de diez páginas aumentó su tamaño y fue descartado.
 
 Después de aplicar y validar una optimización, con archivos nuevos legítimos añadidos al índice de Git y desde la raíz:
 
@@ -77,7 +77,7 @@ El paquete debe corresponder al contenido final de GitHub. No subir el ZIP a Git
 
 ## 5. Completar documentación con hechos reales y abrir el PR
 
-Registrar comentarios reales del tribunal en `docs/evidencias/semana-4/observaciones-sustentacion.md`, con responsable, acción, commit y evidencia. Añadir vídeo de respaldo y versión de presentación usada si faltan. Las responsabilidades, herramientas de IA y ejecución local/PR/pruebas comunes ya están declaradas en README; quedan ejemplos concretos de tareas revisadas y enlaces de PR por integrante si el equipo los aporta. No inventar observaciones ni autorías.
+Registrar comentarios reales del tribunal en `docs/evidencias/semana-4/observaciones-sustentacion.md`, con responsable, acción, commit y evidencia. La presentación usada ya está identificada por el equipo: `docs/Presentacion.pdf` (10 páginas con infografías). Añadir el vídeo de respaldo si falta. Las responsabilidades, herramientas de IA y ejecución local/PR/pruebas comunes ya están declaradas en README; quedan ejemplos concretos de tareas revisadas y enlaces de PR por integrante si el equipo los aporta. No inventar observaciones ni autorías.
 
 Revisar `git status` y `git diff`; añadir únicamente reportes y documentos revisados. Crear el commit, publicar `docs/evidencias-finales` y abrir PR a main. Esperar sus comprobaciones. Al fusionarlo, el despliegue automático se vuelve a verificar con el SHA correspondiente; un reporte anterior conserva su alcance fechado.
 
