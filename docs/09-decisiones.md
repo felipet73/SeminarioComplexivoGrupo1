@@ -33,3 +33,7 @@ El laboratorio comparativo comparte validación y herramientas de lectura, pero 
 El checklist construye ítems extractivos de las fuentes normativas recuperadas. Conserva el texto de cada pasaje, documento, sección, página e ID; marca todos como pendientes de verificar y `completo=false`. No convierte fuentes informativas en obligaciones ni deduce que el estudiante cumplió un requisito. El modelo explica su aplicabilidad y señala las reglas internas que falten.
 
 Referencia de implementación del proveedor alternativo: [Create embeddings, documentación oficial de OpenAI](https://developers.openai.com/api/reference/python/resources/embeddings/methods/create). Se usa la API con dimensiones explícitas y formato float; el proveedor se selecciona en configuración, nunca mezclando sus vectores con los de Gemini.
+
+## Revisión OCR asistida como mejora futura
+
+**\* Debe analizarse el improvement.** Se documenta el requisito de comprobación al incorporar fuentes con OCR y se propone evaluar detección de inconsistencias, comparación visual y revisión humana dirigida, con muestreo adicional. La herramienta no está implementada; no se marca aprobada la revisión integral del instructivo. [ADR-0005](ADR-0005.md).

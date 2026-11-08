@@ -23,3 +23,9 @@ La corrección no verifica por sí sola la implicación semántica de todas las 
 5. Probar recuperación con «¿Cuáles son las dos fases del modelo de negocios para titulación?» y después realizar la consulta en el chatbot. Si responde esa norma, el enlace correspondiente debe indicar artículo 24/página 9. Guardar resultado real y su SHA/revisión; si el modelo se abstiene o selecciona otra fuente, conservarlo e investigar sin forzar un aprobado.
 
 La evidencia Neon de persistencia anterior conserva su fecha/índice de 1.047: no se reescribe, porque corresponde al estado anterior a esta corrección. No repetir la migración SQLite ni borrar la base. Queda pendiente únicamente la aplicación y verificación de esta corrección en el índice remoto.
+
+## Comprobación posterior reportada por el operador
+
+Tras el merge del PR #39, el operador mostró el instructivo revisión 2 con 87 fragmentos y una respuesta de Gemini con las dos fases del modelo de negocios y fuente artículo 24/página 9/revisión 2. Se considera verificada esa discrepancia puntual en la conversación; no se incorporó un JSON nuevo de la respuesta ni se atribuye un SHA/revisión Cloud Run no aportado.
+
+La revisión integral del OCR no se marca completada. **\* Debe analizarse el improvement** de revisión asistida definido en [ADR-0005](ADR-0005.md).
