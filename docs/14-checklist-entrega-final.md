@@ -74,3 +74,7 @@ El [plan operativo actualizado](19-pasos-cierre-y-compresion.md) ordena los coma
 ## Registro de actuación sobre la contraseña administrativa
 
 El operador confirmó cambio de contraseña, nuevo despliegue y acceso exitoso con la nueva. La [constancia de actuación](evidencias/semana-4/actuacion-credenciales-legacy.md) distingue esa declaración de los metadatos y validaciones aún pendientes. El JSON completo 35/35 ya se incorporó mediante el PR #25, pero no se atribuye a una ejecución posterior a la rotación sin comprobar fecha/revisión. Se conservan los cortes anteriores como históricos.
+
+## Optimización del paquete preparada para revisión
+
+Se aplican en la rama dos PDF derivados y un avatar WebP menor, con hashes/procedencia y asociación del OCR actualizados; se conservan las fuentes y ambas presentaciones. La ingesta aislada mantiene 1.047 fragmentos y el baseline léxico 14/16 + 4/4. [Transformación, validaciones y revisión visual pendiente](20-paquete-comprimido.md). No equivale a aprobar normativa/OCR ni a desplegar automáticamente esta rama. El ZIP final se mide de nuevo después de reunir los PR de evidencia y optimización.

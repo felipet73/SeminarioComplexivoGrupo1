@@ -1,5 +1,5 @@
 {
-  "original_sha256": "a66f211d1970cb360a4685b17a6764230017db4061ac7b61532a27de7300a412",
+  "original_sha256": "f8f0544048367f57368e1add75a5e5e3283f248bb69554d496d054da1e07cf5a",
   "engine": "Tesseract 5 / spa / psm 3; Poppler 200dpi",
   "review_status": "pending_full_human_review",
   "pages": [
@@ -119,5 +119,11 @@
       "page": 29,
       "text": "A\n\nSY\ne ES\n\nNombre del oponente (lector):\nFecha máxima de recepción:\n\nFecha de entrega por el oponente:\n\nAnexo Nro, 9\n\nAMBATO - ECUADOR\n\nUNIVERSIDAD REGIONAL AUTÓNOMA DE LOS ANDES\n\nUNIANDES\n\nUNIVERSIDAD REGIONAL AUTÓNOMA DE LOS ANDES\n\n“La Universidad de las alturas”\n\nTema del examen complexivo:\n\nLínea de investigación:\nElaborado por:\n\nCarrera: Matriz___ Extensión:\n\nPARÁMETROS DE EVALUACIÓN PARA EL EXAMEN COMPLEXIVO COMO FORMA\nDE TITULACIÓN COMO FORMA DE TITULACIÓN\n\nVALORACIÓN\nNo. CRITERIOS PUNTAJE\nPUNTAJE CONSIGNADO\n, | INTRODUCCIÓN (IMPORTANCIA, OBJETIVO ¿5\nSUSTENTACIÓN EN FUENTES ACTUALIZADAS :\n\n2 | MATERIALES Y MÉTODOS. 1.5\n\n3 | RESULTADOS (IDEAS DEL AUTOR) 1.5\n\n4 | DISCUSIÓN (IDEAS DEL AUTOR) 2.0\n\n5 | CONCLUSIONES 1.0\n\n6 | BIBLIOGRAFÍA 1.5\n\n7 | PRESENTACIÓN, REDACCIÓN Y ORTOGRAFÍA 1.0\n\nCALIFICACIÓN: 110 LETRAS:\n\nFIRMA F. SECRETARIO GENERAL-PROCURADOR\nEN LA MATRIZ O DIRECTOR EN LA EXTENSIÓN\n\nVISTO BUENO:\n\nPirri Tica\n\nltnuin Ya a Dana Win £ 1/a Talfo -\n\nDra. Corona Gómez, PhD\nRECTORA UNIANDES\n\n"
     }
-  ]
+  ],
+  "ocr_source_sha256": "a66f211d1970cb360a4685b17a6764230017db4061ac7b61532a27de7300a412",
+  "pdf_derivation": {
+    "source_git_revision": "16081c8224ba07d1b0b917f89266f6bb562fb0e5",
+    "source_sha256": "a66f211d1970cb360a4685b17a6764230017db4061ac7b61532a27de7300a412",
+    "binding_note": "original_sha256 vincula el PDF de ingesta derivado. OCR obtenido del PDF fuente anterior, no regenerado: mismas 29 paginas en el mismo orden. Texto OCR preservado integro; revision humana sigue pendiente."
+  }
 }

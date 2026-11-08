@@ -1,0 +1,62 @@
+{
+  "base_commit": "16081c8224ba07d1b0b917f89266f6bb562fb0e5",
+  "pdf_candidates": [
+    {
+      "source": "data/raw/4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf",
+      "candidate": "tmp/compresion-revision/seguimiento-s0.5-q50.pdf",
+      "original_bytes": 8347923,
+      "candidate_bytes": 4527812,
+      "pages": 72,
+      "text_equal": true,
+      "images_replaced": 8,
+      "scale": 0.5,
+      "jpeg_quality": 50,
+      "applied": true,
+      "requires_visual_review": true,
+      "source_sha256": "76e0a6fb8626ea264a8522d73bfcf72cbd973e7e3d9becebb31679daf692518e",
+      "candidate_sha256": "d1a23fc5d80910404e7c3a99da939143972c702bc5f69caf196ef4381b3fd975"
+    },
+    {
+      "source": "data/raw/UNIANDES-Instructivo-Titulacion-2017.pdf",
+      "candidate": "tmp/compresion-revision/titulacion-s0.5-q50.pdf",
+      "original_bytes": 8850203,
+      "candidate_bytes": 3121159,
+      "pages": 29,
+      "text_equal": true,
+      "images_replaced": 29,
+      "scale": 0.5,
+      "jpeg_quality": 50,
+      "applied": true,
+      "requires_visual_review": true,
+      "source_sha256": "a66f211d1970cb360a4685b17a6764230017db4061ac7b61532a27de7300a412",
+      "candidate_sha256": "f8f0544048367f57368e1add75a5e5e3283f248bb69554d496d054da1e07cf5a"
+    }
+  ],
+  "avatar_candidate": "tmp/compresion-revision/asistente-q85.webp",
+  "scenario_bytes": 18909976,
+  "limit_bytes": 20000000,
+  "scenario_fits": true,
+  "applied": true,
+  "deliverable_created": false,
+  "applied_in_branch": true,
+  "visual_sample": {
+    "titulacion_pages": [
+      5,
+      8,
+      20
+    ],
+    "seguimiento_pages": [
+      11,
+      31,
+      61
+    ],
+    "scope": "Muestra revisada visualmente; no certifica todas las paginas ni el OCR."
+  },
+  "pypdf_text_equal_all_pages": true,
+  "originals_retained_in_git": true,
+  "original_files_deleted_from_history": false,
+  "ocr_text_changed": false,
+  "ocr_approved": false,
+  "signed_pdf_modified": false,
+  "note": "Compresion aplicada en rama para revision; medir paquete final y validar ingesta. No acredita revision humana completa de los PDF ni aprobacion del OCR."
+}

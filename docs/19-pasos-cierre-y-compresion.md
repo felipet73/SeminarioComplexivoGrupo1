@@ -39,6 +39,8 @@ El último 5/6 estricto del agente no pasa a 6/6 por tener 35/35 HTTP. El instru
 
 ## 4. Reducir el paquete: propuesta medida, todavía no aplicada
 
+**Actualización de optimización:** la rama de compresión ya prepara derivados y actualiza manifiesto/OCR; el empaquetador pasó por debajo de 20.000.000 bytes. Ver [aplicación y revisión pendiente](20-paquete-comprimido.md). Las cifras y notas siguientes conservan el análisis previo de la base, no el estado del nuevo paquete.
+
 Medición de la base: **28.727.410 bytes (27,40 MiB)**. El máximo del empaquetador es **20.000.000 bytes**, no 20 MiB. Faltan reducir al menos 8.727.410 bytes. El corpus comprimido por sí solo supera los 20 MB; eliminar únicamente capturas no resuelve el límite.
 
 | Archivo | Original, bytes | Copia experimental, bytes | Tratamiento |
