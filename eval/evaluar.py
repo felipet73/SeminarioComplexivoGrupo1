@@ -1,5 +1,6 @@
 """Evalúa recuperación real. --chat añade generación real y acierto de citas, no exactitud semántica."""
 import argparse
+import os
 import json
 import hashlib
 import sys
@@ -19,7 +20,7 @@ def evaluar(cases, chat=False, version=None, llm=None):
     if not cases or not any(c.get('documento') for c in cases) or not any(not c.get('documento') for c in cases):
         raise ValueError('La muestra debe contener preguntas con fuente y sin fuente')
     results = []
-    llm = (llm or ClienteLLM(get_settings())) if chat else None
+    llm = (llm or ClienteLLM(get_settings(), min_interval_seconds=float(os.environ.get('EVAL_LLM_MIN_INTERVAL_SECONDS', '0')))) if chat else None
     from app.prompts import cargar_prompt
     expected = json.loads((ROOT / 'eval/respuestas_esperadas.json').read_text(encoding='utf-8'))
     proveedor_fallo = False
