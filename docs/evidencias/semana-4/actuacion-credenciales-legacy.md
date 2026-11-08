@@ -10,12 +10,12 @@ Constancia incorporada el **8 de noviembre de 2026 (UTC)**, a partir de la confi
 | Servicio | Cloud Run, `titulacion-rag`, región `us-central1` |
 | Entorno objeto de la actuación | Producción, según el contexto y confirmación del operador |
 | Configuración intervenida | Contraseña administrativa `ADMIN_PASSWORD` |
-| Referencia mostrada en Cloud Run | `ADMIN_PASSWORD` → `admin-password`, versión configurada `latest`; captura aportada por el operador |
-| Nueva versión mostrada | Versión **2**, habilitada; creación visible **7/11/26, 9:47 p. m.**, sin zona horaria visible. La lista se aporta en el contexto de `admin-password`, aunque el recorte no muestra el encabezado del secreto |
-| Versión anterior | Versión **1**, también habilitada en la captura |
+| Referencia mostrada en Cloud Run | `ADMIN_PASSWORD` → `admin-password`, versión configurada **2** en la captura más reciente aportada por el operador |
+| Nueva versión mostrada | Versión **2**, habilitada; creación visible **7/11/26, 9:47 p. m.**, sin zona horaria visible. La captura más reciente muestra el encabezado `admin-password` y el recurso `projects/386902880383/secrets/admin-password` |
+| Versión anterior | Versión **1**, **inhabilitada** en la captura más reciente (anteriormente habilitada) |
 | Responsable | Operador que confirmó la actuación; nombre pendiente de incorporar |
 | Revisión de Cloud Run y SHA de aplicación después del cambio | Pendientes de adjuntar; no se infieren del último commit de Git |
-| Evidencia disponible de la operación | Confirmación del operador y dos capturas de metadatos revisadas en el chat; imágenes aún no versionadas en el repositorio. Falta reporte posterior ligado a la nueva revisión |
+| Evidencia disponible de la operación | Confirmación del operador y capturas sucesivas de metadatos revisadas en el chat; imágenes aún no versionadas en el repositorio. Falta reporte posterior ligado a la nueva revisión |
 
 No se registran valores de contraseñas, claves, tokens, hashes de contraseñas ni respuestas autenticadas del panel.
 
@@ -29,11 +29,11 @@ Para completar la trazabilidad, adjuntar únicamente metadatos: fecha/hora con z
 
 ## Metadatos adicionales aportados mediante capturas
 
-La pantalla de variables y secretos muestra `GEMINI_API_KEY` → `gemini-api-key:latest`, `ADMIN_PASSWORD` → `admin-password:latest` y `OPENAI_API_KEY` → `openai-api-key:latest`. No muestra valores secretos. La lista de versiones muestra la versión 2 habilitada y la versión 1 todavía habilitada. Se registra lo visible sin inferir la zona horaria ni que la captura del formulario pruebe por sí sola su despliegue.
+Las primeras capturas mostraban `ADMIN_PASSWORD` → `admin-password:latest` y las versiones 1 y 2 habilitadas. Las capturas posteriores actualizan esa evidencia: el secreto se identifica expresamente como `projects/386902880383/secrets/admin-password`, la versión **2** permanece habilitada y la **1** figura inhabilitada. En el formulario de Cloud Run, `ADMIN_PASSWORD` referencia explícitamente la versión **2**. Los proveedores conservan `gemini-api-key:latest` y `openai-api-key:latest`. No se muestran valores secretos.
 
-`latest` es una referencia dinámica. En variables de entorno Cloud Run obtiene el valor al iniciar la instancia; la captura no demuestra qué versión cargó cada instancia o revisión. Para una evidencia inequívoca de esta rotación, fijar `ADMIN_PASSWORD` a la versión **2**, desplegar y comprobar el acceso y la revisión que recibe tráfico. Conservar metadatos de esa revisión y repetir las pruebas públicas. Esto no exige cambiar las referencias de los proveedores para documentar esta actuación.
+La fijación de la referencia a **2** y la inhabilitación de **1** están acreditadas visualmente en las pantallas aportadas. El formulario no muestra por sí solo una implementación completada ni identifica la revisión que recibe tráfico. Falta vincular esta configuración concreta a una revisión desplegada y comprobar el acceso después de esa última implementación; el acceso confirmado antes no se atribuye automáticamente a esta configuración posterior.
 
-Tras comprobar que los servicios que deben seguir activos utilizan la versión nueva, inhabilitar la versión 1 si ya no tiene consumidores legítimos. No destruirla como primer paso. Inhabilitar una versión impide nuevas lecturas, pero no borra valores ya cargados por instancias existentes ni elimina la contraseña del historial Git. No se considera inhabilitada a partir de las capturas aportadas.
+Inhabilitar la versión 1 impide nuevas lecturas de esa versión, pero no borra valores ya cargados por instancias existentes ni elimina la contraseña del historial Git. No se afirma que todas las revisiones antiguas hayan dejado de ser accesibles. La versión no se muestra destruida y no es necesario destruirla para registrar su inhabilitación.
 
 ## Clave JWT histórica y mecanismo retirado
 
@@ -50,6 +50,7 @@ Después de identificar el SHA realmente desplegado, repetir el procedimiento de
 ## Estado de cierre
 
 - **Confirmado por el operador:** cambio de contraseña administrativa, nuevo despliegue y acceso manual con la nueva contraseña.
+- **Acreditado mediante capturas posteriores:** secreto `admin-password` identificado, versión 2 habilitada, versión 1 inhabilitada y referencia `ADMIN_PASSWORD` fijada a 2 en el formulario de Cloud Run.
 - **Pendiente de trazabilidad técnica:** responsable nominal, fecha exacta con zona, versión efectivamente cargada por la revisión de Cloud Run y SHA publicado; reporte HTTP posterior asociado a esa actuación. La versión 2 y su fecha visible ya constan como metadatos de captura.
 - **Pendientes independientes:** revisión de reutilización en otros entornos y revisiones accesibles; decisión y ejecución coordinadas sobre el historial Git.
 
