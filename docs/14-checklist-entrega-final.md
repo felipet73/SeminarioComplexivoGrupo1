@@ -16,16 +16,16 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 | s4f — Tasa y errores seguros | **Cumplido en alcance implementado** | 30 consultas/60 s/proceso, alias compartidos, 429/Retry-After, timeout, respaldo y errores categorizados sin excepción cruda; tests estrictos. No es cuota distribuida ni por usuario. |
 | s4g — Aviso de IA y minimización de datos | **Cumplido en alcance educativo básico** | Interfaz identifica IA, orientación no oficial, pide verificar fuentes y prohíbe compartir contraseñas/datos sensibles. Contexto opcional acotado, métricas sin texto libre. El texto de consulta/contexto sí se envía al proveedor seleccionado; ver [tratamiento de datos](16-datos-y-limites.md). |
 | s4h — README y decisiones; instalación en diez minutos | **Documentación preparada; ensayo humano pendiente** | README, requisitos, ADR y comandos corresponden al código. Registrar instalación por un integrante nuevo, duración real, ambiente y health. No hay un tiempo de diez minutos medido por otra persona. |
-| s4i — IA y aportes por integrante | **Parcial** | Asistencia declarada y tabla de identidades observadas. Cada integrante debe confirmar tareas, herramientas, revisiones y ejemplos; no se rellena como si la IA conociera sus contribuciones. |
+| s4i — IA y aportes por integrante | **Aportes y herramientas confirmados; detalle de revisión de IA parcial** | README detalla tareas de Christian (despliegues/CI/optimización), Olmes (pruebas manuales/backend semana 4) y Widman (tests/documentación backend, QA frontend y fuentes). Declaración de IA incluye Gemini, ChatGPT y Codex. Ejecución local, PR y verificación de pruebas confirmadas por todos. Faltan ejemplos de salida de IA revisada por cada persona y enlaces de PR nominados si se exige ese detalle. |
 | s4j — PDF de la presentación de doce minutos | **Archivo preparado** | `docs/presentacion-entrega4.pdf` actualizado y PDF técnico de apoyo. Falta ensayo cronometrado y confirmar que esta es la versión realmente usada. El informe técnico extenso no sustituye la exposición de 12 minutos. |
-| s4k — Evidencias y observaciones de sustentación | **Parcial** | Reportes locales, producción y seguridad presentes; añadir capturas de health, pipeline verde y resultados públicos. Registrar observaciones reales del tribunal y commits de cierre en [registro](evidencias/semana-4/observaciones-sustentacion.md). No se inventan observaciones. |
+| s4k — Evidencias y observaciones de sustentación | **Observación real registrada; trazabilidad específica parcial** | El equipo reportó una solicitud sin respuesta durante la demo y confirmó corrección posterior. [SUST-01 y validaciones generales](evidencias/semana-4/observaciones-sustentacion.md) registrados; pregunta/causa/fecha exactas y repetición del mismo caso pendientes de aportar. Los reportes 35/35 y 6/6 no se presentan como esa reproducción específica. Vídeo de respaldo pendiente de adjuntar. |
 
 ## Qué ya está cerrado de la ficha antigua
 
 - [x] Módulo legacy eliminado de HEAD y rutas antiguas retiradas en la URL probada.
 - [x] Despliegue con SHA verificable y pipeline dependiente de cinco controles previos.
 - [x] 35 casos públicos, incluida generación real directa y por proxy SSE; se resolvieron los tres 503 anteriores.
-- [x] Tests estrictos restaurados y aislados de claves reales: 104 backend, cobertura 88,73 %, 18 frontend y suite de navegador de 10 escenarios según la evidencia disponible.
+- [x] Tests estrictos restaurados y aislados de claves reales: **112 backend, cobertura de app 88,84 %**, en la última ejecución local sobre `7b19cf3`; [XML y resumen](evidencias/semana-4/2026-11-08-conteo-pruebas/). Frontend 18 y navegador 10 según sus evidencias separadas. Los conteos 99/104/105 se conservan como cortes históricos, explicados en [el registro de conteos](21-conteos-de-pruebas.md).
 - [x] Límite de consultas compartido, errores seguros y documentación técnica de endpoints/secuencias.
 - [x] Falsos positivos de las seis exclusiones de Gitleaks identificados y separados de credenciales legacy.
 - [ ] Requisito literal de historial sin credenciales: no se satisface solo eliminando HEAD.
@@ -79,3 +79,7 @@ El operador confirmó cambio de contraseña, nuevo despliegue y acceso exitoso c
 ## Optimización del paquete preparada para revisión
 
 Se aplican en la rama dos PDF derivados y un avatar WebP menor, con hashes/procedencia y asociación del OCR actualizados; se conservan las fuentes y ambas presentaciones. La ingesta aislada mantiene 1.047 fragmentos y el baseline léxico 14/16 + 4/4. [Transformación, validaciones y revisión visual pendiente](20-paquete-comprimido.md). No equivale a aprobar normativa/OCR ni a desplegar automáticamente esta rama. El ZIP final se mide de nuevo después de reunir los PR de evidencia y optimización.
+
+## Cierre documental de equipo y conteos
+
+README amplía aportes y declara Gemini, ChatGPT y Codex según confirmación del equipo. El [registro de sustentación](evidencias/semana-4/observaciones-sustentacion.md) ya contiene SUST-01; no permanece vacío ni se fabrica un acta del tribunal. El conteo vigente es **112 pruebas backend y 88,84 % de cobertura de app**, con [XML nuevo y reconciliación histórica](21-conteos-de-pruebas.md). Los reportes de 99, 104 y 105 conservan sus fechas y no se reescriben.

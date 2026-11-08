@@ -223,7 +223,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 
 | Verificación real | Resultado y alcance |
 |---|---|
-| Backend actual | **105 pruebas aprobadas, 88,73 %** de cobertura; umbral 85 %. Incluye prueba del empaquetador. [Evidencia local](docs/evidencias/semana-4/metricas-permisos-2026-11-07.json); job remoto aprobado para `c1a5f3f`. |
+| Backend actual | **112 pruebas aprobadas, 88,84 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos. [XML y resumen local](docs/evidencias/semana-4/2026-11-08-conteo-pruebas/). [Evolución de los conteos históricos](docs/21-conteos-de-pruebas.md). No se presenta esta ejecución local como un nuevo job de CI. |
 | Frontend y navegador | **18 pruebas**, build y **10 escenarios** Playwright con API aislada y modelo doble; jobs remotos aprobados. |
 | Producción | **35/35**, incluidos tres casos generativos, rutas retiradas y contratos públicos; [Actions 42389025186](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186). El smoke adicional exige incremento de métricas. |
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
@@ -280,14 +280,38 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 
 | Integrante | Identidades registradas en Git | Responsabilidad confirmada por el equipo | Herramientas de IA utilizadas |
 |---|---|---|---|
-| Aguilar Rogel Olmes Patricio | `olmesaguilar` | Procesos y pruebas manuales. | Gemini y ChatGPT. |
-| Cevallos Mazon Widman Yadiro | `WidmanCevallos`, `Widman Yadiro Cevallos Mazon` | Automatización de QA y desarrollo. | Gemini. |
-| Torres Lopez Christian Felipe | `Felipe Torres`, `Felipe Torres Lopez` | Desarrollo y despliegues. | ChatGPT y Codex. |
+| Aguilar Rogel Olmes Patricio | `olmesaguilar` | Pruebas manuales e implementación de código backend de semana 4. | Gemini y ChatGPT. |
+| Cevallos Mazon Widman Yadiro | `WidmanCevallos`, `Widman Yadiro Cevallos Mazon` | Nuevos tests y documentación backend, automatización de pruebas frontend y documentación de fuentes. | Gemini. |
+| Torres Lopez Christian Felipe | `Felipe Torres`, `Felipe Torres Lopez` | Despliegue backend/frontend, configuración de CI y optimización del código. | ChatGPT y Codex. |
+
+### Aportes detallados confirmados
+
+**Christian Felipe Torres López**
+
+- Despliegue del backend y del frontend.
+- Configuración de integración continua (CI).
+- Optimización del código del proyecto.
+- Herramientas de IA declaradas: ChatGPT y Codex.
+
+**Olmes Patricio Aguilar Rogel**
+
+- Ejecución de pruebas manuales de la aplicación.
+- Implementación del código backend correspondiente a la semana 4.
+- Herramientas de IA declaradas: Gemini y ChatGPT.
+
+**Widman Yadiro Cevallos Mazon**
+
+- Incorporación de nuevos tests del backend.
+- Documentación del backend y de las fuentes utilizadas.
+- Automatización de pruebas del frontend.
+- Herramienta de IA declarada: Gemini.
+
+Estos aportes fueron confirmados por el equipo. No se atribuyen commits, porcentajes de autoría ni salidas concretas de IA a una persona sin evidencia adicional. La asociación tarea–PR puede ampliarse con enlaces que identifique cada integrante.
 
 **Verificación realizada por todos los integrantes:** cada integrante desplegó y ejecutó el proyecto en su entorno local, realizó pull requests y verificó las pruebas tanto localmente como en el repositorio mediante GitHub Actions. Esta declaración fue confirmada por el equipo; no atribuye por sí sola la revisión de una salida específica de IA.
 
-**Declaración de IA:** se utilizó asistencia de Codex para análisis, implementación, pruebas, documentación y material de presentación. Se revisaron y corrigieron resultados mediante tests, contratos y evidencia explícita; los modelos también intervienen en el producto según lo descrito. Un commit firmado con la configuración del equipo no demuestra autoría manual ni identifica quién revisó cada salida. Las responsabilidades y herramientas de IA de la tabla fueron confirmadas por el equipo. Queda por detallar qué tareas concretas asistió cada herramienta y cómo revisó sus resultados cada integrante; no se deducen esos detalles de su responsabilidad principal ni se inventan porcentajes individuales.
+**Declaración de IA:** el equipo declara el uso de **Gemini, ChatGPT y Codex**, con distribución por integrante indicada arriba. La asistencia de Codex documentada en esta revisión abarca análisis, implementación, pruebas, documentación y material de presentación. El equipo confirmó la ejecución local, realización de PR y verificación de pruebas locales y de GitHub Actions; los resultados técnicos se contrastan con contratos, tests y reportes. No se deduce de ello qué salida específica de Gemini o ChatGPT revisó cada integrante: faltan ejemplos concretos de tarea, sugerencia y validación si se requiere ese detalle. Los modelos utilizados por el producto en ejecución se describen separadamente en la arquitectura. Un commit firmado con la configuración del equipo no demuestra autoría manual ni identifica al revisor de cada salida de IA.
 
-Material de entrega: [checklist s4a–s4k](docs/14-checklist-entrega-final.md), [presentación PDF](docs/presentacion-entrega4.pdf), [informe técnico PDF](docs/analisis-tecnico-preliminar.pdf), [observaciones de sustentación](docs/evidencias/semana-4/observaciones-sustentacion.md).
+Material de entrega: [checklist s4a–s4k](docs/14-checklist-entrega-final.md), [presentación utilizada en sustentación](docs/Presentacion.pdf), [informe técnico PDF](docs/analisis-tecnico-preliminar.pdf), [observaciones de sustentación](docs/evidencias/semana-4/observaciones-sustentacion.md).
 
 Para medir el ZIP desde raíz: `python scripts/empaquetar_entrega.py --medir`. Devuelve exit 1 si supera 20 MB y no deja un entregable sobredimensionado; solo incluye archivos conocidos por Git y excluye secretos locales, dependencias y caches. Antes de entregar, revisar el informe, el estado de Git y el detector activo; el empaquetador no acredita historial limpio.
