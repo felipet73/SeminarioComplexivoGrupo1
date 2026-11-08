@@ -1,0 +1,63 @@
+{
+  "fecha_utc": "2026-11-08T00:40:02.960924+00:00",
+  "main_revisado": "e3e8b22545724af521b7b35bf4d60590cfaa13fe",
+  "actions": {
+    "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42422021200",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "nombre": "navegador",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "contenedor",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "backend",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "frontend",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "Revisar secretos con Gitleaks",
+        "conclusion": "success"
+      },
+      {
+        "nombre": "evaluacion-real",
+        "conclusion": "skipped"
+      },
+      {
+        "nombre": "desplegar",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "json_completo_postdespliegue_versionado": false,
+  "descarga_artefacto": {
+    "estado": "bloqueada por red",
+    "host": "productionresultssa1.blob.core.windows.net",
+    "valores_o_urls_firmadas_incluidos": false
+  },
+  "pruebas_directas_desde_chat": "No ejecutadas: Cloud Run/Vercel bloqueados por red",
+  "scan_cambios": {
+    "rango": "f8e0a1b..e3e8b22",
+    "commits_revisados": 23,
+    "metodo": "Regex de formatos reconocibles sobre líneas añadidas de cada commit respecto al primer padre; valores nunca impresos",
+    "hallazgos": [],
+    "limites": "No detecta todo secreto arbitrario ni demuestra no reutilización. Los PDF añadidos en e3e8b22 se revisaron visualmente: presentación informativa y capturas de pruebas, sin valores de credenciales identificados."
+  },
+  "paquete": {
+    "bytes": 28722097,
+    "MiB": 27.39,
+    "max_bytes": 20000000,
+    "cumple_limite": false,
+    "zip_creado": false
+  },
+  "no_reutilizacion_o_rotacion_legacy_acreditada": false,
+  "historial_reescrito": false,
+  "evaluacion_final_independiente_ejecutada": false,
+  "aporte_equipo": "Responsabilidades, herramientas IA y verificación local/PR/CI ya confirmadas en README; observaciones reales no aportadas."
+}
