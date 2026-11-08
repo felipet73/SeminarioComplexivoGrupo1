@@ -57,7 +57,7 @@ Ni la ruta antigua ni su clave son usadas por la autenticación actual `admin_au
 
 ## Historial y estado persistente
 
-`python scripts/check_secrets.py` detecta ahora asignaciones fijas de secretos/contraseñas en código activo, además de formatos de API keys. `--historial-legacy` audita el módulo retirado en todas las referencias y continúa dando exit 1. La evidencia está en `docs/evidencias/semana-4/historial-credenciales.json`. No se añadieron excepciones para ocultar esa credencial ni se ejecutó un force push.
+`python scripts/check_secrets.py` detecta ahora asignaciones fijas de secretos/contraseñas en código activo, además de formatos de API keys. `--historial-legacy` audita el módulo retirado en las referencias disponibles. Antes de la limpieza daba exit 1; después de la publicación coordinada del 8/11/2026 pasa con exit 0 en un clon normal nuevo. Las refs internas de PR/cachés siguen pendientes de tratamiento. La evidencia está en `docs/evidencias/semana-4/historial-credenciales.json`. No se añadieron excepciones para ocultar esa credencial. Se publicaron 27 ramas con leases, conservando todas las ramas; [constancia](24-cierre-historial-publicado.md). Los reportes anteriores conservan su corte histórico.
 
 Una limpieza del historial requiere una copia espejo de respaldo, enumerar ramas/tags afectados, coordinar todos los clones y reescribir la ruta retirada, con publicación forzada autorizada y revisión de referencias de PR/cachés. No sustituye la revocación del servicio activo. La [guía de GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository) detalla ese procedimiento.
 

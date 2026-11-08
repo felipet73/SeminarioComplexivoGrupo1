@@ -1,0 +1,243 @@
+{
+  "fecha_publicacion_utc": "2026-11-08T06:09:55.834835+00:00",
+  "fecha_publicacion_ecuador": "2026-11-08T01:09:55.834835-05:00",
+  "repositorio": "felipet73/SeminarioComplexivoGrupo1",
+  "main_antes": "319dc6cfc292d2d3b4014ba518a47724622b7856",
+  "main_publicado": "2482401e50b607296151b5a7ac47738536c0b2d5",
+  "metodo": "git push --atomic con --force-with-lease individual por rama; autorizacion explicita del usuario y respaldo previo confirmado",
+  "ramas_actualizadas": 27,
+  "ramas_totales_al_publicar": 28,
+  "tags_al_publicar": 0,
+  "ramas_eliminadas": 0,
+  "mapa_ramas": [
+    {
+      "ref": "refs/heads/1348b06",
+      "sha_antes": "5ce60b97e25e487b79050d5f8375e1ffc44557f4",
+      "sha_despues": "6bc13e9dd4a20235fe8fd71aafcb68e1d24407cb"
+    },
+    {
+      "ref": "refs/heads/chore/cierre-y-paquete-final",
+      "sha_antes": "60a97a45924f416d4e0272b59d33e632e223db5d",
+      "sha_despues": "99ffb45d4fef8a0d78fc7814154b1756a1a8540e"
+    },
+    {
+      "ref": "refs/heads/chore/comprimir-paquete-final",
+      "sha_antes": "8991116aed1cf3e238492749a03600f806d9bb0e",
+      "sha_despues": "7ab834f8d43f33b8c97d4c9cc278602e25448974"
+    },
+    {
+      "ref": "refs/heads/chore/optimizar-entrega-final",
+      "sha_antes": "4fd7ade066008279a604daa391b04d91e09f60ee",
+      "sha_despues": "bd83f015eadd13bb9b0321e288561b1a30486b9d"
+    },
+    {
+      "ref": "refs/heads/docs/analisis-tecnico-entrega4",
+      "sha_antes": "aee4fcdfc132d047c49d303fb2c8ec1abf0f2aa7",
+      "sha_despues": "e5d718b2b53ea8b2d461919e4a39c4e8d6dc9acd"
+    },
+    {
+      "ref": "refs/heads/docs/aportes-y-conteos-verificables",
+      "sha_antes": "1a6a770ed760f1a1274317d3b935c3262ec2979f",
+      "sha_despues": "8150d2089c86bf0539ddfc76b75c9f7099d21f7d"
+    },
+    {
+      "ref": "refs/heads/docs/constancia-rotacion-legacy",
+      "sha_antes": "3db41241117f3737f7ad878a78f19b96cbabcaf0",
+      "sha_despues": "c936691c0b3548e8a45269cbe1fbfc36cacde509"
+    },
+    {
+      "ref": "refs/heads/docs/evaluacion-final-aprobada",
+      "sha_antes": "d092063c6db4662148a14e8ea1d2a0b045c55435",
+      "sha_despues": "88c9cdc65f427f0e898392ce543aa81a2fd278e5"
+    },
+    {
+      "ref": "refs/heads/docs/evidencia-produccion-final",
+      "sha_antes": "3c690045efc7587b32cc05cfe10d0110ad2da691",
+      "sha_despues": "82dd1c5cbdf22e391fc26257b2c177fba4f1575b"
+    },
+    {
+      "ref": "refs/heads/docs/readme-requisitos-comite",
+      "sha_antes": "f9da33a5ad7b06a63bd8d0f41fe6a48ea985079b",
+      "sha_despues": "b3072d542171974db68c29a13b0433da7aa3b931"
+    },
+    {
+      "ref": "refs/heads/docs/verificar-cierre-legacy",
+      "sha_antes": "71ed7f4b4c1166a30ed6b04f32ce03d089b3fa1b",
+      "sha_despues": "cb9d592c6baa88695c6a5770fc890bbd873b5f53"
+    },
+    {
+      "ref": "refs/heads/feat/admin-rag-chat-evaluaciones",
+      "sha_antes": "3aaf8f4169bddd311c12d7aca1a8f9f93c835534",
+      "sha_despues": "887b5581cedefd4051a462facea14fb690046b4b"
+    },
+    {
+      "ref": "refs/heads/feat/cambios-rag-olmes",
+      "sha_antes": "0f37150610ca2d706a4699b9be251e474bedc2c8",
+      "sha_despues": "5c9868f0f02b5e929fdf6ba1f55ab90386566e71"
+    },
+    {
+      "ref": "refs/heads/feat/complementando_observaciones",
+      "sha_antes": "8f3369c90302695099ddeaf959ba706c3c9e90e2",
+      "sha_despues": "27cd331224b45f564385b2260422af8c6d2ec1f6"
+    },
+    {
+      "ref": "refs/heads/feat/evidencias-semana2-ft",
+      "sha_antes": "6f0ba5f6a1526dbe28aead2e41483af52157d487",
+      "sha_despues": "8761e137c190fbc98509b53f0b1eba7f89a8c775"
+    },
+    {
+      "ref": "refs/heads/feat/mejorando-operacionesrag",
+      "sha_antes": "c4f4a0040b96a5670918497fa2355b63f77015d0",
+      "sha_despues": "0a78580e2a4369372b3166e28263d21d57fe639c"
+    },
+    {
+      "ref": "refs/heads/feat/persistencia-postgres-preparada",
+      "sha_antes": "b404e7244352388e9f2f896368ee6af8b266a158",
+      "sha_despues": "68bf917f8ed7b48ca72ae4da943ce483f7a0e298"
+    },
+    {
+      "ref": "refs/heads/feature/evaluacion-e2e-widman",
+      "sha_antes": "550fd9491ec218d0581d179e38b0b2af1b9f05e1",
+      "sha_despues": "3b3f145124d866331da4526b042cbf38ff48b0d0"
+    },
+    {
+      "ref": "refs/heads/feature/panel-rag-audit",
+      "sha_antes": "3a81d57433d85f1d0655ecf87529edd46ed48784",
+      "sha_despues": "87af35669e2c33baac322d7b9f243f77666b15ac"
+    },
+    {
+      "ref": "refs/heads/fix/admin-secciones-nueva-fuente",
+      "sha_antes": "f2edcf1eb32a4c947a98ef497aa13a4ebfbd750d",
+      "sha_despues": "fb96ac46cfeab2a66888bf20018472ff39d25b29"
+    },
+    {
+      "ref": "refs/heads/fix/ci-main-sin-servicios-externos",
+      "sha_antes": "7ab3e84028d9b781a3dbab1abb744b6d831492e8",
+      "sha_despues": "8e1b881a0a24725f4c56cd7166270135e0c4608b"
+    },
+    {
+      "ref": "refs/heads/fix/diagnostico-evaluacion-agente",
+      "sha_antes": "4d90eaf05a79dbb092cc6bce9fadcf5bb28ad806",
+      "sha_despues": "1ec6f73317c183aaec5c1263f79e0c11bb895cd5"
+    },
+    {
+      "ref": "refs/heads/fix/entrega4-seguridad-y-despliegue",
+      "sha_antes": "5ce60b97e25e487b79050d5f8375e1ffc44557f4",
+      "sha_despues": "6bc13e9dd4a20235fe8fd71aafcb68e1d24407cb"
+    },
+    {
+      "ref": "refs/heads/fix/prueba-admin-seleccion-documento",
+      "sha_antes": "0aafdcc6a59d4854f8bd1a2046d1c42714297277",
+      "sha_despues": "17783847af0a7b19e23fe602527c02ac0b40263c"
+    },
+    {
+      "ref": "refs/heads/fix/ritmo-evaluacion-gemini",
+      "sha_antes": "d5cca81709d0ebf405a2a30d9eda9f1dc5fed99e",
+      "sha_despues": "79324ce04f9addb7788ee172bc0f2e9979498f86"
+    },
+    {
+      "ref": "refs/heads/main",
+      "sha_antes": "319dc6cfc292d2d3b4014ba518a47724622b7856",
+      "sha_despues": "2482401e50b607296151b5a7ac47738536c0b2d5"
+    },
+    {
+      "ref": "refs/heads/respaldo/cambios-locales-2026-11-06",
+      "sha_antes": "80623860c164addf3370200afd090fb77fbd6bea",
+      "sha_despues": "be3f8bfa09b1d6136d3e15bbb8881eef7451e562"
+    }
+  ],
+  "archivos_distintos_en_main": [
+    ".gitleaksignore",
+    ".github/workflows/ci.yml"
+  ],
+  "codigo_aplicacion_preservado": true,
+  "fingerprints_falsos_positivos_ajustados": 5,
+  "exclusiones_para_seguridad_py": 0,
+  "clon_nuevo_detectores": {
+    "activo_exit": 0,
+    "historial_legacy_exit": 0
+  },
+  "gitleaks_local_prepublicacion": {
+    "exit": 0,
+    "hallazgos": 0,
+    "redaccion": "100%"
+  },
+  "ci": {
+    "id": 42453615683,
+    "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683",
+    "sha": "2482401e50b607296151b5a7ac47738536c0b2d5",
+    "resultado": "success",
+    "jobs": [
+      {
+        "nombre": "Revisar secretos con Gitleaks",
+        "resultado": "success"
+      },
+      {
+        "nombre": "Persistencia PostgreSQL aislada",
+        "resultado": "success"
+      },
+      {
+        "nombre": "navegador",
+        "resultado": "success"
+      },
+      {
+        "nombre": "frontend",
+        "resultado": "success"
+      },
+      {
+        "nombre": "backend",
+        "resultado": "success"
+      },
+      {
+        "nombre": "contenedor",
+        "resultado": "success"
+      },
+      {
+        "nombre": "evaluacion-real",
+        "resultado": "skipped"
+      },
+      {
+        "nombre": "desplegar",
+        "resultado": "success"
+      }
+    ]
+  },
+  "referencias_pr_afectadas_pendientes": [
+    "refs/pull/10/head",
+    "refs/pull/17/head",
+    "refs/pull/18/head",
+    "refs/pull/19/head",
+    "refs/pull/2/head",
+    "refs/pull/20/head",
+    "refs/pull/21/head",
+    "refs/pull/22/head",
+    "refs/pull/23/head",
+    "refs/pull/24/head",
+    "refs/pull/25/head",
+    "refs/pull/26/head",
+    "refs/pull/27/head",
+    "refs/pull/28/head",
+    "refs/pull/29/head",
+    "refs/pull/3/head",
+    "refs/pull/30/head",
+    "refs/pull/31/head",
+    "refs/pull/32/head",
+    "refs/pull/4/head",
+    "refs/pull/5/head",
+    "refs/pull/6/head",
+    "refs/pull/7/head",
+    "refs/pull/8/head",
+    "refs/pull/9/head"
+  ],
+  "primeros_commits_cambiados": [
+    {
+      "sha_anterior": "2a958636a569a300aa79877e22bb0c686a595e69",
+      "sha_filtrado": "f7a5bb8e71bfc1e372c4256f2ece690a0ceeebbb"
+    }
+  ],
+  "commit_historico_aun_accesible_api": true,
+  "soporte_github_contactado": false,
+  "respaldo_privado": "Equipo confirmo bundle completo/verificado; copia espejo y bundle privados adicionales verificados. No se versionan ni se entregan en el portal.",
+  "alcance": "Las ramas publicadas y clones normales se sanearon. No se afirma purga de objetos/caches/refs de PR/forks/clones de terceros ni no reutilizacion universal.",
+  "cloudsql": "Activacion diferida por costos; sin aprovisionamiento realizado."
+}

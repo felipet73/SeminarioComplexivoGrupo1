@@ -65,3 +65,7 @@ El SHA publicado ya está identificado mediante la captura de `/health`: `c4fd72
 - **Pendientes independientes:** revisión de reutilización en otros entornos y revisiones accesibles; decisión y ejecución coordinadas sobre el historial Git.
 
 La rotación declarada mejora la protección del servicio actualizado. El requisito global de protección de credenciales sigue parcial mientras falte acreditar el resto de su alcance.
+
+## Actualización de historia publicada
+
+El 8/11/2026 (Ecuador) se publicaron 27 ramas reescritas con respaldo confirmado y autorización explícita. Main `2482401` y un clon nuevo pasan detector histórico/activo y CI/despliegue. No se sustituyen las evidencias de rotación anteriores por esta operación. Las refs antiguas de PR/cachés siguen permitiendo acceso a objetos históricos; [constancia y borrador de soporte](../../24-cierre-historial-publicado.md). Reutilizaciones/URLs antiguas ajenas a la revisión comprobada siguen fuera de la garantía.

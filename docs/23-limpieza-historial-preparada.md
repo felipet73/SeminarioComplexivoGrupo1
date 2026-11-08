@@ -1,4 +1,6 @@
-# Limpieza de credenciales históricas: simulación, no publicación
+# Limpieza de credenciales históricas: preparación y publicación
+
+**Actualización del 8/11/2026 (Ecuador):** la preparación descrita abajo se completó y se publicaron 27 ramas con autorización y respaldo previo. Main `2482401` pasó detectores, CI y despliegue. Las refs de PR y cachés siguen pendientes; ver [constancia vigente](24-cierre-historial-publicado.md). El resto de este documento conserva el procedimiento previo, no afirma que la publicación siga sin realizarse.
 
 Se preparó una simulación en dos copias espejo locales privadas, fuera del repositorio y del ZIP. Se aplicó `git filter-repo --path backend/app/seguridad.py --invert-paths` **solo a la copia filtrada**. No se imprimieron valores, no se modificó el checkout y no se publicó un force push.
 
@@ -14,6 +16,6 @@ Esto **no cierra el requisito de historial limpio** de GitHub. Antes de publicar
 6. Tratar refs de PR, caches y vistas de objetos antiguos con el procedimiento de GitHub y, si corresponde, soporte. Indicar a cada integrante cómo reemplazar su clon sin reintroducir commits antiguos.
 7. Repetir detector histórico/activo, CI, despliegue, SHA y pruebas públicas. Conservar constancia de lo eliminado, respaldo privado y limitaciones sobre forks/copias de terceros.
 
-El repositorio actual sigue conteniendo los valores en los commits históricos señalados. Las copias externas no se borran por modificar main. La decisión/publicación coordinada permanece pendiente; la simulación se ofrece para revisar el impacto antes de solicitar esa autorización.
+En el momento de la preparación, el repositorio aún contenía los valores en las ramas históricas señaladas. Las copias externas no se borran por modificar main. La publicación coordinada ya se completó después de esa simulación; queda la gestión de referencias internas/cachés y copias externas.
 
 Guía oficial: [Removing sensitive data from a repository](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository).
