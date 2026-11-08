@@ -1,0 +1,89 @@
+{
+  "fecha_utc": "2026-11-08T05:02:23.549733+00:00",
+  "resultado": "aprobado",
+  "imagen": "titulacion-rag:postgres-preparado",
+  "revision_declarada": "f653a7149b36156cd7697b65b1cf6392305a9ce3",
+  "antes_despues": [
+    {
+      "container_id": "20fd59c7f61ef666750244a7c907d6b57b6c12f7cbd4b1ff6abe3d9af4abfaf6",
+      "image_id": "sha256:775468041308b3779021acd3180e6074f0c4598fd63885f76bc96b1c8639d0a5",
+      "health": {
+        "status": "ok",
+        "service": "titulacion-rag-api",
+        "version": "2.0.0",
+        "revision": "f653a7149b36156cd7697b65b1cf6392305a9ce3"
+      },
+      "ready": {
+        "status": "ready",
+        "fragmentos_elegibles": 961,
+        "estrategia": "lexical",
+        "proveedor_verificado": false
+      },
+      "citas": [
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-42",
+          "seccion": "Artículo 26",
+          "pagina": 9
+        },
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-43",
+          "seccion": "Artículo 27",
+          "pagina": 9
+        },
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-119",
+          "seccion": "Artículo 82",
+          "pagina": 23
+        },
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-207",
+          "seccion": "Artículo 141",
+          "pagina": 39
+        }
+      ],
+      "respuesta_sha256": "260b47b1f989dee739e9f0868880a2de18a40cd22a5f525508d27e0d94fcd4e4"
+    },
+    {
+      "container_id": "7e06d821a7c2955de030d9963d4b50e446da39c5a16e532e93b65c3ac999ab7a",
+      "image_id": "sha256:775468041308b3779021acd3180e6074f0c4598fd63885f76bc96b1c8639d0a5",
+      "health": {
+        "status": "ok",
+        "service": "titulacion-rag-api",
+        "version": "2.0.0",
+        "revision": "f653a7149b36156cd7697b65b1cf6392305a9ce3"
+      },
+      "ready": {
+        "status": "ready",
+        "fragmentos_elegibles": 961,
+        "estrategia": "lexical",
+        "proveedor_verificado": false
+      },
+      "citas": [
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-42",
+          "seccion": "Artículo 26",
+          "pagina": 9
+        },
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-43",
+          "seccion": "Artículo 27",
+          "pagina": 9
+        },
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-119",
+          "seccion": "Artículo 82",
+          "pagina": 23
+        },
+        {
+          "fragmento_id": "d3693691-d5f6-4a84-810e-16083eabac5c-r1-207",
+          "seccion": "Artículo 141",
+          "pagina": 39
+        }
+      ],
+      "respuesta_sha256": "260b47b1f989dee739e9f0868880a2de18a40cd22a5f525508d27e0d94fcd4e4"
+    }
+  ],
+  "alcance": "Dos contenedores locales nuevos sin volumen recuperan la semilla y devuelven los mismos pasajes citados. No acredita retención de cargas administrativas ni reinicio remoto de Cloud Run.",
+  "proveedores_consumidos": false,
+  "generacion_llm_evaluada": false
+}

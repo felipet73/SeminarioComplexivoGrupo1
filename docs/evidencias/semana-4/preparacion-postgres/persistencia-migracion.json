@@ -1,0 +1,45 @@
+{
+  "fecha_utc": "2026-11-08T05:10:07.930571+00:00",
+  "commit_base": "f653a7149b36156cd7697b65b1cf6392305a9ce3",
+  "alcance": "PostgreSQL 17 local, dos procesos nuevos con directorios locales diferentes; no Cloud Run ni prueba de reinicio del servidor PostgreSQL.",
+  "resultado": "aprobado",
+  "postgres_image_id": "sha256:aac5ed9e090c8b3e134bf1dcf3f9fe0787a29cecdf7867de8b53b5d8abc3eef2",
+  "fases": [
+    {
+      "escritura": "ok"
+    },
+    {
+      "documento": "ok",
+      "archivo": "ok",
+      "indice_y_cita": "ok",
+      "prompts": "ok",
+      "configuracion": "ok",
+      "auditoria": "ok",
+      "vectores_y_cache": "ok",
+      "rollback": "ok",
+      "sesion_anterior": "invalidada",
+      "nuevo_login": "ok"
+    }
+  ],
+  "proveedores_consumidos": false,
+  "datos": "Documento y configuración sintéticos; sin DSN, contraseña o cookie en el reporte.",
+  "migracion_sqlite": {
+    "fecha_utc": "2026-11-08T05:10:08.649342+00:00",
+    "resultado": "aprobado",
+    "registros": 6,
+    "fragmentos": 1,
+    "auditoria": 3,
+    "archivos": 1,
+    "sqlite_snapshot_sha256": "5e9e391d69e6b9a715465297cd725aacf7b5788a1ea248eb48961f839613c25f",
+    "alcance": "Importación transaccional de copia SQLite y archivos; no cambia tráfico ni borra el origen. Sesiones en memoria no se migran.",
+    "credenciales_publicadas": false,
+    "destino_ocupado_rechazado": true
+  },
+  "golden_set_postgres": {
+    "positivos": 16,
+    "negativos": 4,
+    "acierto_top_k": 0.875,
+    "silencio": 1.0,
+    "errores": 0
+  }
+}

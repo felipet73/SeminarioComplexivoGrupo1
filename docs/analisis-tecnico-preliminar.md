@@ -1,6 +1,6 @@
 # Análisis técnico preliminar y contraste de observaciones
 
-> **Informe histórico del corte indicado abajo.** Sus 104 pruebas y resultado estricto del agente no son el último estado: el conteo vigente es 112 con cobertura de app 88,84 % ([evidencia y evolución](21-conteos-de-pruebas.md)); la evaluación real posterior aprobó 6/6 ([resultados](07-evaluacion.md)). El PDF preliminar conserva su propio corte y no sustituye esos reportes.
+> **Informe histórico del corte indicado abajo.** Sus 104 pruebas y resultado estricto del agente no son el último estado: el conteo vigente es 130 con cobertura de app 89,09 % ([evidencia y evolución](21-conteos-de-pruebas.md)); la evaluación real posterior aprobó 6/6 ([resultados](07-evaluacion.md)). El PDF preliminar conserva su propio corte y no sustituye esos reportes.
 
 ## 1. Dictamen y alcance
 

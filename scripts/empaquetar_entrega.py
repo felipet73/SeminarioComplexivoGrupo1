@@ -8,7 +8,7 @@ import tempfile
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_DIRS = {'.git', '.venv', 'venv', 'node_modules', '__pycache__', '.pytest_cache',
+EXCLUDED_DIRS = {'.terraform', '.git', '.venv', 'venv', 'node_modules', '__pycache__', '.pytest_cache',
                  '.ruff_cache', 'logs', 'tmp', 'test-results', 'playwright-report'}
 
 
@@ -17,8 +17,8 @@ def permitida(path):
         return False
     if path.name.startswith('.env'):
         return path.name == '.env.example' or path.as_posix() == 'frontend/.env.production'
-    return not (path.suffix.lower() in {'.key', '.pem', '.sqlite3', '.sqlite', '.db', '.zip'}
-                or '.sqlite3-' in path.name or '.db-' in path.name)
+    return not (path.suffix.lower() in {'.key', '.pem', '.sqlite3', '.sqlite', '.db', '.zip', '.tfvars', '.tfstate', '.tfplan'}
+                or ('.tfvars' in path.suffixes and path.suffix != '.example') or '.tfstate' in path.suffixes or '.sqlite3-' in path.name or '.db-' in path.name)
 
 
 def empaquetar(root, output, *, max_bytes=20_000_000, medir=False):

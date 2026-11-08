@@ -3,6 +3,7 @@ from collections.abc import Iterator
 import json
 from uuid import uuid4
 from fastapi import Depends, FastAPI, HTTPException, Response
+from app.services.postgres_store import StorageUnavailable
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -93,6 +94,12 @@ def ready():
   if not count:
     raise HTTPException(503, 'No hay fuentes elegibles con índice actualizado')
   return {'status':'ready', 'fragmentos_elegibles':count, 'estrategia':config['strategy'], 'proveedor_verificado':False}
+
+
+@app.exception_handler(StorageUnavailable)
+async def error_almacenamiento(request, exc):
+  return JSONResponse(status_code=503, content={'detail':'El almacenamiento no está disponible. Intenta nuevamente más tarde.'},
+                      headers={'Retry-After':'5'})
 
 
 @app.exception_handler(RequestValidationError)
