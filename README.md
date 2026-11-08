@@ -262,7 +262,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 ## Decisiones y riesgos
 
 - [ADR y decisiones técnicas/éticas](docs/09-decisiones.md): alcance controlado, lista cerrada, confirmación humana, citas y alternativa SQLite/FTS5/vectores a Chroma.
-- [PostgreSQL durable propuesto](docs/ADR-0004.md): backend optativo probado; Cloud SQL pendiente de costo/activación.
+- [PostgreSQL durable propuesto](docs/ADR-0004.md): backend optativo probado; activación de Cloud SQL pospuesta por costos.
 - [Decisión objetivo sobre datos](docs/ADR-0003.md): distingue infraestructura deseada de la persistencia local realmente desplegada.
 - [Registro de riesgos](docs/riesgos.md): mitigaciones, evidencia y riesgo residual; no contiene valores de secretos.
 - [Auditoría de credenciales históricas](docs/15-auditoria-credenciales-historicas.md): las exclusiones de Gitleaks son falsos positivos de un advisory; el mecanismo JWT legacy contenía credenciales funcionales y sigue en commits antiguos. Código y rutas actuales retirados no equivalen a historial limpio ni acreditan revocación en otras copias.
@@ -273,7 +273,7 @@ El agente puede pedir herramientas antes de terminar: una consulta puede sumar v
 - Corpus: cinco fuentes aprobadas, 961 fragmentos; el instructivo UNIANDES con OCR aporta otros 86 **sin aprobar y no elegibles**. La aprobación y vigencia son decisiones humanas.
 - Checklist extractivo: `pendiente_de_verificar` y `completo=false`; no determina si un estudiante cumplió requisitos. El calendario excluye fines de semana y fecha inicial, **no feriados ni plazos institucionales**.
 - Los borradores requieren confirmación, caducan y son idempotentes; solo se guardan localmente, no se envían a terceros ni asignan tutor. La capacidad demo no prueba identidad universitaria.
-- En producción la persistencia sigue local hasta activar infraestructura: PostgreSQL/Cloud SQL está preparado con migración y ensayo local, pero requiere cotización/aprobación y prueba remota. Las sesiones caducan al reiniciar y las métricas/límites siguen por proceso. [Alcance y procedimiento](docs/22-postgresql-cloudsql.md).
+- En producción la persistencia sigue local hasta activar infraestructura: PostgreSQL/Cloud SQL está preparado con migración y ensayo local; el equipo decidió posponer su activación por costos hasta contar con presupuesto aprobado. La persistencia administrativa remota sigue pendiente. Las sesiones caducan al reiniciar y las métricas/límites siguen por proceso. [Alcance y procedimiento](docs/22-postgresql-cloudsql.md).
 - Evaluación final completa frente a semana 3 acreditada en Actions 42443602234; revisión humana de OCR y exhaustividad semántica todavía pendientes.
 - Historial Git con credenciales legacy pendiente de remediación coordinada; no se oculta con nuevas exclusiones. Tampoco se garantiza resistencia a toda inyección o disponibilidad continua del proveedor.
 - Paquete optimizado: **menor de 20.000.000 bytes**, comprobado con el empaquetador. Dos PDF derivados y el avatar reducen tamaño; hashes y procedencia actualizados. [Transformación, validación y aceptación visual](docs/20-paquete-comprimido.md). Volver a medir después de añadir evidencias y generar la entrega desde main final.

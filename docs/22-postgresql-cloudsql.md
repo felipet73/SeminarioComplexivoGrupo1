@@ -1,6 +1,12 @@
 # Persistencia PostgreSQL / Cloud SQL: preparación sin activar costos
 
-Estado: **opción implementada y validada localmente; Cloud SQL no creado ni activado**. El equipo eligió preparar PostgreSQL/Cloud SQL y revisar costos antes de activar. Sin `RAG_DATABASE_URL` se conserva SQLite y el despliegue actual. Fusionar este código no crea una instancia ni ejecuta Terraform.
+Estado: **opción implementada y validada localmente; activación pospuesta por costos**. El **8 de noviembre de 2026, fecha de Ecuador**, el equipo decidió conservar la preparación técnica y activar PostgreSQL/Cloud SQL oportunamente, cuando exista presupuesto aprobado y necesidad operativa. No hay fecha comprometida ni autorización vigente para crear recursos facturables. Sin `RAG_DATABASE_URL` se conserva SQLite y el despliegue actual. Fusionar este código no crea una instancia ni ejecuta Terraform.
+
+## Decisión vigente para la entrega
+
+Se conserva SQLite con semilla reproducible en producción. La implementación, infraestructura propuesta, migrador y pruebas de PostgreSQL quedan disponibles para una activación futura; no se ejecutará `terraform apply` ni se configurará `RAG_DATABASE_URL` por esta decisión. Los pasos de aprovisionamiento y activación que siguen son una guía futura, no tareas autorizadas para ejecutar ahora.
+
+La persistencia administrativa entre instancias **sigue siendo una limitación conocida**. Las pruebas locales acreditan la preparación técnica; no certifican una base Cloud SQL activa ni cierran s4c en producción. Para retomar: aprobar presupuesto/cotización, revisar plan, respaldar/migrar datos, activar y registrar el ensayo remoto. No se presume que el docente haya dispensado ese requisito: la postergación y su alcance quedan declarados.
 
 ## Qué se persiste
 
