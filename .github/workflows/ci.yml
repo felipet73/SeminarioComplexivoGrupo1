@@ -83,6 +83,30 @@ jobs:
             coverage.xml
             eval/tests-backend.xml
 
+  postgres:
+    name: Persistencia PostgreSQL aislada
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GEMINI_API_KEY: ""
+      OPENAI_API_KEY: ""
+      AI_API_KEY: ""
+      RAG_DATABASE_URL: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --no-cache-dir -r backend/requirements.txt
+      - name: Reiniciar procesos, migrar SQLite y repetir golden set sin modelos
+        run: python scripts/probar_postgres.py --with-corpus --report eval/persistencia-postgres.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: persistencia-postgres
+          path: eval/persistencia-postgres.json
+          if-no-files-found: warn
+
   frontend:
     runs-on: ubuntu-latest
     defaults:
@@ -186,6 +210,16 @@ jobs:
           docker run -d --name titulacion-rag-ci -p 8080:8080 -e PORT=8080 titulacion-rag:ci
           python scripts/smoke_container.py --url http://127.0.0.1:8080 --expected-revision "$GITHUB_SHA"
 
+      - name: Recrear instancias sin volumen y verificar la semilla citada
+        run: python scripts/verificar_reinicio_contenedor.py --image titulacion-rag:ci --expected-revision "$GITHUB_SHA" --report eval/reinicio-contenedor.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reinicio-contenedor
+          path: eval/reinicio-contenedor.json
+          if-no-files-found: warn
+
       - name: Logs del contenedor
         if: always()
         run: docker logs titulacion-rag-ci || true
@@ -202,7 +236,7 @@ jobs:
           retention-days: 1
 
   desplegar:
-    needs: [secretos, backend, frontend, navegador, contenedor]
+    needs: [secretos, backend, frontend, navegador, contenedor, postgres]
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     environment: production

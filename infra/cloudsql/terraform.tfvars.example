@@ -1,0 +1,5 @@
+project_id              = "agentetitulacion"
+runtime_service_account = "titulacion-run@agentetitulacion.iam.gserviceaccount.com"
+region                  = "us-central1"
+instance_name           = "titulacion-postgres"
+tier                    = "db-f1-micro"

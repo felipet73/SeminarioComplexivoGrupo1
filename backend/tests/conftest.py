@@ -34,6 +34,8 @@ def metricas_aisladas(tmp_path, monkeypatch):
     monkeypatch.setattr(GeminiProvider, 'generar', proveedor_real_prohibido)
     monkeypatch.setattr(OpenAIProvider, 'generar', proveedor_real_prohibido)
     monkeypatch.setattr(metrics, 'LOG_PATH', tmp_path / 'metrics.jsonl')
+    monkeypatch.setattr(admin_store, 'DATABASE_URL', '')
+    monkeypatch.setenv('RAG_DATABASE_URL', '')
     original=admin_store.PROMPT_DIR
     copied=tmp_path/'prompts'
     copied.mkdir()

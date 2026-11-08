@@ -1,5 +1,9 @@
 import json
 import re
+import mimetypes
+import shutil
+from starlette.background import BackgroundTask
+from urllib.parse import quote
 from pathlib import Path
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, Response, UploadFile
 from fastapi.responses import FileResponse
@@ -10,6 +14,7 @@ from app.admin_schemas import Login, PromptInput, DocMeta, DocUpdate, RAGConfig,
 from app.config import get_settings
 from app.services import admin_store as store, rag, analysis
 from app.services.llm import ClienteLLM
+from app.services.postgres_store import StorageUnavailable
 from app.eval_cases import CASES
 from app.parametros import PARAMETROS
 
@@ -38,6 +43,18 @@ def signout(request: Request,response: Response):
     response.delete_cookie(COOKIE,path='/api/admin')
     return {'ok':True}
 
+@protected.get('/backup')
+def export_private_backup():
+    from app.services.backup import sqlite_backup
+    try:
+        archive, directory = sqlite_backup()
+    except ValueError as error:
+        raise HTTPException(409, str(error)) from error
+    return FileResponse(archive, filename='respaldo-privado.zip', media_type='application/zip',
+                        headers={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'},
+                        background=BackgroundTask(shutil.rmtree,directory,ignore_errors=True))
+
+
 @protected.get('/bootstrap')
 def bootstrap():
     s=get_settings()
@@ -63,6 +80,8 @@ def create_prompt(payload: PromptInput, actor=Depends(require_admin)):
     return value
 
 def write_prompt(version, content):
+    if store.is_postgres():
+        return  # Contenido/versiones persistidos transaccionalmente en records.
     store.PROMPT_DIR.mkdir(parents=True,exist_ok=True)
     path=store.PROMPT_DIR/f'system_v{version}.md'
     temp=path.with_suffix('.tmp')
@@ -109,6 +128,8 @@ async def upload_document(metadata: str=Form(...), file:UploadFile=File(...), ac
         raise HTTPException(422,'Revisa el formato del archivo, el texto extraíble y las fechas de vigencia.')
     except HTTPException:
         raise
+    except StorageUnavailable:
+        raise
     except Exception:
         raise HTTPException(422,'No se pudo leer el archivo. Revisa que no esté dañado y tenga texto extraíble.')
     finally:
@@ -136,12 +157,21 @@ async def replace_document(doc_id:str,metadata:str=Form(...),expected_revision:i
         raise HTTPException(409,str(e))
     except (ValueError,ValidationError):
         raise HTTPException(422,'Revisa formato, texto y fechas del nuevo archivo.')
+    except StorageUnavailable:
+        raise
     except Exception:
         raise HTTPException(422,'No se pudo leer el nuevo archivo.')
     finally:
         await file.close()
 
 def file_response(doc):
+    if store.is_postgres():
+        content = store.read_blob(doc['path'])
+        if content is None:
+            raise HTTPException(404, 'Archivo no encontrado.')
+        return Response(content=content, media_type=mimetypes.guess_type(doc['name'])[0] or 'application/octet-stream',
+                        headers={'Content-Disposition':"attachment; filename*=UTF-8''"+quote(doc['name'], safe=''),
+                                 'X-Content-Type-Options':'nosniff', 'Cache-Control':'no-store'})
     target=(store.DATA_DIR/doc['path']).resolve()
     if not target.is_relative_to(store.DATA_DIR.resolve()) or not target.is_file():
         raise HTTPException(404,'Archivo no encontrado.')
@@ -186,6 +216,8 @@ def index_document(doc_id:str,actor=Depends(require_admin)):
         raise HTTPException(409,str(e))
     except ValueError as e:
         raise HTTPException(422,str(e))
+    except StorageUnavailable:
+        raise
     except Exception:
         raise HTTPException(503,'No se pudo generar el índice; revisa la clave o disponibilidad de embeddings. El índice anterior se conserva.')
 
