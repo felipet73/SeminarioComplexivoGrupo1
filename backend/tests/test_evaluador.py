@@ -60,3 +60,32 @@ def test_dataset_rechaza_ids_duplicados(tmp_path):
     path.write_text('\n'.join(json.dumps(c) for c in cases), encoding='utf-8')
     with pytest.raises(ValueError, match='duplicados'):
         evaluador.leer_casos(path)
+
+
+@pytest.mark.parametrize('categoria,status', [
+    ('autenticacion', 403), ('cuota_o_limite', 429),
+    ('modelo_no_disponible', 404), ('timeout', None), ('proveedor', 503),
+])
+def test_agente_conserva_diagnostico_sanitizado_del_proveedor(monkeypatch, categoria, status):
+    from fastapi import HTTPException
+    from app.config import Settings
+    from app.services.llm import ProveedorNoDisponible
+    spec = importlib.util.spec_from_file_location('agente_real', ROOT / 'eval/evaluar_agente_real.py')
+    agente = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(agente)
+    monkeypatch.setattr(agente, 'get_settings', lambda: Settings(gemini_api_key='clave-ficticia'))
+
+    def falla(*args, **kwargs):
+        try:
+            raise ProveedorNoDisponible('detalle privado ficticio del SDK', categoria, status)
+        except ProveedorNoDisponible as error:
+            raise HTTPException(503, 'El servicio de IA no está disponible.') from error
+
+    monkeypatch.setattr(agente, 'generar_respuesta', falla)
+    report = agente.evaluar()
+    assert report['aciertos'] == 0 and report['total'] == 6
+    assert all(c['categoria_proveedor'] == categoria and c['status_proveedor'] == status
+               and not c['cumple'] for c in report['casos'])
+    serialized = json.dumps(report)
+    assert 'detalle privado ficticio' not in serialized
+    assert 'clave-ficticia' not in serialized

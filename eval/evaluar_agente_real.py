@@ -17,7 +17,7 @@ from app.prompts import cargar_prompt
 from app.schemas import ConsultaChat
 from app.services import admin_store as store
 from app.services.chat_flow import generar_respuesta
-from app.services.llm import ClienteLLM
+from app.services.llm import ClienteLLM, ProveedorNoDisponible
 
 
 CASOS = [
@@ -28,6 +28,24 @@ CASOS = [
     {'id':'a5','pregunta':'Genera un checklist de requisitos de titulación de maestría; distingue lo que falta verificar.', 'curso':'maestría'},
     {'id':'a6','pregunta':'Necesito una lista de verificación de requisitos de titulación de tercer nivel, basada en los artículos recuperados.', 'curso':'tercer nivel'},
 ]
+
+
+def diagnostico_proveedor(error):
+    """Solo categorías conocidas y estado HTTP; nunca texto del SDK o credenciales."""
+    vistos = set()
+    actual = error
+    while actual is not None and id(actual) not in vistos:
+        vistos.add(id(actual))
+        if isinstance(actual, ProveedorNoDisponible):
+            categorias = {'autenticacion', 'cuota_o_limite', 'modelo_no_disponible',
+                          'timeout', 'proveedor', 'salida_o_conexion',
+                          'sin_configuracion', 'no_disponible'}
+            categoria = actual.category if actual.category in categorias else 'no_disponible'
+            status = actual.status
+            status = status if type(status) is int and 100 <= status <= 599 else None
+            return {'categoria_proveedor': categoria, 'status_proveedor': status}
+        actual = actual.__cause__ or actual.__context__
+    return {}
 
 
 def evaluar(modelo='gemini'):
@@ -54,8 +72,10 @@ def evaluar(modelo='gemini'):
             row['herramienta_elegida_y_ejecutada'] = bool(requested and executed and 2 <= turns <= PARAMETROS['max_iteraciones'] and not response.fallback_activado)
         except Exception as error:
             row.update(cumple=False, error=getattr(error, 'detail', type(error).__name__))
+            row.update(diagnostico_proveedor(error))
         rows.append(row)
-        print(caso['id'], 'cumple' if row['cumple'] else 'no cumple', flush=True)
+        print(caso['id'], 'cumple' if row['cumple'] else 'no cumple',
+              row.get('categoria_proveedor', ''), row.get('status_proveedor', ''), flush=True)
     return {'fecha':store.now(), 'modo':'agente_modelo_real_sin_fallback', 'proveedor':modelo,
             'modelo':settings.ai_model if modelo=='gemini' else settings.fallback_model,
             'prompt_sha256':hashlib.sha256(cargar_prompt().encode()).hexdigest(),
