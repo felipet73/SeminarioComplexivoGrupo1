@@ -2,7 +2,7 @@
 
 ## Evidencia y resultado
 
-El operador ejecutó las capturas y adjuntó los tres JSON completos. Se conservan sin alterar; `verificacion.json` registra sus SHA-256 y la comparación recalculada por el asistente con `scripts/verificar_persistencia_remota.py`. No se usaron credenciales de producción desde el entorno del asistente.
+El operador ejecutó las capturas y adjuntó los tres JSON completos. Se conserva el contenido JSON completo; solo se normalizan saltos de línea CRLF a LF. `verificacion.json` registra los SHA-256 de los adjuntos originales y de los archivos versionados y la comparación recalculada por el asistente con `scripts/verificar_persistencia_remota.py`. No se usaron credenciales de producción desde el entorno del asistente.
 
 | Punto | Antes | Después |
 | --- | --- | --- |
