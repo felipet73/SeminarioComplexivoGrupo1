@@ -9,7 +9,7 @@ Corte documental: 10 de noviembre de 2026, Ecuador. Base revisada: `ab21d853186b
 | Último despliegue main | API GitHub: Actions **42494812366**, SHA **ab21d85**, conclusión success; pasos de smoke y casos públicos aprobados. [Metadatos](evidencias/semana-4/cierre-main-ab21d85/actions-metadata.json). |
 | JSON público completo | El artefacto `evidencias-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80` existe, no expirado al consultar; archivo **pendiente de incorporar**. El almacenamiento devolvió Forbidden desde este entorno. Los metadatos no sustituyen los 35 casos. |
 | Conteo backend y presentación | Corregidos docs/08 y docs/11 a **147**; s4j identifica **docs/Presentacion.pdf**, diez páginas, versión usada según el equipo. No se inventa medición de duración. |
-| Historial GitHub | Las 25 refs de la solicitud siguen publicadas y `3e38895` responde en la API. No se recuperaron ni imprimieron sus valores. Solicitud de docs/25 **pendiente de envío por propietario**, sin número de caso. JWT retirado, no rotado; forks/clones externos no purgados. |
+| Historial GitHub | Las 25 refs de la solicitud siguen publicadas y `3e38895` responde en la API. No se recuperaron ni imprimieron sus valores. Solicitud de docs/25 **enviada por el propietario, caso #4985701, abierto y pendiente de actuación** según capturas aportadas posteriormente. JWT retirado, no rotado; forks/clones externos no purgados. |
 | Persistencia y despliegue | Comparación Neon entre revisiones aprobada y JSON versionados. CI ahora declara `RAG_DATABASE_URL=rag-database-url:1` con merge y verifica referencia sin consultar el valor. Se aplicará tras merge/despliegue, no antes. Sesiones/métricas/rate limit siguen por proceso. |
 | Artículo 24 | Corrección/reindexación remota reportadas por el operador y capturas observadas; 87 fragmentos y fuente artículo 24/página 9/revisión 2. Falta el archivo original de captura o JSON remoto versionado si se exige evidencia autónoma. No se trata como bug todavía sin corregir. |
 | Corpus/OCR | Git conserva `approved=false` para el instructivo; panel remoto aprobado según el equipo y sus respuestas. Esa divergencia se documenta, no se igualan políticas sin revisión. **\* Debe analizarse el improvement** de ADR-0005; revisión integral y vigencia no acreditadas. |
@@ -49,7 +49,7 @@ Después de fusionar cambios de despliegue/código, comprobar la ejecución del 
 
 ## 2. Solicitud a GitHub Support
 
-Entrar como propietario en https://support.github.com/contact y enviar el texto revisado de [docs/25](25-solicitud-soporte-github.md), sin valores. Registrar fecha, número de caso y estado de respuesta en su tabla. No publicar una copia del bundle privado. El asistente tiene acceso API al repositorio pero no una sesión autenticada de Support; no envió el formulario. No marcar purga cerrada hasta respuesta y verificación de refs/commit; copias externas siguen fuera del alcance.
+El propietario aportó confirmación de envío y listado de tickets: **#4985701**, prioridad Normal, abierto. Dar seguimiento desde su cuenta y registrar respuesta/resultado en [docs/25](25-solicitud-soporte-github.md). La captura no muestra fecha/hora absoluta; completar ese dato desde el correo cuando se disponga. El asistente registró la evidencia, no realizó el envío. No publicar bundle privado ni valores. No marcar purga cerrada hasta respuesta y verificación de refs/commit; copias externas siguen fuera del alcance.
 
 ## 3. Corpus y evidencias humanas
 

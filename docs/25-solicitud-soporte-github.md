@@ -1,3 +1,9 @@
+# GitHub Support: solicitud enviada, caso #4985701
+
+**Estado vigente: enviada por el propietario; pendiente de respuesta y actuación de GitHub Support.** Capturas aportadas en la conversación muestran «Tu mensaje ha sido enviado correctamente» y el ticket #4985701 de `felipet73`, prioridad Normal, estado abierto. No confirman retirada de referencias ni purga. La pantalla indica creación «ahora», sin fecha/hora absoluta visible; ese dato queda pendiente de la confirmación por correo.
+
+El texto siguiente se conserva como referencia del contenido preparado para la solicitud. No contiene valores de credenciales.
+
 Asunto: Solicitud de revisión de referencias de PR y cachés tras retirar credenciales históricas
 
 Repositorio: https://github.com/felipet73/SeminarioComplexivoGrupo1
@@ -46,16 +52,16 @@ Solicitamos evaluar la retirada de referencias/vistas en caché que permitan acc
 
 La publicación de ramas no elimina por sí sola forks/clones/cachés ni las refs internas de PR. Indiquen qué referencias pueden retirarse y qué actuaciones adicionales necesita realizar el propietario.
 
-Este es un borrador: NO se envió automáticamente a GitHub Support. Enviar/revisar mediante https://support.github.com/contact .
+El propietario completó el envío mediante GitHub Support y aportó confirmación; el asistente no envió el formulario. Seguimiento desde la cuenta propietaria en https://support.github.com/ .
 
-## Registro del envío (pendiente de completar por propietario)
+## Registro del envío
 
 | Campo | Estado registrado |
 | --- | --- |
-| Enviado desde cuenta propietaria | Pendiente; no se ha aportado confirmación |
-| Fecha de envío | No registrada |
-| Número de caso | No registrado |
-| Estado/respuesta de Support | No recibido |
+| Enviado desde cuenta propietaria | Confirmado por capturas del formulario y listado de tickets de felipet73 |
+| Fecha de envío | Fecha/hora absoluta pendiente de correo; la captura indica «ahora» |
+| Número de caso | **#4985701** |
+| Estado/respuesta de Support | **Abierto, prioridad Normal; pendiente de respuesta y actuación** |
 | Verificación posterior de refs/cachés | Pendiente de respuesta y comprobación |
 
-El asistente dispone de acceso al repositorio por API, pero no de una sesión autenticada en GitHub Support; no realizó el envío. Copiar el asunto y texto anteriores en el formulario de soporte desde la cuenta propietaria y registrar únicamente fecha, número y estado, sin valores ni respaldo privado. Que se envíe la solicitud no demuestra por sí solo que las referencias ya se retiraron.
+El envío fue realizado por el propietario desde su sesión; el asistente registró las capturas aportadas. La respuesta generada por IA durante la preparación no equivale a respuesta del equipo de soporte. Que exista ticket no demuestra que las referencias ya se retiraron: esperar comunicación del equipo y comprobar después refs/cachés/commit antes de marcar el cierre completo. No se versionan correos privados, valores ni respaldo del repositorio.

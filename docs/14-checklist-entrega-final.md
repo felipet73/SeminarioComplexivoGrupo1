@@ -95,7 +95,7 @@ PostgreSQL/Cloud SQL queda técnicamente preparado y probado localmente. Su acti
 
 ## Publicación coordinada del historial — 8 de noviembre de 2026, Ecuador
 
-Se publicaron 27 ramas mediante operación atómica con leases. Main `2482401` aprobó [Actions 42453615683](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683) y despliegue. Los clones deben renovarse. [Resultado, mapa y pendientes de PR/cachés](24-cierre-historial-publicado.md); no se envió una solicitud a soporte ni se afirma purga completa. La decisión de costos de Cloud SQL sigue vigente.
+Se publicaron 27 ramas mediante operación atómica con leases. Main `2482401` aprobó [Actions 42453615683](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683) y despliegue. Los clones deben renovarse. [Resultado, mapa y pendientes de PR/cachés](24-cierre-historial-publicado.md); en ese corte aún no se había enviado solicitud. Posteriormente el propietario aportó confirmación del caso **#4985701**, abierto y pendiente de actuación; no se afirma purga completa. La decisión de costos de Cloud SQL sigue vigente.
 
 ## Neon: importación y activación reportadas
 
@@ -121,4 +121,11 @@ El operador mostró reindexación de 87 fragmentos y respuesta con fuente artíc
 
 ## Cierre para entrega (estado contrastado con main ab21d85)
 
-Última ejecución de main verificada por API: Actions 42494812366, despliegue y casos públicos aprobados. El artefacto existe, pero **su JSON completo aún no está versionado**. Pendientes operativos: incorporarlo con SHA, enviar solicitud de GitHub Support desde la cuenta propietaria y registrar caso, medir instalación/ensayo si se exige, generar ZIP del main final y subirlo al portal. La revisión OCR mantiene el asterisco de improvement y no se marca aprobada. [Estado y pasos exactos](29-cierre-final-y-evidencias.md).
+Última ejecución de main verificada por API: Actions 42494812366, despliegue y casos públicos aprobados. El artefacto existe, pero **su JSON completo aún no está versionado**. Pendientes operativos: incorporarlo con SHA, dar seguimiento al caso GitHub Support **#4985701** (envío confirmado, retirada pendiente), medir instalación/ensayo si se exige, generar ZIP del main final y subirlo al portal. La revisión OCR mantiene el asterisco de improvement y no se marca aprobada. [Estado y pasos exactos](29-cierre-final-y-evidencias.md).
+
+## Solicitud de retirada de referencias: enviada
+
+- [x] Propietario envió solicitud a GitHub Support: **caso #4985701**, prioridad Normal, estado abierto, confirmado en capturas de la conversación.
+- [ ] Respuesta/actuación de GitHub y verificación posterior de refs/cachés/commit. S4b no se marca completamente cerrado.
+
+La fecha/hora absoluta no aparece en las capturas; queda pendiente de correo de confirmación. [Registro y alcance](25-solicitud-soporte-github.md).
