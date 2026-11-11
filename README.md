@@ -45,6 +45,8 @@ Detalle: [arquitectura](docs/03-arquitectura.md), [RAG](docs/06-rag.md), [secuen
 
 ## Cómo ejecutarlo en local
 
+El equipo confirmó instalación y ejecución desde copias nuevas tras la limpieza del historial, especialmente para el QA final de Olmes. Duración declarada inferior a diez minutos, **aproximadamente seis minutos estimados, sin cronómetro**. [Constancia y alcance](docs/evidencias/semana-4/instalacion-equipo.md); la medición automatizada es independiente.
+
 Requisitos: **Git, Python 3.12 y Node 22 actualizado —compatible con Vite— o Node 24**; `npm` incluido. Ejecutar desde la raíz salvo donde se indique. No se necesita Docker para desarrollo local.
 
 ### 1. Clonar y preparar Python
@@ -318,3 +320,7 @@ Estos aportes fueron confirmados por el equipo. No se atribuyen commits, porcent
 Material de entrega: [checklist s4a–s4k](docs/14-checklist-entrega-final.md), [presentación utilizada en sustentación](docs/Presentacion.pdf), [informe técnico PDF](docs/analisis-tecnico-preliminar.pdf), [observaciones de sustentación](docs/evidencias/semana-4/observaciones-sustentacion.md).
 
 Para medir el ZIP desde raíz: `python scripts/empaquetar_entrega.py --medir`. Devuelve exit 1 si supera 20 MB y no deja un entregable sobredimensionado; solo incluye archivos conocidos por Git y excluye secretos locales, dependencias y caches. Antes de entregar, revisar el informe, el estado de Git y el detector activo; el empaquetador no acredita historial limpio.
+
+### Alcance de los documentos OCR
+
+El cliente debe aportar PDF legible, con texto extraíble y fiel al original. Si necesita OCR, lo prepara y verifica con herramientas externas de su elección; implementar OCR no forma parte del producto. La validación técnica y la indexación no certifican fidelidad integral ni vigencia. **\* Debe analizarse el improvement** de revisión asistida, fuera del alcance actual y sin marcar como implementado. [Decisión](docs/ADR-0005.md).

@@ -14,7 +14,7 @@ Corte documental: 10 de noviembre de 2026, Ecuador. Base revisada: `ab21d853186b
 | Artículo 24 | Corrección/reindexación remota reportadas por el operador y capturas observadas; 87 fragmentos y fuente artículo 24/página 9/revisión 2. Falta el archivo original de captura o JSON remoto versionado si se exige evidencia autónoma. No se trata como bug todavía sin corregir. |
 | Corpus/OCR | Git conserva `approved=false` para el instructivo; panel remoto aprobado según el equipo y sus respuestas. Esa divergencia se documenta, no se igualan políticas sin revisión. **\* Debe analizarse el improvement** de ADR-0005; revisión integral y vigencia no acreditadas. |
 | Configuración híbrida | 16/16 acreditado para OpenAI `text-embedding-3-small`/0,55. No se extrapola a Gemini/0,65 ni al estado actual del panel. Nueva configuración requiere su propia evaluación. |
-| Evidencia humana | Instalación en diez minutos sin medición; observación de sustentación declarada por equipo, sin acta/fecha exacta aportada. Capturas de rotación/tráfico/chat vistas en conversación no están disponibles como archivos originales en el checkout. No se fabrican fechas ni imágenes. |
+| Evidencia humana | Instalación humana confirmada por los tres integrantes tras renovar clones: aprox. seis minutos estimados, menos de diez, sin cronómetro; Olmes realizó QA final. Observación de sustentación declarada por equipo, sin acta/fecha exacta aportada. Capturas de rotación/tráfico/chat vistas en conversación no están disponibles como archivos originales en el checkout. No se fabrican fechas ni imágenes. |
 | Paquete main revisado | Worktree limpio, empaquetador exit 0: **19.096.731 bytes** (<20.000.000), SHA y hash del ZIP registrados en [reporte](evidencias/semana-4/cierre-main-ab21d85/paquete-main.json). Repetir después de fusionar cambios. |
 | Portal | Subida/acuse **no realizados desde este entorno**. El propietario debe subir un solo ZIP del main final, con el código del grupo, máximo 20 MB. Plazo comunicado: miércoles 11 de noviembre de 2026, **23:59 Ecuador**. |
 
@@ -57,7 +57,7 @@ El propietario aportó confirmación de envío y listado de tickets: **#4985701*
 
 No cambiar `approved=false` a true en Git para reflejar mecánicamente una aprobación hecha en el panel sin revisión. Registrar quién aprobó en remoto, con qué alcance y en qué fecha cuando se conozca; si no existe sustento de revisión, el equipo debe decidir retirar/excluir su uso normativo hasta revisarlo. ADR-0005 propone facilitar la revisión futura, no acredita la actual ni crea un bloqueo automático nuevo.
 
-Para evidencia autónoma, aportar imágenes originales ligeras o un JSON de consulta revisado por secretos. No se incorporan capturas reconstruidas ni vídeos pesados. Un ensayo de instalación debe registrar persona, entorno, hora de inicio/fin, comandos y resultado real; no se rellena «10 minutos» sin haberlo medido.
+Para evidencia autónoma, aportar imágenes originales ligeras o un JSON de consulta revisado por secretos. No se incorporan capturas reconstruidas ni vídeos pesados. La instalación del equipo ya está [confirmada](evidencias/semana-4/instalacion-equipo.md): aprox. seis minutos estimados, sin cronómetro. No se rellenan horas de inicio/fin ni un tiempo exacto no medidos.
 
 ## 4. Generar y subir el único ZIP final
 

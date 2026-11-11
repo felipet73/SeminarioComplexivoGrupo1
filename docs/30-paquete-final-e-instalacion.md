@@ -34,7 +34,7 @@ Se clonó main `8d353473256a3d35580d78d9c3edf868b5d9802c` en un directorio nuevo
 
 Resultado: **aprobado, 51,633 segundos**. Linux administrado, Python 3.12.14, Node 24.22.1 y npm 11.9.0 ya instalados. No incluye preparar esos prerrequisitos, generar respuestas con LLM, credenciales, servicios externos, navegador interactivo ni tiempo humano leyendo instrucciones. No acredita disponibilidad 24 h ni instalación en cualquier red/equipo. [Reporte completo](evidencias/semana-4/paquete-final-automatizado/instalacion-limpia-automatizada.json).
 
-Es una medición automatizada real, **no** un ensayo por un integrante nuevo. Si el criterio docente exige esa persona, sigue pendiente hasta recibir nombre, sistema, duración real, resultado y alcance. No se cambia el checkbox humano a partir de estos 51,633 segundos.
+Es una medición automatizada real y separada de la confirmación humana recibida después: los tres integrantes descargaron el repositorio limpio y ejecutaron desde cero para pruebas finales; el equipo estima aproximadamente seis minutos, menos de diez, sin cronómetro. Olmes realizó QA final. [Constancia humana y límites](evidencias/semana-4/instalacion-equipo.md). No se atribuyen los 51,633 segundos a ningún integrante ni se afirma una persona ajena al equipo.
 
 ## Validación técnica del empaquetado
 
@@ -45,8 +45,8 @@ La suite agrega casos para evidencia válida, resumen incompleto, fallo, omitido
 ## Pendientes que una automatización no puede declarar realizados
 
 - Respuesta de GitHub Support al caso #4985701 y verificación de retirada de referencias/cachés.
-- Revisión OCR/vigencia: **\* Debe analizarse el improvement**, no se marca aprobación integral.
-- Fecha/acta de sustentación, ensayo humano y capturas originales cuando los exija el docente: solo el equipo puede aportar esos hechos.
+- Calidad/legibilidad del PDF y eventual OCR: responsabilidad del cliente que aporta/aprueba el insumo. No hay OCR dentro del alcance del producto. La herramienta asistida es una mejora futura: **\* Debe analizarse el improvement**, sin marcarla implementada ni certificar la fuente actual. La vigencia normativa se revisa por separado.
+- Fecha/acta de sustentación y capturas originales cuando los exija el docente: solo el equipo puede aportar esos hechos. La ejecución humana local ya fue confirmada con tiempo estimado, no cronometrado.
 - Subida al portal y acuse, antes del plazo comunicado: miércoles 11 de noviembre, 23:59 Ecuador.
 
 La captura puntual de artículo 24/página 9 y el ensayo Neon antes/después sí están documentados con sus límites. No se requieren cambios funcionales nuevos para repetirlos; no se reimporta ni se borra la base.
