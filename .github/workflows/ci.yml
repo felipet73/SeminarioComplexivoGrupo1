@@ -339,3 +339,13 @@ jobs:
         with:
           name: evidencias-despliegue-${{ github.sha }}
           path: eval/results-produccion*.json
+
+      - name: Generar ZIP final con evidencia pública del mismo SHA
+        run: python scripts/empaquetar_entrega.py --evidencia-produccion eval/results-produccion-funcional.json --expected-revision "$GITHUB_SHA" --output "tmp/Titulacion_Grupo1_$GITHUB_SHA.zip" --report tmp/paquete-final.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: entrega-final-${{ github.sha }}
+          path: |
+            tmp/Titulacion_Grupo1_${{ github.sha }}.zip
+            tmp/paquete-final.json
+          if-no-files-found: error

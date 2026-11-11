@@ -53,3 +53,7 @@ Dos regresiones nuevas: impedir fallback con eco de getpass y leer/eliminar cont
 ## Corrección de artículo OCR: 147
 
 Seis regresiones nuevas (4 variantes de encabezado, OCR real página 9 y fuente del flujo con modelo simulado). Suite local **147 aprobadas, cobertura app 89,11 %**. [XML, diagnóstico y recuperación](evidencias/semana-4/citas-articulo-24/). Los conteos anteriores se conservan como cortes históricos.
+
+## Paquete final con evidencia del mismo SHA: 154
+
+Siete regresiones nuevas validan incorporación de los 35 casos al ZIP, rechazo de resumen/fallo/omitidos/IDs/otro SHA y checkout modificado. Suite local: **154 aprobadas, cobertura app 89,11 %**. [XML y resumen](evidencias/semana-4/paquete-final-automatizado/). Los cortes 147 y anteriores mantienen sus archivos; no son ejecuciones del nuevo código.

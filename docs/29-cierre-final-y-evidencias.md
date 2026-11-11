@@ -75,3 +75,7 @@ explorer.exe tmp
 ```
 
 El empaquetador usa archivos rastreados y excluye secretos/estados/cachés, `.env`, `.venv`, `node_modules`, `__pycache__`, Terraform privado y respaldos. Evitar bundles privados dentro del proyecto. Revisar tamaño exacto ≤20.000.000 bytes y contenido; subir solo el ZIP generado al portal con el código real del grupo. Conservar acuse, hora Ecuador, SHA y hash del paquete. No hay constancia de entrega hasta recibir ese acuse.
+
+## Ampliación de cierre automatizable
+
+Main 8d35347 aprobó Actions 42934948121, incluida la referencia declarada Neon. La instalación limpia automatizada pasó en 51,633 s, sin atribuir ensayo a una persona. La ampliación del empaquetador produce tras CI un ZIP con JSON de los 35 casos del mismo SHA, evitando otro commit que vuelva a cambiar la revisión. [Guía vigente para obtener el entregable y pendientes humanos](30-paquete-final-e-instalacion.md).

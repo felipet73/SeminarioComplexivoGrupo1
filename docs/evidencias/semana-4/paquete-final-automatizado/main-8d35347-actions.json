@@ -1,0 +1,64 @@
+{
+  "run_id": 42934948121,
+  "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42934948121",
+  "sha": "8d353473256a3d35580d78d9c3edf868b5d9802c",
+  "estado": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-11T00:54:07Z",
+  "jobs": [
+    {
+      "nombre": "frontend",
+      "conclusion": "success",
+      "pasos": []
+    },
+    {
+      "nombre": "Revisar secretos con Gitleaks",
+      "conclusion": "success",
+      "pasos": []
+    },
+    {
+      "nombre": "contenedor",
+      "conclusion": "success",
+      "pasos": []
+    },
+    {
+      "nombre": "Persistencia PostgreSQL aislada",
+      "conclusion": "success",
+      "pasos": []
+    },
+    {
+      "nombre": "navegador",
+      "conclusion": "success",
+      "pasos": []
+    },
+    {
+      "nombre": "backend",
+      "conclusion": "success",
+      "pasos": []
+    },
+    {
+      "nombre": "evaluacion-real",
+      "conclusion": "skipped",
+      "pasos": []
+    },
+    {
+      "nombre": "desplegar",
+      "conclusion": "success",
+      "pasos": [
+        {
+          "nombre": "Verificar referencia de persistencia sin leer el secreto",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Verificar revisión, corpus, rutas retiradas y chat",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Casos funcionales contra las URLs públicas",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "alcance": "Metadatos reales por API; no sustituye JSON por caso del nuevo despliegue. CI de esta rama prepara ZIP con ese JSON incorporado sin otro commit."
+}
