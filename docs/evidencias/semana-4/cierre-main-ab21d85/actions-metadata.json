@@ -65,6 +65,18 @@
     "size_in_bytes": 1776,
     "expired": false
   },
-  "json_completo_incorporado": false,
-  "limite": "El almacenamiento de artefactos devolvió Forbidden en este entorno; no se inventan resultados individuales."
+  "json_completo_incorporado": true,
+  "limite": "Prueba pública de ab21d85 el 8/11/2026; no se atribuye a commits posteriores. No certifica revisión OCR ni disponibilidad continua.",
+  "json_completo": "../produccion-ab21d85-run-42494812366.json",
+  "sha256_adjunto_original": "33674f3a305adca3122187b35b341f468ba425c598b21bc19d2e03c81070ad90",
+  "sha256_json_versionado": "33674f3a305adca3122187b35b341f468ba425c598b21bc19d2e03c81070ad90",
+  "resultado_validacion": {
+    "correctos": 35,
+    "total": 35,
+    "casos_completos": 35,
+    "ids_unicos": 35,
+    "omitidos": 0,
+    "revision_obtenida_coincide": true
+  },
+  "procedencia_json": "Artefacto descargado y adjuntado por el propietario; validado contra SHA, casos y metadatos de Actions. Solo normalización CRLF a LF si corresponde."
 }

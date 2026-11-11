@@ -121,7 +121,7 @@ El operador mostró reindexación de 87 fragmentos y respuesta con fuente artíc
 
 ## Cierre para entrega (estado contrastado con main ab21d85)
 
-Última ejecución de main verificada por API: Actions 42494812366, despliegue y casos públicos aprobados. El artefacto existe, pero **su JSON completo aún no está versionado**. Pendientes operativos: incorporarlo con SHA, dar seguimiento al caso GitHub Support **#4985701** (envío confirmado, retirada pendiente), medir instalación/ensayo si se exige, generar ZIP del main final y subirlo al portal. La revisión OCR mantiene el asterisco de improvement y no se marca aprobada. [Estado y pasos exactos](29-cierre-final-y-evidencias.md).
+Última ejecución de main verificada por API: Actions 42494812366, despliegue y casos públicos aprobados. El **JSON completo de 35/35 ya está versionado con SHA ab21d85**, posterior a la limpieza y Neon; [reporte](evidencias/semana-4/produccion-ab21d85-run-42494812366.json). Pendientes operativos: dar seguimiento al caso GitHub Support **#4985701** (envío confirmado, retirada pendiente), medir instalación/ensayo si se exige, generar ZIP del main final y subirlo al portal. La revisión OCR mantiene el asterisco de improvement y no se marca aprobada. [Estado y pasos exactos](29-cierre-final-y-evidencias.md).
 
 ## Solicitud de retirada de referencias: enviada
 
@@ -129,3 +129,7 @@ El operador mostró reindexación de 87 fragmentos y respuesta con fuente artíc
 - [ ] Respuesta/actuación de GitHub y verificación posterior de refs/cachés/commit. S4b no se marca completamente cerrado.
 
 La fecha/hora absoluta no aparece en las capturas; queda pendiente de correo de confirmación. [Registro y alcance](25-solicitud-soporte-github.md).
+
+## Evidencia pública ab21d85 incorporada
+
+- [x] JSON completo de Actions 42494812366: **35/35, sin omitidos**, SHA esperado y obtenido coincidentes. Reporte real del 8/11/2026, recibido del propietario y validado; no es una nueva corrida ni prueba del próximo merge. [Archivo completo](evidencias/semana-4/produccion-ab21d85-run-42494812366.json).

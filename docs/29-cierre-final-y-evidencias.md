@@ -7,7 +7,7 @@ Corte documental: 10 de noviembre de 2026, Ecuador. Base revisada: `ab21d853186b
 | Punto | Estado comprobado / siguiente acción |
 | --- | --- |
 | Último despliegue main | API GitHub: Actions **42494812366**, SHA **ab21d85**, conclusión success; pasos de smoke y casos públicos aprobados. [Metadatos](evidencias/semana-4/cierre-main-ab21d85/actions-metadata.json). |
-| JSON público completo | El artefacto `evidencias-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80` existe, no expirado al consultar; archivo **pendiente de incorporar**. El almacenamiento devolvió Forbidden desde este entorno. Los metadatos no sustituyen los 35 casos. |
+| JSON público completo | El artefacto `evidencias-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80` existe, no expirado al consultar; **JSON completo incorporado**, descargado y adjuntado por el propietario tras Forbidden desde este entorno. [35/35, sin omitidos, SHA coincidente](evidencias/semana-4/produccion-ab21d85-run-42494812366.json). Los metadatos se complementan ahora con los casos. |
 | Conteo backend y presentación | Corregidos docs/08 y docs/11 a **147**; s4j identifica **docs/Presentacion.pdf**, diez páginas, versión usada según el equipo. No se inventa medición de duración. |
 | Historial GitHub | Las 25 refs de la solicitud siguen publicadas y `3e38895` responde en la API. No se recuperaron ni imprimieron sus valores. Solicitud de docs/25 **enviada por el propietario, caso #4985701, abierto y pendiente de actuación** según capturas aportadas posteriormente. JWT retirado, no rotado; forks/clones externos no purgados. |
 | Persistencia y despliegue | Comparación Neon entre revisiones aprobada y JSON versionados. CI ahora declara `RAG_DATABASE_URL=rag-database-url:1` con merge y verifica referencia sin consultar el valor. Se aplicará tras merge/despliegue, no antes. Sesiones/métricas/rate limit siguen por proceso. |
@@ -18,7 +18,9 @@ Corte documental: 10 de noviembre de 2026, Ecuador. Base revisada: `ab21d853186b
 | Paquete main revisado | Worktree limpio, empaquetador exit 0: **19.096.731 bytes** (<20.000.000), SHA y hash del ZIP registrados en [reporte](evidencias/semana-4/cierre-main-ab21d85/paquete-main.json). Repetir después de fusionar cambios. |
 | Portal | Subida/acuse **no realizados desde este entorno**. El propietario debe subir un solo ZIP del main final, con el código del grupo, máximo 20 MB. Plazo comunicado: miércoles 11 de noviembre de 2026, **23:59 Ecuador**. |
 
-## 1. Descargar e incorporar el JSON completo
+## 1. JSON completo incorporado; procedimiento de descarga para futuras corridas
+
+El propietario ya aportó el reporte de esta ejecución y se incorporó íntegro tras validar SHA y 35 casos. No necesita repetir estos pasos para ab21d85. Se conservan como referencia para recuperar otra ejecución.
 
 En GitHub: [ejecución 42494812366](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366) → Summary → Artifacts → `evidencias-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80`. Extraer `results-produccion-funcional.json`. No guardar el ZIP de artefacto en la entrega.
 
