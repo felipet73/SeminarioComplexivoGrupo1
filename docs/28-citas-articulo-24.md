@@ -22,7 +22,7 @@ La corrección no verifica por sí sola la implicación semántica de todas las 
 4. Inspeccionar en RAG el fragmento de `Art, 24.- Modelo de negocios`: debe indicar **Artículo 24, página 9**. Comprobar que no permanece ese encabezado dentro de un fragmento artículo 23.
 5. Probar recuperación con «¿Cuáles son las dos fases del modelo de negocios para titulación?» y después realizar la consulta en el chatbot. Si responde esa norma, el enlace correspondiente debe indicar artículo 24/página 9. Guardar resultado real y su SHA/revisión; si el modelo se abstiene o selecciona otra fuente, conservarlo e investigar sin forzar un aprobado.
 
-La evidencia Neon de persistencia anterior conserva su fecha/índice de 1.047: no se reescribe, porque corresponde al estado anterior a esta corrección. No repetir la migración SQLite ni borrar la base. Queda pendiente únicamente la aplicación y verificación de esta corrección en el índice remoto.
+La evidencia Neon de persistencia anterior conserva su fecha/índice de 1.047: no se reescribe, porque corresponde al estado anterior a esta corrección. No repetir la migración SQLite ni borrar la base. Ese era el pendiente al preparar PR #39; el operador confirmó después su aplicación y consulta corregida, como se registra a continuación. Sigue sin versionarse un JSON nuevo de esa respuesta.
 
 ## Comprobación posterior reportada por el operador
 

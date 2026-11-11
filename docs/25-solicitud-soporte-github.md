@@ -5,7 +5,7 @@ Propietario solicitante: felipet73 (enviar desde la cuenta autorizada del reposi
 
 Se expusieron históricamente una contraseña administrativa y una clave JWT en backend/app/seguridad.py. No se adjuntan sus valores. La contraseña de ejecución fue cambiada y el mecanismo JWT/rutas legacy se retiró del código operativo; no se afirma ausencia de reutilización en todos los entornos.
 
-Se conservó un respaldo privado, se reescribieron atómicamente 27 ramas con leases y se mantuvieron las 28 ramas. Main actual: 2482401e50b607296151b5a7ac47738536c0b2d5. Un clon nuevo sin refs de PR pasa el detector histórico y el activo; el código actual de aplicación se conservó. GitHub mantiene referencias de PR de solo lectura y el commit histórico todavía responde en la API.
+Se conservó un respaldo privado, se reescribieron atómicamente 27 ramas con leases y se mantuvieron las 28 ramas. Main inmediatamente después de la limpieza: 2482401e50b607296151b5a7ac47738536c0b2d5 (corte histórico, no HEAD vigente). Un clon nuevo sin refs de PR pasa el detector histórico y el activo; el código actual de aplicación se conservó. GitHub mantiene referencias de PR de solo lectura y el commit histórico todavía responde en la API.
 
 Commits históricos de referencia:
 - 1348b065feaba46b6dfea20bf26b1f7d8b455dc8
@@ -47,3 +47,15 @@ Solicitamos evaluar la retirada de referencias/vistas en caché que permitan acc
 La publicación de ramas no elimina por sí sola forks/clones/cachés ni las refs internas de PR. Indiquen qué referencias pueden retirarse y qué actuaciones adicionales necesita realizar el propietario.
 
 Este es un borrador: NO se envió automáticamente a GitHub Support. Enviar/revisar mediante https://support.github.com/contact .
+
+## Registro del envío (pendiente de completar por propietario)
+
+| Campo | Estado registrado |
+| --- | --- |
+| Enviado desde cuenta propietaria | Pendiente; no se ha aportado confirmación |
+| Fecha de envío | No registrada |
+| Número de caso | No registrado |
+| Estado/respuesta de Support | No recibido |
+| Verificación posterior de refs/cachés | Pendiente de respuesta y comprobación |
+
+El asistente dispone de acceso al repositorio por API, pero no de una sesión autenticada en GitHub Support; no realizó el envío. Copiar el asunto y texto anteriores en el formulario de soporte desde la cuenta propietaria y registrar únicamente fecha, número y estado, sin valores ni respaldo privado. Que se envíe la solicitud no demuestra por sí solo que las referencias ya se retiraron.

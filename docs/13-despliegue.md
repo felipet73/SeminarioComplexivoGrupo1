@@ -71,3 +71,7 @@ La opción `RAG_DATABASE_URL` conserva datos, índices y originales en PostgreSQ
 `GET /api/admin/backup` exige sesión administrativa, responde no-store y exporta una copia SQLite más originales para migración; no incluye entorno ni credenciales del proceso. Su contenido puede ser privado: no versionarlo ni enviarlo en el ZIP de entrega. En PostgreSQL el endpoint deriva al respaldo administrado, no crea un dump web.
 
 CI también recrea dos contenedores sin volumen para verificar la semilla. La evidencia local de ese ensayo no se etiqueta como reinicio remoto de Cloud Run. La constancia de rotación de contraseña ya se encuentra en [actuación legacy](evidencias/semana-4/actuacion-credenciales-legacy.md); la limpieza del historial tiene [simulación y coordinación separadas](23-limpieza-historial-preparada.md).
+
+## Referencia Neon declarada en CI
+
+El workflow declara `RAG_DATABASE_URL=rag-database-url:1` y `secrets_update_strategy: merge`: deja de depender solo de la configuración manual inicial y conserva las demás referencias de secretos. Un paso posterior consulta únicamente la configuración del servicio y exige esa referencia/versión, sin leer el secreto. La cuenta de ejecución necesita Secret Accessor sobre ese secreto; no se añade un conector Cloud SQL. Si se rota la URL, actualizar la versión declarada y verificar el despliegue antes de deshabilitar la anterior. Este cambio no se presenta como desplegado antes de su merge/ejecución.

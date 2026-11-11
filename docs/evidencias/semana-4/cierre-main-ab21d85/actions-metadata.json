@@ -1,0 +1,70 @@
+{
+  "fuente": "GitHub REST API actions/runs, jobs y artifacts; no JSON de pruebas por caso",
+  "run_id": 42494812366,
+  "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366",
+  "sha": "ab21d853186ba34acfe8359553a8d38a39de1f80",
+  "branch": "main",
+  "estado": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-08T15:26:23Z",
+  "updated_at": "2026-11-08T15:29:13Z",
+  "jobs": [
+    {
+      "nombre": "frontend",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "contenedor",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "Revisar secretos con Gitleaks",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "navegador",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "backend",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "Persistencia PostgreSQL aislada",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "evaluacion-real",
+      "conclusion": "skipped",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "desplegar",
+      "conclusion": "success",
+      "pasos_funcionales": [
+        {
+          "nombre": "Verificar revisión, corpus, rutas retiradas y chat",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Casos funcionales contra las URLs públicas",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artefacto": {
+    "id": 13622863021,
+    "name": "evidencias-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80",
+    "size_in_bytes": 1776,
+    "expired": false
+  },
+  "json_completo_incorporado": false,
+  "limite": "El almacenamiento de artefactos devolvió Forbidden en este entorno; no se inventan resultados individuales."
+}

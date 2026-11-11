@@ -17,7 +17,7 @@ Los estudiantes necesitan interpretar requisitos y opciones de titulación dispe
 - **Corpus disponible:** https://titulacion-rag-386902880383.us-central1.run.app/ready
 - **Contrato HTTP:** https://titulacion-rag-386902880383.us-central1.run.app/docs
 
-Frontend en **Vercel**, backend en **Cloud Run**, región `us-central1`. Última ejecución de despliegue verificada: [Actions 42389025186](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186), commit **`c1a5f3f`**, aprobada el 7 de noviembre de 2026. Incluye smoke con registro de métricas y 35 casos públicos, con generación real directa y por proxy. Esta evidencia corresponde a esa revisión; un cambio posterior exige repetir las comprobaciones.
+Frontend en **Vercel**, backend en **Cloud Run**, región `us-central1`. Última ejecución de despliegue verificada en la API de GitHub: [Actions 42494812366](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366), SHA **`ab21d853186ba34acfe8359553a8d38a39de1f80`**, aprobada el 8 de noviembre de 2026. El job de smoke y casos funcionales públicos terminó correctamente; **falta incorporar el JSON completo por caso de ese artefacto**, no se sustituye con el reporte histórico de `279580e`. [Metadatos y paso pendiente](docs/29-cierre-final-y-evidencias.md). Un cambio posterior requiere comprobar su propia ejecución y SHA.
 
 `/health` acredita el proceso y su revisión declarada; `/ready` comprueba corpus elegible e índice actual, **no disponibilidad del proveedor**. El servicio puede tener arranque en frío al escalar a cero; no se ha acreditado aquí un tiempo máximo ni disponibilidad durante 24 horas.
 
@@ -153,7 +153,7 @@ El flujo implementado está en [.github/workflows/ci.yml](.github/workflows/ci.y
 4. Actualiza Cloud Run y verifica SHA, corpus, retirada legacy, SSE y registro de métricas. Ejecuta obligatoriamente 35 casos públicos con generación real.
 5. Un fallo posterior deja el job rojo; **no hay rollback automático**. Vercel publica el frontend desde Git mediante su integración.
 
-Servicio backend: `titulacion-rag`, región `us-central1`; configuración y permisos en [docs/13-despliegue.md](docs/13-despliegue.md). El workflow usa memoria 1 GiB y entre cero y una instancia; esto no garantiza durabilidad. Última corrida aprobada: [42389025186 / c1a5f3f](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186).
+Servicio backend: `titulacion-rag`, región `us-central1`; configuración y permisos en [docs/13-despliegue.md](docs/13-despliegue.md). El workflow usa memoria 1 GiB y entre cero y una instancia; esto no garantiza durabilidad. Última corrida aprobada verificada: [42494812366 / ab21d85](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366); JSON completo pendiente de incorporar. El workflow declara `RAG_DATABASE_URL=rag-database-url:1` con merge de referencias, sin publicar el DSN. Esta declaración se aplicará al fusionar y desplegar el cambio.
 
 Para verificar el **contenedor local**, desde la raíz, en Bash:
 
@@ -226,7 +226,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 |---|---|
 | Backend actual | **147 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de corrección de cita OCR. [XML y resumen local](docs/evidencias/semana-4/citas-articulo-24/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
 | Frontend y navegador | **18 pruebas**, build y **10 escenarios** Playwright con API aislada y modelo doble; jobs remotos aprobados. |
-| Producción | **35/35**, incluidos tres casos generativos, rutas retiradas y contratos públicos; [Actions 42389025186](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42389025186). El smoke adicional exige incremento de métricas. |
+| Producción | Job de pruebas públicas aprobado en [Actions 42494812366 / ab21d85](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366). El runner exige 35 casos con generación; **JSON completo de ese corte pendiente de incorporar**. Los JSON 35/35 anteriores mantienen su SHA y alcance históricos. |
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
 | Recuperación léxica final local | **14/16 positivos, 4/4 negativas, cero errores**, igual al baseline histórico; [reporte](docs/evidencias/semana-4/recuperacion-lexica-final-2026-11-07.json). Flujo con modelo doble: **20/20**. |
 | Evaluación híbrida/chat de semana 3 | Híbrido **16/16** artículos y chat con citas **16/16**, negativas **4/4**, según [evaluación y archivos históricos](docs/07-evaluacion.md). No se presentan como una nueva corrida final. |

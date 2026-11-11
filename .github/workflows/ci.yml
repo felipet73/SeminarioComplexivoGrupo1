@@ -299,12 +299,34 @@ jobs:
           service: ${{ env.GCP_SERVICE }}
           image: ${{ steps.imagen.outputs.uri }}
           env_vars_update_strategy: merge
+          secrets_update_strategy: merge
+          secrets: |
+            RAG_DATABASE_URL=rag-database-url:1
           env_vars: |
             APP_REVISION=${{ github.sha }}
             APP_ENV=production
             CORS_ORIGINS=${{ env.FRONTEND_URL }}
             ADMIN_COOKIE_SECURE=true
           flags: --memory=1Gi --max-instances=1 --min-instances=0
+      - name: Verificar referencia de persistencia sin leer el secreto
+        run: |
+          gcloud run services describe "$GCP_SERVICE" --project "$GCP_PROJECT_ID" --region "$GCP_REGION" --format=json > /tmp/cloudrun-verificacion.json
+          python - <<'PYVERIFY'
+          import json
+          from pathlib import Path
+          path = Path('/tmp/cloudrun-verificacion.json')
+          try:
+              service = json.loads(path.read_text())
+              containers = service['spec']['template']['spec']['containers']
+              env = next(e for c in containers for e in c.get('env', []) if e['name'] == 'RAG_DATABASE_URL')
+              ref = env.get('valueFrom', {}).get('secretKeyRef', {})
+              assert ref.get('name', '').split('/')[-1] == 'rag-database-url', 'Referencia PostgreSQL no coincide'
+              assert ref.get('key') == '1', 'Versión PostgreSQL no coincide'
+              assert 'value' not in env, 'La conexión no debe declararse como valor literal'
+              print('Referencia PostgreSQL declarada y verificada; valor del secreto no consultado.')
+          finally:
+              path.unlink(missing_ok=True)
+          PYVERIFY
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
