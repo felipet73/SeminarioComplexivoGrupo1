@@ -1,0 +1,797 @@
+{
+  "fecha_utc": "2026-11-08T15:29:04.026007+00:00",
+  "backend": "https://titulacion-rag-386902880383.us-central1.run.app",
+  "frontend": "https://seminario-complexivo-grupo1.vercel.app",
+  "revision_esperada": "ab21d853186ba34acfe8359553a8d38a39de1f80",
+  "incluye_modelo": true,
+  "solo_backend": false,
+  "correctos": 35,
+  "total": 35,
+  "omitidos": [],
+  "p95_segundos": 4.327,
+  "casos": [
+    {
+      "id": "front-inicio",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://seminario-complexivo-grupo1.vercel.app/",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "allow_origin": "*",
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.223,
+      "ok": true
+    },
+    {
+      "id": "front-admin",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://seminario-complexivo-grupo1.vercel.app/admin",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "allow_origin": "*",
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.194,
+      "ok": true
+    },
+    {
+      "id": "front-metricas",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://seminario-complexivo-grupo1.vercel.app/metricas",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "allow_origin": "*",
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.155,
+      "ok": true
+    },
+    {
+      "id": "proxy-sesion",
+      "esperado": {
+        "status": 401,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://seminario-complexivo-grupo1.vercel.app/api/admin/session",
+        "metodo": "GET",
+        "status": 401,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.199,
+      "ok": true
+    },
+    {
+      "id": "salud-revision",
+      "esperado": {
+        "status": 200,
+        "contrato": "salud",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/health",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": "ab21d853186ba34acfe8359553a8d38a39de1f80",
+      "segundos": 0.071,
+      "ok": true
+    },
+    {
+      "id": "corpus-listo",
+      "esperado": {
+        "status": 200,
+        "contrato": "ready",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/ready",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.854,
+      "ok": true
+    },
+    {
+      "id": "login-legacy-retirado",
+      "esperado": {
+        "status": 404,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/admin/login",
+        "metodo": "POST",
+        "status": 404,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.076,
+      "ok": true
+    },
+    {
+      "id": "recarga-legacy-retirada",
+      "esperado": {
+        "status": 404,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/admin/recargar-reglamentos",
+        "metodo": "POST",
+        "status": 404,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.064,
+      "ok": true
+    },
+    {
+      "id": "sesion-protegida",
+      "esperado": {
+        "status": 401,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/admin/session",
+        "metodo": "GET",
+        "status": 401,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.064,
+      "ok": true
+    },
+    {
+      "id": "bootstrap-protegido",
+      "esperado": {
+        "status": 401,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/admin/bootstrap",
+        "metodo": "GET",
+        "status": 401,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.084,
+      "ok": true
+    },
+    {
+      "id": "historial-protegido",
+      "esperado": {
+        "status": 401,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/admin/history",
+        "metodo": "GET",
+        "status": 401,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.076,
+      "ok": true
+    },
+    {
+      "id": "login-sin-csrf",
+      "esperado": {
+        "status": 403,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/admin/login",
+        "metodo": "POST",
+        "status": 403,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.08,
+      "ok": true
+    },
+    {
+      "id": "contratos-herramientas",
+      "esperado": {
+        "status": 200,
+        "contrato": "herramientas",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas",
+        "metodo": "GET",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.073,
+      "ok": true
+    },
+    {
+      "id": "chat-vacio",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.073,
+      "ok": true
+    },
+    {
+      "id": "chat-corto",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.076,
+      "ok": true
+    },
+    {
+      "id": "modelo-invalido",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.075,
+      "ok": true
+    },
+    {
+      "id": "inyeccion-chat",
+      "esperado": {
+        "status": 200,
+        "contrato": "rechazo",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": "rechazo",
+      "revision_obtenida": null,
+      "segundos": 0.074,
+      "ok": true
+    },
+    {
+      "id": "inyeccion-stream",
+      "esperado": {
+        "status": 200,
+        "contrato": "rechazo_sse",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat/stream",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "text/event-stream; charset=utf-8",
+        "allow_origin": null,
+        "allow_credentials": null,
+        "sse_valido": true,
+        "sse_estado": "rechazo",
+        "sse_sin_fuentes": true
+      },
+      "estado_obtenido": "rechazo",
+      "revision_obtenida": null,
+      "segundos": 0.086,
+      "ok": true
+    },
+    {
+      "id": "inyeccion-agente",
+      "esperado": {
+        "status": 200,
+        "contrato": "rechazo",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/agente",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": "rechazo",
+      "revision_obtenida": null,
+      "segundos": 0.086,
+      "ok": true
+    },
+    {
+      "id": "cors-permitido",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat/stream",
+        "metodo": "OPTIONS",
+        "status": 200,
+        "content_type": "text/plain; charset=utf-8",
+        "allow_origin": "https://seminario-complexivo-grupo1.vercel.app",
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.066,
+      "ok": true
+    },
+    {
+      "id": "cors-denegado",
+      "esperado": {
+        "status": 400,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat/stream",
+        "metodo": "OPTIONS",
+        "status": 400,
+        "content_type": "text/plain; charset=utf-8",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.078,
+      "ok": true
+    },
+    {
+      "id": "calendario-fin-semana",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": {
+          "fecha_resultado": "2026-11-02"
+        },
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.084,
+      "ok": true
+    },
+    {
+      "id": "calendario-bisiesto",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": {
+          "fecha_resultado": "2024-02-29"
+        },
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.081,
+      "ok": true
+    },
+    {
+      "id": "calendario-cero",
+      "esperado": {
+        "status": 200,
+        "contrato": null,
+        "json_igual": {
+          "fecha_resultado": "2026-10-30"
+        },
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.081,
+      "ok": true
+    },
+    {
+      "id": "dias-negativos",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.079,
+      "ok": true
+    },
+    {
+      "id": "dias-booleanos",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.072,
+      "ok": true
+    },
+    {
+      "id": "fecha-invalida",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/calcular-plazo",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.069,
+      "ok": true
+    },
+    {
+      "id": "requisitos-invalidos",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/consultar-requisitos",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.072,
+      "ok": true
+    },
+    {
+      "id": "checklist-invalido",
+      "esperado": {
+        "status": 422,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/generar-checklist",
+        "metodo": "POST",
+        "status": 422,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.064,
+      "ok": true
+    },
+    {
+      "id": "requisitos-con-evidencia",
+      "esperado": {
+        "status": 200,
+        "contrato": "pasajes",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/consultar-requisitos",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 1.514,
+      "ok": true
+    },
+    {
+      "id": "checklist-con-citas",
+      "esperado": {
+        "status": 200,
+        "contrato": "checklist",
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/herramientas/generar-checklist",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 1.464,
+      "ok": true
+    },
+    {
+      "id": "fuente-inexistente",
+      "esperado": {
+        "status": 404,
+        "contrato": null,
+        "json_igual": null,
+        "documento": null,
+        "articulo": null
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/sources/fuente-inexistente/1",
+        "metodo": "GET",
+        "status": 404,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": null,
+      "revision_obtenida": null,
+      "segundos": 0.615,
+      "ok": true
+    },
+    {
+      "id": "modelo-r01",
+      "esperado": {
+        "status": 200,
+        "contrato": "respuesta_citada",
+        "json_igual": null,
+        "documento": "Reglamento Regimen Academico",
+        "articulo": "26"
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": "respuesta",
+      "revision_obtenida": null,
+      "segundos": 13.627,
+      "ok": true
+    },
+    {
+      "id": "modelo-r04",
+      "esperado": {
+        "status": 200,
+        "contrato": "respuesta_citada",
+        "json_igual": null,
+        "documento": "Reglamento Regimen Academico",
+        "articulo": "31"
+      },
+      "obtenido": {
+        "url": "https://titulacion-rag-386902880383.us-central1.run.app/api/chat",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "application/json",
+        "allow_origin": null,
+        "allow_credentials": null
+      },
+      "estado_obtenido": "respuesta",
+      "revision_obtenida": null,
+      "segundos": 3.909,
+      "ok": true
+    },
+    {
+      "id": "modelo-r01-proxy-sse",
+      "esperado": {
+        "status": 200,
+        "contrato": "respuesta_citada",
+        "json_igual": null,
+        "documento": "Reglamento Regimen Academico",
+        "articulo": "26"
+      },
+      "obtenido": {
+        "url": "https://seminario-complexivo-grupo1.vercel.app/api/chat/stream",
+        "metodo": "POST",
+        "status": 200,
+        "content_type": "text/event-stream; charset=utf-8",
+        "allow_origin": null,
+        "allow_credentials": null,
+        "sse_valido": true,
+        "sse_estado": "respuesta",
+        "sse_sin_fuentes": false
+      },
+      "estado_obtenido": "respuesta",
+      "revision_obtenida": null,
+      "segundos": 4.327,
+      "ok": true
+    }
+  ],
+  "limite": "Las citas estructurales no prueban implicación semántica. Persistencia y revisión humana del corpus no se certifican aquí."
+}

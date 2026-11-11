@@ -1,0 +1,10 @@
+{
+  "sha": "ab21d853186ba34acfe8359553a8d38a39de1f80",
+  "origen": "worktree limpio y separado de origin/main, sin modificaciones",
+  "bytes": 19096731,
+  "max_bytes": 20000000,
+  "exit_code": 0,
+  "zip_sha256": "1cef3ea2a7c7d226cda8c458676cd959f63080101078aace910cc80801cc6bbc",
+  "entregado_portal": false,
+  "limite": "Medición de main ab21d85, repetir tras fusionar cambios posteriores; no es constancia de subida al portal."
+}

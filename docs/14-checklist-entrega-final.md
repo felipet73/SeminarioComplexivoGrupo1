@@ -17,7 +17,7 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 | s4g — Aviso de IA y minimización de datos | **Cumplido en alcance educativo básico** | Interfaz identifica IA, orientación no oficial, pide verificar fuentes y prohíbe compartir contraseñas/datos sensibles. Contexto opcional acotado, métricas sin texto libre. El texto de consulta/contexto sí se envía al proveedor seleccionado; ver [tratamiento de datos](16-datos-y-limites.md). |
 | s4h — README y decisiones; instalación en diez minutos | **Documentación preparada; ensayo humano pendiente** | README, requisitos, ADR y comandos corresponden al código. Registrar instalación por un integrante nuevo, duración real, ambiente y health. No hay un tiempo de diez minutos medido por otra persona. |
 | s4i — IA y aportes por integrante | **Aportes y herramientas confirmados; detalle de revisión de IA parcial** | README detalla tareas de Christian (despliegues/CI/optimización), Olmes (pruebas manuales/backend semana 4) y Widman (tests/documentación backend, QA frontend y fuentes). Declaración de IA incluye Gemini, ChatGPT y Codex. Ejecución local, PR y verificación de pruebas confirmadas por todos. Faltan ejemplos de salida de IA revisada por cada persona y enlaces de PR nominados si se exige ese detalle. |
-| s4j — PDF de la presentación de doce minutos | **Archivo preparado** | `docs/presentacion-entrega4.pdf` actualizado y PDF técnico de apoyo. Falta ensayo cronometrado y confirmar que esta es la versión realmente usada. El informe técnico extenso no sustituye la exposición de 12 minutos. |
+| s4j — PDF de la presentación de doce minutos | **Versión usada confirmada por el equipo** | `docs/Presentacion.pdf`, diez páginas con infografías, fue la presentación utilizada según confirmación del equipo. `presentacion-entrega4.pdf` se conserva como material anterior. La duración real de doce minutos no se acredita sin medición. |
 | s4k — Evidencias y observaciones de sustentación | **Observación aclarada y registrada; material de respaldo parcial** | [SUST-01](evidencias/semana-4/observaciones-sustentacion.md): faltó una pregunta de demo que activara solicitud de datos adicionales, no hubo un fallo del sistema. El equipo confirma verificación posterior y existen tests específicos del contrato de aclaración. No se inventa una reparación ni se atribuyen los 429 de evaluación a la demo. Fecha exacta de sesión y vídeo de respaldo pendientes de aportar. |
 
 ## Qué ya está cerrado de la ficha antigua
@@ -95,7 +95,7 @@ PostgreSQL/Cloud SQL queda técnicamente preparado y probado localmente. Su acti
 
 ## Publicación coordinada del historial — 8 de noviembre de 2026, Ecuador
 
-Se publicaron 27 ramas mediante operación atómica con leases. Main `2482401` aprobó [Actions 42453615683](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683) y despliegue. Los clones deben renovarse. [Resultado, mapa y pendientes de PR/cachés](24-cierre-historial-publicado.md); no se envió una solicitud a soporte ni se afirma purga completa. La decisión de costos de Cloud SQL sigue vigente.
+Se publicaron 27 ramas mediante operación atómica con leases. Main `2482401` aprobó [Actions 42453615683](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42453615683) y despliegue. Los clones deben renovarse. [Resultado, mapa y pendientes de PR/cachés](24-cierre-historial-publicado.md); en ese corte aún no se había enviado solicitud. Posteriormente el propietario aportó confirmación del caso **#4985701**, abierto y pendiente de actuación; no se afirma purga completa. La decisión de costos de Cloud SQL sigue vigente.
 
 ## Neon: importación y activación reportadas
 
@@ -118,3 +118,18 @@ Causa reproducida y corregida en código: el OCR `Art, 24` no se separaba y here
 **\* Debe analizarse el improvement.** Diseñar una herramienta independiente del motor OCR que presente posibles inconsistencias por página/artículo, original y texto lado a lado, revisión humana de hallazgos y muestreo adicional. Evaluar OCR con IA como alternativa, sin selección ni activación de proveedor. La revisión actual sigue sin marcar; esta decisión no cambia aprobaciones del panel, políticas del corpus ni estados del OCR. [Alcance, alternativas y criterios](ADR-0005.md).
 
 El operador mostró reindexación de 87 fragmentos y respuesta con fuente artículo 24/página 9/revisión 2 después del PR #39; la discrepancia puntual 24/23 quedó verificada en la conversación. Esto no completa la revisión integral ni implementa el improvement.
+
+## Cierre para entrega (estado contrastado con main ab21d85)
+
+Última ejecución de main verificada por API: Actions 42494812366, despliegue y casos públicos aprobados. El **JSON completo de 35/35 ya está versionado con SHA ab21d85**, posterior a la limpieza y Neon; [reporte](evidencias/semana-4/produccion-ab21d85-run-42494812366.json). Pendientes operativos: dar seguimiento al caso GitHub Support **#4985701** (envío confirmado, retirada pendiente), medir instalación/ensayo si se exige, generar ZIP del main final y subirlo al portal. La revisión OCR mantiene el asterisco de improvement y no se marca aprobada. [Estado y pasos exactos](29-cierre-final-y-evidencias.md).
+
+## Solicitud de retirada de referencias: enviada
+
+- [x] Propietario envió solicitud a GitHub Support: **caso #4985701**, prioridad Normal, estado abierto, confirmado en capturas de la conversación.
+- [ ] Respuesta/actuación de GitHub y verificación posterior de refs/cachés/commit. S4b no se marca completamente cerrado.
+
+La fecha/hora absoluta no aparece en las capturas; queda pendiente de correo de confirmación. [Registro y alcance](25-solicitud-soporte-github.md).
+
+## Evidencia pública ab21d85 incorporada
+
+- [x] JSON completo de Actions 42494812366: **35/35, sin omitidos**, SHA esperado y obtenido coincidentes. Reporte real del 8/11/2026, recibido del propietario y validado; no es una nueva corrida ni prueba del próximo merge. [Archivo completo](evidencias/semana-4/produccion-ab21d85-run-42494812366.json).

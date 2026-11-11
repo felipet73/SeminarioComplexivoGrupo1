@@ -18,7 +18,7 @@ El proveedor Cloud SQL no fue creado ni activado. La decisión de posponerlo por
 
 Se detectaron **25 referencias de PR afectadas** en el espejo (de 26 referencias adicionales existentes). No son referencias que podamos actualizar con el push de ramas. La API todavía permite consultar al menos el commit histórico comprobado `3e38895`; no se consultaron ni imprimieron sus valores.
 
-Por eso no se certifica «eliminación completa de GitHub» ni riesgo cero. [Borrador de solicitud al soporte](25-solicitud-soporte-github.md), **no enviado**: el propietario debe revisarlo y tramitarlo por GitHub Support. Su resultado depende de GitHub. Cerrar PR o borrar comentarios no elimina estas referencias. Forks y clones externos también están fuera de este saneamiento.
+Por eso no se certifica «eliminación completa de GitHub» ni riesgo cero. [Solicitud a soporte](25-solicitud-soporte-github.md) **enviada por el propietario, caso #4985701, abierto y pendiente de respuesta/actuación** según capturas aportadas posteriormente. Su resultado depende de GitHub; la existencia del ticket no acredita purga. Cerrar PR o borrar comentarios no elimina estas referencias. Forks y clones externos también están fuera de este saneamiento.
 
 ## Instrucciones para cada integrante
 

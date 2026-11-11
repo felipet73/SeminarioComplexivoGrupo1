@@ -1,3 +1,9 @@
+# GitHub Support: solicitud enviada, caso #4985701
+
+**Estado vigente: enviada por el propietario; pendiente de respuesta y actuación de GitHub Support.** Capturas aportadas en la conversación muestran «Tu mensaje ha sido enviado correctamente» y el ticket #4985701 de `felipet73`, prioridad Normal, estado abierto. No confirman retirada de referencias ni purga. La pantalla indica creación «ahora», sin fecha/hora absoluta visible; ese dato queda pendiente de la confirmación por correo.
+
+El texto siguiente se conserva como referencia del contenido preparado para la solicitud. No contiene valores de credenciales.
+
 Asunto: Solicitud de revisión de referencias de PR y cachés tras retirar credenciales históricas
 
 Repositorio: https://github.com/felipet73/SeminarioComplexivoGrupo1
@@ -5,7 +11,7 @@ Propietario solicitante: felipet73 (enviar desde la cuenta autorizada del reposi
 
 Se expusieron históricamente una contraseña administrativa y una clave JWT en backend/app/seguridad.py. No se adjuntan sus valores. La contraseña de ejecución fue cambiada y el mecanismo JWT/rutas legacy se retiró del código operativo; no se afirma ausencia de reutilización en todos los entornos.
 
-Se conservó un respaldo privado, se reescribieron atómicamente 27 ramas con leases y se mantuvieron las 28 ramas. Main actual: 2482401e50b607296151b5a7ac47738536c0b2d5. Un clon nuevo sin refs de PR pasa el detector histórico y el activo; el código actual de aplicación se conservó. GitHub mantiene referencias de PR de solo lectura y el commit histórico todavía responde en la API.
+Se conservó un respaldo privado, se reescribieron atómicamente 27 ramas con leases y se mantuvieron las 28 ramas. Main inmediatamente después de la limpieza: 2482401e50b607296151b5a7ac47738536c0b2d5 (corte histórico, no HEAD vigente). Un clon nuevo sin refs de PR pasa el detector histórico y el activo; el código actual de aplicación se conservó. GitHub mantiene referencias de PR de solo lectura y el commit histórico todavía responde en la API.
 
 Commits históricos de referencia:
 - 1348b065feaba46b6dfea20bf26b1f7d8b455dc8
@@ -46,4 +52,16 @@ Solicitamos evaluar la retirada de referencias/vistas en caché que permitan acc
 
 La publicación de ramas no elimina por sí sola forks/clones/cachés ni las refs internas de PR. Indiquen qué referencias pueden retirarse y qué actuaciones adicionales necesita realizar el propietario.
 
-Este es un borrador: NO se envió automáticamente a GitHub Support. Enviar/revisar mediante https://support.github.com/contact .
+El propietario completó el envío mediante GitHub Support y aportó confirmación; el asistente no envió el formulario. Seguimiento desde la cuenta propietaria en https://support.github.com/ .
+
+## Registro del envío
+
+| Campo | Estado registrado |
+| --- | --- |
+| Enviado desde cuenta propietaria | Confirmado por capturas del formulario y listado de tickets de felipet73 |
+| Fecha de envío | Fecha/hora absoluta pendiente de correo; la captura indica «ahora» |
+| Número de caso | **#4985701** |
+| Estado/respuesta de Support | **Abierto, prioridad Normal; pendiente de respuesta y actuación** |
+| Verificación posterior de refs/cachés | Pendiente de respuesta y comprobación |
+
+El envío fue realizado por el propietario desde su sesión; el asistente registró las capturas aportadas. La respuesta generada por IA durante la preparación no equivale a respuesta del equipo de soporte. Que exista ticket no demuestra que las referencias ya se retiraron: esperar comunicación del equipo y comprobar después refs/cachés/commit antes de marcar el cierre completo. No se versionan correos privados, valores ni respaldo del repositorio.

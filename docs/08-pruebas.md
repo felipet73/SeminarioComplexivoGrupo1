@@ -1,6 +1,6 @@
 # Pruebas funcionales y criterio de aceptación - Grupo 1
 
-> **Conteo vigente, 8 de noviembre de 2026 UTC:** 132 pruebas backend aprobadas y 89,11 % de cobertura de `app` en ejecución local. Ver [XML, resumen y explicación de cortes anteriores](21-conteos-de-pruebas.md). El smoke público de 35 casos y la evaluación real del agente 6/6 son conjuntos separados; ver [checklist](14-checklist-entrega-final.md).
+> **Conteo vigente, 8 de noviembre de 2026 UTC:** 147 pruebas backend aprobadas y 89,11 % de cobertura de `app` en ejecución local. Ver [XML, resumen y explicación de cortes anteriores](21-conteos-de-pruebas.md). El smoke público de 35 casos y la evaluación real del agente 6/6 son conjuntos separados; ver [checklist](14-checklist-entrega-final.md).
 
 Las URLs evaluadas son el [backend de Cloud Run](https://titulacion-rag-386902880383.us-central1.run.app) y el [frontend de Vercel](https://seminario-complexivo-grupo1.vercel.app/). El contrato y los datos de prueba están en `eval/casos_http.json`; el runner es `scripts/pruebas_funcionales.py`. No se usan frases de ejemplo ni se acepta una abstención como respuesta normativa correcta.
 
@@ -52,3 +52,9 @@ Las regresiones añadidas cubren credenciales de baja entropía, alias del chat 
 Repetir las corridas contra las dos URLs después de desplegar la nueva revisión y conservar los JSON en `docs/evidencias/semana-4/`. Se requiere 32/32 para los contratos sin generación y 35/35 para declarar también superadas las tres consultas generativas. El job de despliegue incluye `--incluir-modelo`: no puede aprobar omitiendo estos casos. Consume la cuota del proveedor configurado en Cloud Run; no necesita copiar claves LLM al runner. El pipeline verifica el SHA; resultados locales no reemplazan esta comprobación remota.
 
 La evaluación del RAG y del agente sigue en `docs/07-evaluacion.md`: el resultado histórico estricto del agente es 5/6 listas finales citadas. Los casos HTTP no prueban exhaustividad normativa, persistencia entre revisiones, identidad institucional ni calidad semántica de cada afirmación. El OCR pendiente no se aprueba por ejecutar estas pruebas.
+
+## Producción posterior a limpieza y Neon: JSON completo incorporado
+
+[Actions 42494812366](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366), SHA `ab21d853186ba34acfe8359553a8d38a39de1f80`: **35/35 casos completos y únicos, cero omitidos**, `incluye_modelo=true`, `solo_backend=false`. Fecha del reporte: **2026-11-08 15:29:04 UTC**; p95 de esta corrida **4,327 s**, sin equivalencia a prueba de carga. La revisión obtenida coincide con la esperada. [JSON completo](evidencias/semana-4/produccion-ab21d85-run-42494812366.json).
+
+El propietario descargó el artefacto y adjuntó el archivo; se validó su estructura y resultado antes de versionarlo. [Metadatos y hashes](evidencias/semana-4/cierre-main-ab21d85/actions-metadata.json). No se reutiliza el JSON de `279580e` para acreditar este SHA y no se atribuye este resultado a despliegues posteriores.

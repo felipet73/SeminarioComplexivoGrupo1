@@ -1,0 +1,82 @@
+{
+  "fuente": "GitHub REST API actions/runs, jobs y artifacts; no JSON de pruebas por caso",
+  "run_id": 42494812366,
+  "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366",
+  "sha": "ab21d853186ba34acfe8359553a8d38a39de1f80",
+  "branch": "main",
+  "estado": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-08T15:26:23Z",
+  "updated_at": "2026-11-08T15:29:13Z",
+  "jobs": [
+    {
+      "nombre": "frontend",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "contenedor",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "Revisar secretos con Gitleaks",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "navegador",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "backend",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "Persistencia PostgreSQL aislada",
+      "conclusion": "success",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "evaluacion-real",
+      "conclusion": "skipped",
+      "pasos_funcionales": []
+    },
+    {
+      "nombre": "desplegar",
+      "conclusion": "success",
+      "pasos_funcionales": [
+        {
+          "nombre": "Verificar revisión, corpus, rutas retiradas y chat",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Casos funcionales contra las URLs públicas",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artefacto": {
+    "id": 13622863021,
+    "name": "evidencias-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80",
+    "size_in_bytes": 1776,
+    "expired": false
+  },
+  "json_completo_incorporado": true,
+  "limite": "Prueba pública de ab21d85 el 8/11/2026; no se atribuye a commits posteriores. No certifica revisión OCR ni disponibilidad continua.",
+  "json_completo": "../produccion-ab21d85-run-42494812366.json",
+  "sha256_adjunto_original": "33674f3a305adca3122187b35b341f468ba425c598b21bc19d2e03c81070ad90",
+  "sha256_json_versionado": "33674f3a305adca3122187b35b341f468ba425c598b21bc19d2e03c81070ad90",
+  "resultado_validacion": {
+    "correctos": 35,
+    "total": 35,
+    "casos_completos": 35,
+    "ids_unicos": 35,
+    "omitidos": 0,
+    "revision_obtenida_coincide": true
+  },
+  "procedencia_json": "Artefacto descargado y adjuntado por el propietario; validado contra SHA, casos y metadatos de Actions. Solo normalización CRLF a LF si corresponde."
+}

@@ -1,0 +1,31 @@
+{
+  "resultado": "aprobado",
+  "alcance": "YAML analizado y bloque de verificación ejecutado con cinco servicios sintéticos; no despliegue real ni lectura del secreto.",
+  "casos": [
+    {
+      "caso": "correcta",
+      "resultado_esperado": "aceptado",
+      "cumple": true
+    },
+    {
+      "caso": "otro_secreto",
+      "resultado_esperado": "rechazado",
+      "cumple": true
+    },
+    {
+      "caso": "latest",
+      "resultado_esperado": "rechazado",
+      "cumple": true
+    },
+    {
+      "caso": "otra_version",
+      "resultado_esperado": "rechazado",
+      "cumple": true
+    },
+    {
+      "caso": "valor_literal",
+      "resultado_esperado": "rechazado",
+      "cumple": true
+    }
+  ]
+}
