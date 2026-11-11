@@ -1,0 +1,123 @@
+{
+  "fecha_utc": "2026-11-11T00:58:53.771168+00:00",
+  "commit": "ab21d853186ba34acfe8359553a8d38a39de1f80",
+  "working_tree_con_cambios": false,
+  "zip_sha256": "97b0269f56ebc74bf0448cca8bded2fe1c1d812fcea9f16e011d9911376508ce",
+  "evidencia_produccion": {
+    "revision": "ab21d853186ba34acfe8359553a8d38a39de1f80",
+    "casos": 35,
+    "archivo": "docs/evidencias/semana-4/produccion-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80.json",
+    "sha256": "33674f3a305adca3122187b35b341f468ba425c598b21bc19d2e03c81070ad90",
+    "alcance": "Reporte del mismo despliegue incluido al empaquetar, sin crear otro commit ni atribuirlo a otra revisión."
+  },
+  "bytes": 19098586,
+  "MiB": 18.21,
+  "max_bytes": 20000000,
+  "cumple_limite": true,
+  "zip_creado": true,
+  "archivos": 334,
+  "excluidos": [],
+  "mayores": [
+    {
+      "archivo": "entrega-main-ab21d85/data/raw/4.-INSTRUCTIVO-PARA-LA-EJECUCION-DEL-PROCESO-DE-SEGUIMIENTO-A-GRADUADOS-UNIANDES.pdf",
+      "bytes": 4527812,
+      "comprimidos": 4371340
+    },
+    {
+      "archivo": "entrega-main-ab21d85/data/raw/UNIANDES-Instructivo-Titulacion-2017.pdf",
+      "bytes": 3121159,
+      "comprimidos": 3010121
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/Presentacion.pdf",
+      "bytes": 2531707,
+      "comprimidos": 2424473
+    },
+    {
+      "archivo": "entrega-main-ab21d85/data/raw/2020-MANUAL-PARA-LA-ELABORACION-EJECUCION-SEGUIMIENTO-Y-CONTROL-DEL-PLAN-OPERATIVO-ANUAL-POA-1.pdf",
+      "bytes": 2678780,
+      "comprimidos": 2137241
+    },
+    {
+      "archivo": "entrega-main-ab21d85/data/raw/03_2017-11-09_MANUAL_VINCULACION_UNIANDES.pdf",
+      "bytes": 2193741,
+      "comprimidos": 2052282
+    },
+    {
+      "archivo": "entrega-main-ab21d85/data/raw/Reglamento-de-Regimen-Academico.pdf",
+      "bytes": 1133635,
+      "comprimidos": 1025267
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-2/ImagenesSemana2.pdf",
+      "bytes": 845896,
+      "comprimidos": 772608
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-3/2026-11-05/checklist-movil-modelo-doble.png",
+      "bytes": 422130,
+      "comprimidos": 414495
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-3/confirmacion-movil.png",
+      "bytes": 366313,
+      "comprimidos": 359159
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-4/EvidenciasSemana4.pdf",
+      "bytes": 295659,
+      "comprimidos": 258627
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-1/Evidenciabackend1.png",
+      "bytes": 254487,
+      "comprimidos": 242176
+    },
+    {
+      "archivo": "entrega-main-ab21d85/frontend/assets/AsistenteIAUNIANDES.webp",
+      "bytes": 232260,
+      "comprimidos": 232335
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-3/RespuestaDocumentada.png",
+      "bytes": 244190,
+      "comprimidos": 230925
+    },
+    {
+      "archivo": "entrega-main-ab21d85/data/raw/LOES.pdf",
+      "bytes": 259952,
+      "comprimidos": 229413
+    },
+    {
+      "archivo": "entrega-main-ab21d85/data/referencias/CASO-01-Grupo-1.pdf",
+      "bytes": 204638,
+      "comprimidos": 197760
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-3/auditoria-python.json",
+      "bytes": 412253,
+      "comprimidos": 119340
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-3/CI-Implementado.png",
+      "bytes": 125188,
+      "comprimidos": 116881
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/analisis-tecnico-preliminar.pdf",
+      "bytes": 92394,
+      "comprimidos": 76120
+    },
+    {
+      "archivo": "entrega-main-ab21d85/docs/evidencias/semana-3/EndPoints.png",
+      "bytes": 87723,
+      "comprimidos": 75811
+    },
+    {
+      "archivo": "entrega-main-ab21d85/frontend/package-lock.json",
+      "bytes": 126070,
+      "comprimidos": 30307
+    }
+  ],
+  "alcance": "Archivos conocidos por Git y, si se solicita, reporte público validado del mismo SHA; ejecutar detector de secretos antes de entregar. No acredita historial limpio."
+}

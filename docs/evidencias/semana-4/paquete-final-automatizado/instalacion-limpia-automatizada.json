@@ -1,0 +1,55 @@
+{
+  "tipo": "instalacion_automatizada_no_ensayo_humano",
+  "inicio_utc": "2026-11-11T00:57:14.611358+00:00",
+  "prerrequisitos": "Git, Python 3.12, Node 24 y npm ya instalados; no se mide instalación del sistema ni credenciales/proveedores.",
+  "entorno": "Linux administrado, sin venv/node_modules previos del proyecto; cachés pip/npm nuevos; red/proxy del entorno.",
+  "sha": "8d353473256a3d35580d78d9c3edf868b5d9802c",
+  "resultado": "aprobado",
+  "pasos": [
+    {
+      "paso": "Clon nuevo de main",
+      "segundos": 3.32,
+      "exit_code": 0
+    },
+    {
+      "paso": "Crear entorno Python",
+      "segundos": 2.212,
+      "exit_code": 0
+    },
+    {
+      "paso": "Instalar requirements-dev",
+      "segundos": 26.592,
+      "exit_code": 0
+    },
+    {
+      "paso": "Ingesta léxica sin proveedores",
+      "segundos": 6.933,
+      "exit_code": 0
+    },
+    {
+      "paso": "Instalar frontend",
+      "segundos": 11.37,
+      "exit_code": 0
+    },
+    {
+      "paso": "Arranque backend/frontend y HTTP ready/página",
+      "segundos": 1.086,
+      "exit_code": 0
+    },
+    {
+      "paso": "Smoke HTTP local SHA, corpus, SSE rechazo y métricas",
+      "segundos": 0.11,
+      "exit_code": 0
+    }
+  ],
+  "segundos_total": 51.633,
+  "fin_utc": "2026-11-11T00:58:06.243646+00:00",
+  "proveedores_consumidos": false,
+  "ensayo_humano": false,
+  "versiones": {
+    "python": "3.12.14",
+    "node": "24.22.1",
+    "npm": "11.9.0"
+  },
+  "diez_minutos_automatizado": true
+}

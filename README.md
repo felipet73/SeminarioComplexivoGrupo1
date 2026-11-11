@@ -17,7 +17,7 @@ Los estudiantes necesitan interpretar requisitos y opciones de titulación dispe
 - **Corpus disponible:** https://titulacion-rag-386902880383.us-central1.run.app/ready
 - **Contrato HTTP:** https://titulacion-rag-386902880383.us-central1.run.app/docs
 
-Frontend en **Vercel**, backend en **Cloud Run**, región `us-central1`. Última ejecución de despliegue verificada en la API de GitHub: [Actions 42494812366](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366), SHA **`ab21d853186ba34acfe8359553a8d38a39de1f80`**, aprobada el 8 de noviembre de 2026. El job de smoke y casos funcionales públicos terminó correctamente; **JSON completo 35/35 incorporado**, con revisión obtenida coincidente y cero omitidos; [reporte](docs/evidencias/semana-4/produccion-ab21d85-run-42494812366.json). El reporte de `279580e` se conserva como histórico. [Metadatos y paso pendiente](docs/29-cierre-final-y-evidencias.md). Un cambio posterior requiere comprobar su propia ejecución y SHA.
+Frontend en **Vercel**, backend en **Cloud Run**, región `us-central1`. Última ejecución aprobada verificada por API: [Actions 42934948121](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42934948121), SHA **`8d353473256a3d35580d78d9c3edf868b5d9802c`**, con referencia Neon, smoke y casos públicos aprobados. El [JSON completo versionado de 35/35](docs/evidencias/semana-4/produccion-ab21d85-run-42494812366.json) es de la corrida anterior `ab21d85`; no se le cambia el SHA. El workflow ampliado genera un ZIP con el JSON real de su propio despliegue, sin otro commit de evidencia. [Descarga y límites](docs/30-paquete-final-e-instalacion.md).
 
 `/health` acredita el proceso y su revisión declarada; `/ready` comprueba corpus elegible e índice actual, **no disponibilidad del proveedor**. El servicio puede tener arranque en frío al escalar a cero; no se ha acreditado aquí un tiempo máximo ni disponibilidad durante 24 horas.
 
@@ -44,6 +44,8 @@ flowchart LR
 Detalle: [arquitectura](docs/03-arquitectura.md), [RAG](docs/06-rag.md), [secuencias y 31 operaciones de API](docs/analisis-tecnico-preliminar.pdf).
 
 ## Cómo ejecutarlo en local
+
+El equipo confirmó instalación y ejecución desde copias nuevas tras la limpieza del historial, especialmente para el QA final de Olmes. Duración declarada inferior a diez minutos, **aproximadamente seis minutos estimados, sin cronómetro**. [Constancia y alcance](docs/evidencias/semana-4/instalacion-equipo.md); la medición automatizada es independiente.
 
 Requisitos: **Git, Python 3.12 y Node 22 actualizado —compatible con Vite— o Node 24**; `npm` incluido. Ejecutar desde la raíz salvo donde se indique. No se necesita Docker para desarrollo local.
 
@@ -151,9 +153,10 @@ El flujo implementado está en [.github/workflows/ci.yml](.github/workflows/ci.y
 2. `desplegar` requiere el éxito de esos seis jobs y solo opera en `main` por push o activación manual.
 3. Conserva la imagen Docker que pasó el smoke, autentica con GitHub OIDC/WIF y publica en Artifact Registry con etiqueta SHA.
 4. Actualiza Cloud Run y verifica SHA, corpus, retirada legacy, SSE y registro de métricas. Ejecuta obligatoriamente 35 casos públicos con generación real.
-5. Un fallo posterior deja el job rojo; **no hay rollback automático**. Vercel publica el frontend desde Git mediante su integración.
+5. Después de los casos públicos aprobados, genera `entrega-final-SHA`: ZIP ≤20 MB con el JSON completo del mismo SHA e informe/hash. [Cómo descargar y entregar](docs/30-paquete-final-e-instalacion.md).
+6. Un fallo posterior deja el job rojo; **no hay rollback automático**. Vercel publica el frontend desde Git mediante su integración.
 
-Servicio backend: `titulacion-rag`, región `us-central1`; configuración y permisos en [docs/13-despliegue.md](docs/13-despliegue.md). El workflow usa memoria 1 GiB y entre cero y una instancia; esto no garantiza durabilidad. Última corrida aprobada verificada: [42494812366 / ab21d85](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366); JSON completo 35/35 incorporado con su SHA. El workflow declara `RAG_DATABASE_URL=rag-database-url:1` con merge de referencias, sin publicar el DSN. Esta declaración se aplicará al fusionar y desplegar el cambio.
+Servicio backend: `titulacion-rag`, región `us-central1`; configuración y permisos en [docs/13-despliegue.md](docs/13-despliegue.md). El workflow usa memoria 1 GiB y entre cero y una instancia; esto no garantiza durabilidad. Última corrida aprobada verificada: [42934948121 / 8d35347](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42934948121), incluida comprobación de la referencia Neon; el JSON completo versionado previo corresponde a ab21d85. El nuevo pipeline generará el ZIP con su propio JSON de despliegue. El workflow declara `RAG_DATABASE_URL=rag-database-url:1` con merge de referencias, sin publicar el DSN. La declaración de Neon pasó la verificación del despliegue 42934948121. El nuevo empaquetado se aplicará después de fusionar esta ampliación.
 
 Para verificar el **contenedor local**, desde la raíz, en Bash:
 
@@ -224,7 +227,7 @@ Sin `--incluir-modelo` se seleccionan 32 contratos, no 35. Para exigir el commit
 
 | Verificación real | Resultado y alcance |
 |---|---|
-| Backend actual | **147 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de corrección de cita OCR. [XML y resumen local](docs/evidencias/semana-4/citas-articulo-24/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
+| Backend actual | **154 pruebas aprobadas, 89,11 % de cobertura de `app`**, umbral 85 %; cero fallos/errores/omitidos en rama de empaquetado final. [XML y resumen local](docs/evidencias/semana-4/paquete-final-automatizado/). Los 130 anteriores se conservan; [evolución de conteos](docs/21-conteos-de-pruebas.md). |
 | Frontend y navegador | **18 pruebas**, build y **10 escenarios** Playwright con API aislada y modelo doble; jobs remotos aprobados. |
 | Producción | **35/35, cero omitidos**, con generación y revisión obtenida `ab21d85` coincidente. [Actions 42494812366](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42494812366) y [JSON completo](docs/evidencias/semana-4/produccion-ab21d85-run-42494812366.json), corrida del 8/11/2026. No se presenta como prueba de commits posteriores o carga sostenida. |
 | Smoke manual aportado por el equipo | **35/35, cero omitidos; p95 2,453 s** en esa corrida. No es prueba de carga ni disponibilidad 24 h y se ejecutó sin exigir SHA. [Registro del resultado observado](docs/evidencias/semana-4/smoke-manual-observado-2026-11-07.json). |
@@ -317,3 +320,7 @@ Estos aportes fueron confirmados por el equipo. No se atribuyen commits, porcent
 Material de entrega: [checklist s4a–s4k](docs/14-checklist-entrega-final.md), [presentación utilizada en sustentación](docs/Presentacion.pdf), [informe técnico PDF](docs/analisis-tecnico-preliminar.pdf), [observaciones de sustentación](docs/evidencias/semana-4/observaciones-sustentacion.md).
 
 Para medir el ZIP desde raíz: `python scripts/empaquetar_entrega.py --medir`. Devuelve exit 1 si supera 20 MB y no deja un entregable sobredimensionado; solo incluye archivos conocidos por Git y excluye secretos locales, dependencias y caches. Antes de entregar, revisar el informe, el estado de Git y el detector activo; el empaquetador no acredita historial limpio.
+
+### Alcance de los documentos OCR
+
+El cliente debe aportar PDF legible, con texto extraíble y fiel al original. Si necesita OCR, lo prepara y verifica con herramientas externas de su elección; implementar OCR no forma parte del producto. La validación técnica y la indexación no certifican fidelidad integral ni vigencia. **\* Debe analizarse el improvement** de revisión asistida, fuera del alcance actual y sin marcar como implementado. [Decisión](docs/ADR-0005.md).

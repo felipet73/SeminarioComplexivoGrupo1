@@ -1,0 +1,10 @@
+{
+  "tests": 154,
+  "fallos": 0,
+  "errores": 0,
+  "omitidos": 0,
+  "cobertura_app_porcentaje": 89.11,
+  "base_sha": "8d353473256a3d35580d78d9c3edf868b5d9802c",
+  "arbol_con_cambios": true,
+  "alcance": "Suite local aislada del empaquetador y aplicación. No nuevo ensayo remoto de modelos."
+}
