@@ -1,0 +1,469 @@
+{
+  "fuente": "GitHub REST API; metadatos reales, sin reconstruir contenido de artefactos",
+  "run_id": 42939713143,
+  "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143",
+  "sha": "2e0bf2d68b7ecf8a4557da3890bd235990010a86",
+  "branch": "main",
+  "estado": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-11T01:32:39Z",
+  "updated_at": "2026-11-11T01:35:32Z",
+  "jobs": [
+    {
+      "nombre": "backend",
+      "conclusion": "success",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258345132",
+      "pasos": [
+        {
+          "nombre": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run python -m pip install --upgrade pip",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run pip install --no-cache-dir -r backend/requirements-dev.txt",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run ruff check backend scripts eval",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run python scripts/check_secrets.py",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run python -m pytest -q backend/tests --cov=app --cov-fail-under=85 --cov-report=xml --junitxml=eval/tests-backend.xml",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run python scripts/ingest.py --data-dir data/eval-state --strategy lexical",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run python eval/evaluar.py",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run python eval/evaluar_flujo.py",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run pip-audit --local --format=json --output eval/results-auditoria-python.json",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "nombre": "contenedor",
+      "conclusion": "success",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258345291",
+      "pasos": [
+        {
+          "nombre": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Construir imagen sin credenciales de modelos",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Probar arranque, corpus y contrato HTTP",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Recrear instancias sin volumen y verificar la semilla citada",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Logs del contenedor",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Conservar exactamente la imagen probada para su despliegue",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "nombre": "frontend",
+      "conclusion": "success",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258345306",
+      "pasos": [
+        {
+          "nombre": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run npm test",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run npm run build",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run npm audit --audit-level=high",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "nombre": "Persistencia PostgreSQL aislada",
+      "conclusion": "success",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258345328",
+      "pasos": [
+        {
+          "nombre": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run pip install --no-cache-dir -r backend/requirements.txt",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Reiniciar procesos y PostgreSQL, migrar sin serialize y repetir golden set",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "nombre": "Revisar secretos con Gitleaks",
+      "conclusion": "success",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258345562",
+      "pasos": [
+        {
+          "nombre": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Escanear todo el historial",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Detectar también credenciales fijas de baja entropía en código activo",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Impedir reintroducción del módulo legacy en el historial",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "nombre": "navegador",
+      "conclusion": "success",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258345572",
+      "pasos": [
+        {
+          "nombre": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run python -m venv backend/.venv",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run backend/.venv/bin/pip install --upgrade pip",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run backend/.venv/bin/pip install --no-cache-dir -r backend/requirements.txt",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run npx playwright install --with-deps chromium",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run npm run test:admin",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/upload-artifact@v4",
+          "conclusion": "skipped"
+        },
+        {
+          "nombre": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "nombre": "evaluacion-real",
+      "conclusion": "skipped",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258347510",
+      "pasos": []
+    },
+    {
+      "nombre": "desplegar",
+      "conclusion": "success",
+      "url": "https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143/job/130258847328",
+      "pasos": [
+        {
+          "nombre": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Validar configuración de despliegue",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run google-github-actions/auth@v3",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run google-github-actions/auth@v3",
+          "conclusion": "skipped"
+        },
+        {
+          "nombre": "Run google-github-actions/setup-gcloud@v3",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/download-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Publicar imagen probada con etiqueta del commit",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run google-github-actions/deploy-cloudrun@v3",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Verificar referencia de persistencia sin leer el secreto",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Verificar revisión, corpus, rutas retiradas y chat",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Casos funcionales contra las URLs públicas",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Generar ZIP final con evidencia pública del mismo SHA",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run google-github-actions/auth@v3",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "nombre": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artefactos": [
+    {
+      "id": 13820491498,
+      "name": "entrega-final-2e0bf2d68b7ecf8a4557da3890bd235990010a86",
+      "size_in_bytes": 19069602,
+      "expired": false,
+      "digest": "sha256:011dc7f260dca59039f34c41ca87422c0b8db49b9fb80c8e6967233f351586f0"
+    },
+    {
+      "id": 13820316410,
+      "name": "gitleaks-results.sarif",
+      "size_in_bytes": 6832,
+      "expired": false,
+      "digest": "sha256:cb54c08b9bdcec1fed8866620e75861b2d693fb5831c904e85b8a4478eae476c"
+    },
+    {
+      "id": 13820266012,
+      "name": "evaluacion-rag",
+      "size_in_bytes": 12731,
+      "expired": false,
+      "digest": "sha256:f25c8b313b4fbcac40717077b1b5c9d5a7b500b55094b3c9d014b24a201e2a93"
+    },
+    {
+      "id": 13820216122,
+      "name": "reinicio-contenedor",
+      "size_in_bytes": 960,
+      "expired": false,
+      "digest": "sha256:d24f8f62e7e7d730249c7a0f5370778c8e269552ae326b1ca4b2896e4b5cad69"
+    },
+    {
+      "id": 13818984605,
+      "name": "persistencia-postgres",
+      "size_in_bytes": 1008,
+      "expired": false,
+      "digest": "sha256:5cd954c5e7cbe7b43a71556eb0fbe3e2a66997aaf2c6dc3fc15770ebeb0e0995"
+    },
+    {
+      "id": 13818769981,
+      "name": "evidencias-despliegue-2e0bf2d68b7ecf8a4557da3890bd235990010a86",
+      "size_in_bytes": 1756,
+      "expired": false,
+      "digest": "sha256:5ef728e1cbe685a97e5c18de427572076c6decc7a0d9bacf5df4bcbb6724d0d4"
+    }
+  ],
+  "descarga_binaria_desde_entorno_asistente": false,
+  "limite": "La descarga directa del binario Actions devuelve Forbidden aquí; el propietario aportó paquete-final.json y el JSON de casos, versionados y validados. El XML de CI y ZIP binario no se recibieron. El tamaño/digest del artefacto GitHub corresponde al contenedor, no al ZIP interior.",
+  "primarios_json_aportados_por_propietario": true,
+  "paquete_final_json": "paquete-final.json",
+  "reporte_casos": "../produccion-despliegue-2e0bf2d68b7ecf8a4557da3890bd235990010a86.json"
+}

@@ -74,4 +74,8 @@ CI también recrea dos contenedores sin volumen para verificar la semilla. La ev
 
 ## Referencia Neon declarada en CI
 
-El workflow declara `RAG_DATABASE_URL=rag-database-url:1` y `secrets_update_strategy: merge`: deja de depender solo de la configuración manual inicial y conserva las demás referencias de secretos. Un paso posterior consulta únicamente la configuración del servicio y exige esa referencia/versión, sin leer el secreto. La cuenta de ejecución necesita Secret Accessor sobre ese secreto; no se añade un conector Cloud SQL. Si se rota la URL, actualizar la versión declarada y verificar el despliegue antes de deshabilitar la anterior. Este cambio no se presenta como desplegado antes de su merge/ejecución.
+El workflow declara `RAG_DATABASE_URL=rag-database-url:1` y `secrets_update_strategy: merge`: deja de depender solo de la configuración manual inicial y conserva las demás referencias de secretos. Un paso posterior consulta únicamente la configuración del servicio y exige esa referencia/versión, sin leer el secreto. La cuenta de ejecución necesita Secret Accessor sobre ese secreto; no se añade un conector Cloud SQL. Si se rota la URL, actualizar la versión declarada y verificar el despliegue antes de deshabilitar la anterior. La referencia y su verificación ya pasaron en Actions 42934948121/8d35347 y en el corte final Actions 42939713143/2e0bf2d; no dependen solo de la configuración manual inicial.
+
+## Corte final verificado y paquete
+
+Actions 42939713143 sobre main 2e0bf2d pasó despliegue, referencia Neon, smoke de SHA, casos públicos y generación/publicación del ZIP final. [Metadatos, artefacto y límites de la comprobación](31-estado-verificado-final.md). No se necesita otro commit de evidencia para que el ZIP incluya el JSON de ese mismo despliegue.

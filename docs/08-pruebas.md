@@ -61,4 +61,12 @@ El propietario descargó el artefacto y adjuntó el archivo; se validó su estru
 
 ## ZIP ligado a la prueba pública
 
-El pipeline ampliado empaqueta después del smoke y de los 35 casos; incorpora el JSON real de ese mismo SHA dentro del ZIP, sin modificar el historial para copiarlo. El empaquetador valida integridad del conjunto, SHA y checkout limpio antes de crear entrega. Main 8d35347 aprobó Actions 42934948121; la ampliación de empaquetado se ejecutará tras su propio merge. [Guía y validaciones](30-paquete-final-e-instalacion.md).
+El pipeline ampliado empaqueta después del smoke y de los 35 casos; incorpora el JSON real de ese mismo SHA dentro del ZIP, sin modificar el historial para copiarlo. El empaquetador valida integridad del conjunto, SHA y checkout limpio antes de crear entrega. Main 8d35347 aprobó Actions 42934948121; la ampliación de empaquetado ya se ejecutó y aprobó en Actions 42939713143 / 2e0bf2d. [Guía y validaciones](30-paquete-final-e-instalacion.md).
+
+## Corte 2e0bf2d en Actions
+
+El job backend/pytest de Actions 42939713143 terminó aprobado sobre el checkout 2e0bf2d, además de los seis controles previos, despliegue/casos públicos y empaquetado. [Metadatos reales de pasos y artefactos](evidencias/semana-4/main-2e0bf2d/actions-verificado.json). El XML de CI reside en `evaluacion-rag`; el XML de 154 pruebas versionado anterior declara correctamente que era ejecución local con cambios. No se cambia su procedencia ni se finge descargar el XML remoto. JSON final de casos de 2e0bf2d y paquete-final.json aportados por el propietario y versionados; [diferencias entre Git y artefactos](31-estado-verificado-final.md).
+
+## Primarios del corte 2e0bf2d recibidos
+
+[JSON original de casos](evidencias/semana-4/produccion-despliegue-2e0bf2d68b7ecf8a4557da3890bd235990010a86.json) y [paquete-final.json original](evidencias/semana-4/main-2e0bf2d/paquete-final.json): **35/35, cero omitidos**, SHA esperado/obtenido coincidente, checkout limpio, ZIP de **19.129.820 bytes**, por debajo de 20.000.000. El hash del reporte recibido coincide con el consignado dentro del informe del paquete. P95 de esa corrida: **4,794 s**, no prueba de carga. Los archivos recibidos se conservan byte a byte; [validación y límites](evidencias/semana-4/main-2e0bf2d/validacion-primarios.json). No se recibió el ZIP binario ni se recalculó su hash; se conserva el hash generado por CI en su informe.

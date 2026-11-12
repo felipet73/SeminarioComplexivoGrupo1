@@ -1,0 +1,14 @@
+{
+  "caso": 4985701,
+  "referencias_solicitadas": 25,
+  "referencias_publicadas_al_revisar": 25,
+  "commit_legacy_accesible": true,
+  "se_recuperaron_valores": false,
+  "alcance": "Consulta de referencias y SHA solamente; no reproduce credenciales ni confirma purga.",
+  "acuse_recepcion_aportado": true,
+  "fecha_visible_correo": "10/11/2026 19:42",
+  "zona_horaria_visible": null,
+  "tipo_correo": "Confirmación automática de recepción, no respuesta técnica ni retirada",
+  "fecha_confirmacion_correo_aportada": true,
+  "respuesta_tecnica_support_aportada": false
+}

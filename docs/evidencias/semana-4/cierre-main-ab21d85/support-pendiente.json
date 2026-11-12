@@ -34,6 +34,9 @@
   "estado": "Abierto; solicitud enviada, pendiente de respuesta y actuación de GitHub Support. Retirada no confirmada.",
   "solicitud_enviada_por_propietario": true,
   "prioridad": "Normal",
-  "fecha_envio_absoluta": null,
-  "evidencia_envio": "Capturas aportadas por el propietario en conversación: confirmación de envío y listado de tickets. No disponibles como archivos originales en el checkout."
+  "evidencia_envio": "Capturas aportadas en conversación: envío/listado de tickets y correo de recepción #4985701 con fecha visible. No se versiona captura del buzón ni se afirma purga.",
+  "acuse_confirmado": true,
+  "fecha_acuse_visible": "10/11/2026 19:42",
+  "zona_horaria_visible": null,
+  "respuesta_tecnica_aportada": false
 }
