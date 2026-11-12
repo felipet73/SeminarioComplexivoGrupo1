@@ -1,6 +1,6 @@
 # GitHub Support: solicitud enviada, caso #4985701
 
-**Estado vigente: enviada por el propietario; pendiente de respuesta y actuación de GitHub Support.** Capturas aportadas en la conversación muestran «Tu mensaje ha sido enviado correctamente» y el ticket #4985701 de `felipet73`, prioridad Normal, estado abierto. No confirman retirada de referencias ni purga. La pantalla indica creación «ahora», sin fecha/hora absoluta visible; ese dato queda pendiente de la confirmación por correo.
+**Estado vigente: enviada por el propietario; pendiente de respuesta y actuación de GitHub Support.** Capturas aportadas en la conversación muestran «Tu mensaje ha sido enviado correctamente» y el ticket #4985701 de `felipet73`, prioridad Normal, estado abierto. No confirman retirada de referencias ni purga. El correo de acuse aportado posteriormente muestra **10/11/2026 19:42**; la zona horaria no es visible y no se convierte a UTC por inferencia. Es confirmación de recepción, no respuesta técnica ni purga.
 
 El texto siguiente se conserva como referencia del contenido preparado para la solicitud. No contiene valores de credenciales.
 
@@ -59,9 +59,13 @@ El propietario completó el envío mediante GitHub Support y aportó confirmaci�
 | Campo | Estado registrado |
 | --- | --- |
 | Enviado desde cuenta propietaria | Confirmado por capturas del formulario y listado de tickets de felipet73 |
-| Fecha de envío | Fecha/hora absoluta pendiente de correo; la captura indica «ahora» |
+| Fecha de confirmación por correo | **10/11/2026 19:42**, según fecha visible; zona horaria no indicada |
 | Número de caso | **#4985701** |
 | Estado/respuesta de Support | **Abierto, prioridad Normal; pendiente de respuesta y actuación** |
 | Verificación posterior de refs/cachés | Pendiente de respuesta y comprobación |
 
 El envío fue realizado por el propietario desde su sesión; el asistente registró las capturas aportadas. La respuesta generada por IA durante la preparación no equivale a respuesta del equipo de soporte. Que exista ticket no demuestra que las referencias ya se retiraron: esperar comunicación del equipo y comprobar después refs/cachés/commit antes de marcar el cierre completo. No se versionan correos privados, valores ni respaldo del repositorio.
+
+## Acuse recibido
+
+El propietario aportó una captura del correo «[GitHub Support] Confirmation - Request Received (#4985701)», con fecha visible 10/11/2026 19:42. Confirma que se recibió la solicitud; no anuncia una retirada de referencias. No se incorpora la captura completa del buzón por contener información ajena al proyecto, ni se presenta como archivo primario versionado. La respuesta técnica sigue pendiente de aportar.

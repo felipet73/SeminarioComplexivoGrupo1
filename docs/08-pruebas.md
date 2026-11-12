@@ -61,4 +61,8 @@ El propietario descargó el artefacto y adjuntó el archivo; se validó su estru
 
 ## ZIP ligado a la prueba pública
 
-El pipeline ampliado empaqueta después del smoke y de los 35 casos; incorpora el JSON real de ese mismo SHA dentro del ZIP, sin modificar el historial para copiarlo. El empaquetador valida integridad del conjunto, SHA y checkout limpio antes de crear entrega. Main 8d35347 aprobó Actions 42934948121; la ampliación de empaquetado se ejecutará tras su propio merge. [Guía y validaciones](30-paquete-final-e-instalacion.md).
+El pipeline ampliado empaqueta después del smoke y de los 35 casos; incorpora el JSON real de ese mismo SHA dentro del ZIP, sin modificar el historial para copiarlo. El empaquetador valida integridad del conjunto, SHA y checkout limpio antes de crear entrega. Main 8d35347 aprobó Actions 42934948121; la ampliación de empaquetado ya se ejecutó y aprobó en Actions 42939713143 / 2e0bf2d. [Guía y validaciones](30-paquete-final-e-instalacion.md).
+
+## Corte 2e0bf2d en Actions
+
+El job backend/pytest de Actions 42939713143 terminó aprobado sobre el checkout 2e0bf2d, además de los seis controles previos, despliegue/casos públicos y empaquetado. [Metadatos reales de pasos y artefactos](evidencias/semana-4/main-2e0bf2d/actions-verificado.json). El XML de CI reside en `evaluacion-rag`; el XML de 154 pruebas versionado anterior declara correctamente que era ejecución local con cambios. No se cambia su procedencia ni se finge descargar el XML remoto. JSON final de casos dentro del ZIP de Actions; [diferencias entre Git y artefactos](31-estado-verificado-final.md).

@@ -1,5 +1,9 @@
 # Paquete final automático y comprobación de instalación
 
+## Estado de ejecución acreditado
+
+**Ya ejecutado en Actions:** main `2e0bf2d`, [run 42939713143](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143), con empaquetado y publicación aprobados. Artefacto ID 13820491498. No es una función solo ensayada localmente. [Estado y metadatos versionados](31-estado-verificado-final.md). Las pruebas locales descritas abajo conservan su SHA propio.
+
 ## Problema resuelto
 
 Versionar el JSON del último despliegue en un commit nuevo cambia el SHA y genera otra ejecución. Para entregar código y evidencia del mismo SHA sin esa repetición, el job `desplegar` genera ahora el ZIP **después** de que pasen las pruebas públicas. Incorpora explícitamente el JSON generado en ese job, aunque no esté rastreado en Git. No se agrega ningún otro archivo no versionado.

@@ -57,3 +57,7 @@ Seis regresiones nuevas (4 variantes de encabezado, OCR real página 9 y fuente 
 ## Paquete final con evidencia del mismo SHA: 154
 
 Siete regresiones nuevas validan incorporación de los 35 casos al ZIP, rechazo de resumen/fallo/omitidos/IDs/otro SHA y checkout modificado. Suite local: **154 aprobadas, cobertura app 89,11 %**. [XML y resumen](evidencias/semana-4/paquete-final-automatizado/). Los cortes 147 y anteriores mantienen sus archivos; no son ejecuciones del nuevo código.
+
+## Confirmación CI sobre SHA exacto
+
+El job backend/pytest de [Actions 42939713143 / 2e0bf2d](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42939713143) terminó aprobado sobre el checkout de esa revisión. El árbol modificado del XML local de 154 no es la única comprobación existente. [Metadatos reales de CI y referencia al artefacto XML](evidencias/semana-4/main-2e0bf2d/actions-verificado.json). Se conserva el alcance de cada archivo; no se convierte retrospectivamente un XML local en uno descargado de CI.

@@ -1,0 +1,13 @@
+{
+  "estado": "LISTO_PARA_SUBIDA",
+  "sha": "2e0bf2d68b7ecf8a4557da3890bd235990010a86",
+  "run_id": 42939713143,
+  "criterio": "Job desplegar, verificación Neon/smoke/casos públicos, empaquetado validado del mismo SHA y publicación de artefacto aprobados.",
+  "artefacto": "entrega-final-2e0bf2d68b7ecf8a4557da3890bd235990010a86",
+  "artefacto_id": 13820491498,
+  "validacion_limite": "Paso del empaquetador aprobado; máximo 20.000.000 bytes. Bytes/hash del ZIP interior en paquete-final.json, no descargado aquí.",
+  "subida_portal_confirmada": false,
+  "seguimiento_externo": "Support #4985701 abierto según última confirmación del propietario; no purga certificada.",
+  "alcance_ocr": "PDF legible a cargo del cliente; herramienta OCR/revisión asistida fuera del alcance como improvement. No certifica calidad/vigencia del instructivo.",
+  "limite_revision": "Estado de este SHA; un merge posterior exige su propia ejecución y artefacto aprobado."
+}

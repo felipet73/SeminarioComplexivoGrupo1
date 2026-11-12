@@ -1,6 +1,6 @@
 # Estado de entrega final y sustentación — Grupo 1
 
-Corte vigente: 8 de noviembre de 2026 UTC. Evaluación final sin despliegue aprobada en [Actions 42443602234](https://github.com/felipet73/SeminarioComplexivoGrupo1/actions/runs/42443602234), SHA `16081c8224ba07d1b0b917f89266f6bb562fb0e5`: recuperación/chat y agente estricto 6/6. Los cortes anteriores conservan su alcance histórico. Esta ejecución aislada no acredita un despliegue HTTP nuevo.
+**Estado: LISTO PARA SUBIDA para el corte main `2e0bf2d`, Actions 42939713143**, con despliegue, casos públicos, generación y publicación del ZIP aprobados. [Estado verificable, artefacto y límites](31-estado-verificado-final.md). No significa ya entregado ni purga externa finalizada. Un merge posterior requiere su propia ejecución y paquete. La evaluación generativa/agentiva independiente de Actions 42443602234/SHA `16081c8` conserva fecha y alcance históricos.
 
 Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.pdf** y **Entrega_final_proyecto_comite_evaluacion (1).pdf**, aportados por el equipo. Sus hashes constan en la [auditoría](evidencias/semana-4/auditoria-secretos-y-comite-2026-11-07.json). Se usan como requisitos de entrega, no como prueba de que el grupo ya los cumplió.
 
@@ -8,10 +8,10 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 
 | Punto | Estado actual | Evidencia / acción de cierre |
 | --- | --- | --- |
-| s4a — URL pública en README y health | **Cumplido en la revisión probada** | URLs reales, smoke de SHA y 35 casos públicos aprobados; mostrar navegador privado durante la demo. |
-| s4b — Credenciales solo en plataforma, incluido historial limpio | **Ramas saneadas; PR/cachés y alcance externo parcial** | Contraseña actual rotada, versión 1 inhabilitada y mecanismo JWT retirado. Reescritura coordinada de 27 ramas publicada; clon nuevo y CI/despliegue `2482401` aprobados. Cinco fingerprints de falsos positivos adaptados, sin exclusiones para credenciales legacy. [Constancia](24-cierre-historial-publicado.md). Restan 25 refs de PR afectadas/cachés, revisión de otras copias/revisiones accesibles y detalle nominal/fecha exacta de rotación si se exige. No se declara purga completa del servidor. |
-| s4c — Índice persistente tras reinicio | **Verificado entre revisiones Cloud Run, alcance documentado** | Mismo SHA, revisiones 00033-wvv → 00034-bgp: comparación remota aprobada para 6 documentos, 1.047 fragmentos capturados, originales/historial, prompts y configuración. Captura de tráfico 100 % y respuesta con fuentes observadas; discrepancia artículo 24/23 requiere revisión semántica separada. No acredita reinicio de Neon, métricas ni sesiones. [JSON completos y constancia](evidencias/semana-4/neon-remoto/constancia.md). |
-| s4d — 15+ casos públicos, incluida inyección | **Cumplido en ejecución; completar material visual** | 35/35 con fecha, SHA y tres consultas generativas, más inyección y rutas retiradas. Guardar el JSON por caso del intento 2 y su p95; no reutilizar el p95 del intento fallido. La red del chat bloquea descargar el artefacto, no se inventa su contenido. |
+| s4a — URL pública en README y health | **Cumplido en 2e0bf2d** | Actions 42939713143 aprobó smoke de SHA/corpus/rutas/chat y pruebas públicas. [Metadatos exactos](evidencias/semana-4/main-2e0bf2d/actions-verificado.json). |
+| s4b — Credenciales solo en plataforma, incluido historial limpio | **Mitigación y envío realizados; retirada externa pendiente** | Contraseña actual rotada, v1 inhabilitada, JWT retirado (no rotado), ramas saneadas. Support #4985701: acuse 10/11/2026 19:42 según correo, zona no visible; pendiente de respuesta técnica. Las 25 refs y commit antiguo siguen accesibles al contrastar. No se declara purga ni control de forks/clones. [Registro](25-solicitud-soporte-github.md). |
+| s4c — Índice persistente tras reinicio | **Verificado entre revisiones Cloud Run, alcance documentado** | JSON antes/después 00033-wvv → 00034-bgp aprobados para estado capturado en Neon. Corrección de cita artículo 24 aplicada y confirmada luego por operador (87 fragmentos); captura/JSON remoto original no versionado. No acredita reinicio de Neon, métricas ni sesiones. [Evidencia](evidencias/semana-4/neon-remoto/constancia.md). |
+| s4d — 15+ casos públicos, incluida inyección | **Aprobado en 2e0bf2d; reporte en artefacto del mismo SHA** | Actions 42939713143 aprobó pruebas públicas y empaquetado que valida 35 casos completos con SHA coincidente. JSON dentro del ZIP final de Actions, no descargado aquí. El JSON completo versionado ab21d85 mantiene su fecha propia. [Metadatos y alcance](31-estado-verificado-final.md). |
 | s4e — Evaluación final repetida frente a semana 3 | **Cumplido en el alcance automatizado** | Mismo golden set de 20 preguntas y seis casos del agente; léxico 14/16, híbrido/citas 16/16, negativas 4/4 y agente estricto 6/6, sin fallback. [Comparación y límites](07-evaluacion.md), Actions 42443602234, SHA `16081c8`; JSON completos versionados. No acredita exhaustividad semántica ni aprobación del OCR. |
 | s4f — Tasa y errores seguros | **Cumplido en alcance implementado** | 30 consultas/60 s/proceso, alias compartidos, 429/Retry-After, timeout, respaldo y errores categorizados sin excepción cruda; tests estrictos. No es cuota distribuida ni por usuario. |
 | s4g — Aviso de IA y minimización de datos | **Cumplido en alcance educativo básico** | Interfaz identifica IA, orientación no oficial, pide verificar fuentes y prohíbe compartir contraseñas/datos sensibles. Contexto opcional acotado, métricas sin texto libre. El texto de consulta/contexto sí se envía al proveedor seleccionado; ver [tratamiento de datos](16-datos-y-limites.md). |
@@ -19,6 +19,10 @@ Se contrastaron los documentos del docente **Sustentacion_sabado_7_paso_a_paso.p
 | s4i — IA y aportes por integrante | **Aportes y herramientas confirmados; detalle de revisión de IA parcial** | README detalla tareas de Christian (despliegues/CI/optimización), Olmes (pruebas manuales/backend semana 4) y Widman (tests/documentación backend, QA frontend y fuentes). Declaración de IA incluye Gemini, ChatGPT y Codex. Ejecución local, PR y verificación de pruebas confirmadas por todos. Faltan ejemplos de salida de IA revisada por cada persona y enlaces de PR nominados si se exige ese detalle. |
 | s4j — PDF de la presentación de doce minutos | **Versión usada confirmada por el equipo** | `docs/Presentacion.pdf`, diez páginas con infografías, fue la presentación utilizada según confirmación del equipo. `presentacion-entrega4.pdf` se conserva como material anterior. La duración real de doce minutos no se acredita sin medición. |
 | s4k — Evidencias y observaciones de sustentación | **Observación aclarada y registrada; material de respaldo parcial** | [SUST-01](evidencias/semana-4/observaciones-sustentacion.md): faltó una pregunta de demo que activara solicitud de datos adicionales, no hubo un fallo del sistema. El equipo confirma verificación posterior y existen tests específicos del contrato de aclaración. No se inventa una reparación ni se atribuyen los 429 de evaluación a la demo. Fecha exacta de sesión y vídeo de respaldo pendientes de aportar. |
+
+## Cortes históricos de seguimiento
+
+Los apartados siguientes conservan mediciones y pendientes de sus revisiones anteriores; no sustituyen el estado vigente de la tabla superior y [docs/31](31-estado-verificado-final.md). Una frase «pendiente» en un corte fechado no reabre automáticamente lo cerrado después.
 
 ## Qué ya está cerrado de la ficha antigua
 
@@ -128,7 +132,7 @@ El operador mostró reindexación de 87 fragmentos y respuesta con fuente artíc
 - [x] Propietario envió solicitud a GitHub Support: **caso #4985701**, prioridad Normal, estado abierto, confirmado en capturas de la conversación.
 - [ ] Respuesta/actuación de GitHub y verificación posterior de refs/cachés/commit. S4b no se marca completamente cerrado.
 
-La fecha/hora absoluta no aparece en las capturas; queda pendiente de correo de confirmación. [Registro y alcance](25-solicitud-soporte-github.md).
+El correo de confirmación aportado después muestra **10/11/2026 19:42**, zona horaria no visible; acredita recepción, no actuación técnica. [Registro y alcance](25-solicitud-soporte-github.md).
 
 ## Evidencia pública ab21d85 incorporada
 

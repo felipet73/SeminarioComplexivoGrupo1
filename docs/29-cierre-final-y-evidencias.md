@@ -1,22 +1,24 @@
 # Cierre de entrega: main, evidencia pública y tareas del propietario
 
-Corte documental: 10 de noviembre de 2026, Ecuador. Base revisada: `ab21d853186ba34acfe8359553a8d38a39de1f80`. Las ejecuciones posteriores deben identificarse con su propio SHA; no se modifica la fecha o revisión de reportes antiguos.
+**Corte vigente acreditado: main `2e0bf2d68b7ecf8a4557da3890bd235990010a86`, Actions 42939713143, LISTO PARA SUBIDA**. La API confirma despliegue, prueba pública, empaquetado y publicación. [Estado completo y metadatos](31-estado-verificado-final.md). Los reportes ab21d85 y 8d35347 se conservan como históricos; no son las cifras del ZIP final ni la única evidencia de CI.
 
-## Contraste de pendientes
+## Contraste vigente
 
-| Punto | Estado comprobado / siguiente acción |
+| Punto | Estado / evidencia |
 | --- | --- |
-| Último despliegue main | API GitHub: Actions **42494812366**, SHA **ab21d85**, conclusión success; pasos de smoke y casos públicos aprobados. [Metadatos](evidencias/semana-4/cierre-main-ab21d85/actions-metadata.json). |
-| JSON público completo | El artefacto `evidencias-despliegue-ab21d853186ba34acfe8359553a8d38a39de1f80` existe, no expirado al consultar; **JSON completo incorporado**, descargado y adjuntado por el propietario tras Forbidden desde este entorno. [35/35, sin omitidos, SHA coincidente](evidencias/semana-4/produccion-ab21d85-run-42494812366.json). Los metadatos se complementan ahora con los casos. |
-| Conteo backend y presentación | Corregidos docs/08 y docs/11 a **147**; s4j identifica **docs/Presentacion.pdf**, diez páginas, versión usada según el equipo. No se inventa medición de duración. |
-| Historial GitHub | Las 25 refs de la solicitud siguen publicadas y `3e38895` responde en la API. No se recuperaron ni imprimieron sus valores. Solicitud de docs/25 **enviada por el propietario, caso #4985701, abierto y pendiente de actuación** según capturas aportadas posteriormente. JWT retirado, no rotado; forks/clones externos no purgados. |
-| Persistencia y despliegue | Comparación Neon entre revisiones aprobada y JSON versionados. CI ahora declara `RAG_DATABASE_URL=rag-database-url:1` con merge y verifica referencia sin consultar el valor. Se aplicará tras merge/despliegue, no antes. Sesiones/métricas/rate limit siguen por proceso. |
-| Artículo 24 | Corrección/reindexación remota reportadas por el operador y capturas observadas; 87 fragmentos y fuente artículo 24/página 9/revisión 2. Falta el archivo original de captura o JSON remoto versionado si se exige evidencia autónoma. No se trata como bug todavía sin corregir. |
-| Corpus/OCR | Git conserva `approved=false` para el instructivo; panel remoto aprobado según el equipo y sus respuestas. Esa divergencia se documenta, no se igualan políticas sin revisión. **\* Debe analizarse el improvement** de ADR-0005; revisión integral y vigencia no acreditadas. |
-| Configuración híbrida | 16/16 acreditado para OpenAI `text-embedding-3-small`/0,55. No se extrapola a Gemini/0,65 ni al estado actual del panel. Nueva configuración requiere su propia evaluación. |
-| Evidencia humana | Instalación humana confirmada por los tres integrantes tras renovar clones: aprox. seis minutos estimados, menos de diez, sin cronómetro; Olmes realizó QA final. Observación de sustentación declarada por equipo, sin acta/fecha exacta aportada. Capturas de rotación/tráfico/chat vistas en conversación no están disponibles como archivos originales en el checkout. No se fabrican fechas ni imágenes. |
-| Paquete main revisado | Worktree limpio, empaquetador exit 0: **19.096.731 bytes** (<20.000.000), SHA y hash del ZIP registrados en [reporte](evidencias/semana-4/cierre-main-ab21d85/paquete-main.json). Repetir después de fusionar cambios. |
-| Portal | Subida/acuse **no realizados desde este entorno**. El propietario debe subir un solo ZIP del main final, con el código del grupo, máximo 20 MB. Plazo comunicado: miércoles 11 de noviembre de 2026, **23:59 Ecuador**. |
+| Despliegue main acreditado | **2e0bf2d / Actions 42939713143, success**; pasos Neon, smoke, casos públicos, empaquetado y upload aprobados. [JSON de API](evidencias/semana-4/main-2e0bf2d/actions-verificado.json). |
+| JSON público | El corte 2e0bf2d se incorpora al ZIP por el mismo job; el archivo original está en Actions, no descargado por este entorno (Forbidden). El JSON completo ab21d85 sí está versionado y conserva su fecha. No se confunden repositorio y artefacto. |
+| Paquete final | **Generado en Actions**, artefacto 13820491498 `entrega-final-2e0bf2d…`; límite validado por el paso. Tamaño/digest de API corresponden al contenedor de GitHub, no al ZIP interior; bytes/hash interiores están en `paquete-final.json`. |
+| Tests y presentación | **154 tests locales** con XML/procedencia explícitos; además backend/pytest de CI aprobado sobre 2e0bf2d. `docs/Presentacion.pdf` es la versión usada, diez páginas, según equipo. |
+| Support | Caso **#4985701 enviado**, acuse visible **10/11/2026 19:42**, zona no mostrada; no respuesta técnica aportada ni retirada certificada. Siguen 25 refs publicadas y commit antiguo accesible. |
+| Instalación humana | Los tres integrantes reinstalaron desde copias limpias; aprox. seis minutos estimados, sin cronómetro, según representante. No se inventan fechas/SO/SHA por sesión ni persona ajena. Medición automatizada 51,633 s es otra prueba sobre 8d35347. |
+| PDF/OCR | Calidad/fidelidad del insumo a cargo del cliente; OCR no implementado ni dentro del alcance. Improvement asistido por analizar. Semilla Git `approved=false` y aprobación administrativa remota son estados diferentes; no se presenta como revisión integral acreditada. |
+| Artículo 24 | Causa corregida y uso remoto correcto confirmado por operador. Falta archivo primario versionado de esa captura/consulta si se exige; no se dice que la corrección siga sin aplicar. |
+| Híbrido | 16/16 pertenece a OpenAI/0,55; no se atribuye a Gemini/0,65 ni al panel remoto. Sesiones/métricas/rate limit siguen por proceso. |
+| Portal | **Listo para subida**, no ya entregado. Subir únicamente ZIP interior renombrado según docente; no JSON por separado. El acuse se registra después y no es condición previa de este estado. |
+
+Los archivos `paquete-main.json` e `integracion-zip-con-evidencia.json` miden ab21d85, no el ZIP de 2e0bf2d. No se alteran sus bytes/SHA históricos. La ausencia de un binario descargado aquí no significa que el artefacto no exista: los pasos y su ID se verificaron por API.
+
 
 ## 1. JSON completo incorporado; procedimiento de descarga para futuras corridas
 
@@ -51,7 +53,7 @@ Después de fusionar cambios de despliegue/código, comprobar la ejecución del 
 
 ## 2. Solicitud a GitHub Support
 
-El propietario aportó confirmación de envío y listado de tickets: **#4985701**, prioridad Normal, abierto. Dar seguimiento desde su cuenta y registrar respuesta/resultado en [docs/25](25-solicitud-soporte-github.md). La captura no muestra fecha/hora absoluta; completar ese dato desde el correo cuando se disponga. El asistente registró la evidencia, no realizó el envío. No publicar bundle privado ni valores. No marcar purga cerrada hasta respuesta y verificación de refs/commit; copias externas siguen fuera del alcance.
+El propietario aportó confirmación de envío y listado de tickets: **#4985701**, prioridad Normal, abierto. Dar seguimiento desde su cuenta y registrar respuesta/resultado en [docs/25](25-solicitud-soporte-github.md). El acuse por correo muestra 10/11/2026 19:42; zona horaria no visible. Esa confirmación no es respuesta técnica. El asistente registró la evidencia, no realizó el envío. No publicar bundle privado ni valores. No marcar purga cerrada hasta respuesta y verificación de refs/commit; copias externas siguen fuera del alcance.
 
 ## 3. Corpus y evidencias humanas
 
@@ -59,7 +61,11 @@ No cambiar `approved=false` a true en Git para reflejar mecánicamente una aprob
 
 Para evidencia autónoma, aportar imágenes originales ligeras o un JSON de consulta revisado por secretos. No se incorporan capturas reconstruidas ni vídeos pesados. La instalación del equipo ya está [confirmada](evidencias/semana-4/instalacion-equipo.md): aprox. seis minutos estimados, sin cronómetro. No se rellenan horas de inicio/fin ni un tiempo exacto no medidos.
 
-## 4. Generar y subir el único ZIP final
+## 4. Obtener y subir el único ZIP final
+
+**Opción acreditada:** descargar el artefacto `entrega-final-SHA` de Actions, extraerlo, cotejar `paquete-final.json`, renombrar únicamente el ZIP interior como exige el docente y subir ese archivo. [Pasos y límites](31-estado-verificado-final.md). No subir JSON por separado ni el contenedor de Actions.
+
+**Alternativa de empaquetado local, no la fuente del artefacto ya generado:**
 
 Desde un clon limpio posterior a la limpieza histórica, con main actualizado y sin cambios pendientes:
 
@@ -74,7 +80,7 @@ Get-FileHash "$archivoZip" -Algorithm SHA256
 explorer.exe tmp
 ```
 
-El empaquetador usa archivos rastreados y excluye secretos/estados/cachés, `.env`, `.venv`, `node_modules`, `__pycache__`, Terraform privado y respaldos. Evitar bundles privados dentro del proyecto. Revisar tamaño exacto ≤20.000.000 bytes y contenido; subir solo el ZIP generado al portal con el código real del grupo. Conservar acuse, hora Ecuador, SHA y hash del paquete. No hay constancia de entrega hasta recibir ese acuse.
+El empaquetador usa archivos rastreados y excluye secretos/estados/cachés, `.env`, `.venv`, `node_modules`, `__pycache__`, Terraform privado y respaldos. Evitar bundles privados dentro del proyecto. Revisar tamaño exacto ≤20.000.000 bytes y contenido; subir solo el ZIP generado al portal con el código real del grupo. Conservar acuse, hora Ecuador, SHA y hash del paquete. El estado listo para subida se acredita antes del acuse; el acuse solo confirma la entrega posterior.
 
 ## Ampliación de cierre automatizable
 

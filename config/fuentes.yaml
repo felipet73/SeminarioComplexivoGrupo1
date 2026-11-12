@@ -40,7 +40,7 @@
       "valid_to": null,
       "approved": false,
       "enabled": true,
-      "notes": "Fuente oficial escaneada. OCR con errores en membretes y tablas; pendiente revision humana integral y confirmacion institucional de vigencia/aplicabilidad. Excluida de respuestas hasta aprobar. OCR SHA-256: 556a1f22b919a8158adcd0eb227885539d5a79d3a0c2a6ec3be6b714377f82bf"
+      "notes": "Política de ingesta inicial: sin aprobar hasta que quien aporta la fuente confirme legibilidad/fidelidad y vigencia/aplicabilidad. OCR preparado externamente; su revisión no es una función del producto. El estado administrativo de producción puede diferir y no se sincroniza desde esta semilla. OCR SHA-256: 46b3b5fa2f2e3d222af1ea022f54716661e58c988c70a3b0a80865ccfcc2279b"
     }
   }
 }
