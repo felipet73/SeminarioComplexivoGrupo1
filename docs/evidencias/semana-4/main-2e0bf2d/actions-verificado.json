@@ -462,5 +462,8 @@
     }
   ],
   "descarga_binaria_desde_entorno_asistente": false,
-  "limite": "Forbidden al descargar desde almacenamiento de Actions. El tamaño/digest del artefacto GitHub corresponde al contenedor descargable, no al ZIP interior. JSON por caso, XML y paquete-final.json permanecen en los artefactos; no se inventan sus contenidos."
+  "limite": "La descarga directa del binario Actions devuelve Forbidden aquí; el propietario aportó paquete-final.json y el JSON de casos, versionados y validados. El XML de CI y ZIP binario no se recibieron. El tamaño/digest del artefacto GitHub corresponde al contenedor, no al ZIP interior.",
+  "primarios_json_aportados_por_propietario": true,
+  "paquete_final_json": "paquete-final.json",
+  "reporte_casos": "../produccion-despliegue-2e0bf2d68b7ecf8a4557da3890bd235990010a86.json"
 }

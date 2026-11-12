@@ -1,0 +1,19 @@
+{
+  "resultado": "aprobado",
+  "procedencia": "JSON originales descargados de Actions y aportados por el propietario; conservados byte a byte.",
+  "sha": "2e0bf2d68b7ecf8a4557da3890bd235990010a86",
+  "paquete_bytes": 19129820,
+  "limite_bytes": 20000000,
+  "working_tree_con_cambios": false,
+  "correctos": 35,
+  "total": 35,
+  "omitidos": 0,
+  "ids_catalogo_coinciden": true,
+  "revision_obtenida_coincide": true,
+  "hash_reporte_coincide_con_paquete": true,
+  "sha256_paquete_json": "96579b601f5b6a3f6931dc0c921c1653b990be2510daf357942beda44695638e",
+  "sha256_reporte_casos": "ce6c2e8cf9c002586efda6240d2528df1458b07b21cf1e8184aa93210e21fc4e",
+  "zip_sha256_reportado": "eae2ad9967f346d8fcd0ac57ab29d0aad371775c533bc019b8bf70b37dbe5e13",
+  "zip_binario_recalculado_en_esta_revision": false,
+  "alcance": "No se recibió el ZIP binario. Se validan los dos JSON originales y el hash cruzado del reporte; el hash del ZIP es el reportado por el empaquetador en CI, no uno recalculado desde un archivo descargado aquí."
+}

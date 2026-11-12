@@ -7,8 +7,8 @@
 | Punto | Estado / evidencia |
 | --- | --- |
 | Despliegue main acreditado | **2e0bf2d / Actions 42939713143, success**; pasos Neon, smoke, casos públicos, empaquetado y upload aprobados. [JSON de API](evidencias/semana-4/main-2e0bf2d/actions-verificado.json). |
-| JSON público | El corte 2e0bf2d se incorpora al ZIP por el mismo job; el archivo original está en Actions, no descargado por este entorno (Forbidden). El JSON completo ab21d85 sí está versionado y conserva su fecha. No se confunden repositorio y artefacto. |
-| Paquete final | **Generado en Actions**, artefacto 13820491498 `entrega-final-2e0bf2d…`; límite validado por el paso. Tamaño/digest de API corresponden al contenedor de GitHub, no al ZIP interior; bytes/hash interiores están en `paquete-final.json`. |
+| JSON público | El corte 2e0bf2d se incorpora al ZIP por el mismo job; el propietario aportó el original del corte 2e0bf2d y se versionó tras validar los 35 casos y hash cruzado. El JSON completo ab21d85 sí está versionado y conserva su fecha. No se confunden repositorio y artefacto. |
+| Paquete final | **Generado en Actions**, artefacto 13820491498 `entrega-final-2e0bf2d…`; límite validado por el paso. Tamaño/digest de API corresponden al contenedor de GitHub, no al ZIP interior; bytes/hash interiores están en el `paquete-final.json` original ya versionado: **19.129.820 bytes**, árbol limpio y SHA coincidente. |
 | Tests y presentación | **154 tests locales** con XML/procedencia explícitos; además backend/pytest de CI aprobado sobre 2e0bf2d. `docs/Presentacion.pdf` es la versión usada, diez páginas, según equipo. |
 | Support | Caso **#4985701 enviado**, acuse visible **10/11/2026 19:42**, zona no mostrada; no respuesta técnica aportada ni retirada certificada. Siguen 25 refs publicadas y commit antiguo accesible. |
 | Instalación humana | Los tres integrantes reinstalaron desde copias limpias; aprox. seis minutos estimados, sin cronómetro, según representante. No se inventan fechas/SO/SHA por sesión ni persona ajena. Medición automatizada 51,633 s es otra prueba sobre 8d35347. |

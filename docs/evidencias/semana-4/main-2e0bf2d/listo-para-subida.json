@@ -5,9 +5,11 @@
   "criterio": "Job desplegar, verificación Neon/smoke/casos públicos, empaquetado validado del mismo SHA y publicación de artefacto aprobados.",
   "artefacto": "entrega-final-2e0bf2d68b7ecf8a4557da3890bd235990010a86",
   "artefacto_id": 13820491498,
-  "validacion_limite": "Paso del empaquetador aprobado; máximo 20.000.000 bytes. Bytes/hash del ZIP interior en paquete-final.json, no descargado aquí.",
+  "validacion_limite": "paquete-final.json original: 19.129.820 bytes, cumple_limite=true, zip_creado=true, working_tree_con_cambios=false y SHA correcto; hash cruzado del reporte de 35 casos validado.",
   "subida_portal_confirmada": false,
   "seguimiento_externo": "Support #4985701 abierto según última confirmación del propietario; no purga certificada.",
   "alcance_ocr": "PDF legible a cargo del cliente; herramienta OCR/revisión asistida fuera del alcance como improvement. No certifica calidad/vigencia del instructivo.",
-  "limite_revision": "Estado de este SHA; un merge posterior exige su propia ejecución y artefacto aprobado."
+  "limite_revision": "Estado de este SHA; un merge posterior exige su propia ejecución y artefacto aprobado.",
+  "paquete_bytes": 19129820,
+  "zip_sha256_reportado": "eae2ad9967f346d8fcd0ac57ab29d0aad371775c533bc019b8bf70b37dbe5e13"
 }
